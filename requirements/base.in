@@ -1,4 +1,4 @@
 # Core requirements for using this application
 
-Django>=1.8,<2.0          # Web application framework
-
+Django>=1.11,<2.0          # Web application framework
+django-waffle==0.12.0      # pinned to match the version in edx/edx-platform
