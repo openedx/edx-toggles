@@ -1,4 +1,11 @@
 Feature toggles configured for **{{ ida.name }}**:
+--------------------------------------------------
+
+Summary:
+~~~~~~~~
+
+* Total Waffle Flags in {{ ida.name }}: {{ ida.toggles_by_type('waffle.flag') |length }}
+* Total Waffle Switches in {{ ida.name }}: {{ ida.toggles_by_type('waffle.switch') |length }}
 
 {% if ida.toggles_by_type('waffle.flag')  %}
 
