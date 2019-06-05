@@ -142,6 +142,8 @@ class Renderer(object):
             trim_blocks=True
         )
         self.report_dir = report_dir
+        if not os.path.isdir(report_dir):
+            os.mkdir(report_dir)
 
     def render_file(self, output_file_name, template_name, variables={}):
         file_path = os.path.join(self.report_dir, output_file_name)
@@ -200,9 +202,7 @@ def link_annotation_reports_to_idas(idas, annotation_report_path):
     type=click.Path(exists=True),
 )
 @click.argument(
-    'output_path',
-    default="feature_toggle_report",
-    type=click.Path(exists=True),
+    'output_path', default="feature_toggle_report",
 )
 def main(sql_dump_path, annotation_report_path, output_path):
     ida_names = ['credentials', 'ecommerce', 'discovery', 'lms']
