@@ -1,5 +1,5 @@
 
-from .generate_docs_2 import (
+from ..feature_toggle_report_generator import (
     Ida, ToggleState
 )
 
@@ -71,7 +71,7 @@ def test_template_date():
             'rollout': False,
             'note': 'blah',
             'created': '2019-04-23 14:21:44.765727+00:00',
-            'modified': '2019-04-23 14:21:44.765738+00:00'
+            'modified': '2019-04-23 14:21:44.765738+00:00',
             'groups': [],
             'users': []
         }
