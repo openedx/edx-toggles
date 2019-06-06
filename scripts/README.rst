@@ -64,6 +64,10 @@ Assuming you have the two prerequisites mentioned above, install the
 dependencies for the report generator, and run it, passing the following
 values on the command line:
 
+    * feature-toggle-data: path to the sql dump data created above
+    * annotation-data: path to the code annotation data created above
+    * output: path to write report files into
+
 .. code:: bash
 
     make requirements
