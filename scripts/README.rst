@@ -1,12 +1,11 @@
 Feature Toggle Reporter:
 ------------------------
 
-We make extensive use of a variety of feature toggles at edX. This helps
-us XXX. However, it has the downside of making the state of a deployed
-application somewhat opaque. This tool anaylzes data from the codebases
-of deployed applications, as well as their databases, to provide a summary
-of the feature toggles in use in a given deployment. For more information,
-please see:
+We make extensive use of a variety of feature toggles at edX. However, it has
+the downside of making the state of a deployed application somewhat opaque.
+This tool anaylzes data from the codebases of deployed applications, as well
+as their databases, to provide a summary of the feature toggles in use in a
+given deployment. For more information, please see:
 
 https://open-edx-proposals.readthedocs.io/en/latest/oep-0017-bp-feature-toggles.html
 

@@ -17,13 +17,13 @@ class Ida(object):
         self.toggle_states = {}
         self.annotation_report_path = None
 
-    def add_toggle_data(self, toggle_dump_file_path):
+    def add_toggle_data(self, dump_file_path):
         """
         Given the path to a file containing the SQL dump for a
         feature toggle type in an Ida, parse out the information relevant
         to each toggle and add it to this Ida.
         """
-        with io.open(toggle_dump_file_path, 'r', encoding='utf-8') as dump_file:
+        with io.open(dump_file_path, 'r', encoding='utf-8') as dump_file:
             dump_contents = yaml.safe_load(dump_file.read())
         for row in dump_contents:
             toggle_name = row['fields']['name']
@@ -37,10 +37,14 @@ class Ida(object):
 
     def link_toggles_to_annotations(self):
         """
-        pass
+        Read the code annotation file specified at `annotation_report_path`,
+        linking annotated feature toggles to the feature toggle state
+        entries in this Idas toggle_state dictionary.
         """
         if not self.annotation_report_path:
             return
+        with io.open(self.annotation_report_path, 'r', encoding='utf-8') as annotation_file:
+            annotation_contents = yaml.safe_load(annotation_file.read())
 
     def toggles_by_type(self, toggle_type):
         """
@@ -188,8 +192,24 @@ def add_toggle_state_to_idas(idas, dump_file_path):
         idas[ida_name].add_toggle_data(sql_dump_file_path)
 
 
-def link_annotation_reports_to_idas(idas, annotation_report_path):
-    pass
+def link_annotation_reports_to_idas(idas, annotation_report_files_path):
+    """
+    Given a dictionary of Idas to consider, and the path to a directory
+    containing the annotation reporst for feature toggles in said Idas, read
+    each file, parsing and linking the annotation data to the toggle state
+    data in the Ida.
+    """
+    ida_name_pattern = re.compile(r'(?P<ida>[a-z]*)_annotations.yml')
+    annotation_files = [
+        f for f in os.listdir(annotation_report_files_path)
+        if re.search(ida_name_pattern, f)
+    ]
+    for annotation_file in annotation_files:
+        annotation_file_path = os.path.join(
+            annotation_report_files_path, annotation_file
+        )
+        ida_name = re.search(ida_name_pattern, annotation_file).group('ida')
+        idas[ida_name].annotation_report_path = annotation_file_path
 
 
 @click.command()
@@ -208,6 +228,7 @@ def main(sql_dump_path, annotation_report_path, output_path):
     ida_names = ['credentials', 'ecommerce', 'discovery', 'lms']
     idas = {name: Ida(name) for name in ida_names}
     add_toggle_state_to_idas(idas, sql_dump_path)
+    link_annotation_reports_to_idas(idas, annotation_report_path)
     renderer = Renderer('templates', 'reports')
     renderer.render_report(idas)
 
