@@ -62,7 +62,7 @@ class Ida(object):
 class ToggleState(object):
     """
     Represents an individual feature toggle within an Ida, including all
-    of it's state, pulled from the Ida's database.
+    of its state, pulled from the Ida's database.
     """
 
     def __init__(self, name, toggle_type, data):
