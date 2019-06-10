@@ -1,5 +1,5 @@
-Feature toggles configured for **{{ ida.name }}**:
-------------------------------------{% for _ in ida.name %}-{% endfor %}
+Feature toggles configured for {{ ida.name }}:
+--------------------------------{% for _ in ida.name %}-{% endfor %}
 
 Summary:
 ~~~~~~~~
