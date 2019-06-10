@@ -45,7 +45,7 @@ class IDA(object):
         """
         if not self.annotation_report_path:
             return
-        with io.open(self.annotation_report_path, 'r', encoding='utf-8') as annotation_file:
+        with io.open(self.annotation_report_path, 'r') as annotation_file:
             annotation_contents = yaml.safe_load(annotation_file.read())
             self._add_annotation_links_to_toggle_state(annotation_contents)
 
@@ -70,7 +70,6 @@ class IDA(object):
                         data = data[0]
             return data
 
-
         def group_annotations(annotations):
             """
             Given a list of code annotations, split them into individual lists
@@ -93,7 +92,7 @@ class IDA(object):
                 annotation_name = _get_annotation_data('name', group)
                 annotation_group_id = group[0]['report_group_id']
                 annotation_type = _get_annotation_data('type', group)
-                annotation_type = re.sub('_', '\.', annotation_type)
+                annotation_type = re.sub('_', '.', annotation_type)
 
                 if self._contains(annotation_type, annotation_name):
                     i = self._get_index(annotation_type, annotation_name)
@@ -116,7 +115,6 @@ class IDA(object):
         except KeyError:
             return False
         return present
-
 
     def _get_index(self, toggle_type, toggle_name):
         """
