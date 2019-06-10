@@ -2,12 +2,16 @@
 
 import datetime
 import io
+import itertools
 import os
 import re
 
 import click
 import jinja2
 import yaml
+from slugify import slugify
+
+from code_annotations.cli import generate_docs
 
 
 class Ida(object):
@@ -57,6 +61,85 @@ class Ida(object):
             return self.toggle_states[toggle_type]
         except KeyError:
             return []
+
+    def add_annotation_links_to_toggle_state(self, annotation_file_contents):
+        """
+        Given the contents of a code annotations report file for this IDA,
+        parse through it, adding the slufigied rst anchor link to the
+        annotated definition of each toggle it finds to the toggles
+        configured for this IDA.
+        """
+        def _get_annotation_data(annotation_token, annotations):
+            """
+            Given a list of annotations (dictionaries), get the
+            `annotation_data` associated with a specified `annotation_token`.
+            """
+            token = '.. toggle_{}:'.format(annotation_token)
+            data = None
+            for annotation in annotations:
+                if annotation['annotation_token'] == token:
+                    data = annotation['annotation_data']
+                    if type(data) == list:
+                        data = data[0]
+            return data
+
+
+        def group_annotations(annotations):
+            """
+            Given a list of code annotations, split them into individual lists
+            based on their 'report_group_id'.
+            """
+            groups = []
+            for i in itertools.count(1):
+                group = list(filter(
+                    lambda a: a['report_group_id'] == i, annotations
+                ))
+                if len(group) == 0:
+                    break
+                groups.append(group)
+            return groups
+
+        for source_file, annotations in annotation_file_contents.items():
+            annotation_groups = group_annotations(annotations)
+
+            for group in annotation_groups:
+                annotation_name = _get_annotation_data('name', group)
+                annotation_group_id = group[0]['report_group_id']
+                annotation_type = _get_annotation_data('type', group)
+                annotation_type = re.sub('_', '\.', annotation_type)
+
+                if self._contains(annotation_type, annotation_name):
+                    i = self._get_index(annotation_type, annotation_name)
+                    self.toggle_states[annotation_type][i].set_annotation_link(
+                        self.name, source_file, annotation_group_id
+                    )
+
+    def _contains(self, toggle_type, toggle_name):
+        """
+        helper function for determining if a feature toggle is configured
+        in an IDA, searching by toggle type and toggle name
+        """
+        try:
+            present = any(
+                map(
+                    lambda t: t.name == toggle_name,
+                    self.toggle_states[toggle_type]
+                )
+            )
+        except KeyError:
+            return False
+        return present
+
+
+    def _get_index(self, toggle_type, toggle_name):
+        """
+        helper function for getting the index of a given feature toggle
+        in the data structure holding all toggles for this IDA
+        """
+        names = [t.name for t in self.toggle_states[toggle_type]]
+        for index, name in enumerate(names):
+            if name == toggle_name:
+                return index
 
 
 class ToggleState(object):
@@ -134,6 +217,11 @@ class ToggleState(object):
             template_data['rollout'] = self.data['rollout']
 
         return template_data
+
+    def set_annotation_link(self, ida_name, source_file, group_id):
+        slug = slugify('{}-{}'.format(source_file, group_id))
+        link = '{}/index.rst#{}'.format(ida_name, slug)
+        self.annotation_link = link
 
 
 class Renderer(object):

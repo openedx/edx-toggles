@@ -22,7 +22,7 @@ Summary:
 
 
 {% if ida.toggles_by_type('waffle.switch')  %}
-    
+
 **Waffle Switches**:
 
     {% for switch in ida.toggles_by_type('waffle.switch') %}

@@ -4,4 +4,5 @@
     * state (True=On, False=Off): {{ switch.state }}
     * created on: {{ switch.data_for_template['creation_date'] }}
     * last modified on: {{ switch.data_for_template['last_modified_date'] }}
+    * source: {{ switch.annotation_link }}_ definition
 

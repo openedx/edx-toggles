@@ -15,4 +15,5 @@
     * on as part of a rollout: {{ flag.data_for_template['rollout'] }}
     * created on: {{ flag.data_for_template['creation_date'] }}
     * last modified on: {{ flag.data_for_template['last_modified_date'] }}
+    * source: {{ flag.annotation_link }}_ definition
 
