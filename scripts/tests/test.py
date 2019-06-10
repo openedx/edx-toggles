@@ -1,10 +1,10 @@
 from ..feature_toggle_report_generator import (
-    Ida, ToggleState
+    IDA, ToggleState
 )
 
 
 def test_adding_annoation_links():
-    ida = Ida('my-ida')
+    ida = IDA('my-ida')
     switch_1 = ToggleState('the-first-waflle-switch', 'waffle.switch', {})
     switch_2 = ToggleState('my-sample-switch', 'waffle.switch', {})
     switch_3 = ToggleState('another-sample-switch', 'waffle.switch', {})

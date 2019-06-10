@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import collections
 import datetime
 import io
 import itertools
@@ -18,7 +19,7 @@ class IDA(object):
 
     def __init__(self, name):
         self.name = name
-        self.toggle_states = {}
+        self.toggle_states = collections.defaultdict(list)
         self.annotation_report_path = None
 
     def add_toggle_data(self, dump_file_path):
@@ -34,10 +35,7 @@ class IDA(object):
             toggle_type = row['model']
             toggle_data = row['fields']
             toggle = ToggleState(toggle_name, toggle_type, toggle_data)
-            if toggle_type in self.toggle_states.keys():
-                self.toggle_states[toggle_type].append(toggle)
-            else:
-                self.toggle_states[toggle_type] = [toggle]
+            self.toggle_states[toggle_type].append(toggle)
 
     def link_toggles_to_annotations(self):
         """
@@ -50,18 +48,6 @@ class IDA(object):
         with io.open(self.annotation_report_path, 'r', encoding='utf-8') as annotation_file:
             annotation_contents = yaml.safe_load(annotation_file.read())
             self._add_annotation_links_to_toggle_state(annotation_contents)
-
-    def toggles_by_type(self, toggle_type):
-        """
-        Return a list of feature toggles for this IDA, given a type
-        of toggle (i.e. waffle_switch). Although you can just index
-        the dictionary directly, this method will handle the case when a
-        key is not present, as it will be called from Jinja templates
-        """
-        try:
-            return self.toggle_states[toggle_type]
-        except KeyError:
-            return []
 
     def _add_annotation_links_to_toggle_state(self, annotation_file_contents):
         """
