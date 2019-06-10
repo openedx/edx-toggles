@@ -1,5 +1,5 @@
 Feature Toggle Data for {{ ida.name }}
-{% for _ in ida.name %}-{% endfor %}
+------------------------{% for _ in ida.name %}-{% endfor %}
 
 
 .. _feature_toggle_state: {{ ida.name }}-feature-toggle-state.rst
