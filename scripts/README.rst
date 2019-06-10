@@ -30,12 +30,12 @@ planned expiration dates.
 
 Rename the resulting yml file `<ida_name>_annotation_data.yml`. This step is
 necessary, as the feature toggle report generator will key off the `ida_name`
-in the filename in order to be able to link this data to the SQL data collected
-in the next step. Create a directory called `annotation-data`, and place the
-resulting annotation report from each Ida into this directory.
+in the filename in order to be able to link this data to the toggle state data
+collected in the next step. Create a directory called `annotation-data`, and
+place the resulting annotation report from each Ida into this directory.
 
-Feature Toggle SQL Data
-~~~~~~~~~~~~~~~~~~~~~~~
+Feature Toggle State Data
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The current state of certain feature toggles (i.e. django-waffle, waffle-utils)
 is not captured in the codebase, as it is decoupled from the deployment of

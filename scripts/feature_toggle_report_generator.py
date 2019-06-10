@@ -14,7 +14,7 @@ from slugify import slugify
 from code_annotations.cli import generate_docs
 
 
-class Ida(object):
+class IDA(object):
 
     def __init__(self, name):
         self.name = name
@@ -24,8 +24,8 @@ class Ida(object):
     def add_toggle_data(self, dump_file_path):
         """
         Given the path to a file containing the SQL dump for a
-        feature toggle type in an Ida, parse out the information relevant
-        to each toggle and add it to this Ida.
+        feature toggle type in an IDA, parse out the information relevant
+        to each toggle and add it to this IDA.
         """
         with io.open(dump_file_path, 'r', encoding='utf-8') as dump_file:
             dump_contents = yaml.safe_load(dump_file.read())
@@ -43,12 +43,13 @@ class Ida(object):
         """
         Read the code annotation file specified at `annotation_report_path`,
         linking annotated feature toggles to the feature toggle state
-        entries in this Idas toggle_state dictionary.
+        entries in this IDAs toggle_state dictionary.
         """
         if not self.annotation_report_path:
             return
         with io.open(self.annotation_report_path, 'r', encoding='utf-8') as annotation_file:
             annotation_contents = yaml.safe_load(annotation_file.read())
+            self._add_annotation_links_to_toggle_state(annotation_contents)
 
     def toggles_by_type(self, toggle_type):
         """
@@ -62,7 +63,7 @@ class Ida(object):
         except KeyError:
             return []
 
-    def add_annotation_links_to_toggle_state(self, annotation_file_contents):
+    def _add_annotation_links_to_toggle_state(self, annotation_file_contents):
         """
         Given the contents of a code annotations report file for this IDA,
         parse through it, adding the slufigied rst anchor link to the
@@ -144,8 +145,8 @@ class Ida(object):
 
 class ToggleState(object):
     """
-    Represents an individual feature toggle within an Ida, including all
-    of its state, pulled from the Ida's database.
+    Represents an individual feature toggle within an IDA, including all
+    of its state, pulled from the IDA's database.
     """
 
     def __init__(self, name, toggle_type, data):
@@ -266,9 +267,9 @@ class Renderer(object):
 
 def add_toggle_state_to_idas(idas, dump_file_path):
     """
-    Given a dictionary of Idas to consider, and the path to a directory
-    containing the SQL dumps for feature toggles in said Idas, read each dump
-    file, parsing and linking it's data into the Ida associated with it.
+    Given a dictionary of IDAs to consider, and the path to a directory
+    containing the SQL dumps for feature toggles in said IDAs, read each dump
+    file, parsing and linking it's data into the IDA associated with it.
     """
     ida_name_pattern = re.compile(r'(?P<ida>[a-z]*)_.*yml')
     sql_dump_files = [
@@ -282,10 +283,10 @@ def add_toggle_state_to_idas(idas, dump_file_path):
 
 def link_annotation_reports_to_idas(idas, annotation_report_files_path):
     """
-    Given a dictionary of Idas to consider, and the path to a directory
-    containing the annotation reporst for feature toggles in said Idas, read
+    Given a dictionary of IDAs to consider, and the path to a directory
+    containing the annotation reporst for feature toggles in said IDAs, read
     each file, parsing and linking the annotation data to the toggle state
-    data in the Ida.
+    data in the IDA.
     """
     ida_name_pattern = re.compile(r'(?P<ida>[a-z]*)_annotations.yml')
     annotation_files = [
@@ -314,7 +315,7 @@ def link_annotation_reports_to_idas(idas, annotation_report_files_path):
 )
 def main(sql_dump_path, annotation_report_path, output_path):
     ida_names = ['credentials', 'ecommerce', 'discovery', 'lms']
-    idas = {name: Ida(name) for name in ida_names}
+    idas = {name: IDA(name) for name in ida_names}
     add_toggle_state_to_idas(idas, sql_dump_path)
     link_annotation_reports_to_idas(idas, annotation_report_path)
     renderer = Renderer('templates', 'reports')
