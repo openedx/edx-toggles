@@ -65,12 +65,12 @@ values on the command line:
 
     * feature-toggle-data: path to the sql dump data created above
     * annotation-data: path to the code annotation data created above
-    * output: path to write report files into
+    * reports: path to write report files into
 
 .. code:: bash
 
     make requirements
-    python scripts/feature_toggle_report_generator.py feature-toggle-data annoation-data output
+    python scripts/feature_toggle_report_generator.py feature-toggle-data annoation-data reports
 
 
 .. _code_annotations: https://www.github.com/edx/code-annotations

@@ -79,5 +79,5 @@ tests/__init__.py
 default.db
 
 # Used in the creation of feature toggle reports
-annotations/
+annotation-data/
 reports/
