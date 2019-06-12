@@ -91,3 +91,36 @@ def test_adding_annoation_links():
 
     link = 'my-ida/index.rst#path-to-source-code-py-2'
     assert ida.toggle_states['waffle.switch'][1].annotation_link == link
+
+
+def test_toggle_date_format():
+    switch = ToggleState(
+        'my_switch', 'waffle.switch',
+        {
+            'note': 'blank',
+            'created': '2019-04-23 14:21:44.765727+00:00',
+            'modified': '2019-04-23 14:21:44.765738+00:00'
+        }
+    )
+    expected_timestamp = '2019-04-23 14:21 +00:00'
+    assert switch.data_for_template['creation_date'] == expected_timestamp
+
+
+def test_toggle_state():
+    flag = ToggleState(
+        'my_flag', 'waffle.flag',
+        {
+            'note': 'blank',
+            'created': '2019-04-23 14:21:44.765727+00:00',
+            'modified': '2019-04-23 14:21:44.765738+00:00',
+            'everyone': False,
+            'percent': 'null',
+            'testing': False,
+            'superusers': False,
+            'staff': False,
+            'authenticated': False,
+            'languages': False,
+            'rollout': False
+        }
+    )
+    assert not flag.state

@@ -29,7 +29,9 @@ class IDA(object):
         to each toggle and add it to this IDA.
         """
         with io.open(dump_file_path, 'r', encoding='utf-8') as dump_file:
-            dump_contents = yaml.safe_load(dump_file.read())
+            dump_contents = yaml.load(
+                dump_file.read(), Loader=CustomSafeLoader
+            )
         for row in dump_contents:
             toggle_name = row['fields']['name']
             toggle_type = row['model']
@@ -166,29 +168,46 @@ class ToggleState(object):
             )
 
     @property
+    def state_msg(self):
+        if self.state:
+            return "On"
+        else:
+            return "Off"
+
+    @property
     def data_for_template(self):
         """
         Return a dictionary of this Toggle's data for the report, formatted for
         readability
         """
-        null_or_number = lambda n: n if isinstance(n, int) else 0
+        def _format_date(date_string):
+            """
+            Given a timestamp string in the following format
+            `2017-06-21 16:05:58.863603+00:00`, transform it into
+            `2017-06-21 16:05 +00:00`
+            """
+            pattern = re.compile(
+                r'(?P<timestamp>20\d\d-\d\d-\d\d \d\d:\d\d):\d\d.\d*'
+            )
+
+            raw_timestamp, timezone = date_string.split('+')
+            timestamp = re.search(pattern, raw_timestamp).group('timestamp')
+            return "{} +{}".format(timestamp, timezone)
+
+        def null_or_number(n): n if isinstance(n, int) else 0
+
         template_data = {}
-        date_template = '%Y-%m-%d %H:%M'
         if self.toggle_type == 'waffle.switch':
             template_data['note'] = self.data['note']
-            template_data['creation_date'] = datetime.datetime.strftime(
-                self.data['created'], date_template
-            )
-            template_data['last_modified_date'] = datetime.datetime.strftime(
-                self.data['modified'], date_template
+            template_data['creation_date'] = _format_date(self.data['created'])
+            template_data['last_modified_date'] = _format_date(
+                self.data['modified']
             )
         elif self.toggle_type == 'waffle.flag':
             template_data['note'] = self.data['note']
-            template_data['creation_date'] = datetime.datetime.strftime(
-                self.data['created'], date_template
-            )
-            template_data['last_modified_date'] = datetime.datetime.strftime(
-                self.data['modified'], date_template
+            template_data['creation_date'] = _format_date(self.data['created'])
+            template_data['last_modified_date'] = _format_date(
+                self.data['modified']
             )
             template_data['everyone'] = self.data['everyone']
             template_data['percent'] = null_or_number(self.data['percent'])
@@ -249,6 +268,35 @@ class Renderer(object):
             )
 
 
+class CustomSafeLoader(yaml.SafeLoader):
+    """
+    This provides an alternative to `yaml.safe_load` so that you can still
+    safely load yaml data, but customize the set of yaml types that will be
+    automatically converted into Python types. This is used so that we can
+    preserve timezone data when loading dates, which PyYaml drops by default
+    when converting to Pythons `datetime` type.
+
+    NOTE: since this is subclassing SafeLoader, it will NOT affect other
+    calls to `yaml.safe_load`
+    """
+
+    @classmethod
+    def remove_implicit_resolver(cls, tag_to_remove):
+        """
+        Remove an individual implicit resolver from this Loader, so that
+        it will not attempt to automatically resolve a yaml object into
+        the specified Python type
+        """
+        if 'yaml_implicit_resolvers' not in cls.__dict__:
+            cls.yaml_implicit_resolvers = cls.yaml_implicit_resolvers.copy()
+
+        for first_letter, mappings in cls.yaml_implicit_resolvers.items():
+            thing = [
+                (tag, regex) for tag, regex in mappings if tag != tag_to_remove
+            ]
+            cls.yaml_implicit_resolvers[first_letter] = thing
+
+
 def add_toggle_state_to_idas(idas, dump_file_path):
     """
     Given a dictionary of IDAs to consider, and the path to a directory
@@ -298,6 +346,8 @@ def link_annotation_reports_to_idas(idas, annotation_report_files_path):
     'output_path', default="feature_toggle_report",
 )
 def main(sql_dump_path, annotation_report_path, output_path):
+    # create a custom yaml loader for preserving timezone data in timestamps
+    CustomSafeLoader.remove_implicit_resolver('tag:yaml.org,2002:timestamp')
     ida_names = ['credentials', 'ecommerce', 'discovery', 'lms']
     idas = {name: IDA(name) for name in ida_names}
     add_toggle_state_to_idas(idas, sql_dump_path)
