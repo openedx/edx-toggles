@@ -4,8 +4,10 @@ import collections
 import datetime
 import io
 import itertools
+import json
 import os
 import re
+import shutil
 
 import click
 import jinja2
@@ -29,9 +31,7 @@ class IDA(object):
         to each toggle and add it to this IDA.
         """
         with io.open(dump_file_path, 'r', encoding='utf-8') as dump_file:
-            dump_contents = yaml.load(
-                dump_file.read(), Loader=CustomSafeLoader
-            )
+            dump_contents = json.loads(dump_file.read())
         for row in dump_contents:
             toggle_name = row['fields']['name']
             toggle_type = row['model']
@@ -139,7 +139,7 @@ class ToggleState(object):
         self.name = name
         self.toggle_type = toggle_type
         self.data = data
-        self.annotation_link = None
+        self._annotation_link = None
 
     @property
     def state(self):
@@ -175,26 +175,36 @@ class ToggleState(object):
             return "Off"
 
     @property
+    def annotation_link(self):
+        if self._annotation_link:
+            return self._annotation_link
+        else:
+            return "No source definition found in annotation report"
+
+    @property
     def data_for_template(self):
         """
         Return a dictionary of this Toggle's data for the report, formatted for
         readability
         """
+
         def _format_date(date_string):
-            """
-            Given a timestamp string in the following format
-            `2017-06-21 16:05:58.863603+00:00`, transform it into
-            `2017-06-21 16:05 +00:00`
-            """
-            pattern = re.compile(
-                r'(?P<timestamp>20\d\d-\d\d-\d\d \d\d:\d\d):\d\d.\d*'
+            datetime_pattern = re.compile(
+                r'(?P<date>20\d\d-\d\d-\d\d)T(?P<time>\d\d:\d\d):\d*\.\d*.*'
             )
+            offset_pattern = re.compile(
+                r'.*T\d\d:\d\d:\d\d.\d+(?P<offset>[Z+-].*)'
+            )
+            date = re.search(datetime_pattern, date_string).group('date')
+            time = re.search(datetime_pattern, date_string).group('time')
+            offset = re.search(offset_pattern, date_string).group('offset')
 
-            raw_timestamp, timezone = date_string.split('+')
-            timestamp = re.search(pattern, raw_timestamp).group('timestamp')
-            return "{} +{}".format(timestamp, timezone)
+            if offset == 'Z':
+                offset = 'UTC'
 
-        def null_or_number(n): n if isinstance(n, int) else 0
+            return "{} {} {}".format(date, time, offset)
+
+        def null_or_number(n): return n if isinstance(n, int) else 0
 
         template_data = {}
         if self.toggle_type == 'waffle.switch':
@@ -225,7 +235,7 @@ class ToggleState(object):
     def set_annotation_link(self, ida_name, source_file, group_id):
         slug = slugify('{}-{}'.format(source_file, group_id))
         link = '{}/index.rst#{}'.format(ida_name, slug)
-        self.annotation_link = link
+        self._annotation_link = link
 
 
 class Renderer(object):
@@ -268,42 +278,13 @@ class Renderer(object):
             )
 
 
-class CustomSafeLoader(yaml.SafeLoader):
-    """
-    This provides an alternative to `yaml.safe_load` so that you can still
-    safely load yaml data, but customize the set of yaml types that will be
-    automatically converted into Python types. This is used so that we can
-    preserve timezone data when loading dates, which PyYaml drops by default
-    when converting to Pythons `datetime` type.
-
-    NOTE: since this is subclassing SafeLoader, it will NOT affect other
-    calls to `yaml.safe_load`
-    """
-
-    @classmethod
-    def remove_implicit_resolver(cls, tag_to_remove):
-        """
-        Remove an individual implicit resolver from this Loader, so that
-        it will not attempt to automatically resolve a yaml object into
-        the specified Python type
-        """
-        if 'yaml_implicit_resolvers' not in cls.__dict__:
-            cls.yaml_implicit_resolvers = cls.yaml_implicit_resolvers.copy()
-
-        for first_letter, mappings in cls.yaml_implicit_resolvers.items():
-            thing = [
-                (tag, regex) for tag, regex in mappings if tag != tag_to_remove
-            ]
-            cls.yaml_implicit_resolvers[first_letter] = thing
-
-
 def add_toggle_state_to_idas(idas, dump_file_path):
     """
     Given a dictionary of IDAs to consider, and the path to a directory
     containing the SQL dumps for feature toggles in said IDAs, read each dump
     file, parsing and linking it's data into the IDA associated with it.
     """
-    ida_name_pattern = re.compile(r'(?P<ida>[a-z]*)_.*yml')
+    ida_name_pattern = re.compile(r'(?P<ida>[a-z]*)_.*json')
     sql_dump_files = [
         f for f in os.listdir(dump_file_path) if re.search(ida_name_pattern, f)
     ]
@@ -320,7 +301,7 @@ def link_annotation_reports_to_idas(idas, annotation_report_files_path):
     each file, parsing and linking the annotation data to the toggle state
     data in the IDA.
     """
-    ida_name_pattern = re.compile(r'(?P<ida>[a-z]*)_annotations.yml')
+    ida_name_pattern = re.compile(r'(?P<ida>[a-z]*)-annotations.yml')
     annotation_files = [
         f for f in os.listdir(annotation_report_files_path)
         if re.search(ida_name_pattern, f)
@@ -346,8 +327,6 @@ def link_annotation_reports_to_idas(idas, annotation_report_files_path):
     'output_path', default="feature_toggle_report",
 )
 def main(sql_dump_path, annotation_report_path, output_path):
-    # create a custom yaml loader for preserving timezone data in timestamps
-    CustomSafeLoader.remove_implicit_resolver('tag:yaml.org,2002:timestamp')
     ida_names = ['credentials', 'ecommerce', 'discovery', 'lms']
     idas = {name: IDA(name) for name in ida_names}
     add_toggle_state_to_idas(idas, sql_dump_path)

@@ -1,7 +1,7 @@
 .. admonition:: {{ flag.name }}
 
     * waffle flag name: {{ flag.name }}
-    * state (True=On, False=Off): {{ flag.state }}
+    * state: {{ flag.state_msg }}
     * on for everyone: {{ flag.data_for_template['everyone'] }}
     * on for: {{ flag.data_for_template['percent'] }} %
     * on for tests: {{ flag.data_for_template['testing'] }}
@@ -15,5 +15,11 @@
     * on as part of a rollout: {{ flag.data_for_template['rollout'] }}
     * created on: {{ flag.data_for_template['creation_date'] }}
     * last modified on: {{ flag.data_for_template['last_modified_date'] }}
-    * source: {{ flag.annotation_link }}_ definition
+    {% if flag._annotation_link %}
+    * source: `{{ flag.annotation_link }}`_
+    {% else %}
+    * source: No source data found in annotation report
+    {% endif %}
+
+.. _{{ flag.annotation_link }}: {{ flag.annotation_link }}
 

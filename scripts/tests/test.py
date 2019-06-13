@@ -98,12 +98,14 @@ def test_toggle_date_format():
         'my_switch', 'waffle.switch',
         {
             'note': 'blank',
-            'created': '2019-04-23 14:21:44.765727+00:00',
-            'modified': '2019-04-23 14:21:44.765738+00:00'
+            'created': '2019-04-23T14:21:44.765727+00:30',
+            'modified': '2019-04-23T14:21:44.765738Z'
         }
     )
-    expected_timestamp = '2019-04-23 14:21 +00:00'
-    assert switch.data_for_template['creation_date'] == expected_timestamp
+    creation_timestamp = '2019-04-23 14:21 +00:30'
+    modified_timestamp = '2019-04-23 14:21 UTC'
+    assert switch.data_for_template['creation_date'] == creation_timestamp
+    assert switch.data_for_template['last_modified_date'] == modified_timestamp
 
 
 def test_toggle_state():
