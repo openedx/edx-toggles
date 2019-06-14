@@ -8,7 +8,9 @@ Feature Toggle Data for {{ ida.name }}
 
 {% if ida.annotation_report_path %}
 
-* code annotation report: {{ ida.annotation_report_path }}
+.. _code annotation report: {{ ida.name }}/index.rst
+
+* `code annotation report`_
 
 {% else %}
 

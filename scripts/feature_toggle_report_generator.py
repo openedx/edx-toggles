@@ -3,7 +3,6 @@
 import collections
 import datetime
 import io
-import itertools
 import json
 import os
 import re
@@ -14,7 +13,8 @@ import jinja2
 import yaml
 from slugify import slugify
 
-from code_annotations.cli import generate_docs
+from code_annotations.base import AnnotationConfig
+from code_annotations.generate_docs import ReportRenderer
 
 
 class IDA(object):
@@ -78,12 +78,10 @@ class IDA(object):
             based on their 'report_group_id'.
             """
             groups = []
-            for i in itertools.count(1):
+            for i in set(a['report_group_id'] for a in annotations):
                 group = list(filter(
                     lambda a: a['report_group_id'] == i, annotations
                 ))
-                if len(group) == 0:
-                    break
                 groups.append(group)
             return groups
 
@@ -150,8 +148,10 @@ class ToggleState(object):
         def bool_for_null_numbers(n):
             if n == 'null':
                 return False
-            else:
+            elif isinstance(n, int):
                 return int(n) > 0
+            else:
+                return False
 
         if self.toggle_type == 'waffle.switch':
             return self.data['active']
@@ -190,10 +190,10 @@ class ToggleState(object):
 
         def _format_date(date_string):
             datetime_pattern = re.compile(
-                r'(?P<date>20\d\d-\d\d-\d\d)T(?P<time>\d\d:\d\d):\d*\.\d*.*'
+                r'(?P<date>20\d\d-\d\d-\d\d)T(?P<time>\d\d:\d\d):\d*.*'
             )
             offset_pattern = re.compile(
-                r'.*T\d\d:\d\d:\d\d.\d+(?P<offset>[Z+-].*)'
+                r'.*T\d\d:\d\d:\d+.*(?P<offset>[Z+-].*)'
             )
             date = re.search(datetime_pattern, date_string).group('date')
             time = re.search(datetime_pattern, date_string).group('time')
@@ -233,7 +233,7 @@ class ToggleState(object):
         return template_data
 
     def set_annotation_link(self, ida_name, source_file, group_id):
-        slug = slugify('{}-{}'.format(source_file, group_id))
+        slug = slugify('index-rst-{}-{}'.format(source_file, group_id))
         link = '{}/index.rst#{}'.format(ida_name, slug)
         self._annotation_link = link
 
@@ -312,6 +312,38 @@ def link_annotation_reports_to_idas(idas, annotation_report_files_path):
         )
         ida_name = re.search(ida_name_pattern, annotation_file).group('ida')
         idas[ida_name].annotation_report_path = annotation_file_path
+        idas[ida_name].link_toggles_to_annotations()
+
+
+def generate_code_annotation_docs(idas, output_path):
+    """
+    For each IDA, copy its annotation report into the `output_path` directory
+    and generate code annotation docs. Finally, move this set of docs into
+    its own subdirectory
+    """
+    if os.path.isdir(output_path):
+        shutil.rmtree(output_path)
+    os.mkdir(output_path)
+    for ida_name, ida in idas.items():
+        if not ida.annotation_report_path:
+            continue
+        temp_annotation_report = os.path.join(
+            'reports', os.path.basename(ida.annotation_report_path)
+        )
+        shutil.copyfile(ida.annotation_report_path, temp_annotation_report)
+        annotation_config = AnnotationConfig('feature_annotations.yml', 0)
+        with io.open(temp_annotation_report, 'r') as annotation_report:
+            report_files = (annotation_report, )
+            annotation_renderer = ReportRenderer(annotation_config, report_files)
+            annotation_renderer.render()
+        ida_doc_path = os.path.join(output_path, ida_name)
+        os.mkdir(ida_doc_path)
+        for rst in [f for f in os.listdir(output_path) if f.endswith('rst')]:
+            src = os.path.join(output_path, rst)
+            target = os.path.join(ida_doc_path, rst)
+            shutil.copyfile(src, target)
+            os.remove(src)
+        os.remove(temp_annotation_report)
 
 
 @click.command()
@@ -331,7 +363,8 @@ def main(sql_dump_path, annotation_report_path, output_path):
     idas = {name: IDA(name) for name in ida_names}
     add_toggle_state_to_idas(idas, sql_dump_path)
     link_annotation_reports_to_idas(idas, annotation_report_path)
-    renderer = Renderer('templates', 'reports')
+    generate_code_annotation_docs(idas, output_path)
+    renderer = Renderer('templates', output_path)
     renderer.render_report(idas)
 
 
