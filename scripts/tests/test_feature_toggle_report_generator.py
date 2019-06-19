@@ -89,7 +89,7 @@ def test_adding_annoation_links():
 
     ida._add_annotation_links_to_toggle_state(annotation_groups)
 
-    link = 'my-ida/index.rst#path-to-source-code-py-2'
+    link = 'my-ida/index.rst#index-rst-path-to-source-code-py-2'
     assert ida.toggle_states['waffle.switch'][1].annotation_link == link
 
 
