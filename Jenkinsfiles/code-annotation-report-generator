@@ -26,7 +26,7 @@ pipeline {
                 IDA = "course-discovery"
             }
             steps {
-                withPythonEnv('system-cpython-2.7') {
+                withPythonEnv('System-CPython-2.7') {
                     dir('course-discovery') {
                         sh '''
                         make requirements;
@@ -42,7 +42,7 @@ pipeline {
                 IDA = "credentials"
             }
             steps {
-                withPythonEnv('system-cpython-2.7') {
+                withPythonEnv('System-CPython-2.7') {
                     dir('credentials') {
                         sh '''
                         make requirements;
@@ -58,7 +58,7 @@ pipeline {
                 IDA = "ecommerce"
             }
             steps {
-                withPythonEnv('system-cpython-2.7') {
+                withPythonEnv('System-CPython-2.7') {
                     dir('ecommerce') {
                         sh '''
                         make requirements;
@@ -74,7 +74,7 @@ pipeline {
                 IDA = "edx-platform"
             }
             steps {
-                withPythonEnv('system-cpython-2.7') {
+                withPythonEnv('System-CPython-2.7') {
                     dir('edx-platform') {
                         sh '''
                         paver install_prereqs;
