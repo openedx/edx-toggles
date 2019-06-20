@@ -1,0 +1,94 @@
+pipeline {
+    agent { label "jenkins-worker" }
+    options {
+        timestamps()
+        timeout(30)
+    }
+    stages {
+        stage("git-checkout") {
+            steps {
+                dir('credentials') {
+                    git url: 'https://github.com/edx/credentials.git'
+                }
+                dir('course-discovery') {
+                    git url: 'https://github.com/edx/course-discovery.git'
+                }
+                dir('ecommerce') {
+                    git url: 'https://github.com/edx/ecommerce.git'
+                }
+                dir('edx-platform') {
+                    git url: 'https://github.com/edx/edx-platform.git'
+                }
+            }
+        }
+        stage("course-discovery") {
+            environment {
+                IDA = "course-discovery"
+            }
+            steps {
+                withpythonenv('system-cpython-2.7') {
+                    dir('course-discovery') {
+                        sh '''
+                        make requirements;
+                        code_annotations static_find_annotations --config_file=feature_annotations.yml --no_lint --report_file=$IDA_annotations
+                        '''
+                        stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
+                    }
+                }
+            }
+        }
+        stage("credentials") {
+            environment {
+                IDA = "credentials"
+            }
+            steps {
+                withpythonenv('system-cpython-2.7') {
+                    dir('credentials') {
+                        sh '''
+                        make requirements;
+                        code_annotations static_find_annotations --config_file=feature_annotations.yml --no_lint --report_file=$IDA_annotations
+                        '''
+                        stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
+                    }
+                }
+            }
+        }
+        stage("ecommerce") {
+            environment {
+                IDA = "ecommerce"
+            }
+            steps {
+                withpythonenv('system-cpython-2.7') {
+                    dir('ecommerce') {
+                        sh '''
+                        make requirements;
+                        code_annotations static_find_annotations --config_file=feature_annotations.yml --no_lint --report_file=$IDA_annotations
+                        '''
+                        stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
+                    }
+                }
+            }
+        }
+        stage("edx-platform") {
+            environment {
+                IDA = "edx-platform"
+            }
+            steps {
+                withpythonenv('system-cpython-2.7') {
+                    dir('edx-platform') {
+                        sh '''
+                        paver install_prereqs;
+                        code_annotations static_find_annotations --config_file=feature_annotations.yml --no_lint --report_file=$IDA_annotations
+                        '''
+                        stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
