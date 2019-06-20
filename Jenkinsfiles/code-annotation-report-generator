@@ -26,11 +26,11 @@ pipeline {
                 IDA = "course-discovery"
             }
             steps {
-                withpythonenv('system-cpython-2.7') {
+                withPythonEnv('system-cpython-2.7') {
                     dir('course-discovery') {
                         sh '''
                         make requirements;
-                        code_annotations static_find_annotations --config_file=feature_annotations.yml --no_lint --report_file=$IDA_annotations
+                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint --report_file=$IDA_annotations
                         '''
                         stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
                     }
@@ -42,11 +42,11 @@ pipeline {
                 IDA = "credentials"
             }
             steps {
-                withpythonenv('system-cpython-2.7') {
+                withPythonEnv('system-cpython-2.7') {
                     dir('credentials') {
                         sh '''
                         make requirements;
-                        code_annotations static_find_annotations --config_file=feature_annotations.yml --no_lint --report_file=$IDA_annotations
+                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint --report_file=$IDA_annotations
                         '''
                         stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
                     }
@@ -58,11 +58,11 @@ pipeline {
                 IDA = "ecommerce"
             }
             steps {
-                withpythonenv('system-cpython-2.7') {
+                withPythonEnv('system-cpython-2.7') {
                     dir('ecommerce') {
                         sh '''
                         make requirements;
-                        code_annotations static_find_annotations --config_file=feature_annotations.yml --no_lint --report_file=$IDA_annotations
+                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint --report_file=$IDA_annotations
                         '''
                         stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
                     }
@@ -74,11 +74,11 @@ pipeline {
                 IDA = "edx-platform"
             }
             steps {
-                withpythonenv('system-cpython-2.7') {
+                withPythonEnv('system-cpython-2.7') {
                     dir('edx-platform') {
                         sh '''
                         paver install_prereqs;
-                        code_annotations static_find_annotations --config_file=feature_annotations.yml --no_lint --report_file=$IDA_annotations
+                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint --report_file=$IDA_annotations
                         '''
                         stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
                     }
