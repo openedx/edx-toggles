@@ -29,6 +29,7 @@ pipeline {
                 withPythonEnv('System-CPython-2.7') {
                     dir('credentials') {
                         sh '''
+                        nodeenv --node=8.9.3 --prebuilt ~/nenv --force --verbose
                         make requirements;
                         code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint --report_file=$IDA_annotations
                         '''
