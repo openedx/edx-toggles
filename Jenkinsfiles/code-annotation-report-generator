@@ -21,18 +21,18 @@ pipeline {
                 }
             }
         }
-        stage("credentials") {
+        stage("edx-platform") {
             environment {
-                IDA = "credentials"
+                IDA = "edx-platform"
             }
             steps {
                 withPythonEnv('System-CPython-2.7') {
-                    dir('credentials') {
+                    dir('edx-platform') {
                         sh '''
                         pip install nodeenv;
                         nodeenv --node=8.9.3 --prebuilt ~/nenv --force --verbose
                         source ~/nenv/bin/activate;
-                        make requirements;
+                        paver install_prereqs;
                         code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint --report_file=$IDA_annotations
                         '''
                         stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
@@ -59,25 +59,6 @@ pipeline {
                 }
             }
         }
-        stage("edx-platform") {
-            environment {
-                IDA = "edx-platform"
-            }
-            steps {
-                withPythonEnv('System-CPython-2.7') {
-                    dir('edx-platform') {
-                        sh '''
-                        pip install nodeenv;
-                        nodeenv --node=8.9.3 --prebuilt ~/nenv --force --verbose
-                        source ~/nenv/bin/activate;
-                        paver install_prereqs;
-                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint --report_file=$IDA_annotations
-                        '''
-                        stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
-                    }
-                }
-            }
-        }
         stage("course-discovery") {
             environment {
                 IDA = "course-discovery"
@@ -86,6 +67,25 @@ pipeline {
                 withPythonEnv('System-CPython-2.7') {
                     dir('course-discovery') {
                         sh '''
+                        make requirements;
+                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint --report_file=$IDA_annotations
+                        '''
+                        stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
+                    }
+                }
+            }
+        }
+        stage("credentials") {
+            environment {
+                IDA = "credentials"
+            }
+            steps {
+                withPythonEnv('System-CPython-2.7') {
+                    dir('credentials') {
+                        sh '''
+                        pip install nodeenv;
+                        nodeenv --node=8.9.3 --prebuilt ~/nenv --force --verbose
+                        source ~/nenv/bin/activate;
                         make requirements;
                         code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint --report_file=$IDA_annotations
                         '''
