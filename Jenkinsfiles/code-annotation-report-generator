@@ -21,22 +21,6 @@ pipeline {
                 }
             }
         }
-        stage("course-discovery") {
-            environment {
-                IDA = "course-discovery"
-            }
-            steps {
-                withPythonEnv('System-CPython-2.7') {
-                    dir('course-discovery') {
-                        sh '''
-                        make requirements;
-                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint --report_file=$IDA_annotations
-                        '''
-                        stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
-                    }
-                }
-            }
-        }
         stage("credentials") {
             environment {
                 IDA = "credentials"
@@ -78,6 +62,22 @@ pipeline {
                     dir('edx-platform') {
                         sh '''
                         paver install_prereqs;
+                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint --report_file=$IDA_annotations
+                        '''
+                        stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
+                    }
+                }
+            }
+        }
+        stage("course-discovery") {
+            environment {
+                IDA = "course-discovery"
+            }
+            steps {
+                withPythonEnv('System-CPython-2.7') {
+                    dir('course-discovery') {
+                        sh '''
+                        make requirements;
                         code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint --report_file=$IDA_annotations
                         '''
                         stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
