@@ -29,10 +29,11 @@ pipeline {
                 withPythonEnv('System-CPython-2.7') {
                     dir('edx-platform') {
                         sh '''
+                        pwd;
                         pip install nodeenv;
                         nodeenv --node=8.9.3 --prebuilt ~/nenv --force --verbose
                         source ~/nenv/bin/activate;
-                        pip install requirements/edx/test.txt;
+                        pip install requirements/edx/paver.txt;
                         paver install_prereqs;
                         code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint --report_file=$IDA_annotations
                         '''
@@ -94,11 +95,6 @@ pipeline {
                     }
                 }
             }
-        }
-    }
-    post {
-        always {
-            cleanWs()
         }
     }
 }
