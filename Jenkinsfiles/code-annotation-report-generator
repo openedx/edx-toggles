@@ -35,7 +35,7 @@ pipeline {
                         source ~/nenv/bin/activate;
                         pip install -r requirements/edx/paver.txt; pip install -r requirements/edx/testing.txt;
                         paver install_prereqs;
-                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint --report_file=$IDA_annotations
+                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint
                         '''
                         stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
                     }
@@ -54,7 +54,7 @@ pipeline {
                         nodeenv --node=8.9.3 --prebuilt ~/nenv --force --verbose
                         source ~/nenv/bin/activate;
                         make requirements;
-                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint --report_file=$IDA_annotations
+                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint
                         '''
                         stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
                     }
@@ -70,7 +70,7 @@ pipeline {
                     dir('course-discovery') {
                         sh '''
                         make requirements;
-                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint --report_file=$IDA_annotations
+                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint
                         '''
                         stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
                     }
@@ -89,7 +89,7 @@ pipeline {
                         nodeenv --node=8.9.3 --prebuilt ~/nenv --force --verbose
                         source ~/nenv/bin/activate;
                         make requirements;
-                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint --report_file=$IDA_annotations
+                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint
                         '''
                         stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
                     }
