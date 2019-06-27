@@ -20,7 +20,7 @@ pipeline {
                 withPythonEnv('System-CPython-2.7') {
                     dir('edx-platform') {
                         sh '''
-                        ls ..
+                        ls ../edx-toggles
                         source scripts/jenkins-common.sh
                         pip install -r requirements/edx/paver.txt; pip install -r requirements/edx/testing.txt;
                         paver install_prereqs;
