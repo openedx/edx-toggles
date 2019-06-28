@@ -1,3 +1,14 @@
+/**
+* code-annotation-report-generator
+*
+* This job is part of the feature toggle report generator pipeline.
+* It runs code_annotations on the most recent commit to master, searching
+* for feature toggle (i.e. waffle) annotations and then pushing the
+* results to an S3 bucket. This data is later consumed by another job
+* to render and publish a complete feature toggle report.
+*
+**/
+
 pipeline {
     agent { label "jenkins-worker" }
     options {
@@ -5,6 +16,10 @@ pipeline {
         timeout(30)
     }
     stages {
+        /**
+        * Checkout the code for each IDA you want to get code annotation
+        * data for
+        **/
         stage("git-checkout") {
             steps {
                 dir('edx-platform') {
@@ -12,34 +27,42 @@ pipeline {
                 }
             }
         }
+        /**
+        * For each repo, install necessary requirements and run the
+        * code_annotations tool, searching for feature toggle annotations.
+        * Once this is done, stash the report for later use
+        **/
         stage("edx-platform") {
             steps {
                 withPythonEnv('System-CPython-2.7') {
                     dir('edx-platform') {
                         sh '''
                         source scripts/jenkins-common.sh;
-                        pip install -r requirements/edx/paver.txt; pip install -r requirements/edx/testing.txt;
+                        pip install -r requirements/edx/paver.txt;
+                        pip install -r requirements/edx/testing.txt;
                         paver install_prereqs;
                         rm -Rf reports/*
                         code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yaml --no_lint;
-                        mv reports/*.yaml reports/lms_annotations.yaml
+                        mkdir annotation_reports;
+                        mv reports/*.yaml annotation_reports/lms_annotations.yaml
                         '''
-                        stash includes: "reports/lms_annotations.yaml", name: "edx-platform_annotations", allowEmpty: true
+                        stash includes: "annotation_reports/lms_annotations.yaml", name: "edx-platform_annotations", allowEmpty: true
                     }
                 }
             }
         }
-
+        /**
+        * Finally, unstash all of the code_annotation data sets, and push
+        * them to an S3 bucket
+        **/
         stage("push-it") {
             steps {
                 withPythonEnv('System-CPython-2.7') {
                     dir('edx-toggles') {
                         unstash "edx-platform_annotations"
                         sh '''
-                        echo "------------------------------------------------------------"
-                        cat reports/lms_annotations.yaml;
-                        echo "------------------------------------------------------------"
-                        pip install boto
+                        pip install boto;
+                        python utils/push.py
                         '''
                     }
                 }

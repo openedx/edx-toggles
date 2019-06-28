@@ -8,8 +8,9 @@ import boto
 
 def main():
 
-    bucket_name = os.environ.get(it)
+    bucket_name = os.environ.get('BUCKET')
     if not bucket_name:
+        print("Missing environment variable")
         sys.exit(1)
 
     try:
@@ -26,7 +27,7 @@ def main():
     annotation_files = [
         os.path.join(path, af), "annotation_reports/{}".format(af)
         for af in os.listdir(path)
-        if af.ends_with('yaml')
+        if af.ends_with('yaml') or af.ends_with('yml')
     ]
 
     for annotation_file_src, annotation_file_dest in annotation_files:
