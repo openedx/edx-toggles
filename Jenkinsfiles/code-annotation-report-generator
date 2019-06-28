@@ -36,7 +36,11 @@ pipeline {
                     dir('edx-toggles') {
                         unstash "edx-platform_annotations"
                         sh '''
-                        ls reports
+                        ls ..
+                        echo "------------------------------------------------------------"
+                        ls -lR
+                        echo "------------------------------------------------------------"
+                        pip install boto
                         '''
                     }
                 }

@@ -20,19 +20,18 @@ def main():
         sys.exit(1)
 
     annotation_files = [
-        os.path.join(path, af)
+        os.path.join(path, af), "annotation_reports/{}".format(af)
         for af in os.listdir(path)
         if af.ends_with('yaml')
     ]
 
-    for annotation_file in annotation_files:
-        with open(annotation_file) as af:
-            key = boto.s3.key.Key(bucket=bucket, name=file_name)
-            bytes_written = key.set_contents_from_filename(
-                af, replace=True, policy='private'
-            )
-            if bytes_written:
-                print(u"Wrote {} bytes to {}.".format(bytes_written, key.name))
+    for annotation_file_src, annotation_file_dest in annotation_files:
+        key = boto.s3.key.Key(bucket=bucket, name=annotation_file, dest)
+        bytes_written = key.set_contents_from_filename(
+            annotation_file_dest, replace=True, policy='private'
+        )
+        if bytes_written:
+            print(u"Wrote {} bytes to {}.".format(bytes_written, key.name))
 
 if __name__ == "__main__":
     main()
