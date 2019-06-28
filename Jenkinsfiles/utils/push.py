@@ -8,6 +8,7 @@ import boto
 
 def main():
 
+    print("hello world")
     bucket_name = os.environ.get('BUCKET')
     if not bucket_name:
         print("Missing environment variable")
