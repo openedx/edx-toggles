@@ -24,7 +24,7 @@ pipeline {
                         pip install -r requirements/edx/paver.txt; pip install -r requirements/edx/testing.txt;
                         paver install_prereqs;
                         code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yaml --no_lint;
-                        mv reports/*.yaml reports/$IDA_annotations.yaml
+                        mv reports/*.yaml reports/${IDA}_annotations.yaml
                         '''
                         stash includes: "reports/${IDA}_annotations.yaml", name: "${IDA}_annotations", allowEmpty: true
                     }
