@@ -35,7 +35,7 @@ pipeline {
                     dir('edx-toggles') {
                         unstash "edx-platform_annotations"
                         sh '''
-                        ls
+                        ls reports
                         '''
                     }
                 }
