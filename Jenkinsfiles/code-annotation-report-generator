@@ -20,10 +20,10 @@ pipeline {
                 withPythonEnv('System-CPython-2.7') {
                     dir('edx-platform') {
                         sh '''
-                        ls ../edx-toggles
                         source scripts/jenkins-common.sh
                         pip install -r requirements/edx/paver.txt; pip install -r requirements/edx/testing.txt;
                         paver install_prereqs;
+                        stat ../edx-toggles/feature_annotations.yml
                         code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint
                         '''
                         stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
