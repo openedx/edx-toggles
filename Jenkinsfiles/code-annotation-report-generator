@@ -23,9 +23,7 @@ pipeline {
                         source scripts/jenkins-common.sh
                         pip install -r requirements/edx/paver.txt; pip install -r requirements/edx/testing.txt;
                         paver install_prereqs;
-                        ls ../edx-toggles
-                        stat ../edx-toggles/feature_annotations.yml
-                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yml --no_lint
+                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yaml --no_lint
                         '''
                         stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
                     }
