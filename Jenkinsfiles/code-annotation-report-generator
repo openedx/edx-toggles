@@ -20,6 +20,7 @@ pipeline {
                         source scripts/jenkins-common.sh;
                         pip install -r requirements/edx/paver.txt; pip install -r requirements/edx/testing.txt;
                         paver install_prereqs;
+                        rm -Rf reports/*
                         code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yaml --no_lint;
                         mv reports/*.yaml reports/lms_annotations.yaml
                         '''
