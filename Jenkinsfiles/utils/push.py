@@ -26,13 +26,13 @@ def main():
         sys.exit(1)
 
     annotation_files = [
-        os.path.join(path, af), "annotation_reports/{}".format(af)
+        (os.path.join(path, af), "annotation_reports/{}".format(af))
         for af in os.listdir(path)
         if af.ends_with('yaml') or af.ends_with('yml')
     ]
 
     for annotation_file_src, annotation_file_dest in annotation_files:
-        key = boto.s3.key.Key(bucket=bucket, name=annotation_file, dest)
+        key = boto.s3.key.Key(bucket=bucket, name=annotation_file_dest)
         bytes_written = key.set_contents_from_filename(
             annotation_file_dest, replace=True, policy='private'
         )
