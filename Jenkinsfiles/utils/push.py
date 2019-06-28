@@ -8,6 +8,10 @@ import boto
 
 def main():
 
+    bucket_name = os.environ.get(it)
+    if not bucket_name:
+        sys.exit(1)
+
     try:
         conn = boto.connect_s3()
     except boto.exception.NoAuthHandlerFound:

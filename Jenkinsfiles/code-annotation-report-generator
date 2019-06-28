@@ -36,9 +36,8 @@ pipeline {
                     dir('edx-toggles') {
                         unstash "edx-platform_annotations"
                         sh '''
-                        ls ..
                         echo "------------------------------------------------------------"
-                        ls -lR
+                        cat reports/lms_annotations.yaml;
                         echo "------------------------------------------------------------"
                         pip install boto
                         '''
