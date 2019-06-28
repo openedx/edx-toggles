@@ -20,12 +20,13 @@ pipeline {
                 withPythonEnv('System-CPython-2.7') {
                     dir('edx-platform') {
                         sh '''
-                        source scripts/jenkins-common.sh
+                        source scripts/jenkins-common.sh;
                         pip install -r requirements/edx/paver.txt; pip install -r requirements/edx/testing.txt;
                         paver install_prereqs;
-                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yaml --no_lint
+                        code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yaml --no_lint;
+                        mv reports/*.yaml reports/$IDA_annotations.yaml
                         '''
-                        stash includes: "${IDA}_annotations/*", name: "${IDA}_annotations", allowEmpty: true
+                        stash includes: "reports/${IDA}_annotations.yaml", name: "${IDA}_annotations", allowEmpty: true
                     }
                 }
             }
