@@ -25,7 +25,7 @@ def main():
         sys.exit(1)
 
     print "now do stuff!"
-    path = 'automation_reports'
+    path = 'annotation_reports'
     annotation_files = [
         (os.path.join(path, af), "annotation_reports/{}".format(af))
         for af in os.listdir(path)
