@@ -45,6 +45,7 @@ pipeline {
                         code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yaml --no_lint;
                         mkdir annotation_reports;
                         mv reports/*.yaml annotation_reports/lms_annotations.yaml
+                        cal
                         '''
                         stash includes: "annotation_reports/lms_annotations.yaml", name: "edx-platform_annotations", allowEmpty: true
                     }
@@ -61,8 +62,11 @@ pipeline {
                     dir('edx-toggles') {
                         unstash "edx-platform_annotations"
                         sh '''
+                        cal
                         pip install boto;
+                        cal
                         python Jenkinsfiles/utils/push.py
+                        cal
                         '''
                     }
                 }
