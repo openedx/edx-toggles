@@ -29,7 +29,7 @@ def main():
     annotation_files = [
         (os.path.join(path, af), "annotation_reports/{}".format(af))
         for af in os.listdir(path)
-        if af.ends_with('yaml') or af.ends_with('yml')
+        if af.endswith('yaml') or af.endswith('yml')
     ]
 
     for annotation_file_src, annotation_file_dest in annotation_files:
