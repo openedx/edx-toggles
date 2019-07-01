@@ -67,16 +67,5 @@ pipeline {
                 }
             }
         }
-        stage("push-it") {
-            steps {
-                withPythonEnv('System-CPython-2.7') {
-                    dir('edx-toggles') {
-                        sh '''
-                        cal
-                        '''
-                    }
-                }
-            }
-        }
     }
 }
