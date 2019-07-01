@@ -62,7 +62,6 @@ pipeline {
                         sh '''
                         pip install boto
                         python Jenkinsfiles/utils/push.py
-                        echo "==================================================="
                         '''
                     }
                 }
