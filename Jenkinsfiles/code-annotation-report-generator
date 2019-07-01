@@ -63,7 +63,7 @@ pipeline {
                         unstash "edx-platform_annotations"
                         sh '''
                         cal
-                        pip install boto;
+                        pip install boto
                         cal
                         python Jenkinsfiles/utils/push.py
                         cal
