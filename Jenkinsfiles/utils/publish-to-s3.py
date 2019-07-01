@@ -1,3 +1,4 @@
+#!/usr/bin/env
 
 import os
 import sys
@@ -7,7 +8,6 @@ import boto
 
 def main():
 
-    print "hello world"
     bucket_name = os.environ.get('BUCKET')
     if not bucket_name:
         print "Missing environment variable"
@@ -24,7 +24,6 @@ def main():
         print "Unable to connect to cache bucket with these credentials."
         sys.exit(1)
 
-    print "now do stuff!"
     path = 'annotation_reports'
     annotation_files = [
         (os.path.join(path, af), "annotation_reports/{}".format(af))
