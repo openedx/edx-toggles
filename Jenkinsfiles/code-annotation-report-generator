@@ -12,7 +12,6 @@
 pipeline {
     agent { label "jenkins-worker" }
     options {
-        timestamps()
         timeout(30)
     }
     stages {
