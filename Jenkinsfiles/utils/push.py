@@ -25,6 +25,8 @@ def main():
         print("Unable to connect to cache bucket with these credentials.")
         sys.exit(1)
 
+    sys.exit(1)
+
     annotation_files = [
         (os.path.join(path, af), "annotation_reports/{}".format(af))
         for af in os.listdir(path)
