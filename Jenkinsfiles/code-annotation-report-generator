@@ -61,7 +61,6 @@ pipeline {
                     dir('edx-toggles') {
                         unstash "edx-platform_annotations"
                         sh '''
-                        pip install boto;
                         echo "-----------------------------------------------";
                         python --version;
                         '''
