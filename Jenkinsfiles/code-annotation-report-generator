@@ -61,7 +61,6 @@ pipeline {
                     dir('edx-toggles') {
                         sh '''
                         pip install -r Jenkinsfiles/utils/requirements.txt
-                        pip install requests
                         python Jenkinsfiles/utils/push.py
                         '''
                     }
