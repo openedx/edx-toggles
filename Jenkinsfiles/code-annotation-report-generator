@@ -59,6 +59,7 @@ pipeline {
             steps {
                 withPythonEnv('System-CPython-2.7') {
                     dir('edx-toggles') {
+                        unstash "edx-platform_annotations"
                         sh '''
                         pip install -r Jenkinsfiles/utils/requirements.txt
                         python Jenkinsfiles/utils/push.py
