@@ -60,10 +60,19 @@ pipeline {
                 withPythonEnv('System-CPython-2.7') {
                     dir('edx-toggles') {
                         sh '''
-                        cal
                         pip install boto
-                        cal
                         python Jenkinsfiles/utils/push.py
+                        echo "==================================================="
+                        '''
+                    }
+                }
+            }
+        }
+        stage("push-it") {
+            steps {
+                withPythonEnv('System-CPython-2.7') {
+                    dir('edx-toggles') {
+                        sh '''
                         cal
                         '''
                     }
