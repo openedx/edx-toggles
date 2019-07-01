@@ -60,7 +60,6 @@ pipeline {
             steps {
                 withPythonEnv('System-CPython-2.7') {
                     dir('edx-toggles') {
-                        unstash "edx-platform_annotations"
                         sh '''
                         cal
                         pip install boto
