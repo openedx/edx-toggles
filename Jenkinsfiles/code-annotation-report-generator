@@ -62,6 +62,8 @@ pipeline {
                         unstash "edx-platform_annotations"
                         sh '''
                         python --version;
+                        echo "----------------";
+                        pip install boto;
                         '''
                     }
                 }
