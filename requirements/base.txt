@@ -5,5 +5,5 @@
 #    make upgrade
 #
 django-waffle==0.12.0
-django==1.11.20
-pytz==2018.9              # via django
+django==1.11.22
+pytz==2019.1              # via django

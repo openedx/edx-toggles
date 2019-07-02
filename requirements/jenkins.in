@@ -1,0 +1,5 @@
+# Requirements for running various scripts on Jenkins
+
+-r test.txt
+
+boto                # Needed to publish annotation data to s3
