@@ -37,8 +37,7 @@ pipeline {
                     dir('edx-platform') {
                         sh '''
                         source scripts/jenkins-common.sh;
-                        pip install -r requirements/edx/paver.txt;
-                        pip install -r requirements/edx/testing.txt;
+                        pip install -r requirements/edx/paver.txt -r requirements/edx/testing.txt;
                         paver install_prereqs;
                         rm -Rf reports/*
                         code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yaml --no_lint;
@@ -60,8 +59,8 @@ pipeline {
                     dir('edx-toggles') {
                         unstash "edx-platform_annotations"
                         sh '''
-                        pip install -r Jenkinsfiles/utils/requirements.txt
-                        python Jenkinsfiles/utils/publish-to-s3.py
+                        pip install -r requirements/jenkins.txt
+                        python scripts/publish-to-s3.py
                         '''
                     }
                 }
