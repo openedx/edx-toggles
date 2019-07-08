@@ -36,9 +36,8 @@ pipeline {
                 withPythonEnv('System-CPython-2.7') {
                     dir('edx-platform') {
                         sh '''
-                        source scripts/jenkins-common.sh;
                         pip install -r requirements/edx/paver.txt -r requirements/edx/testing.txt;
-                        paver install_prereqs;
+                        paver install_python_prereqs;
                         rm -Rf reports/*
                         code_annotations static_find_annotations --config_file=../edx-toggles/feature_annotations.yaml --no_lint;
                         mkdir annotation_reports;
