@@ -1,0 +1,30 @@
+# This code-annotations configuration file supports OEP-17, Feature Toggles.
+
+source_path: ./
+report_path: reports
+safelist_path: .annotation_safe_list.yml
+coverage_target: 50.0
+annotations:
+  documented_elsewhere:
+    - ".. documented_elsewhere:":
+    - ".. documented_elsewhere_name:":
+  feature_toggle:
+    - ".. toggle_name:":
+    - ".. toggle_type:":
+        choices: [switch, rollout, group, waffle_flag]
+    - ".. toggle_implementation:":
+        choices: [ConfigurationModel, CourseWaffleFlag, WaffleFlag, WaffleSwitch, DjangoSetting]
+    - ".. toggle_default:":
+    - ".. toggle_description:":
+    - ".. toggle_category:":
+    - ".. toggle_use_cases:":
+        choices: [incremental_release, launch_date, monitored_rollout, graceful_degradation, beta_testing, vip, opt_out, open_edx]
+    - ".. toggle_creation_date:":
+    - ".. toggle_expiration_date:":
+    - ".. toggle_warnings:":
+    - ".. toggle_tickets:":
+    - ".. toggle_status:":
+extensions:
+    python:
+        - py
+rst_template: doc.rst.j2
