@@ -51,9 +51,12 @@ generate the feature toggle state data files.
 This will create a new directory called `feature-toggle-data`, containing
 a data dump file for each ida that makes use of waffle feature toggles.
 
-NOTE: This workflow currenly is only applicable to devstack. 
-for making this tooling more useful for live deployments, but there is more
-work needed.
+NOTE: To run this against a real environment, you will need to set the following
+environment variables (the defaults work with devstack):
+* DB_USER
+* DB_PASSWORD
+* DB_HOST
+* DB_PORT
 
 Usage:
 ------
@@ -69,7 +72,7 @@ values on the command line:
 .. code:: bash
 
     make requirements
-    python scripts/feature_toggle_report_generator.py feature-toggle-data annoation-data reports
+    python scripts/feature_toggle_report_generator.py feature-toggle-data annonation-data reports
 
 
 .. _code_annotations: https://www.github.com/edx/code-annotations
