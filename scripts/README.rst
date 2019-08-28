@@ -72,7 +72,7 @@ values on the command line:
 .. code:: bash
 
     make requirements
-    python scripts/feature_toggle_report_generator.py feature-toggle-data annonation-data reports
+    python scripts/feature_toggle_report_generator.py feature-toggle-data annotation-data reports
 
 
 .. _code_annotations: https://www.github.com/edx/code-annotations
