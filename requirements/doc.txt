@@ -28,6 +28,7 @@ importlib-metadata==0.19
 jinja2==2.10.1
 markupsafe==1.1.1
 more-itertools==5.0.0
+mysql-connector-python-rf==2.2.2
 packaging==19.1
 pathlib2==2.3.4
 pbr==5.4.2

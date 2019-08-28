@@ -17,6 +17,7 @@ importlib-metadata==0.19  # via pluggy, pytest
 jinja2==2.10.1            # via code-annotations
 markupsafe==1.1.1         # via jinja2
 more-itertools==5.0.0     # via pytest, zipp
+mysql-connector-python-rf==2.2.2
 packaging==19.1           # via pytest
 pathlib2==2.3.4           # via importlib-metadata, pytest, pytest-django
 pbr==5.4.2                # via stevedore

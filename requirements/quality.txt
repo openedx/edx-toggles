@@ -33,6 +33,7 @@ lazy-object-proxy==1.4.2  # via astroid
 markupsafe==1.1.1
 mccabe==0.6.1             # via pylint
 more-itertools==5.0.0
+mysql-connector-python-rf==2.2.2
 packaging==19.1
 pathlib2==2.3.4
 pbr==5.4.2
