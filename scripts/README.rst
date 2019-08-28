@@ -46,13 +46,12 @@ generate the feature toggle state data files.
 
 .. code:: bash
 
-    make dev.up
-    make feature-toggle-state
+    python gather_feature_toggle_state.py feature-toggle-data
 
 This will create a new directory called `feature-toggle-data`, containing
 a data dump file for each ida that makes use of waffle feature toggles.
 
-NOTE: This workflow currenly is only applicable to devstack. We have plans
+NOTE: This workflow currenly is only applicable to devstack. 
 for making this tooling more useful for live deployments, but there is more
 work needed.
 
