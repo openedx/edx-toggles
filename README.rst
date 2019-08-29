@@ -4,7 +4,10 @@ edx-toggles
 |pypi-badge| |travis-badge| |codecov-badge| |doc-badge| |pyversions-badge|
 |license-badge|
 
-Library and utilities for feature toggles
+Library and utilities for feature toggles. This repo is intended to house a utility
+for enhanced feature toggle management in Django apps used throughout the edX
+ecosystem. Currenty, it only contains some scripts for reporting on the status of
+feature toggles.
 
 License
 -------
