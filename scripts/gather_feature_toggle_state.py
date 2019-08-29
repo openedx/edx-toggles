@@ -3,9 +3,11 @@
 # As part of the Feature Toggle Report Generator utility, this script queries
 # a database (i.e. Devstack MySQL container, read-replica) for data on the
 # state of feature toggles (i.e. waffle flags) in a set of idas (i.e. edxapp)
-# and writet it to a JSON file. These are used as inputs to
+# and write it to a JSON file. These are used as inputs to
 # https://github.com/edx/edx-toggles/blob/master/scripts/feature_toggle_report_generator.py
 
+
+from __future__ import print_function
 
 import datetime
 import decimal
@@ -29,9 +31,17 @@ def create_db_connection(database):
     host = os.getenv('DB_HOST', '0.0.0.0')
     port = os.getenv('DB_PORT', '3506')
 
-    connection = connector.connect(
-        user=username, password=password, host=host, database=database, port=port
-    )
+    db_target = "{}@{}:{}".format(database, host, port)
+    print('Attempting to connect to {}'.format(db_target))
+    try:
+        connection = connector.connect(
+            user=username, password=password, host=host,
+            database=database, port=port
+        )
+    except connector.errors.InterfaceError:
+        print('Unable to connect to {}'.format(db_target))
+        sys.exit(1)
+    print('Successfully connected to {}'.format(db_target))
     return connection
 
 
@@ -52,8 +62,11 @@ def link_headers_to_data(cursor):
 def write_file(output_path, app, json_data):
     file_name = "{}_waffle.json".format(app)
     file_path = os.path.join(output_path, file_name)
+    print("Writing feature toggle data to: {}".format(file_path))
     with open(file_path, 'w') as output_file:
         json.dump(json_data, output_file)
+    print("Finished writing {}".format(file_path))
+
 
 
 def format_as_json_dump(data):
@@ -134,22 +147,29 @@ def main(output_path):
 
     if os.path.isdir(output_path):
         shutil.rmtree(output_path)
+    print('Creating output directory at: {}'.format(output_path))
     os.mkdir(output_path)
 
     for ida in idas:
+        print('Gathering feature toggle state data for {}'.format(ida['app']))
         connection = create_db_connection(ida['database'])
-        cursor = connection.cursor(buffered=True)
 
-        feature_toggle_data = {}
+        try:
+            cursor = connection.cursor(buffered=True)
 
-        for table in ida['table_names']:
-            query = build_query(table)
-            cursor.execute(query)
-            tagged_data = link_headers_to_data(cursor)
+            feature_toggle_data = {}
 
-            feature_toggle_data[table] = tagged_data
+            for table in ida['table_names']:
+                query = build_query(table)
+                cursor.execute(query)
+                tagged_data = link_headers_to_data(cursor)
 
-        connection.close()
+                feature_toggle_data[table] = tagged_data
+        except connector.errors.ProgrammingError:
+            print('Encountered an error when running {}'.format(query))
+            sys.exit(1)
+        finally:
+            connection.close()
 
         json_data = format_as_json_dump(feature_toggle_data)
         write_file(output_path, ida['app'], json_data)
