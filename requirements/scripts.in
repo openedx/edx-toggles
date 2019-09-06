@@ -1,0 +1,3 @@
+atlassian-python-api      # provides an interface for creating Confluence pages
+code-annotations          # provides commands for identifying annotations and generating reports
+mysql-connector-python-rf # provides an interface for querying a MySQL server
