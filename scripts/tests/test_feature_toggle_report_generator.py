@@ -1,17 +1,16 @@
 from ..feature_toggle_report_generator import (
-    IDA, ToggleState
+    IDA, Toggle, ToggleState
 )
 
 
 def test_adding_annoation_links():
     ida = IDA('my-ida')
-    switch_1 = ToggleState('the-first-waflle-switch', 'waffle.switch', {})
-    switch_2 = ToggleState('my-sample-switch', 'waffle.switch', {})
-    switch_3 = ToggleState('another-sample-switch', 'waffle.switch', {})
-    flag_1 = ToggleState('sample-flag', 'waffle.flag', {})
-    ida.toggle_states['waffle.switch'] = [switch_1, switch_2, switch_3]
-    ida.toggle_states['waffle.flag'] = [flag_1]
-
+    switch_1 = Toggle('the-first-waflle-switch', ToggleState('waffle.switch', {}))
+    switch_2 = Toggle('my-sample-switch', ToggleState('waffle.switch', {}))
+    switch_3 = Toggle('another-sample-switch', ToggleState('waffle.switch', {}))
+    flag_1 = Toggle('sample-flag', ToggleState('waffle.flag', {}))
+    ida.toggles['waffle.switch'] = [switch_1, switch_2, switch_3]
+    ida.toggles['waffle.flag'] = [flag_1]
     annotation_groups = {
         'path/to/source/code.py': [
             # A feature toggle annotation, but not one we care about linking
@@ -90,12 +89,12 @@ def test_adding_annoation_links():
     ida._add_annotation_links_to_toggle_state(annotation_groups)
 
     link = 'my-ida/index.rst#index-rst-path-to-source-code-py-2'
-    assert ida.toggle_states['waffle.switch'][1].annotation_link == link
+    assert ida.toggles['waffle.switch'][1].state.annotation_link == link
 
 
 def test_toggle_date_format():
     switch = ToggleState(
-        'my_switch', 'waffle.switch',
+        'waffle.switch',
         {
             'note': 'blank',
             'created': '2019-04-23T14:21:44.765727+00:30',
@@ -110,7 +109,7 @@ def test_toggle_date_format():
 
 def test_toggle_state():
     flag = ToggleState(
-        'my_flag', 'waffle.flag',
+        'waffle.flag',
         {
             'note': 'blank',
             'created': '2019-04-23 14:21:44.765727+00:00',

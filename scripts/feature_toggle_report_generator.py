@@ -21,7 +21,7 @@ class IDA(object):
 
     def __init__(self, name):
         self.name = name
-        self.toggle_states = collections.defaultdict(list)
+        self.toggles = collections.defaultdict(list)
         self.annotation_report_path = None
 
     def add_toggle_data(self, dump_file_path):
@@ -36,8 +36,9 @@ class IDA(object):
             toggle_name = row['fields']['name']
             toggle_type = row['model']
             toggle_data = row['fields']
-            toggle = ToggleState(toggle_name, toggle_type, toggle_data)
-            self.toggle_states[toggle_type].append(toggle)
+            toggle_state = ToggleState(toggle_type, toggle_data)
+            toggle = Toggle(toggle_name, toggle_state)
+            self.toggles[toggle_type].append(toggle)
 
     def link_toggles_to_annotations(self):
         """
@@ -96,7 +97,7 @@ class IDA(object):
 
                 if self._contains(annotation_type, annotation_name):
                     i = self._get_index(annotation_type, annotation_name)
-                    self.toggle_states[annotation_type][i].set_annotation_link(
+                    self.toggles[annotation_type][i].state.set_annotation_link(
                         self.name, source_file, annotation_group_id
                     )
 
@@ -109,7 +110,7 @@ class IDA(object):
             present = any(
                 map(
                     lambda t: t.name == toggle_name,
-                    self.toggle_states[toggle_type]
+                    self.toggles[toggle_type]
                 )
             )
         except KeyError:
@@ -121,10 +122,29 @@ class IDA(object):
         helper function for getting the index of a given feature toggle
         in the data structure holding all toggles for this IDA
         """
-        names = [t.name for t in self.toggle_states[toggle_type]]
+        names = [t.name for t in self.toggles[toggle_type]]
         for index, name in enumerate(names):
             if name == toggle_name:
                 return index
+
+
+class Toggle(object):
+    """
+    Represents a feature toggle in an IDA, including the current state of the
+    toggle in the database and any additional information defined in the
+    source code (marked via `code-annotations`). To account for the case in which
+    a feature toggle is not yet annotated or has been removed from the database
+    but not the source code, this constructor can handle the case in which
+    only one of the above components could be identified.
+    """
+
+    def __init__(self, name, state=None, annotations={}):
+        self.name = name
+        self.state = state
+        self.annotations = annotations
+
+    def __str__(self):
+        return self.name
 
 
 class ToggleState(object):
@@ -133,8 +153,7 @@ class ToggleState(object):
     of its state, pulled from the IDA's database.
     """
 
-    def __init__(self, name, toggle_type, data):
-        self.name = name
+    def __init__(self, toggle_type, data):
         self.toggle_type = toggle_type
         self.data = data
         self._annotation_link = None

@@ -4,14 +4,14 @@ Feature toggles configured for {{ ida.name }}:
 Summary:
 ~~~~~~~~
 
-* Total Waffle Flags in {{ ida.name }}: {{ ida.toggle_states['waffle.flag'] |length }}
-* Total Waffle Switches in {{ ida.name }}: {{ ida.toggle_states['waffle.switch'] |length }}
+* Total Waffle Flags in {{ ida.name }}: {{ ida.toggles['waffle.flag'] |length }}
+* Total Waffle Switches in {{ ida.name }}: {{ ida.toggles['waffle.switch'] |length }}
 
-{% if ida.toggle_states['waffle.flag']  %}
+{% if ida.toggles['waffle.flag']  %}
 
 **Waffle Flags**:
 
-    {% for flag in ida.toggle_states['waffle.flag'] %}
+    {% for flag in ida.toggles['waffle.flag'] %}
         {% include 'flag.tpl' %}
 
     {% endfor %}
@@ -21,11 +21,11 @@ Summary:
 
 
 
-{% if ida.toggle_states['waffle.switch']  %}
+{% if ida.toggles['waffle.switch']  %}
 
 **Waffle Switches**:
 
-    {% for switch in ida.toggle_states['waffle.switch'] %}
+    {% for switch in ida.toggles['waffle.switch'] %}
         {% include 'switch.tpl' %}
 
     {% endfor %}
