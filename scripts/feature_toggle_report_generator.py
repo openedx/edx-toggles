@@ -50,9 +50,9 @@ class IDA(object):
             return
         with io.open(self.annotation_report_path, 'r') as annotation_file:
             annotation_contents = yaml.safe_load(annotation_file.read())
-            self._add_annotation_links_to_toggle_state(annotation_contents)
+            self._add_annotation_data_to_toggle_state(annotation_contents)
 
-    def _add_annotation_links_to_toggle_state(self, annotation_file_contents):
+    def _add_annotation_data_to_toggle_state(self, annotation_file_contents):
         """
         Given the contents of a code annotations report file for this IDA,
         parse through it, adding the slufigied rst anchor link to the
@@ -86,20 +86,43 @@ class IDA(object):
                 groups.append(group)
             return groups
 
+        def clean_token(token_string):
+            return re.search(r'.. (.*):', token_string).group(1)
+
+        def clean_value(token_string, value_string):
+            if 'toggle_type' in token_string:
+                return [re.sub('_', '.', v) for v in value_string]
+            else:
+                return value_string
+
         for source_file, annotations in annotation_file_contents.items():
+
             annotation_groups = group_annotations(annotations)
 
             for group in annotation_groups:
-                annotation_name = _get_annotation_data('name', group)
-                annotation_group_id = group[0]['report_group_id']
-                annotation_type = _get_annotation_data('type', group)
-                annotation_type = re.sub('_', '.', annotation_type)
+
+                group_id = group[0]['report_group_id']
+                source_file = group[0]['filename']
+                toggle_annotation = ToggleAnnotation(group_id, source_file)
+
+                toggle_annotation.line_numbers = [
+                    a['line_number'] for a in group
+                ]
+                toggle_annotation.data = {
+                    clean_token(a['annotation_token']):
+                    clean_value(a['annotation_token'], a['annotation_data'])
+                    for a in group
+                }
+
+                annotation_name = toggle_annotation.data['toggle_name']
+                annotation_type = toggle_annotation.data['toggle_type'][0]
 
                 if self._contains(annotation_type, annotation_name):
                     i = self._get_index(annotation_type, annotation_name)
-                    self.toggles[annotation_type][i].state.set_annotation_link(
-                        self.name, source_file, annotation_group_id
-                    )
+                    self.toggles[annotation_type][i].annotations = toggle_annotation
+                else:
+                    toggle = Toggle(annotation_name, annotations=toggle_annotation)
+                    self.toggles[annotation_type].append(toggle)
 
     def _contains(self, toggle_type, toggle_name):
         """
@@ -138,13 +161,30 @@ class Toggle(object):
     only one of the above components could be identified.
     """
 
-    def __init__(self, name, state=None, annotations={}):
+    def __init__(self, name, state=None, annotations=None):
         self.name = name
         self.state = state
         self.annotations = annotations
 
     def __str__(self):
         return self.name
+
+
+class ToggleAnnotation(object):
+    """
+    Represents a group of individual code annotations all referencing the same
+    Toggle.
+    """
+
+    def __init__(self, report_group_id, source_file):
+        self.report_group_id = report_group_id
+        self.source_file = source_file
+        self.line_numbers = []
+        self.annotation_data = {}
+
+    def line_range(self):
+        lines = sorted(self.line_numbers)
+        return lines[0], lines[-1]
 
 
 class ToggleState(object):

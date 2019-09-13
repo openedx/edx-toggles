@@ -3,9 +3,9 @@ from ..feature_toggle_report_generator import (
 )
 
 
-def test_adding_annoation_links():
+def test_adding_annotation_data():
     ida = IDA('my-ida')
-    switch_1 = Toggle('the-first-waflle-switch', ToggleState('waffle.switch', {}))
+    switch_1 = Toggle('the-first-waffle-switch', ToggleState('waffle.switch', {}))
     switch_2 = Toggle('my-sample-switch', ToggleState('waffle.switch', {}))
     switch_3 = Toggle('another-sample-switch', ToggleState('waffle.switch', {}))
     flag_1 = Toggle('sample-flag', ToggleState('waffle.flag', {}))
@@ -42,21 +42,21 @@ def test_adding_annoation_links():
                 'annotation_token': '.. toggle_name:',
                 'filename': ' path/to/source/code.py',
                 'found_by': 'python',
-                'line_number': 461,
+                'line_number': 561,
                 'report_group_id': 2,
             }, {
                 'annotation_data': ['waffle.switch'],
                 'annotation_token': '.. toggle_type:',
                 'filename': 'path/to/source/code.py',
                 'found_by': 'python',
-                'line_number': 462,
+                'line_number': 562,
                 'report_group_id': 2
             }, {
                 'annotation_data': True,
                 'annotation_token': '.. toggle_default:',
                 'filename': 'path/to/source/code.py',
                 'found_by': 'python',
-                'line_number': 463,
+                'line_number': 563,
                 'report_group_id': 2
             }
         ],
@@ -66,30 +66,70 @@ def test_adding_annoation_links():
                 'annotation_token': '.. toggle_name:',
                 'filename': ' path/to/other/source/code.py',
                 'found_by': 'python',
-                'line_number': 461,
+                'line_number': 661,
                 'report_group_id': 1,
             }, {
                 'annotation_data': ['waffle.switch'],
                 'annotation_token': '.. toggle_type:',
                 'filename': 'path/to/other/source/code.py',
                 'found_by': 'python',
-                'line_number': 462,
+                'line_number': 662,
                 'report_group_id': 1
             }, {
                 'annotation_data': True,
                 'annotation_token': '.. toggle_default:',
                 'filename': 'path/to/other/source/code.py',
                 'found_by': 'python',
-                'line_number': 463,
+                'line_number': 663,
                 'report_group_id': 1
+            }, {
+                'annotation_data': 'not-in-db',
+                'annotation_token': '.. toggle_name:',
+                'filename': ' path/to/other/source/code.py',
+                'found_by': 'python',
+                'line_number': 761,
+                'report_group_id': 2,
+            }, {
+                'annotation_data': ['waffle.switch'],
+                'annotation_token': '.. toggle_type:',
+                'filename': 'path/to/other/source/code.py',
+                'found_by': 'python',
+                'line_number': 762,
+                'report_group_id': 2
+            }, {
+                'annotation_data': True,
+                'annotation_token': '.. toggle_default:',
+                'filename': 'path/to/other/source/code.py',
+                'found_by': 'python',
+                'line_number': 763,
+                'report_group_id': 2
             }
         ]
     }
 
-    ida._add_annotation_links_to_toggle_state(annotation_groups)
+    expected_data = {
+        'toggle_name': 'my-sample-switch',
+        'toggle_type': ['waffle.switch'],
+        'toggle_default': True,
+    }
 
-    link = 'my-ida/index.rst#index-rst-path-to-source-code-py-2'
-    assert ida.toggles['waffle.switch'][1].state.annotation_link == link
+    ida._add_annotation_data_to_toggle_state(annotation_groups)
+
+    annotation = ida.toggles['waffle.switch'][1].annotations
+    assert annotation.report_group_id == 2
+    assert annotation.line_range() == (561, 563)
+    assert annotation.data == expected_data
+
+    expected_data = {
+        'toggle_name': 'not-in-db',
+        'toggle_type': ['waffle.switch'],
+        'toggle_default': True,
+    }
+
+    annotation = ida.toggles['waffle.switch'][3].annotations
+    assert annotation.report_group_id == 2
+    assert annotation.line_range() == (761, 763)
+    assert annotation.data == expected_data
 
 
 def test_toggle_date_format():
