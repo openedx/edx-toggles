@@ -11,9 +11,7 @@ annotations:
   feature_toggle:
     - ".. toggle_name:":
     - ".. toggle_type:":
-        choices: [switch, rollout, group, waffle_flag]
-    - ".. toggle_implementation:":
-        choices: [ConfigurationModel, CourseWaffleFlag, WaffleFlag, WaffleSwitch, DjangoSetting]
+        choices: [switch, rollout, group, waffle_flag, configuration_model]
     - ".. toggle_default:":
     - ".. toggle_description:":
     - ".. toggle_category:":
