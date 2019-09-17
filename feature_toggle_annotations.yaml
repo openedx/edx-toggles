@@ -11,7 +11,7 @@ annotations:
   feature_toggle:
     - ".. toggle_name:":
     - ".. toggle_type:":
-        choices: [switch, rollout, group, waffle_flag, configuration_model]
+        choices: [waffle_flag, waffle_sample, waffle_switch, rollout, group, configuration_model]
     - ".. toggle_default:":
     - ".. toggle_description:":
     - ".. toggle_category:":
