@@ -1,8 +1,8 @@
 # Requirements for test runs.
 
 -r base.txt               # Core dependencies for this package
+-r scripts.txt            # Dependencies for running utility scripts
 
 pytest-cov                # pytest extension for code coverage statistics
 pytest-django             # pytest extension for better Django support
 code-annotations          # provides commands used by the pii_check make target.
-mysql-connector-python-rf # provides an interface for querying a MySQL server
