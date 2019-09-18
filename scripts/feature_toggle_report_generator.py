@@ -13,9 +13,6 @@ import jinja2
 import yaml
 from slugify import slugify
 
-from code_annotations.base import AnnotationConfig
-from code_annotations.generate_docs import ReportRenderer
-
 
 class IDA(object):
 
@@ -113,7 +110,7 @@ class IDA(object):
                     for a in group
                 }
 
-                annotation_name = toggle_annotation.data['toggle_name']
+                annotation_name = _get_annotation_data('name', group)
                 annotation_type = toggle_annotation.data['toggle_type'][0]
 
                 if self._contains(annotation_type, annotation_name):
@@ -317,23 +314,11 @@ class Renderer(object):
                 template.render(**variables)
             )
 
-    def render_report(self, report_data):
-        """
-        Generate the entire feature toggle report
-        """
+    def render_html_report(self, idas):
         self.render_file(
-            'index.rst', 'index.tpl',
-            variables={'idas': report_data.keys()}
+            'feature_toggle_report.html', 'confluence/report.tpl',
+            variables={'idas': idas}
         )
-        for ida_name, ida_data in report_data.items():
-            self.render_file(
-                '{}.rst'.format(ida_name), 'ida_base.tpl',
-                variables={'ida': ida_data}
-            )
-            self.render_file(
-                '{}-feature-toggle-state.rst'.format(ida_name), 'ida.tpl',
-                variables={'ida': ida_data}
-            )
 
 
 def add_toggle_state_to_idas(idas, dump_file_path):
@@ -373,37 +358,6 @@ def add_toggle_annotations_to_idas(idas, annotation_report_files_path):
         idas[ida_name].add_annotations()
 
 
-def generate_code_annotation_docs(idas, output_path):
-    """
-    For each IDA, copy its annotation report into the `output_path` directory
-    and generate code annotation docs. Finally, move this set of docs into
-    its own subdirectory
-    """
-    if os.path.isdir(output_path):
-        shutil.rmtree(output_path)
-    os.mkdir(output_path)
-    for ida_name, ida in idas.items():
-        if not ida.annotation_report_path:
-            continue
-        temp_annotation_report = os.path.join(
-            'reports', os.path.basename(ida.annotation_report_path)
-        )
-        shutil.copyfile(ida.annotation_report_path, temp_annotation_report)
-        annotation_config = AnnotationConfig('feature_annotations.yml', 0)
-        with io.open(temp_annotation_report, 'r') as annotation_report:
-            report_files = (annotation_report, )
-            annotation_renderer = ReportRenderer(annotation_config, report_files)
-            annotation_renderer.render()
-        ida_doc_path = os.path.join(output_path, ida_name)
-        os.mkdir(ida_doc_path)
-        for rst in [f for f in os.listdir(output_path) if f.endswith('rst')]:
-            src = os.path.join(output_path, rst)
-            target = os.path.join(ida_doc_path, rst)
-            shutil.copyfile(src, target)
-            os.remove(src)
-        os.remove(temp_annotation_report)
-
-
 @click.command()
 @click.argument(
     'sql_dump_path',
@@ -421,9 +375,8 @@ def main(sql_dump_path, annotation_report_path, output_path):
     idas = {name: IDA(name) for name in ida_names}
     add_toggle_state_to_idas(idas, sql_dump_path)
     add_toggle_annotations_to_idas(idas, annotation_report_path)
-    # generate_code_annotation_docs(idas, output_path)
     renderer = Renderer('templates', output_path)
-    renderer.render_report(idas)
+    renderer.render_html_report(idas)
 
 
 if __name__ == '__main__':
