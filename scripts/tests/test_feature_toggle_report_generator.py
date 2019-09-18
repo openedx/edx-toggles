@@ -108,9 +108,9 @@ def test_adding_annotation_data():
     }
 
     expected_data = {
-        'toggle_name': 'my-sample-switch',
-        'toggle_type': ['waffle.switch'],
-        'toggle_default': True,
+        'name': 'my-sample-switch',
+        'type': ['waffle.switch'],
+        'default': True,
     }
 
     ida._add_annotation_data_to_toggle_state(annotation_groups)
@@ -118,18 +118,18 @@ def test_adding_annotation_data():
     annotation = ida.toggles['waffle.switch'][1].annotations
     assert annotation.report_group_id == 2
     assert annotation.line_range() == (561, 563)
-    assert annotation.data == expected_data
+    assert annotation._raw_annotation_data == expected_data
 
     expected_data = {
-        'toggle_name': 'not-in-db',
-        'toggle_type': ['waffle.switch'],
-        'toggle_default': True,
+        'name': 'not-in-db',
+        'type': ['waffle.switch'],
+        'default': True,
     }
 
     annotation = ida.toggles['waffle.switch'][3].annotations
     assert annotation.report_group_id == 2
     assert annotation.line_range() == (761, 763)
-    assert annotation.data == expected_data
+    assert annotation._raw_annotation_data == expected_data
 
 
 def test_toggle_date_format():
@@ -143,8 +143,9 @@ def test_toggle_date_format():
     )
     creation_timestamp = '2019-04-23 14:21 +00:30'
     modified_timestamp = '2019-04-23 14:21 UTC'
-    assert switch.data_for_template['creation_date'] == creation_timestamp
-    assert switch.data_for_template['last_modified_date'] == modified_timestamp
+    switch._prepare_state_data_for_template()
+    assert switch._cleaned_state_data['created'] == creation_timestamp
+    assert switch._cleaned_state_data['modified'] == modified_timestamp
 
 
 def test_toggle_state():

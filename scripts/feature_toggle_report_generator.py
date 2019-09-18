@@ -231,17 +231,17 @@ class ToggleState(object):
                 return False
 
         if self.toggle_type == 'waffle.switch':
-            return self.data['active']
+            return self._raw_state_data['active']
         elif self.toggle_type == 'waffle.flag':
             return (
-                self.data['everyone'] or
-                bool_for_null_numbers(self.data['percent']) or
-                self.data['testing'] or
-                self.data['superusers'] or
-                self.data['staff'] or
-                self.data['authenticated'] or
-                bool(self.data['languages']) or
-                self.data['rollout']
+                self._raw_state_data['everyone'] or
+                bool_for_null_numbers(self._raw_state_data['percent']) or
+                self._raw_state_data['testing'] or
+                self._raw_state_data['superusers'] or
+                self._raw_state_data['staff'] or
+                self._raw_state_data['authenticated'] or
+                bool(self._raw_state_data['languages']) or
+                self._raw_state_data['rollout']
             )
 
     @property
