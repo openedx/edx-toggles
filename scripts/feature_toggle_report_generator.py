@@ -67,6 +67,7 @@ class IDA(object):
                     data = annotation['annotation_data']
                     if type(data) == list:
                         data = data[0]
+                    break
             return data
 
         def group_annotations(annotations):
@@ -83,7 +84,7 @@ class IDA(object):
             return groups
 
         def clean_token(token_string):
-            return re.search(r'.. (.*):', token_string).group(1)
+            return re.search(r'.. toggle_(.*):', token_string).group(1)
 
         def clean_value(token_string, value_string):
             if 'toggle_type' in token_string:
@@ -104,15 +105,16 @@ class IDA(object):
                 toggle_annotation.line_numbers = [
                     a['line_number'] for a in group
                 ]
-                toggle_annotation.data = {
+                toggle_annotation._raw_annotation_data = {
                     clean_token(a['annotation_token']):
                     clean_value(a['annotation_token'], a['annotation_data'])
                     for a in group
                 }
 
                 annotation_name = _get_annotation_data('name', group)
-                annotation_type = toggle_annotation.data['toggle_type'][0]
-
+                annotation_type = toggle_annotation._raw_annotation_data[
+                    'type'
+                ][0]
                 if self._contains(annotation_type, annotation_name):
                     i = self._get_index(annotation_type, annotation_name)
                     self.toggles[annotation_type][i].annotations = toggle_annotation
@@ -165,6 +167,20 @@ class Toggle(object):
     def __str__(self):
         return self.name
 
+    def data_for_template(self, component, data_name):
+        if component ==  "state":
+            if self.state:
+                self.state._prepare_state_data_for_template()
+                return self.state._cleaned_state_data[data_name]
+            else:
+                return ''
+        elif component == "annotation":
+            if self.annotations:
+                self.annotations._prepare_annotation_data_for_template()
+                return self.annotations._cleaned_annotation_data[data_name]
+            else:
+                return ''
+
 
 class ToggleAnnotation(object):
     """
@@ -176,11 +192,16 @@ class ToggleAnnotation(object):
         self.report_group_id = report_group_id
         self.source_file = source_file
         self.line_numbers = []
-        self.annotation_data = {}
+        self._raw_annotation_data = {}
+        self._cleaned_annotation_data = collections.defaultdict(str)
 
     def line_range(self):
         lines = sorted(self.line_numbers)
         return lines[0], lines[-1]
+
+    def _prepare_annotation_data_for_template(self):
+        for k, v in self._raw_annotation_data.items():
+            self._cleaned_annotation_data[k] = v
 
 
 class ToggleState(object):
@@ -191,8 +212,9 @@ class ToggleState(object):
 
     def __init__(self, toggle_type, data):
         self.toggle_type = toggle_type
-        self.data = data
         self._annotation_link = None
+        self._raw_state_data = data
+        self._cleaned_state_data = collections.defaultdict(str)
 
     @property
     def state(self):
@@ -236,13 +258,7 @@ class ToggleState(object):
         else:
             return "No source definition found in annotation report"
 
-    @property
-    def data_for_template(self):
-        """
-        Return a dictionary of this Toggle's data for the report, formatted for
-        readability
-        """
-
+    def _prepare_state_data_for_template(self):
         def _format_date(date_string):
             datetime_pattern = re.compile(
                 r'(?P<date>20\d\d-\d\d-\d\d)T(?P<time>\d\d:\d\d):\d*.*'
@@ -258,34 +274,20 @@ class ToggleState(object):
                 offset = 'UTC'
 
             return "{} {} {}".format(date, time, offset)
-
         def null_or_number(n): return n if isinstance(n, int) else 0
 
-        template_data = {}
-        if self.toggle_type == 'waffle.switch':
-            template_data['note'] = self.data['note']
-            template_data['creation_date'] = _format_date(self.data['created'])
-            template_data['last_modified_date'] = _format_date(
-                self.data['modified']
-            )
-        elif self.toggle_type == 'waffle.flag':
-            template_data['note'] = self.data['note']
-            template_data['creation_date'] = _format_date(self.data['created'])
-            template_data['last_modified_date'] = _format_date(
-                self.data['modified']
-            )
-            template_data['everyone'] = self.data['everyone']
-            template_data['percent'] = null_or_number(self.data['percent'])
-            template_data['testing'] = self.data['testing']
-            template_data['superusers'] = self.data['superusers']
-            template_data['staff'] = self.data['staff']
-            template_data['authenticated'] = self.data['authenticated']
-            template_data['languages'] = filter(
-                lambda x: x != '', self.data['languages'].split(',')
-            )
-            template_data['rollout'] = self.data['rollout']
+        for k, v in self._raw_state_data.items():
 
-        return template_data
+            if k in ['created', 'modified']:
+                self._cleaned_state_data[k] = _format_date(v)
+            elif k == 'percent':
+                self._cleaned_state_data[k] = null_or_number(v)
+            elif k == 'languages':
+                self._cleaned_state_data[k] = filter(
+                    lambda x: x != '', v.split(',')
+                )
+            else:
+                self._cleaned_state_data[k] = v
 
     def set_annotation_link(self, ida_name, source_file, group_id):
         slug = slugify('index-rst-{}-{}'.format(source_file, group_id))
