@@ -1,4 +1,6 @@
-<h1>Feature Toggle Report</h1>
+<h1>Feature Toggle Report for {{ environment }}</h1>
+
+This report was created on {{ report_date }}
 
 {% for ida_name, ida in idas.items() %}
 

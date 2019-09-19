@@ -316,10 +316,14 @@ class Renderer(object):
                 template.render(**variables)
             )
 
-    def render_html_report(self, idas):
+    def render_html_report(self, idas, environment_name):
+        report_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
         self.render_file(
             'feature_toggle_report.html', 'confluence/report.tpl',
-            variables={'idas': idas}
+            variables={
+                'idas': idas, environment=environment_name,
+                report_date=report_date
+            }
         )
 
 
@@ -372,13 +376,16 @@ def add_toggle_annotations_to_idas(idas, annotation_report_files_path):
 @click.argument(
     'output_path', default="feature_toggle_report",
 )
-def main(sql_dump_path, annotation_report_path, output_path):
+@click.argument(
+    'environment_name', required=True
+)
+def main(sql_dump_path, annotation_report_path, output_path, environment_name):
     ida_names = ['credentials', 'ecommerce', 'discovery', 'lms']
     idas = {name: IDA(name) for name in ida_names}
     add_toggle_state_to_idas(idas, sql_dump_path)
     add_toggle_annotations_to_idas(idas, annotation_report_path)
     renderer = Renderer('templates', output_path)
-    renderer.render_html_report(idas)
+    renderer.render_html_report(idas, environment_name)
 
 
 if __name__ == '__main__':
