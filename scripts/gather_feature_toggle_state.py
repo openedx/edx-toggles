@@ -138,7 +138,7 @@ def main(output_path):
     idas = [
         {
             'app': 'lms',
-            'database': 'edxapp',
+            'database': os.getenv('LMS_DB', 'edxapp'),
             'table_names': [
                 'waffle_flag', 'waffle_switch', 'waffle_sample'
             ]

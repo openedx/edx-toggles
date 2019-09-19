@@ -58,6 +58,11 @@ environment variables (the defaults work with devstack):
 * DB_HOST
 * DB_PORT
 
+Additionally, you must set an environment variable to specify the database
+name for each IDA that you are querying about, in following form:
+<ida_name>_DB. For example:
+* LMS_DB
+
 Usage:
 ------
 
