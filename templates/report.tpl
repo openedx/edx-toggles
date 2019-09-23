@@ -8,7 +8,7 @@ This report was created on {{ report_date }}
 
     <h2>Waffle Flags</h2>
     {% if ida.toggles['waffle.flag']  %}
-        {% include 'confluence/flag.tpl' %}
+        {% include 'flag.tpl' %}
     {% else %}
         No flags
     {% endif %}
@@ -16,7 +16,7 @@ This report was created on {{ report_date }}
 
     <h2>Waffle Switches</h2>
     {% if ida.toggles['waffle.switch']  %}
-        {% include 'confluence/switch.tpl' %}
+        {% include 'switch.tpl' %}
     {% else %}
         No switches
     {% endif %}
