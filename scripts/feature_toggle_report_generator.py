@@ -321,8 +321,8 @@ class Renderer(object):
         self.render_file(
             'feature_toggle_report.html', 'confluence/report.tpl',
             variables={
-                'idas': idas, environment=environment_name,
-                report_date=report_date
+                'idas': idas, 'environment': environment_name,
+                'report_date': report_date
             }
         )
 
