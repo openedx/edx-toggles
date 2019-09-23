@@ -323,7 +323,7 @@ class Renderer(object):
     def render_html_report(self, idas, environment_name):
         report_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
         self.render_file(
-            'feature_toggle_report.html', 'confluence/report.tpl',
+            'feature_toggle_report.html', 'report.tpl',
             variables={
                 'idas': idas, 'environment': environment_name,
                 'report_date': report_date

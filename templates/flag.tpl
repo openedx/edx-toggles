@@ -1,25 +1,50 @@
-.. admonition:: {{ flag.name }}
-
-    * waffle flag name: {{ flag.name }}
-    * state: {{ flag.state.state_msg }}
-    * on for everyone: {{ flag.state.data_for_template['everyone'] }}
-    * on for: {{ flag.state.data_for_template['percent'] }} %
-    * on for tests: {{ flag.state.data_for_template['testing'] }}
-    * on for superusers: {{ flag.state.data_for_template['superusers'] }}
-    * on for staff: {{ flag.state.data_for_template['staff'] }}
-    * on for authenticated users: {{ flag.state.data_for_template['authenticated'] }}
-    * on for the following languages:
-    {% for lang in flag.state.data_for_template['languages'] %}
-        * {{ lang }}
+<table>
+    <tr>
+        <th>Toggle Name</th>
+        <th>Status</th>
+        <th>Everyone</th>
+        <th>Percent</th>
+        <th>Tests</th>
+        <th>Superusers</th>
+        <th>Staff</th>
+        <th>Authenticated users</th>
+        <th>Languages</th>
+        <th>Rollout</th>
+        <th>First modified</th>
+        <th>Last modified</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Use Cases</th>
+        <th>Type</th>
+        <th>Creation date</th>
+        <th>Expiration date</th>
+    </tr>
+    {% for toggle in ida.toggles['waffle.flag'] %}
+        <tr>
+            <td>{{ toggle.name }}</td>
+            <td>{{ toggle.state.state_msg }}</td>
+            <td>{{ toggle.data_for_template('state', 'everyone') }}</td>
+            <td>{{ toggle.data_for_template('state', 'percent') }}</td>
+            <td>{{ toggle.data_for_template('state', 'testing') }}</td>
+            <td>{{ toggle.data_for_template('state', 'superusers') }}</td>
+            <td>{{ toggle.data_for_template('state', 'staff') }}</td>
+            <td>{{ toggle.data_for_template('state', 'authenticated') }}</td>
+            <td>
+                <ul>
+                    {% for lang in toggle.data_for_template('state', 'languages') %}
+                        <li>{{ lang }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+            <td>{{ toggle.data_for_template('state', 'rollout') }}</td>
+            <td>{{ toggle.data_for_template('state', 'created') }}</td>
+            <td>{{ toggle.data_for_template('state', 'modified') }}</td>
+            <td>{{ toggle.data_for_template('annotation', 'description') }}</td>
+            <td>{{ toggle.data_for_template('annotation', 'category') }}</td>
+            <td>{{ toggle.data_for_template('annotation', 'use_cases') }}</td>
+            <td>{{ toggle.data_for_template('annotation', 'type') }}</td>
+            <td>{{ toggle.data_for_template('annotation', 'creation_date') }}</td>
+            <td>{{ toggle.data_for_template('annotation', 'expiration_date') }}</td>
+        </tr>
     {% endfor %}
-    * on as part of a rollout: {{ flag.state.data_for_template['rollout'] }}
-    * created on: {{ flag.state.data_for_template['creation_date'] }}
-    * last modified on: {{ flag.state.data_for_template['last_modified_date'] }}
-    {% if flag.state._annotation_link %}
-    * source: `{{ flag.state.annotation_link }}`_
-    {% else %}
-    * source: No source data found in annotation report
-    {% endif %}
-
-.. _{{ flag.state.annotation_link }}: {{ flag.state.annotation_link }}
-
+</table>
