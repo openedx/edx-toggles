@@ -1,6 +1,13 @@
 <h1>Feature Toggle Report for {{ environment }}</h1>
 
-This report was created on {{ report_date }}
+<p>This report was created on {{ report_date }}</p>
+<p>Data is pulled from a combination of in-code annotations and database state</p>
+Key:
+<ul>
+    <li>Toggles that are ON are displayed in green and listed with 'status' as 'On'</li>
+    <li>Toggles that are OFF are displayed in red and listed with 'status' as 'Off'</li>
+    <li>Toggles that are not found within the database are displayed without color and no 'status' value</li>
+</ul>
 
 {% for ida_name, ida in idas.items() %}
 
@@ -10,7 +17,7 @@ This report was created on {{ report_date }}
     {% if ida.toggles['waffle.flag']  %}
         {% include 'flag.tpl' %}
     {% else %}
-        No flags
+        No waffle flags detected for this IDA
     {% endif %}
 
 
@@ -18,9 +25,8 @@ This report was created on {{ report_date }}
     {% if ida.toggles['waffle.switch']  %}
         {% include 'switch.tpl' %}
     {% else %}
-        No switches
+        No waffle switches detected for this IDA
     {% endif %}
 
 
 {% endfor %}
-

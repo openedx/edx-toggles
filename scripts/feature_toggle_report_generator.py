@@ -10,6 +10,7 @@ import json
 import os
 import re
 import shutil
+import sys
 
 import click
 import jinja2
@@ -171,19 +172,28 @@ class Toggle(object):
     def __str__(self):
         return self.name
 
+    @property
+    def state_msg(self):
+        if not self.state:
+            return "No data found"
+        elif self.state.state:
+            return "On"
+        else:
+            return "Off"
+
     def data_for_template(self, component, data_name):
         if component ==  "state":
             if self.state:
                 self.state._prepare_state_data_for_template()
                 return self.state._cleaned_state_data[data_name]
             else:
-                return ''
+                return 'No data found'
         elif component == "annotation":
             if self.annotations:
                 self.annotations._prepare_annotation_data_for_template()
                 return self.annotations._cleaned_annotation_data[data_name]
             else:
-                return ''
+                return 'No data found'
 
 
 class ToggleAnnotation(object):
@@ -216,7 +226,6 @@ class ToggleState(object):
 
     def __init__(self, toggle_type, data):
         self.toggle_type = toggle_type
-        self._annotation_link = None
         self._raw_state_data = data
         self._cleaned_state_data = collections.defaultdict(str)
 
@@ -248,20 +257,6 @@ class ToggleState(object):
                 self._raw_state_data['rollout']
             )
 
-    @property
-    def state_msg(self):
-        if self.state:
-            return "On"
-        else:
-            return "Off"
-
-    @property
-    def annotation_link(self):
-        if self._annotation_link:
-            return self._annotation_link
-        else:
-            return "No source definition found in annotation report"
-
     def _prepare_state_data_for_template(self):
         def _format_date(date_string):
             datetime_pattern = re.compile(
@@ -292,11 +287,6 @@ class ToggleState(object):
                 )
             else:
                 self._cleaned_state_data[k] = v
-
-    def set_annotation_link(self, ida_name, source_file, group_id):
-        slug = slugify('index-rst-{}-{}'.format(source_file, group_id))
-        link = '{}/index.rst#{}'.format(ida_name, slug)
-        self._annotation_link = link
 
 
 class Renderer(object):

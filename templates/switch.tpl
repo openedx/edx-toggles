@@ -12,9 +12,15 @@
         <th>Expiration date</th>
     </tr>
     {% for toggle in ida.toggles['waffle.switch'] %}
-        <tr>
+        {% if toggle.state_msg == 'On' %}
+            <tr style="background-color:#C3FDB8;">
+        {% elif toggle.state_msg == 'Off' %}
+            <tr style="background-color:#FF4C4C;">
+        {% else %}
+            <tr>
+        {% endif %}
             <td>{{ toggle.name }}</td>
-            <td>{{ toggle.state.state_msg }}</td>
+            <td>{{ toggle.state_msg }}</td>
             <td>{{ toggle.data_for_template('state', 'created') }}</td>
             <td>{{ toggle.data_for_template('state', 'modified') }}</td>
             <td>{{ toggle.data_for_template('annotation', 'description') }}</td>

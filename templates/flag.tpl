@@ -20,9 +20,15 @@
         <th>Expiration date</th>
     </tr>
     {% for toggle in ida.toggles['waffle.flag'] %}
-        <tr>
+        {% if toggle.state_msg == 'On' %}
+            <tr style="background-color:#C3FDB8;">
+        {% elif toggle.state_msg == 'Off' %}
+            <tr style="background-color:#FF4C4C;">
+        {% else %}
+            <tr>
+        {% endif %}
             <td>{{ toggle.name }}</td>
-            <td>{{ toggle.state.state_msg }}</td>
+            <td>{{ toggle.state_msg }}</td>
             <td>{{ toggle.data_for_template('state', 'everyone') }}</td>
             <td>{{ toggle.data_for_template('state', 'percent') }}</td>
             <td>{{ toggle.data_for_template('state', 'testing') }}</td>
@@ -30,11 +36,15 @@
             <td>{{ toggle.data_for_template('state', 'staff') }}</td>
             <td>{{ toggle.data_for_template('state', 'authenticated') }}</td>
             <td>
-                <ul>
-                    {% for lang in toggle.data_for_template('state', 'languages') %}
-                        <li>{{ lang }}</li>
-                    {% endfor %}
-                </ul>
+                {% if toggle.data_for_template('state', 'languages') == 'No data found' %}
+                    No data found
+                {% else %}
+                    <ul>
+                        {% for lang in toggle.data_for_template('state', 'languages') %}
+                            <li>{{ lang }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </td>
             <td>{{ toggle.data_for_template('state', 'rollout') }}</td>
             <td>{{ toggle.data_for_template('state', 'created') }}</td>
