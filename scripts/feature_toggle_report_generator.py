@@ -45,8 +45,7 @@ class IDA(object):
     def add_annotations(self):
         """
         Read the code annotation file specified at `annotation_report_path`,
-        linking annotated feature toggles to the feature toggle state
-        entries in this IDAs toggle_state dictionary.
+        adding the annotations to the Toggles in this IDA.
         """
         if not self.annotation_report_path:
             return
@@ -57,8 +56,9 @@ class IDA(object):
     def _add_annotation_data_to_toggle_state(self, annotation_file_contents):
         """
         Given the contents of a code annotations report file for this IDA,
-        parse through it, adding annotation data to the toggle states already
-        identified for this IDA
+        parse through it, adding annotation data to the toggles in this IDA.
+        If a toggle has already been added, add the annotation data. If not,
+        create a new Toggle for this IDA and add the annotation data.
         """
         def _get_annotation_data(annotation_token, annotations):
             """
@@ -174,6 +174,10 @@ class Toggle(object):
 
     @property
     def state_msg(self):
+        """
+        The human readable representation of whether or not this toggle is
+        turned on.
+        """
         if not self.state:
             return "No data found"
         elif self.state.state:
@@ -182,6 +186,11 @@ class Toggle(object):
             return "Off"
 
     def data_for_template(self, component, data_name):
+        """
+        A helper function for easily accessing various data from both
+        the ToggleState and ToggleAnnotations for this Toggle for
+        use in templating the confluence report.
+        """
         if component ==  "state":
             if self.state:
                 self.state._prepare_state_data_for_template()
@@ -220,8 +229,8 @@ class ToggleAnnotation(object):
 
 class ToggleState(object):
     """
-    Represents an individual feature toggle within an IDA, including all
-    of its state, pulled from the IDA's database.
+    Represents the state of a feature toggle, configured within an IDA,
+    as pulled from the IDA's database.
     """
 
     def __init__(self, toggle_type, data):

@@ -51,7 +51,17 @@
             <td>{{ toggle.data_for_template('state', 'modified') }}</td>
             <td>{{ toggle.data_for_template('annotation', 'description') }}</td>
             <td>{{ toggle.data_for_template('annotation', 'category') }}</td>
-            <td>{{ toggle.data_for_template('annotation', 'use_cases') }}</td>
+            <td>
+                {% if toggle.data_for_template('annotation', 'use_cases') == 'No data found' %}
+                    No data found
+                {% else %}
+                    <ul>
+                        {% for use_case in toggle.data_for_template('annotation', 'use_cases') %}
+                            <li>{{ use_case }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </td>
             <td>{{ toggle.data_for_template('annotation', 'type') }}</td>
             <td>{{ toggle.data_for_template('annotation', 'creation_date') }}</td>
             <td>{{ toggle.data_for_template('annotation', 'expiration_date') }}</td>

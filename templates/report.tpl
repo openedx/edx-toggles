@@ -1,7 +1,10 @@
 <h1>Feature Toggle Report for {{ environment }}</h1>
 
 <p>This report was created on {{ report_date }}</p>
-<p>Data is pulled from a combination of in-code annotations and database state</p>
+<p>
+Data is pulled from a combination of in-code annotations and database state to create the report described in:
+<a href="https://open-edx-proposals.readthedocs.io/en/latest/oep-0017-bp-feature-toggles.html#req-12-report">oep-17</a>
+</p>
 Key:
 <ul>
     <li>Toggles that are ON are displayed in green and listed with 'status' as 'On'</li>
