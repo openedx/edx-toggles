@@ -179,7 +179,7 @@ class Toggle(object):
         turned on.
         """
         if not self.state:
-            return "No data found"
+            return "Not found in database"
         elif self.state.state:
             return "On"
         else:
@@ -196,13 +196,13 @@ class Toggle(object):
                 self.state._prepare_state_data_for_template()
                 return self.state._cleaned_state_data[data_name]
             else:
-                return 'No data found'
+                return '-'
         elif component == "annotation":
             if self.annotations:
                 self.annotations._prepare_annotation_data_for_template()
                 return self.annotations._cleaned_annotation_data[data_name]
             else:
-                return 'No data found'
+                return '-'
 
 
 class ToggleAnnotation(object):
@@ -439,7 +439,7 @@ def publish_to_confluence(confluence, report_path, confluence_space_id,
     'environment_name', required=True
 )
 def main(sql_dump_path, annotation_report_path, output_path, environment_name):
-    ida_names = ['credentials', 'ecommerce', 'discovery', 'lms']
+    ida_names = ['lms']
     idas = {name: IDA(name) for name in ida_names}
     add_toggle_state_to_idas(idas, sql_dump_path)
     add_toggle_annotations_to_idas(idas, annotation_report_path)

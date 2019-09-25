@@ -1,7 +1,7 @@
 <table>
     <tr>
         <th>Toggle Name</th>
-        <th>Status</th>
+        <th>Status*</th>
         <th>Everyone</th>
         <th>Percent</th>
         <th>Tests</th>
@@ -36,8 +36,8 @@
             <td>{{ toggle.data_for_template('state', 'staff') }}</td>
             <td>{{ toggle.data_for_template('state', 'authenticated') }}</td>
             <td>
-                {% if toggle.data_for_template('state', 'languages') == 'No data found' %}
-                    No data found
+                {% if toggle.data_for_template('state', 'languages') == '-' %}
+                    -
                 {% else %}
                     <ul>
                         {% for lang in toggle.data_for_template('state', 'languages') %}
@@ -52,8 +52,8 @@
             <td>{{ toggle.data_for_template('annotation', 'description') }}</td>
             <td>{{ toggle.data_for_template('annotation', 'category') }}</td>
             <td>
-                {% if toggle.data_for_template('annotation', 'use_cases') == 'No data found' %}
-                    No data found
+                {% if toggle.data_for_template('annotation', 'use_cases') == '-' %}
+                    -
                 {% else %}
                     <ul>
                         {% for use_case in toggle.data_for_template('annotation', 'use_cases') %}
@@ -68,3 +68,8 @@
         </tr>
     {% endfor %}
 </table>
+<p>
+* The 'Status' of a waffle flag is computed by combining the state
+of the following flag components: everyone, percent, testing
+superusers, staff, authenticated, languages, rollout
+</p>
