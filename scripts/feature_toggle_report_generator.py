@@ -91,12 +91,6 @@ class IDA(object):
         def clean_token(token_string):
             return re.search(r'.. toggle_(.*):', token_string).group(1)
 
-        def clean_value(token_string, value_string):
-            if 'toggle_type' in token_string:
-                return [re.sub('_', '.', v) for v in value_string]
-            else:
-                return value_string
-
         for source_file, annotations in annotation_file_contents.items():
 
             annotation_groups = group_annotations(annotations)
@@ -111,14 +105,16 @@ class IDA(object):
                     a['line_number'] for a in group
                 ]
                 toggle_annotation._raw_annotation_data = {
-                    clean_token(a['annotation_token']):
-                    clean_value(a['annotation_token'], a['annotation_data'])
+                    clean_token(a['annotation_token']): a['annotation_data']
                     for a in group
+                    if 'documented' not in a['annotation_token']
                 }
+                if not toggle_annotation._raw_annotation_data:
+                    continue
 
                 annotation_name = _get_annotation_data('name', group)
                 annotation_type = toggle_annotation._raw_annotation_data[
-                    'type'
+                    'implementation'
                 ][0]
                 if self._contains(annotation_type, annotation_name):
                     i = self._get_index(annotation_type, annotation_name)
@@ -224,7 +220,10 @@ class ToggleAnnotation(object):
 
     def _prepare_annotation_data_for_template(self):
         for k, v in self._raw_annotation_data.items():
-            self._cleaned_annotation_data[k] = v
+            if k == 'implementation':
+                self._cleaned_annotation_data[k] = v[0]
+            else:
+                self._cleaned_annotation_data[k] = v
 
 
 class ToggleState(object):
@@ -252,9 +251,9 @@ class ToggleState(object):
             else:
                 return False
 
-        if self.toggle_type == 'waffle.switch':
+        if self.toggle_type == 'WaffleSwitch':
             return self._raw_state_data['active']
-        elif self.toggle_type == 'waffle.flag':
+        elif self.toggle_type == 'WaffleFlag':
             return (
                 self._raw_state_data['everyone'] or
                 bool_for_null_numbers(self._raw_state_data['percent']) or
@@ -448,10 +447,10 @@ def main(sql_dump_path, annotation_report_path, output_path, environment_name):
     confluence = create_confluence_connection()
     confluence_space_id = _get_env_var('CONFLUENCE_SPACE_ID')
     confluence_page_name = _get_env_var('CONFLUENCE_PAGE_NAME')
-    publish_to_confluence(
-        confluence, 'reports/feature_toggle_report.html', confluence_space_id,
-        confluence_page_name
-    )
+    # publish_to_confluence(
+        # confluence, 'reports/feature_toggle_report.html', confluence_space_id,
+        # confluence_page_name
+    # )
 
 
 if __name__ == '__main__':

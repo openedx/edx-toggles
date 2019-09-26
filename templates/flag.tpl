@@ -15,11 +15,11 @@
         <th>Description</th>
         <th>Category</th>
         <th>Use Cases</th>
-        <th>Type</th>
+        <th>Implementation</th>
         <th>Creation date</th>
         <th>Expiration date</th>
     </tr>
-    {% for toggle in ida.toggles['waffle.flag'] %}
+    {% for toggle in ida.toggles['WaffleFlag'] %}
         {% if toggle.state_msg == 'On' %}
             <tr style="background-color:#C3FDB8;">
         {% elif toggle.state_msg == 'Off' %}
@@ -62,7 +62,7 @@
                     </ul>
                 {% endif %}
             </td>
-            <td>{{ toggle.data_for_template('annotation', 'type') }}</td>
+            <td>{{ toggle.data_for_template('annotation', 'implementation') }}</td>
             <td>{{ toggle.data_for_template('annotation', 'creation_date') }}</td>
             <td>{{ toggle.data_for_template('annotation', 'expiration_date') }}</td>
         </tr>
