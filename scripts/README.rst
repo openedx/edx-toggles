@@ -63,8 +63,8 @@ name for each IDA that you are querying about, in following form:
 <ida_name>_DB. For example:
 * LMS_DB
 
-Usage:
-------
+Creating a Feature Toggle Report
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Assuming you have the two prerequisites mentioned above, install the
 dependencies for the report generator, and run it, passing the following
@@ -73,11 +73,23 @@ values on the command line:
     * feature-toggle-data: path to the sql dump data created above
     * annotation-data: path to the code annotation data created above
     * reports: path to write report files into
+    * environment: name of the environment/deployment that you are reporting on
+
+NOTE: You must have the following environment variables set to be able to
+publish the resulting report to Confluence:
+
+* CONFLUENCE_BASE_URL: the url of the confluence instance you are targeting. For
+  example: https://my-company.atlassian.net
+* CONFLUENCE_API_TOKEN: a token for accessing the confluence api
+* CONFLUENCE_USER_EMAIL: the email address of the user linked to the api token
+* CONFLUENCE_SPACE_ID: the id of the space in confluence where you will publish the report
+* CONFLUENCE_PAGE_NAME: the name of the page that will host your report. If it is not yet
+  created, this tool will create it.
 
 .. code:: bash
 
     make requirements
-    python scripts/feature_toggle_report_generator.py feature-toggle-data annotation-data reports
+    python scripts/feature_toggle_report_generator.py feature-toggle-data annotation-data reports environment
 
 
 .. _code_annotations: https://www.github.com/edx/code-annotations

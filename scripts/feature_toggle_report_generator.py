@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+
+from __future__ import print_function
+
 import collections
 import datetime
 import io
@@ -7,21 +10,20 @@ import json
 import os
 import re
 import shutil
+import sys
 
 import click
 import jinja2
 import yaml
+from atlassian import Confluence
 from slugify import slugify
-
-from code_annotations.base import AnnotationConfig
-from code_annotations.generate_docs import ReportRenderer
 
 
 class IDA(object):
 
     def __init__(self, name):
         self.name = name
-        self.toggle_states = collections.defaultdict(list)
+        self.toggles = collections.defaultdict(list)
         self.annotation_report_path = None
 
     def add_toggle_data(self, dump_file_path):
@@ -36,27 +38,27 @@ class IDA(object):
             toggle_name = row['fields']['name']
             toggle_type = row['model']
             toggle_data = row['fields']
-            toggle = ToggleState(toggle_name, toggle_type, toggle_data)
-            self.toggle_states[toggle_type].append(toggle)
+            toggle_state = ToggleState(toggle_type, toggle_data)
+            toggle = Toggle(toggle_name, toggle_state)
+            self.toggles[toggle_type].append(toggle)
 
-    def link_toggles_to_annotations(self):
+    def add_annotations(self):
         """
         Read the code annotation file specified at `annotation_report_path`,
-        linking annotated feature toggles to the feature toggle state
-        entries in this IDAs toggle_state dictionary.
+        adding the annotations to the Toggles in this IDA.
         """
         if not self.annotation_report_path:
             return
         with io.open(self.annotation_report_path, 'r') as annotation_file:
             annotation_contents = yaml.safe_load(annotation_file.read())
-            self._add_annotation_links_to_toggle_state(annotation_contents)
+            self._add_annotation_data_to_toggle_state(annotation_contents)
 
-    def _add_annotation_links_to_toggle_state(self, annotation_file_contents):
+    def _add_annotation_data_to_toggle_state(self, annotation_file_contents):
         """
         Given the contents of a code annotations report file for this IDA,
-        parse through it, adding the slufigied rst anchor link to the
-        annotated definition of each toggle it finds to the toggles
-        configured for this IDA.
+        parse through it, adding annotation data to the toggles in this IDA.
+        If a toggle has already been added, add the annotation data. If not,
+        create a new Toggle for this IDA and add the annotation data.
         """
         def _get_annotation_data(annotation_token, annotations):
             """
@@ -70,6 +72,7 @@ class IDA(object):
                     data = annotation['annotation_data']
                     if type(data) == list:
                         data = data[0]
+                    break
             return data
 
         def group_annotations(annotations):
@@ -85,20 +88,44 @@ class IDA(object):
                 groups.append(group)
             return groups
 
+        def clean_token(token_string):
+            return re.search(r'.. toggle_(.*):', token_string).group(1)
+
+        def clean_value(token_string, value_string):
+            if 'toggle_type' in token_string:
+                return [re.sub('_', '.', v) for v in value_string]
+            else:
+                return value_string
+
         for source_file, annotations in annotation_file_contents.items():
+
             annotation_groups = group_annotations(annotations)
 
             for group in annotation_groups:
-                annotation_name = _get_annotation_data('name', group)
-                annotation_group_id = group[0]['report_group_id']
-                annotation_type = _get_annotation_data('type', group)
-                annotation_type = re.sub('_', '.', annotation_type)
 
+                group_id = group[0]['report_group_id']
+                source_file = group[0]['filename']
+                toggle_annotation = ToggleAnnotation(group_id, source_file)
+
+                toggle_annotation.line_numbers = [
+                    a['line_number'] for a in group
+                ]
+                toggle_annotation._raw_annotation_data = {
+                    clean_token(a['annotation_token']):
+                    clean_value(a['annotation_token'], a['annotation_data'])
+                    for a in group
+                }
+
+                annotation_name = _get_annotation_data('name', group)
+                annotation_type = toggle_annotation._raw_annotation_data[
+                    'type'
+                ][0]
                 if self._contains(annotation_type, annotation_name):
                     i = self._get_index(annotation_type, annotation_name)
-                    self.toggle_states[annotation_type][i].set_annotation_link(
-                        self.name, source_file, annotation_group_id
-                    )
+                    self.toggles[annotation_type][i].annotations = toggle_annotation
+                else:
+                    toggle = Toggle(annotation_name, annotations=toggle_annotation)
+                    self.toggles[annotation_type].append(toggle)
 
     def _contains(self, toggle_type, toggle_name):
         """
@@ -109,7 +136,7 @@ class IDA(object):
             present = any(
                 map(
                     lambda t: t.name == toggle_name,
-                    self.toggle_states[toggle_type]
+                    self.toggles[toggle_type]
                 )
             )
         except KeyError:
@@ -121,23 +148,95 @@ class IDA(object):
         helper function for getting the index of a given feature toggle
         in the data structure holding all toggles for this IDA
         """
-        names = [t.name for t in self.toggle_states[toggle_type]]
+        names = [t.name for t in self.toggles[toggle_type]]
         for index, name in enumerate(names):
             if name == toggle_name:
                 return index
 
 
-class ToggleState(object):
+class Toggle(object):
     """
-    Represents an individual feature toggle within an IDA, including all
-    of its state, pulled from the IDA's database.
+    Represents a feature toggle in an IDA, including the current state of the
+    toggle in the database and any additional information defined in the
+    source code (marked via `code-annotations`). To account for the case in which
+    a feature toggle is not yet annotated or has been removed from the database
+    but not the source code, this constructor can handle the case in which
+    only one of the above components could be identified.
     """
 
-    def __init__(self, name, toggle_type, data):
+    def __init__(self, name, state=None, annotations=None):
         self.name = name
+        self.state = state
+        self.annotations = annotations
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def state_msg(self):
+        """
+        The human readable representation of whether or not this toggle is
+        turned on.
+        """
+        if not self.state:
+            return "Not found in database"
+        elif self.state.state:
+            return "On"
+        else:
+            return "Off"
+
+    def data_for_template(self, component, data_name):
+        """
+        A helper function for easily accessing various data from both
+        the ToggleState and ToggleAnnotations for this Toggle for
+        use in templating the confluence report.
+        """
+        if component ==  "state":
+            if self.state:
+                self.state._prepare_state_data_for_template()
+                return self.state._cleaned_state_data[data_name]
+            else:
+                return '-'
+        elif component == "annotation":
+            if self.annotations:
+                self.annotations._prepare_annotation_data_for_template()
+                return self.annotations._cleaned_annotation_data[data_name]
+            else:
+                return '-'
+
+
+class ToggleAnnotation(object):
+    """
+    Represents a group of individual code annotations all referencing the same
+    Toggle.
+    """
+
+    def __init__(self, report_group_id, source_file):
+        self.report_group_id = report_group_id
+        self.source_file = source_file
+        self.line_numbers = []
+        self._raw_annotation_data = {}
+        self._cleaned_annotation_data = collections.defaultdict(str)
+
+    def line_range(self):
+        lines = sorted(self.line_numbers)
+        return lines[0], lines[-1]
+
+    def _prepare_annotation_data_for_template(self):
+        for k, v in self._raw_annotation_data.items():
+            self._cleaned_annotation_data[k] = v
+
+
+class ToggleState(object):
+    """
+    Represents the state of a feature toggle, configured within an IDA,
+    as pulled from the IDA's database.
+    """
+
+    def __init__(self, toggle_type, data):
         self.toggle_type = toggle_type
-        self.data = data
-        self._annotation_link = None
+        self._raw_state_data = data
+        self._cleaned_state_data = collections.defaultdict(str)
 
     @property
     def state(self):
@@ -154,40 +253,20 @@ class ToggleState(object):
                 return False
 
         if self.toggle_type == 'waffle.switch':
-            return self.data['active']
+            return self._raw_state_data['active']
         elif self.toggle_type == 'waffle.flag':
             return (
-                self.data['everyone'] or
-                bool_for_null_numbers(self.data['percent']) or
-                self.data['testing'] or
-                self.data['superusers'] or
-                self.data['staff'] or
-                self.data['authenticated'] or
-                bool(self.data['languages']) or
-                self.data['rollout']
+                self._raw_state_data['everyone'] or
+                bool_for_null_numbers(self._raw_state_data['percent']) or
+                self._raw_state_data['testing'] or
+                self._raw_state_data['superusers'] or
+                self._raw_state_data['staff'] or
+                self._raw_state_data['authenticated'] or
+                bool(self._raw_state_data['languages']) or
+                self._raw_state_data['rollout']
             )
 
-    @property
-    def state_msg(self):
-        if self.state:
-            return "On"
-        else:
-            return "Off"
-
-    @property
-    def annotation_link(self):
-        if self._annotation_link:
-            return self._annotation_link
-        else:
-            return "No source definition found in annotation report"
-
-    @property
-    def data_for_template(self):
-        """
-        Return a dictionary of this Toggle's data for the report, formatted for
-        readability
-        """
-
+    def _prepare_state_data_for_template(self):
         def _format_date(date_string):
             datetime_pattern = re.compile(
                 r'(?P<date>20\d\d-\d\d-\d\d)T(?P<time>\d\d:\d\d):\d*.*'
@@ -203,39 +282,20 @@ class ToggleState(object):
                 offset = 'UTC'
 
             return "{} {} {}".format(date, time, offset)
-
         def null_or_number(n): return n if isinstance(n, int) else 0
 
-        template_data = {}
-        if self.toggle_type == 'waffle.switch':
-            template_data['note'] = self.data['note']
-            template_data['creation_date'] = _format_date(self.data['created'])
-            template_data['last_modified_date'] = _format_date(
-                self.data['modified']
-            )
-        elif self.toggle_type == 'waffle.flag':
-            template_data['note'] = self.data['note']
-            template_data['creation_date'] = _format_date(self.data['created'])
-            template_data['last_modified_date'] = _format_date(
-                self.data['modified']
-            )
-            template_data['everyone'] = self.data['everyone']
-            template_data['percent'] = null_or_number(self.data['percent'])
-            template_data['testing'] = self.data['testing']
-            template_data['superusers'] = self.data['superusers']
-            template_data['staff'] = self.data['staff']
-            template_data['authenticated'] = self.data['authenticated']
-            template_data['languages'] = filter(
-                lambda x: x != '', self.data['languages'].split(',')
-            )
-            template_data['rollout'] = self.data['rollout']
+        for k, v in self._raw_state_data.items():
 
-        return template_data
-
-    def set_annotation_link(self, ida_name, source_file, group_id):
-        slug = slugify('index-rst-{}-{}'.format(source_file, group_id))
-        link = '{}/index.rst#{}'.format(ida_name, slug)
-        self._annotation_link = link
+            if k in ['created', 'modified']:
+                self._cleaned_state_data[k] = _format_date(v)
+            elif k == 'percent':
+                self._cleaned_state_data[k] = null_or_number(v)
+            elif k == 'languages':
+                self._cleaned_state_data[k] = filter(
+                    lambda x: x != '', v.split(',')
+                )
+            else:
+                self._cleaned_state_data[k] = v
 
 
 class Renderer(object):
@@ -259,23 +319,15 @@ class Renderer(object):
                 template.render(**variables)
             )
 
-    def render_report(self, report_data):
-        """
-        Generate the entire feature toggle report
-        """
+    def render_html_report(self, idas, environment_name):
+        report_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
         self.render_file(
-            'index.rst', 'index.tpl',
-            variables={'idas': report_data.keys()}
+            'feature_toggle_report.html', 'report.tpl',
+            variables={
+                'idas': idas, 'environment': environment_name,
+                'report_date': report_date
+            }
         )
-        for ida_name, ida_data in report_data.items():
-            self.render_file(
-                '{}.rst'.format(ida_name), 'ida_base.tpl',
-                variables={'ida': ida_data}
-            )
-            self.render_file(
-                '{}-feature-toggle-state.rst'.format(ida_name), 'ida.tpl',
-                variables={'ida': ida_data}
-            )
 
 
 def add_toggle_state_to_idas(idas, dump_file_path):
@@ -294,10 +346,10 @@ def add_toggle_state_to_idas(idas, dump_file_path):
         idas[ida_name].add_toggle_data(sql_dump_file_path)
 
 
-def link_annotation_reports_to_idas(idas, annotation_report_files_path):
+def add_toggle_annotations_to_idas(idas, annotation_report_files_path):
     """
     Given a dictionary of IDAs to consider, and the path to a directory
-    containing the annotation reporst for feature toggles in said IDAs, read
+    containing the annotation reports for feature toggles in said IDAs, read
     each file, parsing and linking the annotation data to the toggle state
     data in the IDA.
     """
@@ -312,38 +364,63 @@ def link_annotation_reports_to_idas(idas, annotation_report_files_path):
         )
         ida_name = re.search(ida_name_pattern, annotation_file).group('ida')
         idas[ida_name].annotation_report_path = annotation_file_path
-        idas[ida_name].link_toggles_to_annotations()
+        idas[ida_name].add_annotations()
 
 
-def generate_code_annotation_docs(idas, output_path):
+def create_confluence_connection():
     """
-    For each IDA, copy its annotation report into the `output_path` directory
-    and generate code annotation docs. Finally, move this set of docs into
-    its own subdirectory
+    Make sure the required environment variables are set and return a
+    Confluence object, which is used for accessing the Confluence API
     """
-    if os.path.isdir(output_path):
-        shutil.rmtree(output_path)
-    os.mkdir(output_path)
-    for ida_name, ida in idas.items():
-        if not ida.annotation_report_path:
-            continue
-        temp_annotation_report = os.path.join(
-            'reports', os.path.basename(ida.annotation_report_path)
+    confluence_base_url = _get_env_var('CONFLUENCE_BASE_URL')
+    confluence_user_email = _get_env_var('CONFLUENCE_USER_EMAIL')
+    confluence_api_token = _get_env_var('CONFLUENCE_API_TOKEN')
+    confluence = Confluence(
+        confluence_base_url, confluence_user_email, confluence_api_token
+    )
+    return confluence
+
+
+def _get_env_var(env_var_name):
+    value = os.getenv(env_var_name, None)
+    if not value:
+        raise NameError(
+            'Environment variable {} is not set. This is required to '
+            'publish the feature toggle report to Confluence'.format(
+                env_var_name
+            )
         )
-        shutil.copyfile(ida.annotation_report_path, temp_annotation_report)
-        annotation_config = AnnotationConfig('feature_annotations.yml', 0)
-        with io.open(temp_annotation_report, 'r') as annotation_report:
-            report_files = (annotation_report, )
-            annotation_renderer = ReportRenderer(annotation_config, report_files)
-            annotation_renderer.render()
-        ida_doc_path = os.path.join(output_path, ida_name)
-        os.mkdir(ida_doc_path)
-        for rst in [f for f in os.listdir(output_path) if f.endswith('rst')]:
-            src = os.path.join(output_path, rst)
-            target = os.path.join(ida_doc_path, rst)
-            shutil.copyfile(src, target)
-            os.remove(src)
-        os.remove(temp_annotation_report)
+    return value
+
+
+def publish_to_confluence(confluence, report_path, confluence_space_id,
+                          confluence_page_name):
+    """
+    Publish the HTML report found at `report_path` to confluence space
+    `confluence_space_id` and name it `report_name`
+    """
+    with io.open(report_path, 'r') as report_file:
+        feature_toggle_report_html = report_file.read()
+
+    try:
+        publish_result = confluence.update_page(
+            confluence_space_id, confluence_page_name,
+            feature_toggle_report_html
+        )
+    except TypeError:
+        print(
+            "Unable to find a space in Confluence with the following "
+            "id {}".format(confluence_space_id)
+        )
+        sys.exit(1)
+
+    if 'statusCode' in publish_result.keys():
+        print(
+            "Encountered the following error when publishing to Confluence: "
+            "{}.".format(publish_result['message'])
+        )
+        sys.exit(1)
+
 
 
 @click.command()
@@ -358,14 +435,23 @@ def generate_code_annotation_docs(idas, output_path):
 @click.argument(
     'output_path', default="feature_toggle_report",
 )
-def main(sql_dump_path, annotation_report_path, output_path):
-    ida_names = ['credentials', 'ecommerce', 'discovery', 'lms']
+@click.argument(
+    'environment_name', required=True
+)
+def main(sql_dump_path, annotation_report_path, output_path, environment_name):
+    ida_names = ['lms']
     idas = {name: IDA(name) for name in ida_names}
     add_toggle_state_to_idas(idas, sql_dump_path)
-    link_annotation_reports_to_idas(idas, annotation_report_path)
-    generate_code_annotation_docs(idas, output_path)
+    add_toggle_annotations_to_idas(idas, annotation_report_path)
     renderer = Renderer('templates', output_path)
-    renderer.render_report(idas)
+    renderer.render_html_report(idas, environment_name)
+    confluence = create_confluence_connection()
+    confluence_space_id = _get_env_var('CONFLUENCE_SPACE_ID')
+    confluence_page_name = _get_env_var('CONFLUENCE_PAGE_NAME')
+    publish_to_confluence(
+        confluence, 'reports/feature_toggle_report.html', confluence_space_id,
+        confluence_page_name
+    )
 
 
 if __name__ == '__main__':

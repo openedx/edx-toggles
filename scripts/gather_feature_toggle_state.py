@@ -16,6 +16,7 @@ import json
 import os
 import re
 import shutil
+import sys
 
 import click
 from mysql import connector
