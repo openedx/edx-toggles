@@ -10,8 +10,8 @@ annotations:
     - ".. documented_elsewhere_name:":
   feature_toggle:
     - ".. toggle_name:":
-    - ".. toggle_type:":
-        choices: [waffle_flag, waffle_sample, waffle_switch, rollout, group, configuration_model]
+    - ".. toggle_implementation:":
+        choices: [WaffleFlag, WaffleSample, WaffleSwitch, CourseWaffleFlag, ConfigurationModel, DjangoSetting]
     - ".. toggle_default:":
     - ".. toggle_description:":
     - ".. toggle_category:":
