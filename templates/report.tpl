@@ -33,7 +33,7 @@ below will be colorized and displayed accorind the following example:
     <h1>{{ ida_name }}</h1>
 
     <h2>Waffle Flags</h2>
-    {% if ida.toggles['waffle.flag']  %}
+    {% if ida.toggles['WaffleFlag']  %}
         {% include 'flag.tpl' %}
     {% else %}
         No waffle flags detected for this IDA
@@ -41,7 +41,7 @@ below will be colorized and displayed accorind the following example:
 
 
     <h2>Waffle Switches</h2>
-    {% if ida.toggles['waffle.switch']  %}
+    {% if ida.toggles['WaffleSwitch']  %}
         {% include 'switch.tpl' %}
     {% else %}
         No waffle switches detected for this IDA

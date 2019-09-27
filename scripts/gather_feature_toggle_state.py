@@ -83,7 +83,9 @@ def format_as_json_dump(data):
 
     json_data = []
     for table_name, rows in data.items():
-        formatted_table_name = re.sub('_', '.', table_name)
+        formatted_table_name = ''.join(
+            map(lambda s: s.title(), table_name.split('_'))
+        )
 
         for row in rows:
 
