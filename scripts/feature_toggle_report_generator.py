@@ -68,11 +68,12 @@ class IDA(object):
             'Finished collecting annotations for {}'.format(self.name)
         )
         for toggle_type in self.toggles.keys():
-            num = len(filter(lambda t: t.annotations, self.toggles[toggle_type]))
+            annotation_count = len(
+                filter(lambda t: t.annotations, self.toggles[toggle_type])
+            )
             LOGGER.info(
                 '- Collected annotated {}: {}'.format(
-                    # map(lamself.toggles[toggle_type]
-                    toggle_type, num
+                    toggle_type, annotation_count
                 )
             )
 
