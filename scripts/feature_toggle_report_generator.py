@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
 
-from __future__ import print_function
-
 import collections
 import datetime
 import io
 import json
+import logging
 import os
 import re
 import shutil
@@ -17,6 +16,10 @@ import jinja2
 import yaml
 from atlassian import Confluence
 from slugify import slugify
+
+
+LOGGER = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 
 class IDA(object):
@@ -41,6 +44,15 @@ class IDA(object):
             toggle_state = ToggleState(toggle_type, toggle_data)
             toggle = Toggle(toggle_name, toggle_state)
             self.toggles[toggle_type].append(toggle)
+        LOGGER.info(
+            'Finished collecting toggle state for {}'.format(self.name)
+        )
+        for toggle_type in self.toggles.keys():
+            LOGGER.info(
+                '- Collected {}: {}'.format(
+                    toggle_type, len(self.toggles[toggle_type])
+                )
+            )
 
     def add_annotations(self):
         """
@@ -52,6 +64,18 @@ class IDA(object):
         with io.open(self.annotation_report_path, 'r') as annotation_file:
             annotation_contents = yaml.safe_load(annotation_file.read())
             self._add_annotation_data_to_toggle_state(annotation_contents)
+        LOGGER.info(
+            'Finished collecting annotations for {}'.format(self.name)
+        )
+        for toggle_type in self.toggles.keys():
+            annotation_count = len(
+                filter(lambda t: t.annotations, self.toggles[toggle_type])
+            )
+            LOGGER.info(
+                '- Collected annotated {}: {}'.format(
+                    toggle_type, annotation_count
+                )
+            )
 
     def _add_annotation_data_to_toggle_state(self, annotation_file_contents):
         """
@@ -92,8 +116,16 @@ class IDA(object):
             return re.search(r'.. toggle_(.*):', token_string).group(1)
 
         for source_file, annotations in annotation_file_contents.items():
+            LOGGER.info(
+                'Collecting annotation groups for {} in {}'.format(
+                    self.name, source_file
+                )
+            )
 
             annotation_groups = group_annotations(annotations)
+            LOGGER.info(
+                'Collected annotation groups: {}'.format(len(annotation_groups))
+            )
 
             for group in annotation_groups:
 
@@ -117,9 +149,17 @@ class IDA(object):
                     'implementation'
                 ][0]
                 if self._contains(annotation_type, annotation_name):
+                    LOGGER.info(
+                        'Found a match for {}'.format(annotation_name) +
+                        'in the data pulled from the database.'
+                    )
                     i = self._get_index(annotation_type, annotation_name)
                     self.toggles[annotation_type][i].annotations = toggle_annotation
                 else:
+                    LOGGER.info(
+                        'Could not find any matches for {}'.format(annotation_name) +
+                        'in the data pulled from the database.'
+                    )
                     toggle = Toggle(annotation_name, annotations=toggle_annotation)
                     self.toggles[annotation_type].append(toggle)
 
@@ -320,12 +360,17 @@ class Renderer(object):
 
     def render_html_report(self, idas, environment_name):
         report_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+        report_path = 'feature_toggle_report.html'
+        LOGGER.info('Attempting to render HTML report')
         self.render_file(
-            'feature_toggle_report.html', 'report.tpl',
+            report_path, 'report.tpl',
             variables={
                 'idas': idas, 'environment': environment_name,
                 'report_date': report_date
             }
+        )
+        LOGGER.info(
+            'Succesfully rendered HTML report to {}'.format(report_path)
         )
 
 
@@ -342,7 +387,13 @@ def add_toggle_state_to_idas(idas, dump_file_path):
     for sql_dump_file in sql_dump_files:
         sql_dump_file_path = os.path.join(dump_file_path, sql_dump_file)
         ida_name = re.search(ida_name_pattern, sql_dump_file).group('ida')
+        LOGGER.info(
+            'Collecting toggle_state from {} for {}'.format(
+                sql_dump_file_path, ida_name
+            )
+        )
         idas[ida_name].add_toggle_data(sql_dump_file_path)
+        LOGGER.info('=' * 100)
 
 
 def add_toggle_annotations_to_idas(idas, annotation_report_files_path):
@@ -362,8 +413,14 @@ def add_toggle_annotations_to_idas(idas, annotation_report_files_path):
             annotation_report_files_path, annotation_file
         )
         ida_name = re.search(ida_name_pattern, annotation_file).group('ida')
+        LOGGER.info(
+            'Collecting annotations from {} for {}'.format(
+                annotation_file, ida_name
+            )
+        )
         idas[ida_name].annotation_report_path = annotation_file_path
         idas[ida_name].add_annotations()
+        LOGGER.info('=' * 100)
 
 
 def create_confluence_connection():
@@ -401,24 +458,27 @@ def publish_to_confluence(confluence, report_path, confluence_space_id,
     with io.open(report_path, 'r') as report_file:
         feature_toggle_report_html = report_file.read()
 
+    LOGGER.info('Attempting to publish HTML report to Confluence')
     try:
         publish_result = confluence.update_page(
             confluence_space_id, confluence_page_name,
             feature_toggle_report_html
         )
     except TypeError:
-        print(
+        LOGGER.error(
             "Unable to find a space in Confluence with the following "
             "id {}".format(confluence_space_id)
         )
         sys.exit(1)
 
     if 'statusCode' in publish_result.keys():
-        print(
+        LOGGER.error(
             "Encountered the following error when publishing to Confluence: "
             "{}.".format(publish_result['message'])
         )
         sys.exit(1)
+
+    LOGGER.info('Successfully published HTML report to Confluence')
 
 
 
