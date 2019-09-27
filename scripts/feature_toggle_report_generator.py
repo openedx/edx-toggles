@@ -447,10 +447,10 @@ def main(sql_dump_path, annotation_report_path, output_path, environment_name):
     confluence = create_confluence_connection()
     confluence_space_id = _get_env_var('CONFLUENCE_SPACE_ID')
     confluence_page_name = _get_env_var('CONFLUENCE_PAGE_NAME')
-    # publish_to_confluence(
-        # confluence, 'reports/feature_toggle_report.html', confluence_space_id,
-        # confluence_page_name
-    # )
+    publish_to_confluence(
+        confluence, 'reports/feature_toggle_report.html', confluence_space_id,
+        confluence_page_name
+    )
 
 
 if __name__ == '__main__':
