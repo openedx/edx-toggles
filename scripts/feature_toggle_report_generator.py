@@ -294,16 +294,24 @@ class ToggleState(object):
         if self.toggle_type == 'WaffleSwitch':
             return self._raw_state_data['active']
         elif self.toggle_type == 'WaffleFlag':
-            return (
-                self._raw_state_data['everyone'] or
-                bool_for_null_numbers(self._raw_state_data['percent']) or
-                self._raw_state_data['testing'] or
-                self._raw_state_data['superusers'] or
-                self._raw_state_data['staff'] or
-                self._raw_state_data['authenticated'] or
-                bool(self._raw_state_data['languages']) or
-                self._raw_state_data['rollout']
-            )
+            # the WaffleFlag option `everyone` overrides all other options.
+            # However, it must be explicitly set to Yes(True) or No(False)
+            # in the GUI. Otherwise, it is set to Unknown(None) and WaffleFlag
+            # defers to the other options to determine the state of the flag.
+            if self._raw_state_data['everyone']:
+                return True
+            elif self._raw_state_data['everyone'] is False:
+                return False
+            else:
+                return (
+                    bool_for_null_numbers(self._raw_state_data['percent']) or
+                    self._raw_state_data['testing'] or
+                    self._raw_state_data['superusers'] or
+                    self._raw_state_data['staff'] or
+                    self._raw_state_data['authenticated'] or
+                    bool(self._raw_state_data['languages']) or
+                    self._raw_state_data['rollout']
+                )
 
     def _prepare_state_data_for_template(self):
         def _format_date(date_string):
@@ -333,6 +341,14 @@ class ToggleState(object):
                 self._cleaned_state_data[k] = filter(
                     lambda x: x != '', v.split(',')
                 )
+            elif k == 'everyone':
+                if self._raw_state_data['everyone']:
+                    everyone_string = "Yes"
+                elif self._raw_state_data['everyone'] is False:
+                    everyone_string = "No"
+                else:
+                    everyone_string = "Unknown"
+                self._cleaned_state_data[k] = everyone_string
             else:
                 self._cleaned_state_data[k] = v
 
