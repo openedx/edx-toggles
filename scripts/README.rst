@@ -53,6 +53,7 @@ a data dump file for each ida that makes use of waffle feature toggles.
 
 NOTE: To run this against a real environment, you will need to set the following
 environment variables (the defaults work with devstack):
+
 * DB_USER
 * DB_PASSWORD
 * DB_HOST
@@ -74,9 +75,17 @@ values on the command line:
     * annotation-data: path to the code annotation data created above
     * reports: path to write report files into
     * environment: name of the environment/deployment that you are reporting on
+    * --publish: (optional) a flag to specify whether or not to publish
+      the resulting HTML report to Confluence
 
-NOTE: You must have the following environment variables set to be able to
-publish the resulting report to Confluence:
+For example:
+
+.. code:: bash
+
+    python feature_toggle_report_generator.py my_data my_annotations output_dir stage --publish
+
+NOTE: If you choose to publish to Confluence, you must have the following
+environment variables set to be able to do so:
 
 * CONFLUENCE_BASE_URL: the url of the confluence instance you are targeting. For
   example: https://my-company.atlassian.net
