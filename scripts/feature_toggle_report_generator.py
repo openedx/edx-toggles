@@ -497,20 +497,22 @@ def publish_to_confluence(confluence, report_path, confluence_space_id,
 @click.argument(
     'environment_name', required=True
 )
-def main(sql_dump_path, annotation_report_path, output_path, environment_name):
+@click.option('--publish', is_flag=True)
+def main(sql_dump_path, annotation_report_path, output_path, environment_name, publish):
     ida_names = ['lms']
     idas = {name: IDA(name) for name in ida_names}
     add_toggle_state_to_idas(idas, sql_dump_path)
     add_toggle_annotations_to_idas(idas, annotation_report_path)
     renderer = Renderer('templates', output_path)
     renderer.render_html_report(idas, environment_name)
-    confluence = create_confluence_connection()
-    confluence_space_id = _get_env_var('CONFLUENCE_SPACE_ID')
-    confluence_page_name = _get_env_var('CONFLUENCE_PAGE_NAME')
-    publish_to_confluence(
-        confluence, 'reports/feature_toggle_report.html', confluence_space_id,
-        confluence_page_name
-    )
+    if publish:
+        confluence = create_confluence_connection()
+        confluence_space_id = _get_env_var('CONFLUENCE_SPACE_ID')
+        confluence_page_name = _get_env_var('CONFLUENCE_PAGE_NAME')
+        publish_to_confluence(
+            confluence, 'reports/feature_toggle_report.html', confluence_space_id,
+            confluence_page_name
+        )
 
 
 if __name__ == '__main__':
