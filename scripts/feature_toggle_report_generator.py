@@ -291,6 +291,14 @@ class ToggleState(object):
             else:
                 return False
 
+        def bool_for_null_lists(l):
+            if not l:
+                return False
+            else:
+                return any(
+                    map(lambda x: x not in ['null', 'Null', 'NULL', 'None'], l)
+                )
+
         if self.toggle_type == 'WaffleSwitch':
             return self._raw_state_data['active']
         elif self.toggle_type == 'WaffleFlag':
@@ -310,7 +318,9 @@ class ToggleState(object):
                     self._raw_state_data['staff'] or
                     self._raw_state_data['authenticated'] or
                     bool(self._raw_state_data['languages']) or
-                    self._raw_state_data['rollout']
+                    self._raw_state_data['rollout'] or
+                    bool_for_null_lists(self._raw_state_data['users']) or
+                    bool_for_null_lists(self._raw_state_data['groups'])
                 )
 
     def _prepare_state_data_for_template(self):
@@ -349,6 +359,10 @@ class ToggleState(object):
                 else:
                     everyone_string = "Unknown"
                 self._cleaned_state_data[k] = everyone_string
+            elif k in ['users', 'groups']:
+                self._cleaned_state_data[k] = len(filter(
+                    lambda x: x not in ['null', 'Null', 'NULL', 'None'], v
+                ))
             else:
                 self._cleaned_state_data[k] = v
 

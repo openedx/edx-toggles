@@ -162,7 +162,9 @@ def test_toggle_state():
             'staff': False,
             'authenticated': False,
             'languages': False,
-            'rollout': False
+            'rollout': False,
+            'users': ['NULL'],
+            'groups': []
         }
     )
     assert not flag.state

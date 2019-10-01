@@ -8,6 +8,8 @@
         <th>Superusers</th>
         <th>Staff</th>
         <th>Authenticated users</th>
+        <th>Users</th>
+        <th>Groups</th>
         <th>Languages</th>
         <th>Rollout</th>
         <th>First modified</th>
@@ -35,6 +37,8 @@
             <td>{{ toggle.data_for_template('state', 'superusers') }}</td>
             <td>{{ toggle.data_for_template('state', 'staff') }}</td>
             <td>{{ toggle.data_for_template('state', 'authenticated') }}</td>
+            <td>{{ toggle.data_for_template('state', 'users') }}</td>
+            <td>{{ toggle.data_for_template('state', 'groups') }}</td>
             <td>
                 {% if toggle.data_for_template('state', 'languages') == '-' %}
                     -
