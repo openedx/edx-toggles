@@ -292,12 +292,12 @@ class ToggleState(object):
                 return False
 
         def bool_for_null_lists(l):
-            if not l:
-                return False
-            else:
+            if l:
                 return any(
                     map(lambda x: x not in ['null', 'Null', 'NULL', 'None'], l)
                 )
+            else:
+                return False
 
         if self.toggle_type == 'WaffleSwitch':
             return self._raw_state_data['active']
