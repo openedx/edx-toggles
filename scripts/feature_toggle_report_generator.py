@@ -318,7 +318,6 @@ class ToggleState(object):
                     self._raw_state_data['staff'] or
                     self._raw_state_data['authenticated'] or
                     bool(self._raw_state_data['languages']) or
-                    self._raw_state_data['rollout'] or
                     bool_for_null_lists(self._raw_state_data['users']) or
                     bool_for_null_lists(self._raw_state_data['groups'])
                 )
