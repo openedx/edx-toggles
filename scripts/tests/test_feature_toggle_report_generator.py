@@ -162,7 +162,6 @@ def test_toggle_state():
             'staff': False,
             'authenticated': False,
             'languages': False,
-            'rollout': False,
             'users': ['NULL'],
             'groups': []
         }
