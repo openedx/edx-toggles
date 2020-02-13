@@ -25,4 +25,4 @@ tox-battery==0.5.2
 tox==3.14.4
 urllib3==1.25.8           # via requests
 virtualenv==20.0.3        # via tox
-zipp==2.2.0               # via importlib-metadata
+zipp==1.1.0               # via importlib-metadata
