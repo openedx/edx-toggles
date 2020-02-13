@@ -4,24 +4,25 @@
 #
 #    make upgrade
 #
-atlassian-python-api==1.13.29
-certifi==2019.9.11        # via requests
+atlassian-python-api==1.15.3
+certifi==2019.11.28       # via requests
 chardet==3.0.4            # via requests
 click==7.0                # via code-annotations
-code-annotations==0.3.2
-django==1.11.24           # via code-annotations
+code-annotations==0.3.3
+django-waffle==0.12.0
+django==1.11.28
 idna==2.8                 # via requests
-jinja2==2.10.1            # via code-annotations
+jinja2==2.11.1            # via code-annotations
 markupsafe==1.1.1         # via jinja2
 mysql-connector-python-rf==2.2.2
 oauthlib==3.1.0           # via atlassian-python-api, requests-oauthlib
-pbr==5.4.3                # via stevedore
-python-slugify==3.0.3     # via code-annotations
-pytz==2019.2              # via django
-pyyaml==5.1.2             # via code-annotations
-requests-oauthlib==1.2.0  # via atlassian-python-api
+pbr==5.4.4                # via stevedore
+python-slugify==4.0.0     # via code-annotations
+pytz==2019.3
+pyyaml==5.3               # via code-annotations
+requests-oauthlib==1.3.0  # via atlassian-python-api
 requests==2.22.0          # via atlassian-python-api, requests-oauthlib
-six==1.12.0               # via atlassian-python-api, stevedore
-stevedore==1.31.0         # via code-annotations
-text-unidecode==1.2       # via python-slugify
-urllib3==1.25.3           # via requests
+six==1.14.0               # via atlassian-python-api, stevedore
+stevedore==1.32.0         # via code-annotations
+text-unidecode==1.3       # via python-slugify
+urllib3==1.25.8           # via requests
