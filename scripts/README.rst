@@ -46,7 +46,7 @@ command (in the codebase of your choice):
 
 .. code:: bash
 
-    code_annotations static_find_annotations --config_file feature_annotations.yaml
+    code_annotations static_find_annotations --config_file feature_toggle_annotations.yaml
 
 Rename the resulting yml file `<ida_name>_annotation_data.yml`. This step is
 necessary, as the feature toggle report generator will key off the `ida_name`
@@ -66,7 +66,7 @@ generate the feature toggle state data files.
 
 .. code:: bash
 
-    python gather_feature_toggle_state.py feature-toggle-data
+    make feature-toggle-state
 
 This will create a new directory called `feature-toggle-data`, containing
 a data dump file for each ida that makes use of waffle feature toggles.
