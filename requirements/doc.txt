@@ -8,14 +8,14 @@ alabaster==0.7.12         # via sphinx
 atlassian-python-api==1.15.3
 attrs==19.3.0
 babel==2.8.0              # via sphinx
-bleach==3.1.0             # via readme-renderer
+bleach==3.1.1             # via readme-renderer
 certifi==2019.11.28
 chardet==3.0.4
 click==7.0
 code-annotations==0.3.3
 coverage==5.0.3
 django-waffle==0.12.0
-django==1.11.28
+django==1.11.28           # via code-annotations
 doc8==0.8.0
 docutils==0.16            # via doc8, readme-renderer, restructuredtext-lint, sphinx
 edx-sphinx-theme==1.5.0
