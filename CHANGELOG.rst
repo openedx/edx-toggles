@@ -11,6 +11,11 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
+[0.2.0] - 2020-05-27
+~~~~~~~~~~~~~~~~~~~~
+
+* Removed caniusepython3.
+
 [0.2.0] - 2020-05-05
 ~~~~~~~~~~~~~~~~~~~~
 

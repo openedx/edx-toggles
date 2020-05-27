@@ -14,5 +14,6 @@ oeps:
         state: False
         reason: TODO - Implement for this application if appropriate
     oep-7: True
+    oep-18: True
     oep-30:
         state: True
