@@ -4,13 +4,13 @@
 #
 #    make upgrade
 #
-atlassian-python-api==1.15.7  # via -r requirements/scripts.in
-certifi==2020.4.5.1       # via requests
+atlassian-python-api==1.16.0  # via -r requirements/scripts.in
+certifi==2020.4.5.2       # via requests
 chardet==3.0.4            # via requests
 click==7.1.2              # via code-annotations
-code-annotations==0.3.4   # via -r requirements/scripts.in
+code-annotations==0.3.3   # via -c requirements/constraints.txt, -r requirements/scripts.in
 django-waffle==0.12.0     # via -r requirements/base.txt
-django==2.2.12            # via -r requirements/base.txt, code-annotations
+django==2.2.13            # via -c requirements/constraints.txt, -r requirements/base.txt, code-annotations
 idna==2.9                 # via requests
 jinja2==2.11.2            # via code-annotations
 markupsafe==1.1.1         # via jinja2
@@ -21,9 +21,9 @@ python-slugify==4.0.0     # via code-annotations
 pytz==2020.1              # via -r requirements/base.txt, django
 pyyaml==5.3.1             # via code-annotations
 requests-oauthlib==1.3.0  # via atlassian-python-api
-requests==2.23.0          # via atlassian-python-api, requests-oauthlib
+requests==2.24.0          # via atlassian-python-api, requests-oauthlib
 six==1.15.0               # via atlassian-python-api, stevedore
 sqlparse==0.3.1           # via -r requirements/base.txt, django
-stevedore==1.32.0         # via code-annotations
+stevedore==1.32.0         # via -c requirements/constraints.txt, code-annotations
 text-unidecode==1.3       # via python-slugify
 urllib3==1.25.9           # via requests

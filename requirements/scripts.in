@@ -1,5 +1,7 @@
 # Requirements for running the utility scripts found in the 'scripts' directory
 
+-c constraints.txt
+
 -r base.txt               # Core dependencies for this package
 
 atlassian-python-api      # provides an interface for creating Confluence pages
