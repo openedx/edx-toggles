@@ -3,7 +3,7 @@
 """
 Package metadata for edx_toggles.
 """
-from __future__ import absolute_import, print_function
+
 
 import os
 import re

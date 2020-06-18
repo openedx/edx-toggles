@@ -7,7 +7,7 @@
 # https://github.com/edx/edx-toggles/blob/master/scripts/feature_toggle_report_generator.py
 
 
-from __future__ import print_function
+
 
 import datetime
 import decimal
