@@ -11,7 +11,7 @@ annotations:
   feature_toggle:
     - ".. toggle_name:":
     - ".. toggle_implementation:":
-        choices: [WaffleFlag, WaffleSample, WaffleSwitch, CourseWaffleFlag, ConfigurationModel, DjangoSetting]
+        choices: [ExperimentWaffleFlag, WaffleFlag, WaffleSample, WaffleSwitch, CourseWaffleFlag, ConfigurationModel, DjangoSetting]
     - ".. toggle_default:":
     - ".. toggle_description:":
     - ".. toggle_category:":
