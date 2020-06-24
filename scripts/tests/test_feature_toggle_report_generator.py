@@ -1,6 +1,5 @@
-from ..feature_toggle_report_generator import (
-    IDA, Toggle, ToggleState
-)
+from ..ida import IDA
+from ..toggles import Toggle, ToggleState
 
 
 def test_adding_annotation_data():
