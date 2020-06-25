@@ -55,6 +55,17 @@ class Toggle:
             else:
                 return '-'
 
+    def full_data(self):
+        """
+        Returns a dict with all info on toggle state and annotations
+        """
+        full_data = {}
+        self.state._prepare_state_data_for_template()
+        full_data["state"] = self.state._cleaned_state_data
+        self.annotations._prepare_annotation_data_for_template()
+        full_data["annotation"] = self.annotations._cleaned_annotation_data
+
+
 
 class ToggleAnnotation(object):
     """
