@@ -7,10 +7,11 @@ import collections
 import io
 import json
 import logging
+import os
 import re
 import yaml
 
-from .toggles import Toggle, ToggleAnnotation, ToggleState
+from scripts.toggles import Toggle, ToggleAnnotation, ToggleState
 
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
