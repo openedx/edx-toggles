@@ -4,6 +4,8 @@
 import datetime
 import io
 import os
+import csv
+from collections import OrderedDict
 
 import click
 import jinja2
@@ -11,6 +13,46 @@ import jinja2
 
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
+
+
+class CsvRenderer():
+    """
+    Used to output toggles+annotations data as CSS
+    """
+
+    def __init__(self):
+        pass
+
+    def render_flag_csv_report(self, idas):
+        flag_toggles = []
+        header = set()
+        for ida_name, ida in idas.items():
+            for flag_toggle in ida.toggles['WaffleFlag']:
+                data_dict = flag_toggles.full_data
+                header.union(set(data_dict.keys()))
+                flag_toggles.append(data_dict)
+        self.write_csv("test.csv", flag_toggles, header)
+
+    def render_switch_csv_report(self, idas):
+        flag_toggles = []
+        header = set()
+        for ida_name, ida in idas.items():
+            for flag_toggle in ida.toggles['WaffleSwitch']:
+                data_dict = flag_toggles.full_data
+                header.union(set(data_dict.keys()))
+                flag_toggles.append(data_dict)
+        self.write_csv("test.csv", flag_toggles, header)
+
+
+    def write_csv(file_name, data, fieldnames):
+        """
+        writes data_dict in file with name file_name
+        """
+        with open(file_name, "w") as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            for datum in data:
+                writer.writerow(datum)
 
 
 class HtmlRenderer():
