@@ -61,9 +61,12 @@ class Toggle:
         """
         full_data = {}
         self.state._prepare_state_data_for_template()
-        full_data["state"] = self.state._cleaned_state_data
+        for key, value in self.state._cleaned_state_data.items()
+            full_data["state_{}".format(key)] = value
         self.annotations._prepare_annotation_data_for_template()
-        full_data["annotation"] = self.annotations._cleaned_annotation_data
+        for key, value in self.annotations._cleaned_annotation_data.items():
+            full_data["annotation_{}".format(key)] = value
+        return full_data
 
 
 
