@@ -8,7 +8,7 @@ import os
 import click
 import jinja2
 
-from .ida import IDA
+from scripts.ida import IDA, add_toggle_state_to_idas, add_toggle_annotations_to_idas
 
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)

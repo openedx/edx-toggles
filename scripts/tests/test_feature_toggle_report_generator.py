@@ -1,5 +1,5 @@
-from ..ida import IDA
-from ..toggles import Toggle, ToggleState
+from scripts.ida import IDA
+from scripts.toggles import Toggle, ToggleState
 
 
 def test_adding_annotation_data():

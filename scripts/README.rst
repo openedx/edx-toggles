@@ -48,7 +48,7 @@ command (in the codebase of your choice):
 
     code_annotations static_find_annotations --config_file feature_toggle_annotations.yaml
 
-Rename the resulting yml file `<ida_name>_annotation_data.yml`. This step is
+Rename the resulting yml file `<ida_name>-annotations.yml`. This step is
 necessary, as the feature toggle report generator will key off the `ida_name`
 in the filename in order to be able to link this data to the toggle state data
 collected in the next step. Create a directory called `annotation-data`, and
@@ -102,7 +102,7 @@ For example:
 
 .. code:: bash
 
-    python feature_toggle_report_generator.py my_data my_annotations output_dir stage --publish
+    python -m scripts.feature_toggle_report_generator my_data my_annotations output_dir stage --publish
 
 NOTE: If you choose to publish to Confluence, you must have the following
 environment variables set to be able to do so:
