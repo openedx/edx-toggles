@@ -11,6 +11,11 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
+2020-06-29
+~~~~~~~~~~
+* Moved HtmlRenderer to its onw file
+    - getting files ready to add a CsvResnderer
+
 [0.2.0] - 2020-05-27
 ~~~~~~~~~~~~~~~~~~~~
 
