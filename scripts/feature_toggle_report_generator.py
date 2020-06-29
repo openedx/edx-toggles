@@ -8,8 +8,7 @@ import click
 import jinja2
 
 from scripts.ida import IDA, add_toggle_state_to_idas, add_toggle_annotations_to_idas
-from scripts.renderers import HtmlRenderer
-
+from scripts.renderers import CsvRenderer
 
 
 @click.command()
@@ -37,16 +36,9 @@ def main(sql_dump_path, annotation_report_path, output_path, environment_name, s
     if show_state:
         add_toggle_state_to_idas(idas, sql_dump_path)
     add_toggle_annotations_to_idas(idas, annotation_report_path)
-    renderer = HtmlRenderer('templates', output_path)
-    renderer.render_html_report(idas, environment_name, show_state)
-    if publish:
-        confluence = create_confluence_connection()
-        confluence_space_id = _get_env_var('CONFLUENCE_SPACE_ID')
-        confluence_page_name = _get_env_var('CONFLUENCE_PAGE_NAME')
-        publish_to_confluence(
-            confluence, 'reports/feature_toggle_report.html', confluence_space_id,
-            confluence_page_name
-        )
+    renderer = CsvRenderer()
+    renderer.render_flag_csv_report(idas)
+    renderer.render_switch_csv_report(idas)
 
 
 if __name__ == '__main__':

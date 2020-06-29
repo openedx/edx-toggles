@@ -3,7 +3,10 @@ Common classes to represent toggles withint IDAs.
 """
 import collections
 import re
+import logging
 
+LOGGER = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 class Toggle:
     """
@@ -60,14 +63,20 @@ class Toggle:
         Returns a dict with all info on toggle state and annotations
         """
         full_data = {}
-        self.state._prepare_state_data_for_template()
-        for key, value in self.state._cleaned_state_data.items()
-            full_data["state_{}".format(key)] = value
-        self.annotations._prepare_annotation_data_for_template()
-        for key, value in self.annotations._cleaned_annotation_data.items():
-            full_data["annotation_{}".format(key)] = value
-        return full_data
+        if self.state is not None:
+            self.state._prepare_state_data_for_template()
+            for key, value in self.state._cleaned_state_data.items():
+                full_data["state_{}".format(key)] = value
+        else:
+            LOGGER.debug("{} Toggle's state is None".format(self.name))
 
+        if self.annotations is not None:
+            self.annotations._prepare_annotation_data_for_template()
+            for key, value in self.annotations._cleaned_annotation_data.items():
+                full_data["annotation_{}".format(key)] = value
+        else:
+            LOGGER.debug("{} Toggle's annotations is None".format(self.name))
+        return full_data
 
 
 class ToggleAnnotation(object):
