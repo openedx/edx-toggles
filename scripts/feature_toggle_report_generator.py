@@ -29,8 +29,7 @@ from scripts.renderers import CsvRenderer
 @click.option(
     '--show_state', is_flag=True,
 )
-@click.option('--publish', is_flag=True)
-def main(sql_dump_path, annotation_report_path, output_path, environment_name, show_state, publish):
+def main(sql_dump_path, annotation_report_path, output_path, environment_name, show_state):
     ida_names = ['lms']
     idas = {name: IDA(name) for name in ida_names}
     if show_state:
