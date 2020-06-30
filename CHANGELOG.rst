@@ -11,6 +11,11 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
+2020-06-30
+~~~~~~~~~~
+* Added CsvResnderer
+* Removed confluence integration
+
 2020-06-29
 ~~~~~~~~~~
 * Moved HtmlRenderer to its onw file
