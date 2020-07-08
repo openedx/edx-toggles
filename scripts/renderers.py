@@ -15,7 +15,6 @@ import jinja2
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
-
 class CsvRenderer():
     """
     Used to output toggles+annotations data as CSS
@@ -24,24 +23,28 @@ class CsvRenderer():
     def __init__(self):
         pass
 
-    def render_flag_csv_report(self, idas, name_prefix):
+    def render_flag_csv_report(self, envs_data, name_prefix):
         flag_toggles = []
         header = set()
-        for ida_name, ida in idas.items():
-            for flag_toggle in ida.toggles['WaffleFlag']:
-                data_dict = flag_toggle.full_data()
-                header = header.union(set(data_dict.keys()))
-                flag_toggles.append(data_dict)
+        for env, idas in envs_data.items():
+            for ida_name, ida in idas.items():
+                for flag_toggle in ida.toggles['WaffleFlag']:
+                    data_dict = flag_toggle.full_data()
+                    data_dict["env"] = env
+                    header = header.union(set(data_dict.keys()))
+                    flag_toggles.append(data_dict)
         self.write_csv(name_prefix + "_flag.csv", flag_toggles, header)
 
-    def render_switch_csv_report(self, idas, name_prefix):
+    def render_switch_csv_report(self, envs_data, name_prefix):
         switch_toggles = []
         header = set()
-        for ida_name, ida in idas.items():
-            for switch_toggle in ida.toggles['WaffleSwitch']:
-                data_dict = switch_toggle.full_data()
-                header = header.union(set(data_dict.keys()))
-                switch_toggles.append(data_dict)
+        for env, idas in envs_data.items():
+            for ida_name, ida in idas.items():
+                for switch_toggle in ida.toggles['WaffleSwitch']:
+                    data_dict = switch_toggle.full_data()
+                    data_dict["env"] = env
+                    header = header.union(set(data_dict.keys()))
+                    switch_toggles.append(data_dict)
         self.write_csv(name_prefix + "_switch.csv", switch_toggles, header)
 
 

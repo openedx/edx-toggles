@@ -19,14 +19,12 @@ from scripts.renderers import CsvRenderer
 @click.argument(
     'output_path', default="feature_toggle_report",
 )
-@click.argument(
-    'environment_name', required=False, defaul="all"
-)
 @click.option(
     '--show_state', is_flag=True,
 )
-def main(data_path, output_path, environment_name, show_state):
+def main(data_path, output_path, show_state):
     data_dirs = [dir_path for path in os.listdir(data_path) if os.path.isdir(path) and "_env" in path]
+    annotation_dir = os.path.joint(data_path, "annotations")
     data_paths = []
     # if there are dirs in data_path, each dir is assumed to hold data for a different env
     if data_dirs:
@@ -41,11 +39,11 @@ def main(data_path, output_path, environment_name, show_state):
         ida_names = ['lms']
         total_info[env_data_path] = {name: IDA(name) for name in ida_names}
         if show_state:
-            add_toggle_state_to_idas(total_info[env_data_path], sql_dump_path)
-        add_toggle_annotations_to_idas(total_info[env_data_path], annotation_report_path)
-        renderer = CsvRenderer()
-        renderer.render_flag_csv_report(total_info[env_data_path], os.path.dirname(env_data_path))
-        renderer.render_switch_csv_report(total_info[env_data_path], os.path.dirname(env_data_path))
+            add_toggle_state_to_idas(total_info[env_data_path], os.path.join(env_data_path, "sql_dump"))
+        add_toggle_annotations_to_idas(total_info[env_data_path], annotation_dir)
+    renderer = CsvRenderer()
+    renderer.render_flag_csv_report(total_info, os.path.dirname(env_data_path))
+    renderer.render_switch_csv_report(total_info, os.path.dirname(env_data_path))
 
 
 if __name__ == '__main__':

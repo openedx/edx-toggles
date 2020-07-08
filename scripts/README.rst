@@ -91,29 +91,21 @@ Assuming you have the two prerequisites mentioned above, install the
 dependencies for the report generator, and run it, passing the following
 values on the command line:
 
-    * feature-toggle-data: path to the sql dump data created above
-    * annotation-data: path to the code annotation data created above
-    * reports: path to write report files into
-    * environment: name of the environment/deployment that you are reporting on
-    * --publish: (optional) a flag to specify whether or not to publish
-      the resulting HTML report to Confluence
+    * data_path: path to where toggle data is location
+    * output_path: path to where the reports will be written
+    * --show-state: if this is present, the report will include state
+
+IMPORTANT: data_path should include the following directories:
+    - annotations: directory with all annotation files
+    - {env_name}_env: directory holding all the sql data dump files for each ida
 
 For example:
 
 .. code:: bash
 
-    python -m scripts.feature_toggle_report_generator my_data my_annotations output_dir stage --publish
+    python -m scripts.feature_toggle_report_generator data_path output_path --show-state
 
-NOTE: If you choose to publish to Confluence, you must have the following
-environment variables set to be able to do so:
 
-* CONFLUENCE_BASE_URL: the url of the confluence instance you are targeting. For
-  example: https://my-company.atlassian.net
-* CONFLUENCE_API_TOKEN: a token for accessing the confluence api
-* CONFLUENCE_USER_EMAIL: the email address of the user linked to the api token
-* CONFLUENCE_SPACE_ID: the id of the space in confluence where you will publish the report
-* CONFLUENCE_PAGE_NAME: the name of the page that will host your report. If it is not yet
-  created, this tool will create it.
 
 .. code:: bash
 
