@@ -24,7 +24,7 @@ class CsvRenderer():
     def __init__(self):
         pass
 
-    def render_flag_csv_report(self, idas):
+    def render_flag_csv_report(self, idas, name_prefix):
         flag_toggles = []
         header = set()
         for ida_name, ida in idas.items():
@@ -32,9 +32,9 @@ class CsvRenderer():
                 data_dict = flag_toggle.full_data()
                 header = header.union(set(data_dict.keys()))
                 flag_toggles.append(data_dict)
-        self.write_csv("test_flag.csv", flag_toggles, header)
+        self.write_csv(name_prefix + "_flag.csv", flag_toggles, header)
 
-    def render_switch_csv_report(self, idas):
+    def render_switch_csv_report(self, idas, name_prefix):
         switch_toggles = []
         header = set()
         for ida_name, ida in idas.items():
@@ -42,7 +42,7 @@ class CsvRenderer():
                 data_dict = switch_toggle.full_data()
                 header = header.union(set(data_dict.keys()))
                 switch_toggles.append(data_dict)
-        self.write_csv("test_switch.csv", switch_toggles, header)
+        self.write_csv(name_prefix + "_switch.csv", switch_toggles, header)
 
 
     def write_csv(self, file_name, data, fieldnames):
