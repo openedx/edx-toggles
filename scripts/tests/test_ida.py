@@ -2,6 +2,51 @@ from scripts.ida import IDA
 from scripts.toggles import Toggle, ToggleState
 
 
+def test_adding_toggle_data():
+    ida = IDA('my-ida')
+    flag_data =[{'fields': {
+                'authenticated': False,
+                'created': '2017-06-21T16:06:20.833Z',
+                'everyone': True,
+                'groups': [],
+                'languages': '',
+                'modified': '2020-04-01T18:31:24.930Z',
+                'name': 'enable_client_side_checkout',
+                'note': 'This flag determines if the integrated/client-side checkout flow should be enabled.',
+                'percent': None,
+                'rollout': False,
+                'staff': False,
+                'superusers': True,
+                'testing': False,
+                'users': []
+                },
+            'model': 'waffle.flag',
+            'pk': 1
+            },
+            {'fields': {
+                'authenticated': False,
+                'created': '2020-04-01T18:28:47.829Z',
+                'everyone': None,
+                'groups': [],
+                'languages': '',
+                'modified': '2020-04-01T18:28:47.829Z',
+                'name': 'disable_microfrontend_for_basket_page',
+                'note': '',
+                'percent': None,
+                'rollout': False,
+                'staff': False,
+                'superusers': False,
+                'testing': False,
+                'users': []
+                },
+          'model': 'waffle.flag',
+          'pk': 2
+          }
+          ]
+    ida._add_toggle_data(flag_data)
+    assert len(ida.toggles["WaffleFlag"]) == 2
+
+
 def test_adding_annotation_data():
     ida = IDA('my-ida')
     switch_1 = Toggle('the-first-waffle-switch', ToggleState('WaffleSwitch', {}))
@@ -131,38 +176,3 @@ def test_adding_annotation_data():
     assert annotation._raw_annotation_data == expected_data
 
 
-def test_toggle_date_format():
-    switch = ToggleState(
-        'WaffleSwitch',
-        {
-            'note': 'blank',
-            'created': '2019-04-23T14:21:44.765727+00:30',
-            'modified': '2019-04-23T14:21:44.765738Z'
-        }
-    )
-    creation_timestamp = '2019-04-23 14:21 +00:30'
-    modified_timestamp = '2019-04-23 14:21 UTC'
-    switch._prepare_state_data_for_template()
-    assert switch._cleaned_state_data['created'] == creation_timestamp
-    assert switch._cleaned_state_data['modified'] == modified_timestamp
-
-
-def test_toggle_state():
-    flag = ToggleState(
-        'WaffleFlag',
-        {
-            'note': 'blank',
-            'created': '2019-04-23 14:21:44.765727+00:00',
-            'modified': '2019-04-23 14:21:44.765738+00:00',
-            'everyone': False,
-            'percent': 'null',
-            'testing': False,
-            'superusers': False,
-            'staff': False,
-            'authenticated': False,
-            'languages': False,
-            'users': ['NULL'],
-            'groups': []
-        }
-    )
-    assert not flag.state

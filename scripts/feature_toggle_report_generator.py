@@ -3,6 +3,7 @@
 import datetime
 import io
 import os
+import re
 
 import click
 import jinja2
@@ -20,11 +21,11 @@ from scripts.renderers import CsvRenderer
     'output_path', default="feature_toggle_report",
 )
 @click.option(
-    '--show_state', is_flag=True,
+    '--show-state', is_flag=True,
 )
 def main(data_path, output_path, show_state):
-    data_dirs = [dir_path for path in os.listdir(data_path) if os.path.isdir(path) and "_env" in path]
-    annotation_dir = os.path.joint(data_path, "annotations")
+    data_dirs = [path for path in os.listdir(data_path) if os.path.join(data_path, path) and "_env" in path]
+    annotation_dir = os.path.join(data_path, "annotations")
     data_paths = []
     # if there are dirs in data_path, each dir is assumed to hold data for a different env
     if data_dirs:
@@ -34,16 +35,17 @@ def main(data_path, output_path, show_state):
         data_paths.append(data_path)
 
     total_info = {}
+    env_name_pattern = re.compile(r'(?P<env>[a-z0-9]*)_env')
     for env_data_path in data_paths:
+        env_name = re.search(env_name_pattern, env_data_path).group('env')
         # TODO(jinder): this should not be hardcoded, can get this name from file name convention
         ida_names = ['lms']
-        total_info[env_data_path] = {name: IDA(name) for name in ida_names}
+        total_info[env_name] = {}
         if show_state:
-            add_toggle_state_to_idas(total_info[env_data_path], os.path.join(env_data_path, "sql_dump"))
-        add_toggle_annotations_to_idas(total_info[env_data_path], annotation_dir)
+            add_toggle_state_to_idas(total_info[env_name], env_data_path)
+        add_toggle_annotations_to_idas(total_info[env_name], annotation_dir)
     renderer = CsvRenderer()
-    renderer.render_flag_csv_report(total_info, os.path.dirname(env_data_path))
-    renderer.render_switch_csv_report(total_info, os.path.dirname(env_data_path))
+    renderer.render_csv_report(total_info, os.path.join(output_path, "report.csv"))
 
 
 if __name__ == '__main__':

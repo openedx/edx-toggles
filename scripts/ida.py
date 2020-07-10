@@ -31,14 +31,25 @@ class IDA(object):
         feature toggle type in an IDA, parse out the information relevant
         to each toggle and add it to this IDA.
         """
-        with io.open(dump_file_path, 'r', encoding='utf-8') as dump_file:
+        with io.open(dump_file_path) as dump_file:
             dump_contents = json.loads(dump_file.read())
+        self._add_toggle_data(dump_contents)
+
+    def _add_toggle_data(self, dump_contents):
         for row in dump_contents:
             toggle_name = row['fields']['name']
-            toggle_type = row['model']
+            # the naming convention between annotation report and sql dump toggle state data is diff
+            if row['model'] == "waffle.flag":
+                toggle_type = "WaffleFlag"
+            elif row['model'] == "waffle.switch":
+                toggle_type = "WaffleSwitch"
+            else:
+                toggle_type = row['model']
+
             toggle_data = row['fields']
             toggle_state = ToggleState(toggle_type, toggle_data)
             toggle = Toggle(toggle_name, toggle_state)
+
             self.toggles[toggle_type].append(toggle)
         LOGGER.info(
             'Finished collecting toggle state for {}'.format(self.name)
@@ -199,6 +210,8 @@ def add_toggle_state_to_idas(idas, dump_file_path):
     for sql_dump_file in sql_dump_files:
         sql_dump_file_path = os.path.join(dump_file_path, sql_dump_file)
         ida_name = re.search(ida_name_pattern, sql_dump_file).group('ida')
+        if ida_name not in idas:
+            idas[ida_name] = IDA(ida_name)
         LOGGER.info(
             'Collecting toggle_state from {} for {}'.format(
                 sql_dump_file_path, ida_name
@@ -225,6 +238,8 @@ def add_toggle_annotations_to_idas(idas, annotation_report_files_path):
             annotation_report_files_path, annotation_file
         )
         ida_name = re.search(ida_name_pattern, annotation_file).group('ida')
+        if ida_name not in idas:
+            idas[ida_name] = IDA(ida_name)
         LOGGER.info(
             'Collecting annotations from {} for {}'.format(
                 annotation_file, ida_name

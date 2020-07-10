@@ -20,33 +20,76 @@ class CsvRenderer():
     Used to output toggles+annotations data as CSS
     """
 
-    def __init__(self):
-        pass
+    def retrive_toggles(self, envs_data):
+        """
+        Retrive list of individual toggle datums fro envs_data
 
-    def render_flag_csv_report(self, envs_data, name_prefix):
-        flag_toggles = []
-        header = set()
+        envs_data is a a dict with a complex structure. To output to csv, we only care about the individual
+        toggle data and its type. Here we retrive that data and add structral info in as seperate columns 
+        in translation
+        """
+        toggles_data = []
         for env, idas in envs_data.items():
             for ida_name, ida in idas.items():
-                for flag_toggle in ida.toggles['WaffleFlag']:
-                    data_dict = flag_toggle.full_data()
-                    data_dict["env"] = env
-                    header = header.union(set(data_dict.keys()))
-                    flag_toggles.append(data_dict)
-        self.write_csv(name_prefix + "_flag.csv", flag_toggles, header)
+                for toggle_type, toggles in ida.toggles.items():
+                    for toggle in toggles:
+                        data_dict = toggle.full_data()
+                        data_dict["toggle_type"] = toggle_type
+                        data_dict["ida_name"] = ida_name
+                        data_dict["env_name"] = env
+                        toggles_data.append(data_dict)
+        return toggles_data
 
-    def render_switch_csv_report(self, envs_data, name_prefix):
-        switch_toggles = []
+    def prepare_data(self, toggles_data, toggle_types):
+        """
+        Inputs: 
+            - toggles_data: list[dict] dicts should have all relevant data relating to one toggle
+            - types: there are multiple toggle types, so which would you like to ouptut
+                     if set to None, everything will be outputed
+        """
+        # isolate relevant data
+
+        data_to_render = []
+        if toggle_types is None:
+            data_to_render = toggles_data
+        else:
+            if isinstance(toggle_types, str):
+                toggle_types = [toggle_types]
+            for toggle_dict in toggles_data:
+                if toggle_dict["toggle_type"] in toggle_types:
+                    data_to_render.append(toggle_dict)
+
+        # sort data by either annotation_name or state_name
+        sorting_key = lambda datum: (datum.get("annotation_name", ""), datum.get("state_name", ""))
+        data_to_render = sorted(data_to_render, key=sorting_key)
+        # get header from data
         header = set()
-        for env, idas in envs_data.items():
-            for ida_name, ida in idas.items():
-                for switch_toggle in ida.toggles['WaffleSwitch']:
-                    data_dict = switch_toggle.full_data()
-                    data_dict["env"] = env
-                    header = header.union(set(data_dict.keys()))
-                    switch_toggles.append(data_dict)
-        self.write_csv(name_prefix + "_switch.csv", switch_toggles, header)
+        for data in data_to_render:
+            header = header.union(set(data.keys()))
 
+        def sorting_header(key):
+            """
+            there are multiple criterions by which we should sort header keys
+            """
+            sort_by=[]
+            # setting key for keys with name to False causes them to appear first in header
+            sort_by.append(False if "name" in key else True)
+            # show states first
+            sort_by.append(False if "state" in key else True)
+            # finally sort by alphebetical order
+            sort_by.append(key)
+            return tuple(sort_by)
+
+        header = sorted(list(header), key=sorting_header)
+        return header, data_to_render
+
+    def render_csv_report(self, envs_ida_toggle_data, file_path="report.csv", toggle_types=None):
+        """
+        takes data, processes it, and outputs it in csv form
+        """
+        toggles_data = self.retrive_toggles(envs_ida_toggle_data)
+        header, data_to_render = self.prepare_data(toggles_data, toggle_types)
+        self.write_csv(file_path, data_to_render, header)
 
     def write_csv(self, file_name, data, fieldnames):
         """
