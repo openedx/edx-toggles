@@ -23,7 +23,14 @@ from scripts.renderers import CsvRenderer
 @click.option(
     '--show-state', is_flag=True,
 )
-def main(data_path, output_path, show_state):
+@click.option(
+    '--env', default=None, help="specify env name ifyou want data for only one env",
+    )
+@click.option(
+    '--toggle-type', default=None, help="specify toggle type if you only want data on one toggle type",
+
+    )
+def main(data_path, output_path, show_state, env, toggle_type):
 
     # annotations should be located in annotations dir with file named: <ida_name>-annotations.yml
     annotation_dir = os.path.join(data_path, "annotations")
@@ -43,12 +50,14 @@ def main(data_path, output_path, show_state):
     env_name_pattern = re.compile(r'(?P<env>[a-z0-9]*)_env')
     for env_data_path in data_paths:
         env_name = re.search(env_name_pattern, env_data_path).group('env')
+        if env is not None and env_name != env:
+            continue
         total_info[env_name] = {}
         if show_state:
             add_toggle_state_to_idas(total_info[env_name], env_data_path)
         add_toggle_annotations_to_idas(total_info[env_name], annotation_dir)
     renderer = CsvRenderer()
-    renderer.render_csv_report(total_info, os.path.join(output_path, "report.csv"))
+    renderer.render_csv_report(total_info, os.path.join(output_path, "report.csv"), toggle_type)
 
 
 if __name__ == '__main__':
