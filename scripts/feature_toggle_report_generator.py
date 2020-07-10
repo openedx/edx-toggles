@@ -24,8 +24,13 @@ from scripts.renderers import CsvRenderer
     '--show-state', is_flag=True,
 )
 def main(data_path, output_path, show_state):
-    data_dirs = [path for path in os.listdir(data_path) if os.path.join(data_path, path) and "_env" in path]
+
+    # annotations should be located in annotations dir with file named: <ida_name>-annotations.yml
     annotation_dir = os.path.join(data_path, "annotations")
+
+    # each env should have a folder with all its sql dump with toggle data
+    # folders name as: <env_name>_env  #TODO(jinder): should this be <env_name>-env
+    data_dirs = [path for path in os.listdir(data_path) if os.path.join(data_path, path) and "_env" in path]
     data_paths = []
     # if there are dirs in data_path, each dir is assumed to hold data for a different env
     if data_dirs:
@@ -38,8 +43,6 @@ def main(data_path, output_path, show_state):
     env_name_pattern = re.compile(r'(?P<env>[a-z0-9]*)_env')
     for env_data_path in data_paths:
         env_name = re.search(env_name_pattern, env_data_path).group('env')
-        # TODO(jinder): this should not be hardcoded, can get this name from file name convention
-        ida_names = ['lms']
         total_info[env_name] = {}
         if show_state:
             add_toggle_state_to_idas(total_info[env_name], env_data_path)
