@@ -32,13 +32,18 @@ class IDA(object):
         to each toggle and add it to this IDA.
         """
         with io.open(dump_file_path) as dump_file:
-            dump_contents = json.loads(dump_file.read())
+            try:
+                dump_contents = json.loads(dump_file.read())
+            except:
+                LOGGER.info(
+                'Loading json file at: {} failed, check toogle data in file is formated correctly'.format(dump_file_path)
+                )
         self._add_toggle_data(dump_contents)
 
     def _add_toggle_data(self, dump_contents):
         for row in dump_contents:
             toggle_name = row['fields']['name']
-            # the naming convention between annotation report and sql dump toggle state data is diff
+            # convert sql dump model name to annotation report toggle type name
             if row['model'] == "waffle.flag":
                 toggle_type = "WaffleFlag"
             elif row['model'] == "waffle.switch":
@@ -205,11 +210,11 @@ def add_toggle_state_to_idas(idas, dump_file_path):
     """
     ida_name_pattern = re.compile(r'(?P<ida>[a-z]*)_.*json')
     sql_dump_files = [
-        f for f in os.listdir(dump_file_path) if re.search(ida_name_pattern, f)
+        f for f in os.listdir(dump_file_path) if ida_name_pattern.search(f)
     ]
     for sql_dump_file in sql_dump_files:
         sql_dump_file_path = os.path.join(dump_file_path, sql_dump_file)
-        ida_name = re.search(ida_name_pattern, sql_dump_file).group('ida')
+        ida_name = ida_name_pattern.search(sql_dump_file).group('ida')
         if ida_name not in idas:
             idas[ida_name] = IDA(ida_name)
         LOGGER.info(
@@ -228,16 +233,16 @@ def add_toggle_annotations_to_idas(idas, annotation_report_files_path):
     each file, parsing and linking the annotation data to the toggle state
     data in the IDA.
     """
-    ida_name_pattern = re.compile(r'(?P<ida>[a-z]*)-annotations.yml')
+    ida_name_pattern = re.compile(r'(?P<ida>[a-z]*)_annotations.yml')
     annotation_files = [
         f for f in os.listdir(annotation_report_files_path)
-        if re.search(ida_name_pattern, f)
+        if rida_name_pattern.search(f)
     ]
     for annotation_file in annotation_files:
         annotation_file_path = os.path.join(
             annotation_report_files_path, annotation_file
         )
-        ida_name = re.search(ida_name_pattern, annotation_file).group('ida')
+        ida_name = ida_name_pattern.search(annotation_file).group('ida')
         if ida_name not in idas:
             idas[ida_name] = IDA(ida_name)
         LOGGER.info(

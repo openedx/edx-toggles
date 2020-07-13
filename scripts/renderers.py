@@ -20,13 +20,12 @@ class CsvRenderer():
     Used to output toggles+annotations data as CSS
     """
 
-    def retrive_toggles(self, envs_data):
+    def transform_toggle_data_for_csv(self, envs_data):
         """
-        Retrive list of individual toggle datums fro envs_data
+        Retrieve list of individual toggle datums from envs_data
 
-        envs_data is a a dict with a complex structure. To output to csv, we only care about the individual
-        toggle data and its type. Here we retrive that data and add structral info in as seperate columns 
-        in translation
+        envs_data is a dict with a complex structure of environments, idas and toggles by toggle type.
+        Return a flattened list for each toggle in a specific environment in preparation for csv output.
         """
         toggles_data = []
         for env, idas in envs_data.items():
@@ -40,15 +39,17 @@ class CsvRenderer():
                         toggles_data.append(data_dict)
         return toggles_data
 
-    def prepare_data(self, toggles_data, toggle_types):
+    def filter_and_sort_toggles(self, toggles_data, toggle_type_filter=None):
         """
-        Inputs: 
+        Arguments:
             - toggles_data: list[dict] dicts should have all relevant data relating to one toggle
-            - types: there are multiple toggle types, so which would you like to ouptut
+            - toggle_type_filter: list of type names: there are multiple toggle types, so which would you like to output
                      if set to None, everything will be outputed
+        Returns:
+            - list: sorted list of filtered toggle data.
         """
-        # isolate relevant data
 
+        # filter toggles by toggle_types
         data_to_render = []
         if toggle_types is None:
             data_to_render = toggles_data
@@ -62,10 +63,12 @@ class CsvRenderer():
         # sort data by either annotation_name or state_name
         sorting_key = lambda datum: (datum.get("annotation_name", ""), datum.get("state_name", ""))
         data_to_render = sorted(data_to_render, key=sorting_key)
+
+    def get_sorted_headers_from_toggles(flattened_toggles_data)
         # get header from data
         header = set()
-        for data in data_to_render:
-            header = header.union(set(data.keys()))
+        for datum in flattened_toggles_data:
+            header = header.union(set(datum.keys()))
 
         def sorting_header(key):
             """
@@ -81,14 +84,15 @@ class CsvRenderer():
             return tuple(sort_by)
 
         header = sorted(list(header), key=sorting_header)
-        return header, data_to_render
+        return header
 
     def render_csv_report(self, envs_ida_toggle_data, file_path="report.csv", toggle_types=None):
         """
         takes data, processes it, and outputs it in csv form
         """
-        toggles_data = self.retrive_toggles(envs_ida_toggle_data)
-        header, data_to_render = self.prepare_data(toggles_data, toggle_types)
+        toggles_data = self.transform_toggle_data_for_csv(envs_ida_toggle_data)
+        data_to_render = self.filter_and_sort_toggles(toggles_data, toggle_types)
+        header = self.get_sorted_headers_from_toggles(data_to_render)
         self.write_csv(file_path, data_to_render, header)
 
     def write_csv(self, file_name, data, fieldnames):
