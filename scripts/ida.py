@@ -38,6 +38,7 @@ class IDA(object):
                 LOGGER.info(
                 'Loading json file at: {} failed, check toogle data in file is formated correctly'.format(dump_file_path)
                 )
+                raise
         self._add_toggle_data(dump_contents)
 
     def _add_toggle_data(self, dump_contents):
