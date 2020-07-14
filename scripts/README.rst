@@ -91,10 +91,10 @@ Assuming you have the two prerequisites mentioned above, install the
 dependencies for the report generator, and run it, passing the following
 values on the command line:
 
-    * annotations_dir: path to where toggle data is location
-    * toggle_data_dir:  a path to directory containing directories containing json files with sql data dump
-    * output_path: path to where the reports will be written
-    * --show-state: if this is present, the report will include toggle state
+    * annotations_dir(required argument): path to where toggle data is location
+    * toggle_data_dir(required argument):  a path to directory containing directories containing json files with sql data dump
+    * output_path(required argument): path to where the reports will be written
+    * --show-state(optional flag): if this is present, the report will include toggle state
 
 IMPORTANT: Example of data structure:
     - annotations_dir/
