@@ -98,6 +98,8 @@ class ToggleAnnotation(object):
         return lines[0], lines[-1]
 
     def _prepare_annotation_data(self):
+        self._cleaned_annotation_data["source_file"] = self.source_file
+        self._cleaned_annotation_data["line_number"] = self.line_numbers
         for k, v in self._raw_annotation_data.items():
             if k == 'implementation':
                 self._cleaned_annotation_data[k] = v[0]
