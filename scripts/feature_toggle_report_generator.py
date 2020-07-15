@@ -26,14 +26,27 @@ from scripts.renderers import CsvRenderer
 )
 @click.option(
     '--show-state', is_flag=True,
+    help="if this is present, the report will include toggle state",
 )
 @click.option(
-    '--env', default=None, help="specify env name ifyou want data for only one env",
+    '--env', default=None,
+    help='specify env name ifyou want data for only one env',
     )
 @click.option(
-    '--toggle-type', default=None, help="specify toggle type if you only want data on one toggle type",
+    '--toggle-type', default=None,
+    help='specify toggle type if you only want data on one toggle type',
     )
 def main(annotations_dir, toggle_data_dir, output_path, show_state, env, toggle_type):
+    """
+    Script to process annotation and state data for toggles and output it a report.
+
+    \b
+    Arguments:
+        * annotations_dir: path to where toggle data is location
+        * toggle_data_dir:  a path to directory containing directories containing json files with sql data dump
+        * output_path: path to where the reports will be written
+    """
+
     # each env should have a folder with all its sql dump with toggle data
     # folders name as: <env_name>_env
     # example: prod_env, stage_env, devstack_env

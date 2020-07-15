@@ -91,23 +91,6 @@ Assuming you have the two prerequisites mentioned above, install the
 dependencies for the report generator, and run it, passing the following
 values on the command line:
 
-    * annotations_dir(required argument): path to where toggle data is location
-    * toggle_data_dir(required argument):  a path to directory containing directories containing json files with sql data dump
-    * output_path(required argument): path to where the reports will be written
-    * --show-state(optional flag): if this is present, the report will include toggle state
-
-IMPORTANT: Example of data structure:
-    - annotations_dir/
-        -  lms_annotations.yml
-        - discovery_annotations.yml
-    - toggle_data_dir
-        - prod_env/
-            - lms_waffle.json
-            - discovery_waffle.json
-        - stage_env
-            - lms_waffle.json
-            - discovery_waffle.json
-    The files shoulod follow the pattern of {ida_name}_annotations.yml or {ida_name}_*.json
 
 For example:
 
@@ -121,6 +104,19 @@ For example:
 
     make requirements
     python -m scripts.feature_toggle_report_generator annotation_dir_path toggle_data_dir_path output_path --show-state
+
+IMPORTANT: Example of data structure:
+    - annotations_dir/
+        -  lms_annotations.yml
+        - discovery_annotations.yml
+    - toggle_data_dir
+        - prod_env/
+            - lms_waffle.json
+            - discovery_waffle.json
+        - stage_env
+            - lms_waffle.json
+            - discovery_waffle.json
+    The files shoulod follow the pattern of {ida_name}_annotations.yml or {ida_name}_*.json
 
 
 .. _code_annotations: https://www.github.com/edx/code-annotations
