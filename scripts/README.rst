@@ -94,6 +94,12 @@ values on the command line:
 
 For example:
 
+To get help output for script:
+
+.. code:: bash
+
+    python -m scripts.feature_toggle_report_generator --help
+
 To generate report with everything:
 
 .. code:: bash
