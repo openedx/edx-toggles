@@ -5,6 +5,7 @@ import collections
 import re
 import logging
 
+
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
@@ -47,13 +48,13 @@ class Toggle:
         """
         if component ==  "state":
             if self.state:
-                self.state._prepare_state_data_for_template()
+                self.state._prepare_state_data()
                 return self.state._cleaned_state_data[data_name]
             else:
                 return '-'
         elif component == "annotation":
             if self.annotations:
-                self.annotations._prepare_annotation_data_for_template()
+                self.annotations._prepare_annotation_data()
                 return self.annotations._cleaned_annotation_data[data_name]
             else:
                 return '-'
@@ -63,15 +64,15 @@ class Toggle:
         Returns a dict with all info on toggle state and annotations
         """
         full_data = {}
-        if self.state is not None:
-            self.state._prepare_state_data_for_template()
+        if self.state:
+            self.state._prepare_state_data()
             for key, value in self.state._cleaned_state_data.items():
                 full_data["state_{}".format(key)] = value
         else:
             LOGGER.debug("{} Toggle's state is None".format(self.name))
 
-        if self.annotations is not None:
-            self.annotations._prepare_annotation_data_for_template()
+        if self.annotations:
+            self.annotations._prepare_annotation_data()
             for key, value in self.annotations._cleaned_annotation_data.items():
                 full_data["annotation_{}".format(key)] = value
         else:
@@ -96,7 +97,9 @@ class ToggleAnnotation(object):
         lines = sorted(self.line_numbers)
         return lines[0], lines[-1]
 
-    def _prepare_annotation_data_for_template(self):
+    def _prepare_annotation_data(self):
+        self._cleaned_annotation_data["source_file"] = self.source_file
+        self._cleaned_annotation_data["line_number"] = self.line_numbers
         for k, v in self._raw_annotation_data.items():
             if k == 'implementation':
                 self._cleaned_annotation_data[k] = v[0]
@@ -160,7 +163,7 @@ class ToggleState(object):
                     bool_for_null_lists(self._raw_state_data['groups'])
                 )
 
-    def _prepare_state_data_for_template(self):
+    def _prepare_state_data(self):
         def _format_date(date_string):
             datetime_pattern = re.compile(
                 r'(?P<date>20\d\d-\d\d-\d\d)T(?P<time>\d\d:\d\d):\d*.*'
@@ -197,8 +200,8 @@ class ToggleState(object):
                     everyone_string = "Unknown"
                 self._cleaned_state_data[k] = everyone_string
             elif k in ['users', 'groups']:
-                self._cleaned_state_data[k] = len(filter(
+                self._cleaned_state_data[k] = len(list(filter(
                     lambda x: x not in ['null', 'Null', 'NULL', 'None'], v
-                ))
+                )))
             else:
                 self._cleaned_state_data[k] = v

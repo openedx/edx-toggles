@@ -91,34 +91,32 @@ Assuming you have the two prerequisites mentioned above, install the
 dependencies for the report generator, and run it, passing the following
 values on the command line:
 
-    * feature-toggle-data: path to the sql dump data created above
-    * annotation-data: path to the code annotation data created above
-    * reports: path to write report files into
-    * environment: name of the environment/deployment that you are reporting on
-    * --publish: (optional) a flag to specify whether or not to publish
-      the resulting HTML report to Confluence
 
 For example:
 
 .. code:: bash
 
-    python -m scripts.feature_toggle_report_generator my_data my_annotations output_dir stage --publish
+    python -m scripts.feature_toggle_report_generator annotation_dir_path toggle_data_dir_path output_path --show-state
 
-NOTE: If you choose to publish to Confluence, you must have the following
-environment variables set to be able to do so:
 
-* CONFLUENCE_BASE_URL: the url of the confluence instance you are targeting. For
-  example: https://my-company.atlassian.net
-* CONFLUENCE_API_TOKEN: a token for accessing the confluence api
-* CONFLUENCE_USER_EMAIL: the email address of the user linked to the api token
-* CONFLUENCE_SPACE_ID: the id of the space in confluence where you will publish the report
-* CONFLUENCE_PAGE_NAME: the name of the page that will host your report. If it is not yet
-  created, this tool will create it.
 
 .. code:: bash
 
     make requirements
-    python scripts/feature_toggle_report_generator.py feature-toggle-data annotation-data reports environment
+    python -m scripts.feature_toggle_report_generator annotation_dir_path toggle_data_dir_path output_path --show-state
+
+IMPORTANT: Example of data structure:
+    - annotations_dir/
+        -  lms_annotations.yml
+        - discovery_annotations.yml
+    - toggle_data_dir
+        - prod_env/
+            - lms_waffle.json
+            - discovery_waffle.json
+        - stage_env
+            - lms_waffle.json
+            - discovery_waffle.json
+    The files shoulod follow the pattern of {ida_name}_annotations.yml or {ida_name}_*.json
 
 
 .. _code_annotations: https://www.github.com/edx/code-annotations

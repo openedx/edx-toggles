@@ -3,6 +3,7 @@
 import datetime
 import io
 import os
+import re
 
 import click
 import jinja2
@@ -13,31 +14,62 @@ from scripts.renderers import CsvRenderer
 
 @click.command()
 @click.argument(
-    'sql_dump_path',
+    'annotations_dir',
     type=click.Path(exists=True),
 )
 @click.argument(
-    'annotation_report_path',
+    'toggle_data_dir',
     type=click.Path(exists=True),
 )
 @click.argument(
     'output_path', default="feature_toggle_report",
 )
-@click.argument(
-    'environment_name', required=True
+@click.option(
+    '--show-state', is_flag=True,
+    help="if this is present, the report will include toggle state",
 )
 @click.option(
-    '--show_state', is_flag=True,
-)
-def main(sql_dump_path, annotation_report_path, output_path, environment_name, show_state):
-    ida_names = ['lms']
-    idas = {name: IDA(name) for name in ida_names}
-    if show_state:
-        add_toggle_state_to_idas(idas, sql_dump_path)
-    add_toggle_annotations_to_idas(idas, annotation_report_path)
+    '--env', default=None,
+    help='specify env name ifyou want data for only one env',
+    )
+@click.option(
+    '--toggle-type', default=None,
+    help='specify toggle type if you only want data on one toggle type',
+    )
+def main(annotations_dir, toggle_data_dir, output_path, show_state, env, toggle_type):
+    """
+    Script to process annotation and state data for toggles and output it a report.
+
+    \b
+    Arguments:
+        * annotations_dir: path to where toggle data is location
+        * toggle_data_dir:  a path to directory containing directories containing json files with sql data dump
+        * output_path: path to where the reports will be written
+    """
+
+    # each env should have a folder with all its sql dump with toggle data
+    # folders name as: <env_name>_env
+    # example: prod_env, stage_env, devstack_env
+    env_name_pattern = re.compile(r'(?P<env>[a-z0-9]*)_env')
+
+    # find all the dirs in toggle_data_dir whose name match pattern
+    envs_data_paths = []
+    toggle_data_dir_content = os.listdir(toggle_data_dir)
+    for path in toggle_data_dir_content:
+        env_name = env_name_pattern.search(path).group('env')
+        if os.path.isdir(os.path.join(toggle_data_dir, path)) and env_name:
+            envs_data_paths.append((os.path.join(toggle_data_dir, path), env_name))
+
+    total_info = {}
+    for env_data_path, env_name in env_data_paths:
+        if env is not None and env_name != env:
+            continue
+        total_info[env_name] = {}
+        if show_state:
+            add_toggle_state_to_idas(total_info[env_name], env_data_path)
+        add_toggle_annotations_to_idas(total_info[env_name], annotations_dir)
     renderer = CsvRenderer()
-    renderer.render_flag_csv_report(idas)
-    renderer.render_switch_csv_report(idas)
+    renderer.render_csv_report(total_info, os.path.join(output_path, "report.csv"), toggle_type)
 
 
 if __name__ == '__main__':

@@ -11,6 +11,10 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
+2020-07-08
+~~~~~~~~~~
+* Modified scripts/feature_toggle_report_generator to work based on envs
+
 2020-06-30
 ~~~~~~~~~~
 * Added CsvResnderer
