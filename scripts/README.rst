@@ -100,7 +100,8 @@ To generate report with everything:
 
     python -m scripts.feature_toggle_report_generator annotation_dir_path toggle_data_dir_path output_path --show-state
 
-To generate report with data for specific env and toggle type
+To generate report with data for specific env and toggle type:
+
 .. code:: bash
 
     python -m scripts.feature_toggle_report_generator annotation_dir_path toggle_data_dir_path output_path --show-state --env devstack --env prod --toggle-type WaffleFlag --toggle-type WaffleSwitch
