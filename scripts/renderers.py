@@ -62,7 +62,7 @@ class CsvRenderer():
                     data_to_render.append(toggle_dict)
 
         # sort data by either annotation_name or state_name
-        sorting_key = lambda datum: (datum.get("annotation_name", ""), datum.get("state_name", ""))
+        sorting_key = lambda datum: datum.get("name", "")
         return sorted(data_to_render, key=sorting_key)
 
     def get_sorted_headers_from_toggles(self, flattened_toggles_data):
@@ -70,6 +70,10 @@ class CsvRenderer():
         header = set()
         for datum in flattened_toggles_data:
             header = header.union(set(datum.keys()))
+
+        # removing "name" from header so that it is not part of sorting later
+        # will add it back as first column before returning header list
+        header.remove("name")
 
         def sorting_header(key):
             """
@@ -85,6 +89,7 @@ class CsvRenderer():
             return tuple(sort_by)
 
         header = sorted(list(header), key=sorting_header)
+        header.insert(0, "name")
         return header
 
     def render_csv_report(self, envs_ida_toggle_data, file_path="report.csv", toggle_types=None):
