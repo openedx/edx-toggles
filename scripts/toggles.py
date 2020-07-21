@@ -90,6 +90,7 @@ class ToggleAnnotation(object):
         self.report_group_id = report_group_id
         self.source_file = source_file
         self.line_numbers = []
+        self.github_url = None
         self._raw_annotation_data = {}
         self._cleaned_annotation_data = collections.defaultdict(str)
 
@@ -100,6 +101,7 @@ class ToggleAnnotation(object):
     def _prepare_annotation_data(self):
         self._cleaned_annotation_data["source_file"] = self.source_file
         self._cleaned_annotation_data["line_number"] = self.line_numbers
+        self._cleaned_annotation_data["url"] = self.github_url
         for k, v in self._raw_annotation_data.items():
             if k == 'implementation':
                 self._cleaned_annotation_data[k] = v[0]

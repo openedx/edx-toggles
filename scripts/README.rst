@@ -94,16 +94,16 @@ values on the command line:
 
 For example:
 
+To generate report with everything:
+
 .. code:: bash
 
     python -m scripts.feature_toggle_report_generator annotation_dir_path toggle_data_dir_path output_path --show-state
 
-
-
+To generate report with data for specific env and toggle type
 .. code:: bash
 
-    make requirements
-    python -m scripts.feature_toggle_report_generator annotation_dir_path toggle_data_dir_path output_path --show-state
+    python -m scripts.feature_toggle_report_generator annotation_dir_path toggle_data_dir_path output_path --show-state --env devstack --env prod --toggle-type WaffleFlag --toggle-type WaffleSwitch
 
 IMPORTANT: Example of data structure:
     - annotations_dir/
@@ -116,7 +116,7 @@ IMPORTANT: Example of data structure:
         - stage_env
             - lms_waffle.json
             - discovery_waffle.json
-    The files shoulod follow the pattern of {ida_name}_annotations.yml or {ida_name}_*.json
+    The files shoulod follow the pattern of {ida_name}_annotations.yml or {ida_name}_*.json. ida_name is used by report generator and is included in final output. TODO(jinder): does this comment make sense
 
 
 .. _code_annotations: https://www.github.com/edx/code-annotations

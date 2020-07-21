@@ -6,6 +6,7 @@ import io
 import os
 import csv
 import logging
+import pdb
 from collections import OrderedDict
 
 import click
@@ -51,13 +52,13 @@ class CsvRenderer():
 
         # filter toggles by toggle_types
         data_to_render = []
-        if not toggle_types:
+        if not toggle_type_filter:
             data_to_render = toggles_data
         else:
-            if isinstance(toggle_types, str):
-                toggle_types = [toggle_types]
+            if isinstance(toggle_type_filter, str):
+                toggle_type_filter = [toggle_type_filter]
             for toggle_dict in toggles_data:
-                if toggle_dict["toggle_type"] in toggle_types:
+                if toggle_dict["toggle_type"] in toggle_type_filter:
                     data_to_render.append(toggle_dict)
 
         # sort data by either annotation_name or state_name
