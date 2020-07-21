@@ -35,7 +35,7 @@ class IDA(object):
             try:
                 dump_contents = json.loads(dump_file.read())
             except:
-                LOGGER.info(
+                LOGGER.error(
                 'Loading json file at: {} failed, check toogle data in file is formated correctly'.format(dump_file_path)
                 )
                 raise
@@ -237,7 +237,7 @@ def add_toggle_annotations_to_idas(idas, annotation_report_files_path):
     ida_name_pattern = re.compile(r'(?P<ida>[a-z]*)_annotations.yml')
     annotation_files = [
         f for f in os.listdir(annotation_report_files_path)
-        if rida_name_pattern.search(f)
+        if ida_name_pattern.search(f)
     ]
     for annotation_file in annotation_files:
         annotation_file_path = os.path.join(

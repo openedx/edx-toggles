@@ -51,7 +51,7 @@ class CsvRenderer():
 
         # filter toggles by toggle_types
         data_to_render = []
-        if toggle_types is None:
+        if not toggle_types:
             data_to_render = toggles_data
         else:
             if isinstance(toggle_types, str):
@@ -62,9 +62,9 @@ class CsvRenderer():
 
         # sort data by either annotation_name or state_name
         sorting_key = lambda datum: (datum.get("annotation_name", ""), datum.get("state_name", ""))
-        data_to_render = sorted(data_to_render, key=sorting_key)
+        return data_to_render = sorted(data_to_render, key=sorting_key)
 
-    def get_sorted_headers_from_toggles(flattened_toggles_data):
+    def get_sorted_headers_from_toggles(self, flattened_toggles_data):
         # get header from data
         header = set()
         for datum in flattened_toggles_data:
