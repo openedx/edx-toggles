@@ -10,7 +10,6 @@ from collections import defaultdict
 
 import click
 import jinja2
-import pdb
 
 from scripts.ida import IDA, add_toggle_state_to_idas, add_toggle_annotations_to_idas
 from scripts.renderers import CsvRenderer

@@ -150,6 +150,8 @@ class IDA(object):
                 toggle_annotation.line_numbers = [
                     a['line_number'] for a in group
                 ]
+
+                # its useful to have a quick link to go to see the annotations in the code base
                 if 'github_url' in self.configuration.keys():
                     url = "{github_repo_url}/blob/master/{source_file}#L{line_number}".format(
                         github_repo_url=self.configuration['github_url'],
@@ -221,8 +223,6 @@ def add_toggle_state_to_idas(idas, dump_file_path, idas_configuration=None):
     sql_dump_files = [
         f for f in os.listdir(dump_file_path) if ida_name_pattern.search(f)
     ]
-    print("Info: # of dump files: {}, named: {}".format(len(sql_dump_files), "/".join(sql_dump_files)))
-
     for sql_dump_file in sql_dump_files:
         sql_dump_file_path = os.path.join(dump_file_path, sql_dump_file)
         ida_name = ida_name_pattern.search(sql_dump_file).group('ida')
@@ -244,13 +244,11 @@ def add_toggle_annotations_to_idas(idas, annotation_report_files_path, idas_conf
     each file, parsing and linking the annotation data to the toggle state
     data in the IDA.
     """
-    # TODO(jinder): this 
     ida_name_pattern = re.compile(r'(?P<ida>[a-z]*)[-_]annotations.ya?ml')
     annotation_files = [
         f for f in os.listdir(annotation_report_files_path)
         if ida_name_pattern.search(f)
     ]
-    print("Info: # of annotation files: {}, named: {}".format(len(annotation_files), "/".join(annotation_files)))
     for annotation_file in annotation_files:
         annotation_file_path = os.path.join(
             annotation_report_files_path, annotation_file

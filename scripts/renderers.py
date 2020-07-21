@@ -6,7 +6,6 @@ import io
 import os
 import csv
 import logging
-import pdb
 from collections import OrderedDict
 
 import click
