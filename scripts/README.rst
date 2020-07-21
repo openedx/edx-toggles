@@ -123,7 +123,9 @@ IMPORTANT: Example of data structure:
         - stage_env
             - lms_waffle.json
             - discovery_waffle.json
-    The files shoulod follow the pattern of {ida_name}_annotations.yml or {ida_name}_*.json. ida_name is used by report generator and is included in final output. TODO(jinder): does this comment make sense
+    The files shoulod follow the pattern of {ida_name}_annotations.yml or {ida_name}_*.json.
+    Note: ida_name is used by report generator and is included in final output.
+
 
 Configuration file for report generator script:
 
