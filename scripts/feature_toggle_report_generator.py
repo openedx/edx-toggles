@@ -53,12 +53,12 @@ def main(annotations_dir, toggle_data_dir, output_path, show_state, env, toggle_
     env_name_pattern = re.compile(r'(?P<env>[a-z0-9]*)_env')
 
     # find all the dirs in toggle_data_dir whose name match pattern
-    data_paths = []
+    envs_data_paths = []
     toggle_data_dir_content = os.listdir(toggle_data_dir)
     for path in toggle_data_dir_content:
         env_name = env_name_pattern.search(path).group('env')
-        if os.path.is_dir(os.path.join(toggle_data_dir, path)) and env_name:
-            data_paths.append((path, env_name))
+        if os.path.isdir(os.path.join(toggle_data_dir, path)) and env_name:
+            envs_data_paths.append((os.path.join(toggle_data_dir, path), env_name))
 
     total_info = {}
     for env_data_path, env_name in env_data_paths:
