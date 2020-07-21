@@ -137,6 +137,7 @@ Valid keys in configuration file:
 
 valid keys in ida settings:
     - github_url: url to github repository for that ida
+    - rename: in case you want the report to call the ida by a different ida_name. example: lsm -> edxapp
 
 
 .. _code_annotations: https://www.github.com/edx/code-annotations
