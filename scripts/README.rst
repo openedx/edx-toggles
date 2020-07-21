@@ -125,6 +125,19 @@ IMPORTANT: Example of data structure:
             - discovery_waffle.json
     The files shoulod follow the pattern of {ida_name}_annotations.yml or {ida_name}_*.json. ida_name is used by report generator and is included in final output. TODO(jinder): does this comment make sense
 
+Configuration file for report generator script:
+
+The script can also take a yaml file as configuration. 
+
+Valid keys in configuration file:
+    - env: list the envs you want included in report
+    - toggle_type:Ld list the toggle types you want in report
+    - show_state: set to true if you want to output toggles states in report
+    - ida: list configurations settings for each ida
+
+valid keys in ida settings:
+    - github_url: url to github repository for that ida
+
 
 .. _code_annotations: https://www.github.com/edx/code-annotations
 .. _devstack: https://www.github.com/edx/devstack
