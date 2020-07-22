@@ -39,7 +39,7 @@ the version number has been bumped.]
 * Moved HtmlRenderer to its own file
     - getting files ready to add a CsvResnderer
 
-[0.2.0] - 2020-05-27
+[0.2.1] - 2020-05-27
 ~~~~~~~~~~~~~~~~~~~~
 
 * Removed caniusepython3.
