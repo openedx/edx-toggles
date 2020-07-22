@@ -4,4 +4,5 @@ include CONTRIBUTING.rst
 include LICENSE.txt
 include README.rst
 include requirements/base.in
+include edx_toggles/*.yaml
 recursive-include edx_toggles *.html *.png *.gif *js *.css *jpg *jpeg *svg *py

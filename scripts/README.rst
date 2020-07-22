@@ -46,7 +46,7 @@ command (in the codebase of your choice):
 
 .. code:: bash
 
-    code_annotations static_find_annotations --config_file feature_toggle_annotations.yaml
+    code_annotations static_find_annotations --config_file edx_toggles/feature_toggle_annotations.yaml
 
 Rename the resulting yml file `<ida_name>-annotations.yml`. This step is
 necessary, as the feature toggle report generator will key off the `ida_name`
