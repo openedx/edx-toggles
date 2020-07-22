@@ -1,4 +1,4 @@
-from scripts.ida import IDA
+from scripts.ida_toggles import IDA
 from scripts.toggles import Toggle, ToggleState
 
 

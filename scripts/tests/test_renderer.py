@@ -1,10 +1,41 @@
-from scripts.renderers import CsvRenderer
 import random
-import unittest
+from unittest import mock, TestCase
 
+from scripts.renderers import CsvRenderer
+from scripts.ida_toggles import IDA
+from scripts.toggles import Toggle
 
 csv_renderer = CsvRenderer()
-tc = unittest.TestCase()
+tc = TestCase()
+
+@mock.patch('scripts.toggles.Toggle')
+def test_transform_toggle_data_for_csv(mocked_toggle):
+    """Test to make sure data is flattened correctly"""
+
+    env1 = {'lms':IDA('lms', {"rename": "edxapp"}), 'cms':IDA('cms')}
+    env2 = {'lms':IDA('lms', {"rename": "edxapp"}), 'cms':IDA('cms')}
+    envs_data = {'env1':env1, 'env2':env2}
+    total_num_of_loops = 0
+    for env_name, env in envs_data.items():
+        for ida_name, ida in env.items():
+            ida.toggles = {}
+            ida.toggles['WaffleFlag'] = []
+            ida.toggles['WaffleFlag'].append(Toggle("n1"))
+            ida.toggles['WaffleFlag'].append(Toggle("n2"))
+            ida.toggles['WaffleSwitch'] = []
+            ida.toggles['WaffleSwitch'].append(Toggle("n3"))
+            ida.toggles['WaffleSwitch'].append(Toggle("n4"))
+            ida.toggles['WaffleSwitch'].append(Toggle("n5"))
+            total_num_of_loops += 1
+    mocked_toggle.full_data = lambda: {'d1':1, 'd2':2, 'd3':3}
+    output_data = csv_renderer.transform_toggle_data_for_csv(envs_data)
+
+    # test to make sure renaming happened correctly
+    assert 'lms' not in [datum['ida_name'] for datum in output_data]
+    # test to make sure everything is collected
+    assert total_num_of_loops*2 == [datum['toggle_type'] for datum in output_data].count('WaffleFlag')
+    assert total_num_of_loops*3 == [datum['toggle_type'] for datum in output_data].count('WaffleSwitch')
+
 
 def test_get_sorted_headers_from_toggles():
     """
