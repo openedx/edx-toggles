@@ -129,7 +129,7 @@ IMPORTANT: Example of data structure:
 
 Configuration file for report generator script:
 
-The script can also take a yaml file as configuration. 
+The script can also take a yaml file as configuration, though flags will overwrite things in configuration. 
 
 Valid keys in configuration file:
     - env: list the envs you want included in report
