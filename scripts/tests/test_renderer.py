@@ -32,6 +32,7 @@ def test_transform_toggle_data_for_csv(mocked_toggle):
 
     # test to make sure renaming happened correctly
     assert 'lms' not in [datum['ida_name'] for datum in output_data]
+    assert "edxapp" in [datum['ida_name'] for datum in output_data]
     # test to make sure everything is collected
     assert total_num_of_loops*2 == [datum['toggle_type'] for datum in output_data].count('WaffleFlag')
     assert total_num_of_loops*3 == [datum['toggle_type'] for datum in output_data].count('WaffleSwitch')
@@ -39,7 +40,7 @@ def test_transform_toggle_data_for_csv(mocked_toggle):
 
 def test_get_sorted_headers_from_toggles():
     """
-    CSV column should be order by these rules by order:
+    CSV column should be ordered by the following ordered list of rules::
     - name should be first column
     - anything with name in column title has priority
     - state data has priority, column titles with "state" in it

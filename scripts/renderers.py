@@ -32,15 +32,11 @@ class CsvRenderer():
             for ida_name, ida in idas.items():
                 for toggle_type, toggles in ida.toggles.items():
                     for toggle in toggles:
-                        print(toggle_type)
                         data_dict = toggle.full_data()
                         data_dict["toggle_type"] = toggle_type
                         # In case you want the report to call the ida by a different ida_name
                         # example: lms should be called edxapp in report
-                        if "rename" in ida.configuration.keys():
-                            data_dict["ida_name"] = ida.configuration["rename"]
-                        else:
-                            data_dict["ida_name"] = ida_name
+                        data_dict["ida_name"] = ida.configuration.get("rename", ida_name)
                         data_dict["env_name"] = env
                         toggles_data.append(data_dict)
         return toggles_data

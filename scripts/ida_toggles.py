@@ -153,10 +153,14 @@ class IDA(object):
 
                 # its useful to have a quick link to go to see the annotations in the code base
                 if 'github_url' in self.configuration.keys():
-                    url = "{github_repo_url}/blob/master/{source_file}#L{line_number}".format(
+                    #TODO: Replace `master` with a git hash so the links will work even if the files change.
+                    url = "{github_repo_url}/blob/master/{source_file}".format(
                         github_repo_url=self.configuration['github_url'],
                         source_file= source_file,
-                        line_number=toggle_annotation.line_numbers[0] if toggle_annotation.line_numbers else 0)
+                        )
+                    if toggle_annotation.line_numbers:
+                        line_num = "#L{line_number}".format(line_number=toggle_annotation.line_numbers[0])
+                        url = url + line_num
                     toggle_annotation.github_url = url
 
                 toggle_annotation._raw_annotation_data = {

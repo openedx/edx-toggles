@@ -49,7 +49,7 @@ logging.basicConfig(level=logging.INFO)
 @click.option(
     '--configuration',
     default=None,
-    help='alternative method to do configuration, the flags will have priority',
+    help='alternative method to do configuration, the command-line options will have priority',
     )
 def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, toggle_type, configuration):
     """
@@ -70,7 +70,7 @@ def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, to
         configuration = {}
 
     # process configuration
-    # flag inputs overwrite stuff in configuration file
+    # commandline-option inputs overwrite stuff in configuration file
     toggle_type_filter = toggle_type
     if not toggle_type and "toggle_type" in configuration.keys():
         toggle_type_filter = configuration["toggle_type"]
@@ -98,8 +98,10 @@ def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, to
 
     total_info = {}
     for env_data_path, env_name in env_data_paths:
+        # if an env is specified in requested_envs, filter out everyother env
+        # if no env is specified, assume all envs are valid
         if requested_envs and env_name not in requested_envs:
-            LOGGER.debug("Not reading toggle state data for {} env".format(env_name))
+            LOGGER.debug("Skip reading toggle state data for {} env".format(env_name))
             continue
         total_info[env_name] = {}
 

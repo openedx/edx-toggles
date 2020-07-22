@@ -106,7 +106,7 @@ To generate report with everything:
 
     python -m scripts.feature_toggle_report_generator annotation_dir_path toggle_data_dir_path output_path --show-state
 
-To generate report with data for specific env and toggle type:
+To generate report with data for specific envs and toggle types:
 
 .. code:: bash
 
@@ -129,17 +129,15 @@ IMPORTANT: Example of data structure:
 
 Configuration file for report generator script:
 
-The script can also take a yaml file as configuration, though flags will overwrite things in configuration. 
+The script can also take a yaml file as configuration, though command-line options will overwrite things in configuration. 
 
 Valid keys in configuration file:
     - env: list the envs you want included in report
-    - toggle_type:Ld list the toggle types you want in report
+    - toggle_type: list the toggle types you want in report
     - show_state: set to true if you want to output toggles states in report
-    - ida: list configurations settings for each ida
-
-valid keys in ida settings:
-    - github_url: url to github repository for that ida
-    - rename: in case you want the report to call the ida by a different ida_name. example: lsm -> edxapp
+    - ida: list configurations settings for each ida, following are valid keys under ida:
+        - github_url: url to github repository for that ida
+        - rename: a new name to replace the ida name used in the file names. example: lms => edxapp
 
 
 .. _code_annotations: https://www.github.com/edx/code-annotations
