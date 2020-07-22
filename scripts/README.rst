@@ -123,7 +123,7 @@ IMPORTANT: Example of data structure:
         - stage_env
             - lms_waffle.json
             - discovery_waffle.json
-    The files shoulod follow the pattern of {ida_name}_annotations.yml or {ida_name}_*.json.
+    The files should follow the pattern of {ida_name}_annotations.yml or {ida_name}_*.json.
     Note: ida_name is used by report generator and is included in final output.
 
 

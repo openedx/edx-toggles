@@ -50,7 +50,7 @@ class CsvRenderer():
         Arguments:
             - toggles_data: list[dict] dicts should have all relevant data relating to one toggle
             - toggle_type_filter: list of type names: there are multiple toggle types, so which would you like to output
-                     if set to None, everything will be outputed
+                     if set to None, everything will be outputted
         Returns:
             - list: sorted list of filtered toggle data.
         """
@@ -82,14 +82,14 @@ class CsvRenderer():
 
         def sorting_header(key):
             """
-            there are multiple criterions by which we should sort header keys
+            there are multiple criterion by which we should sort header keys
             """
             sort_by=[]
             # setting key for keys with name to False causes them to appear first in header
             sort_by.append(False if "name" in key else True)
             # show states first
             sort_by.append(False if "state" in key else True)
-            # finally sort by alphebetical order
+            # finally sort by alphabetical order
             sort_by.append(key)
             return tuple(sort_by)
 
