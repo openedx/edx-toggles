@@ -11,6 +11,11 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
+2020-07-23
+~~~~~~~~~~
+* Added more options to scripts/feature_toggle_report_generator
+    - filter toggle types and envs, add github_url, and change name of ida in report
+
 2020-07-08
 ~~~~~~~~~~
 * Modified scripts/feature_toggle_report_generator to work based on envs
