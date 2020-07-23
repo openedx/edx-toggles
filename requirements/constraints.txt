@@ -19,3 +19,6 @@ code-annotations==0.3.3
 
 # stevedore > 1.32.0 does not work with Python 3.5
 stevedore==1.32.0
+
+# inflect 4.0.0 drops support for Python 3.5
+inflect<4.0.0
