@@ -20,10 +20,11 @@ logging.basicConfig(level=logging.INFO)
 class IDA(object):
     """ Represents an independently deployed application. """
 
-    def __init__(self, name):
+    def __init__(self, name, configuration=None):
         self.name = name
         self.toggles = collections.defaultdict(list)
         self.annotation_report_path = None
+        self.configuration = configuration if configuration else {}
 
     def add_toggle_data(self, dump_file_path):
         """
@@ -149,6 +150,19 @@ class IDA(object):
                 toggle_annotation.line_numbers = [
                     a['line_number'] for a in group
                 ]
+
+                # its useful to have a quick link to go to see the annotations in the code base
+                if 'github_url' in self.configuration.keys():
+                    #TODO: Replace `master` with a git hash so the links will work even if the files change.
+                    url = "{github_repo_url}/blob/master/{source_file}".format(
+                        github_repo_url=self.configuration['github_url'],
+                        source_file= source_file,
+                        )
+                    if toggle_annotation.line_numbers:
+                        line_num = "#L{line_number}".format(line_number=toggle_annotation.line_numbers[0])
+                        url = url + line_num
+                    toggle_annotation.github_url = url
+
                 toggle_annotation._raw_annotation_data = {
                     clean_token(a['annotation_token']): a['annotation_data']
                     for a in group
@@ -203,7 +217,7 @@ class IDA(object):
                 return index
 
 
-def add_toggle_state_to_idas(idas, dump_file_path):
+def add_toggle_state_to_idas(idas, dump_file_path, idas_configuration=None):
     """
     Given a dictionary of IDAs to consider, and the path to a directory
     containing the SQL dumps for feature toggles in said IDAs, read each dump
@@ -217,7 +231,7 @@ def add_toggle_state_to_idas(idas, dump_file_path):
         sql_dump_file_path = os.path.join(dump_file_path, sql_dump_file)
         ida_name = ida_name_pattern.search(sql_dump_file).group('ida')
         if ida_name not in idas:
-            idas[ida_name] = IDA(ida_name)
+            idas[ida_name] = IDA(ida_name, idas_configuration.get(ida_name, None))
         LOGGER.info(
             'Collecting toggle_state from {} for {}'.format(
                 sql_dump_file_path, ida_name
@@ -227,14 +241,14 @@ def add_toggle_state_to_idas(idas, dump_file_path):
         LOGGER.info('=' * 100)
 
 
-def add_toggle_annotations_to_idas(idas, annotation_report_files_path):
+def add_toggle_annotations_to_idas(idas, annotation_report_files_path, idas_configuration=None):
     """
     Given a dictionary of IDAs to consider, and the path to a directory
     containing the annotation reports for feature toggles in said IDAs, read
     each file, parsing and linking the annotation data to the toggle state
     data in the IDA.
     """
-    ida_name_pattern = re.compile(r'(?P<ida>[a-z]*)_annotations.yml')
+    ida_name_pattern = re.compile(r'(?P<ida>[a-z]*)[-_]annotations.ya?ml')
     annotation_files = [
         f for f in os.listdir(annotation_report_files_path)
         if ida_name_pattern.search(f)
@@ -245,7 +259,7 @@ def add_toggle_annotations_to_idas(idas, annotation_report_files_path):
         )
         ida_name = ida_name_pattern.search(annotation_file).group('ida')
         if ida_name not in idas:
-            idas[ida_name] = IDA(ida_name)
+            idas[ida_name] = IDA(ida_name, idas_configuration.get(ida_name, None))
         LOGGER.info(
             'Collecting annotations from {} for {}'.format(
                 annotation_file, ida_name

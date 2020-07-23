@@ -94,16 +94,23 @@ values on the command line:
 
 For example:
 
+To get help output for script:
+
+.. code:: bash
+
+    python -m scripts.feature_toggle_report_generator --help
+
+To generate report with everything:
+
 .. code:: bash
 
     python -m scripts.feature_toggle_report_generator annotation_dir_path toggle_data_dir_path output_path --show-state
 
-
+To generate report with data for specific envs and toggle types:
 
 .. code:: bash
 
-    make requirements
-    python -m scripts.feature_toggle_report_generator annotation_dir_path toggle_data_dir_path output_path --show-state
+    python -m scripts.feature_toggle_report_generator annotation_dir_path toggle_data_dir_path output_path --show-state --env devstack --env prod --toggle-type WaffleFlag --toggle-type WaffleSwitch
 
 IMPORTANT: Example of data structure:
     - annotations_dir/
@@ -116,7 +123,21 @@ IMPORTANT: Example of data structure:
         - stage_env
             - lms_waffle.json
             - discovery_waffle.json
-    The files shoulod follow the pattern of {ida_name}_annotations.yml or {ida_name}_*.json
+    The files should follow the pattern of {ida_name}_annotations.yml or {ida_name}_*.json.
+    Note: ida_name is used by report generator and is included in final output.
+
+
+Configuration file for report generator script:
+
+The script can also take a yaml file as configuration, though command-line options will overwrite things in configuration. For example: see scripts/configuration.yaml
+
+Valid keys in configuration file:
+    - env: list the envs you want included in report
+    - toggle_type: list the toggle types you want in report
+    - show_state: set to true if you want to output toggles states in report
+    - ida: list configurations settings for each ida, following are valid keys under ida:
+        - github_url: url to github repository for that ida
+        - rename: a new name to replace the ida name used in the file names. example: lms => edxapp
 
 
 .. _code_annotations: https://www.github.com/edx/code-annotations

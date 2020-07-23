@@ -64,9 +64,12 @@ class Toggle:
         Returns a dict with all info on toggle state and annotations
         """
         full_data = {}
+        full_data["name"] = self.name
         if self.state:
             self.state._prepare_state_data()
             for key, value in self.state._cleaned_state_data.items():
+                if key == "name":
+                    continue
                 full_data["state_{}".format(key)] = value
         else:
             LOGGER.debug("{} Toggle's state is None".format(self.name))
@@ -74,6 +77,8 @@ class Toggle:
         if self.annotations:
             self.annotations._prepare_annotation_data()
             for key, value in self.annotations._cleaned_annotation_data.items():
+                if key == "name":
+                    continue
                 full_data["annotation_{}".format(key)] = value
         else:
             LOGGER.debug("{} Toggle's annotations is None".format(self.name))
@@ -90,6 +95,7 @@ class ToggleAnnotation(object):
         self.report_group_id = report_group_id
         self.source_file = source_file
         self.line_numbers = []
+        self.github_url = None
         self._raw_annotation_data = {}
         self._cleaned_annotation_data = collections.defaultdict(str)
 
@@ -100,6 +106,7 @@ class ToggleAnnotation(object):
     def _prepare_annotation_data(self):
         self._cleaned_annotation_data["source_file"] = self.source_file
         self._cleaned_annotation_data["line_number"] = self.line_numbers
+        self._cleaned_annotation_data["url"] = self.github_url
         for k, v in self._raw_annotation_data.items():
             if k == 'implementation':
                 self._cleaned_annotation_data[k] = v[0]

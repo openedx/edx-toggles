@@ -4,13 +4,19 @@ import datetime
 import io
 import os
 import re
+import yaml
+import logging
+from collections import defaultdict
 
 import click
 import jinja2
 
-from scripts.ida import IDA, add_toggle_state_to_idas, add_toggle_annotations_to_idas
+from scripts.ida_toggles import IDA, add_toggle_state_to_idas, add_toggle_annotations_to_idas
 from scripts.renderers import CsvRenderer
 
+
+LOGGER = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 @click.command()
 @click.argument(
@@ -22,21 +28,30 @@ from scripts.renderers import CsvRenderer
     type=click.Path(exists=True),
 )
 @click.argument(
-    'output_path', default="feature_toggle_report",
+    'output_file_path', default="feature_toggle_report",
 )
 @click.option(
     '--show-state', is_flag=True,
     help="if this is present, the report will include toggle state",
 )
 @click.option(
-    '--env', default=None,
-    help='specify env name ifyou want data for only one env',
+    '--env',
+    multiple=True,  # allows user to get union of multiple envs
+    default=None,
+    help='specify env names if you want data from certain envs',
     )
 @click.option(
-    '--toggle-type', default=None,
-    help='specify toggle type if you only want data on one toggle type',
+    '--toggle-type',
+    multiple=True,    # allows user to get union of multiple toggle-types
+    default=None,
+    help='specify toggle types if you only want data on certain toggle type',
     )
-def main(annotations_dir, toggle_data_dir, output_path, show_state, env, toggle_type):
+@click.option(
+    '--configuration',
+    default=None,
+    help='alternative method to do configuration, the command-line options will have priority',
+    )
+def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, toggle_type, configuration):
     """
     Script to process annotation and state data for toggles and output it a report.
 
@@ -44,8 +59,28 @@ def main(annotations_dir, toggle_data_dir, output_path, show_state, env, toggle_
     Arguments:
         * annotations_dir: path to where toggle data is location
         * toggle_data_dir:  a path to directory containing directories containing json files with sql data dump
-        * output_path: path to where the reports will be written
+        * output_file_path: name of file to which to write report
     """
+
+    # Read configuration file:
+    if configuration is not None:
+        with open(configuration) as yaml_file:
+            configuration = yaml.safe_load(yaml_file)
+    else:
+        configuration = {}
+
+    # process configuration
+    # commandline-option inputs overwrite stuff in configuration file
+    toggle_type_filter = toggle_type
+    if not toggle_type and "toggle_type" in configuration.keys():
+        toggle_type_filter = configuration["toggle_type"]
+
+    requested_envs = env
+    if not env and "env" in configuration.keys():
+        requested_envs = configuration["env"]
+
+    if "show_state" in configuration.keys():
+        show_state = configuration["show_state"]
 
     # each env should have a folder with all its sql dump with toggle data
     # folders name as: <env_name>_env
@@ -53,23 +88,30 @@ def main(annotations_dir, toggle_data_dir, output_path, show_state, env, toggle_
     env_name_pattern = re.compile(r'(?P<env>[a-z0-9]*)_env')
 
     # find all the dirs in toggle_data_dir whose name match pattern
-    envs_data_paths = []
+
+    env_data_paths = []
     toggle_data_dir_content = os.listdir(toggle_data_dir)
     for path in toggle_data_dir_content:
-        env_name = env_name_pattern.search(path).group('env')
-        if os.path.isdir(os.path.join(toggle_data_dir, path)) and env_name:
-            envs_data_paths.append((os.path.join(toggle_data_dir, path), env_name))
+        env_name_search = env_name_pattern.search(path)
+        if os.path.isdir(os.path.join(toggle_data_dir, path)) and env_name_search:
+            env_data_paths.append((os.path.join(toggle_data_dir, path), env_name_search.group('env')))
 
     total_info = {}
     for env_data_path, env_name in env_data_paths:
-        if env is not None and env_name != env:
+        # if an env is specified in requested_envs, filter out everyother env
+        # if no env is specified, assume all envs are valid
+        if requested_envs and env_name not in requested_envs:
+            LOGGER.debug("Skip reading toggle state data for {} env".format(env_name))
             continue
         total_info[env_name] = {}
+
+        # add data for each ida
         if show_state:
-            add_toggle_state_to_idas(total_info[env_name], env_data_path)
-        add_toggle_annotations_to_idas(total_info[env_name], annotations_dir)
+            add_toggle_state_to_idas(total_info[env_name], env_data_path, configuration.get("ida", defaultdict(dict)))
+        add_toggle_annotations_to_idas(total_info[env_name], annotations_dir, configuration.get("ida", defaultdict(dict)))
+
     renderer = CsvRenderer()
-    renderer.render_csv_report(total_info, os.path.join(output_path, "report.csv"), toggle_type)
+    renderer.render_csv_report(total_info, output_file_path, toggle_type_filter)
 
 
 if __name__ == '__main__':
