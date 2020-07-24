@@ -52,6 +52,8 @@ class IDA(object):
                 toggle_type = "WaffleFlag"
             elif row['model'] == "waffle.switch":
                 toggle_type = "WaffleSwitch"
+            elif row['model'] == "WaffleUtilsWaffleflagcourseoverridemodel":
+                toggle_type = "CourseWaffleFlag2"
             else:
                 toggle_type = row['model']
 
