@@ -67,7 +67,7 @@ class CsvRenderer():
         sorting_key = lambda datum: datum.get("name", "")
         return sorted(data_to_render, key=sorting_key)
 
-    def get_sorted_headers_from_toggles(self, flattened_toggles_data, initial_header=none):
+    def get_sorted_headers_from_toggles(self, flattened_toggles_data, initial_header=None):
         # get header from data
         header = set()
         for datum in flattened_toggles_data:
