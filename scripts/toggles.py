@@ -70,7 +70,8 @@ class Toggle:
             for key, value in self.state._cleaned_state_data.items():
                 if key == "name":
                     continue
-                full_data["state_{}".format(key)] = value
+                # data that is received from state data dump is postfixed with a "_s"
+                full_data["{}_s".format(key)] = value
         else:
             LOGGER.debug("{} Toggle's state is None".format(self.name))
 
@@ -79,7 +80,8 @@ class Toggle:
             for key, value in self.annotations._cleaned_annotation_data.items():
                 if key == "name":
                     continue
-                full_data["annotation_{}".format(key)] = value
+                # data that is received from annotations is postfixed with a "_a"
+                full_data["{}_a".format(key)] = value
         else:
             LOGGER.debug("{} Toggle's annotations is None".format(self.name))
         return full_data
