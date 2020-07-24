@@ -15,6 +15,7 @@ Unreleased
 ~~~~~~~~~~
 
 * Added output for waffle flag course overrides to data gatherer
+* Upgraded dependencies
 
 2020-07-23
 ~~~~~~~~~~
