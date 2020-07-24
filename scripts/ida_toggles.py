@@ -44,7 +44,9 @@ class IDA(object):
 
     def _add_toggle_data(self, dump_contents):
         for row in dump_contents:
-            toggle_name = row['fields'].get('name', "NO Name in State")
+            toggle_name = row['fields'].get('name', None)
+            if toggle_name is None and row['model'] == "WaffleUtilsWaffleflagcourseoverridemodel":
+                toggle_name = row['fields']['waffle_flag']
             # convert sql dump model name to annotation report toggle type name
             if row['model'] == "waffle.flag":
                 toggle_type = "WaffleFlag"
