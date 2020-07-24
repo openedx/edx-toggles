@@ -46,12 +46,12 @@ def test_get_sorted_headers_from_toggles():
     - state data has priority, column titles with "state" in it
     - alphabetically
     """
-    unsorted_headers = ["env_name", "aaaaa", "ida_name", "bbbbb", "name", "state_not"]
+    unsorted_headers = ["env_name", "aaaaa", "ida_name", "bbbbb", "name", "not_s"]
     flattened_data = [{key:True for key in unsorted_headers} for num in range(20)]
     sorted_header = csv_renderer.get_sorted_headers_from_toggles(flattened_data)
     assert sorted_header[0] == "name"
     assert sorted_header[2] == "ida_name"
-    assert sorted_header[3] == "state_not"
+    assert sorted_header[3] == "not_s"
     assert sorted_header[5] == "bbbbb"
 
 def test_filter_and_sort_toggles_filtering():
