@@ -17,6 +17,9 @@ Unreleased
 * Added output for waffle flag course overrides to data gatherer
 * Upgraded dependencies
 
+[NOTE: None of these versions have actually been released to PyPI, even though
+the version number has been bumped.]
+
 2020-07-23
 ~~~~~~~~~~
 * Added more options to scripts/feature_toggle_report_generator
@@ -49,7 +52,4 @@ Unreleased
 [0.1.0] - 2019-04-08
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Added
-_____
-
-* First release on PyPI.
+* Initial version
