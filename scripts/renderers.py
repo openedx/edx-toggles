@@ -67,16 +67,11 @@ class CsvRenderer():
         sorting_key = lambda datum: datum.get("name", "")
         return sorted(data_to_render, key=sorting_key)
 
-    def get_sorted_headers_from_toggles(self, flattened_toggles_data):
+    def get_sorted_headers_from_toggles(self, flattened_toggles_data, initial_header=none):
         # get header from data
         header = set()
         for datum in flattened_toggles_data:
             header = header.union(set(datum.keys()))
-
-        # removing "name" from header so that it is not part of sorting later
-        # will add it back as first column before returning header list
-        header.remove("name")
-        header.remove("toggle_type")
 
         def sorting_header(key):
             """
@@ -92,18 +87,24 @@ class CsvRenderer():
             sort_by.append(key)
             return tuple(sort_by)
 
-        header = sorted(list(header), key=sorting_header)
-        header.insert(0, "name")
-        header.insert(1,"toggle_type")
-        return header
 
-    def render_csv_report(self, envs_ida_toggle_data, file_path="report.csv", toggle_types=None):
+        output = []
+        # put things in initial header at the beginning of the output(though only if there is data on it)
+        for column in initial_header:
+            if column in header:
+                output.append(column)
+                header.remove(column)
+        header = sorted(list(header), key=sorting_header)
+        output.extend(header)
+        return output
+
+    def render_csv_report(self, envs_ida_toggle_data, file_path="report.csv", toggle_types=None, header=None):
         """
         takes data, processes it, and outputs it in csv form
         """
         toggles_data = self.transform_toggle_data_for_csv(envs_ida_toggle_data)
         data_to_render = self.filter_and_sort_toggles(toggles_data, toggle_types)
-        header = self.get_sorted_headers_from_toggles(data_to_render)
+        header = self.get_sorted_headers_from_toggles(data_to_render, header)
         self.write_csv(file_path, data_to_render, header)
 
     def write_csv(self, file_name, data, fieldnames):
