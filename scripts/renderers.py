@@ -4,6 +4,7 @@
 import datetime
 import io
 import os
+import re
 import csv
 import logging
 from collections import OrderedDict
@@ -84,7 +85,8 @@ class CsvRenderer():
             # setting key for keys with name to False causes them to appear first in header
             sort_by.append(False if "name" in key else True)
             # show states first
-            sort_by.append(False if "state" in key else True)
+            pattern = re.compile(".*_s$")
+            sort_by.append(False if pattern.search(key) else True)
             # finally sort by alphabetical order
             sort_by.append(key)
             return tuple(sort_by)
