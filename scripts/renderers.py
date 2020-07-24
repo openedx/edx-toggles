@@ -77,7 +77,6 @@ class CsvRenderer():
         # will add it back as first column before returning header list
         header.remove("name")
         header.remove("toggle_type")
-        header.remove("state_course_id")
 
         def sorting_header(key):
             """
@@ -96,7 +95,6 @@ class CsvRenderer():
         header = sorted(list(header), key=sorting_header)
         header.insert(0, "name")
         header.insert(1,"toggle_type")
-        header.insert(2,"state_course_id")
         return header
 
     def render_csv_report(self, envs_ida_toggle_data, file_path="report.csv", toggle_types=None):
