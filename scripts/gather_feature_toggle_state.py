@@ -132,7 +132,7 @@ def build_query(table_name):
         # record with the newest change_date for a given key is the
         # one in effect (this is the contract of ConfigurationModel).
         current_versions_subquery = (
-            "SELECT waffle_flag, course_id, MAX(change_date) AS max_change_date "
+            "SELECT waffle_flag, course_id, MAX(change_date) "
             "FROM waffle_utils_waffleflagcourseoverridemodel "
             "GROUP BY waffle_flag, course_id"
         )
