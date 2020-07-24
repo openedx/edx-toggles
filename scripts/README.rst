@@ -61,8 +61,8 @@ The current state of certain feature toggles (i.e. django-waffle, waffle-utils)
 is not captured in the codebase, as it is decoupled from the deployment of
 code. Rather, it must read from the database of an application.
 
-Assuming you have a provisioned `devstack`_, run the following make commands to
-generate the feature toggle state data files.
+Assuming you have a provisioned `devstack`_, run the following make command
+in devstack to generate the feature toggle state data files.
 
 .. code:: bash
 

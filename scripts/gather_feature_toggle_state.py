@@ -1,10 +1,10 @@
-# gather-feature-toggle-state.py
+# gather_feature_toggle_state.py
 
 # As part of the Feature Toggle Report Generator utility, this script queries
 # a database (i.e. Devstack MySQL container, read-replica) for data on the
 # state of feature toggles (i.e. waffle flags) in a set of idas (i.e. edxapp)
 # and write it to a JSON file. These are used as inputs to
-# https://github.com/edx/edx-toggles/blob/master/scripts/feature_toggle_report_generator.py
+# feature_toggle_report_generator.py
 
 
 
@@ -127,6 +127,21 @@ def build_query(table_name):
             "LEFT JOIN waffle_flag_groups ON waffle_flag.id=waffle_flag_groups.flag_id "
             "GROUP BY waffle_flag_users.flag_id, waffle_flag_groups.flag_id;"
         )
+    elif table_name == 'waffle_utils_waffleflagcourseoverridemodel':
+        # This model is keyed on waffle_flag and course_id, and the
+        # record with the newest change_date for a given key is the
+        # one in effect (this is the contract of ConfigurationModel).
+        current_versions_subquery = (
+            "SELECT waffle_flag, course_id, MAX(change_date) "
+            "FROM waffle_utils_waffleflagcourseoverridemodel "
+            "GROUP BY waffle_flag, course_id"
+        )
+        # Get values for current versions, discarding any that are disabled.
+        query = (
+            "SELECT id, waffle_flag, course_id, override_choice "
+            "FROM waffle_utils_waffleflagcourseoverridemodel "
+            "WHERE (waffle_flag, course_id, change_date) IN (%s) AND enabled = true" % current_versions_subquery
+        )
     else:
         query = "SELECT * FROM {};".format(table_name)
     return query
@@ -143,7 +158,8 @@ def main(output_path):
             'app': 'lms',
             'database': os.getenv('LMS_DB', 'edxapp'),
             'table_names': [
-                'waffle_flag', 'waffle_switch', 'waffle_sample'
+                'waffle_flag', 'waffle_switch', 'waffle_sample',
+                'waffle_utils_waffleflagcourseoverridemodel',
             ]
         }
     ]

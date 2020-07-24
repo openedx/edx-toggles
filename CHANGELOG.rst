@@ -3,13 +3,22 @@ Change Log
 
 ..
    All enhancements and patches to edx_toggles will be documented
-   in this file.  It adheres to the structure of http://keepachangelog.com/ ,
+   in this file.  It adheres to the structure of https://keepachangelog.com/ ,
    but in reStructuredText instead of Markdown (for ease of incorporation into
    Sphinx documentation and the PyPI description).
    
-   This project adheres to Semantic Versioning (http://semver.org/).
+   This project adheres to Semantic Versioning (https://semver.org/).
 
 .. There should always be an "Unreleased" section for changes pending release.
+
+Unreleased
+~~~~~~~~~~
+
+* Added output for waffle flag course overrides to data gatherer
+* Upgraded dependencies
+
+[NOTE: None of these versions have actually been released to PyPI, even though
+the version number has been bumped.]
 
 2020-07-23
 ~~~~~~~~~~
@@ -22,12 +31,12 @@ Change Log
 
 2020-06-30
 ~~~~~~~~~~
-* Added CsvResnderer
+* Added CsvRenderer
 * Removed confluence integration
 
 2020-06-29
 ~~~~~~~~~~
-* Moved HtmlRenderer to its onw file
+* Moved HtmlRenderer to its own file
     - getting files ready to add a CsvResnderer
 
 [0.2.0] - 2020-05-27
@@ -43,7 +52,4 @@ Change Log
 [0.1.0] - 2019-04-08
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Added
-_____
-
-* First release on PyPI.
+* Initial version
