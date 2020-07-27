@@ -138,9 +138,9 @@ class ToggleState(object):
         """
         if cleaned:
             self._prepare_state_data()
-            return self._cleaned_state_data.get(key, "")
+            return self._cleaned_state_data.get(key, str())
         else:
-            return self._raw_state_data.get(key, "")
+            return self._raw_state_data.get(key, str())
 
     def set_datum(self, key, value, cleaned=True):
         """

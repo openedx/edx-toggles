@@ -71,7 +71,6 @@ class IDA(object):
                     toggle = Toggle(toggle_name, toggle_state)
                     self.toggles["CourseWaffleFlag"][toggle_name] = toggle
 
-                
                 # add course override data to toggle output
                 # assuming each course only has one override for unique toggle
                 # get dict with all course_overrides and add new course to it
@@ -79,8 +78,10 @@ class IDA(object):
                                         "course_overrides",
                                         cleaned=False,
                                         )
-                if not isinstance(course_overrides, dict):
+
+                if not course_overrides:
                     course_overrides = {}
+
                 course_overrides[toggle_data["course_id"]] = toggle_data["override_choice"]
                 self.toggles["CourseWaffleFlag"][toggle.name].state.set_datum(
                     "course_overrides",
@@ -92,9 +93,8 @@ class IDA(object):
                     'Adding override choice for course {} to waffle flag {}'.format(toggle_data["course_id"], toggle.name)
                 )
             elif toggle_type == "CourseWaffleFlag":
-                #TODO(jinder): Will state data ever have data for just CourseWaffleFlag
-                #TODO(jinder): This block might not be necessary
                 # in case, overrides data already added this toggle to data, make sure not to delete data
+                # this should only be relevant if annotations data is added before toggle state data is added
                 if toggle_name in self.toggles[toggle_type].keys():
                     for k, v in toggle_data:
                         self.toggles[toggle_type][toggle_name].state.set_datum(k, v, cleaned=False)
