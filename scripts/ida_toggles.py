@@ -88,13 +88,14 @@ class IDA(object):
                     cleaned=False,
                 )
 
-
                 LOGGER.info(
                     'Adding override choice for course {} to waffle flag {}'.format(toggle_data["course_id"], toggle.name)
                 )
             elif toggle_type == "CourseWaffleFlag":
+                # in case, overrides data already added this toggle to data, make sure not to delete data
                 if toggle_name in self.toggles[toggle_type].keys():
-                    self.toggles[toggle_type][toggle_name].state._raw_state_data = toggle_data
+                    for k, v in toggle_data:
+                        self.toggles[toggle_type][toggle_name].state.set_datum(k, v, cleaned=False)
                 else:
                     self.toggles[toggle_type][toggle.name] = toggle
             else:
