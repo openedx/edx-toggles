@@ -71,8 +71,20 @@ class IDA(object):
                     toggle = Toggle(toggle_name, toggle_state)
                     self.toggles["CourseWaffleFlag"][toggle_name] = toggle
 
-                # add course override data to toggle output
-                self.toggles["CourseWaffleFlag"][toggle.name].state.add_cleaned_data(toggle_data["course_id"], toggle_data["override_choice"])
+                if "num_courses_on" not in self.toggles["CourseWaffleFlag"][toggle.name].state._cleaned_state_data.keys():
+                    self.toggles["CourseWaffleFlag"][toggle.name].state._cleaned_state_data["num_courses_on"] = 0
+                if "num_courses_off" not in self.toggles["CourseWaffleFlag"][toggle.name].state._cleaned_state_data.keys():
+                    self.toggles["CourseWaffleFlag"][toggle.name].state._cleaned_state_data["num_courses_off"] = 0
+                
+                if toggle_data["override_choice"] == "on":
+                    # add course override data to toggle output
+                    num_on = self.toggles["CourseWaffleFlag"][toggle.name].state._cleaned_state_data["num_courses_on"] + 1
+                    self.toggles["CourseWaffleFlag"][toggle.name].state._cleaned_state_data["num_courses_on"] = num_on
+                else:
+                    # add course override data to toggle output
+                    num_off = self.toggles["CourseWaffleFlag"][toggle.name].state._cleaned_state_data["num_courses_off"] + 1
+                    self.toggles["CourseWaffleFlag"][toggle.name].state._cleaned_state_data["num_courses_off"] = num_off
+
                 LOGGER.info(
                     'Adding override choice for course {} to waffle flag {}'.format(toggle_data["course_id"], toggle.name)
                 )
