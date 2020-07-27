@@ -71,19 +71,23 @@ class IDA(object):
                     toggle = Toggle(toggle_name, toggle_state)
                     self.toggles["CourseWaffleFlag"][toggle_name] = toggle
 
-                if "num_courses_on" not in self.toggles["CourseWaffleFlag"][toggle.name].state._cleaned_state_data.keys():
-                    self.toggles["CourseWaffleFlag"][toggle.name].state._cleaned_state_data["num_courses_on"] = 0
-                if "num_courses_off" not in self.toggles["CourseWaffleFlag"][toggle.name].state._cleaned_state_data.keys():
-                    self.toggles["CourseWaffleFlag"][toggle.name].state._cleaned_state_data["num_courses_off"] = 0
                 
-                if toggle_data["override_choice"] == "on":
-                    # add course override data to toggle output
-                    num_on = self.toggles["CourseWaffleFlag"][toggle.name].state._cleaned_state_data["num_courses_on"] + 1
-                    self.toggles["CourseWaffleFlag"][toggle.name].state._cleaned_state_data["num_courses_on"] = num_on
-                else:
-                    # add course override data to toggle output
-                    num_off = self.toggles["CourseWaffleFlag"][toggle.name].state._cleaned_state_data["num_courses_off"] + 1
-                    self.toggles["CourseWaffleFlag"][toggle.name].state._cleaned_state_data["num_courses_off"] = num_off
+                # add course override data to toggle output
+                # assuming each course only has one override for unique toggle
+                # get dict with all course_overrides and add new course to it
+                course_overrides = self.toggles["CourseWaffleFlag"][toggle.name].state.get_datum(
+                                        "course_overrides",
+                                        cleaned=False,
+                                        )
+                if not isinstance(course_overrides, dict):
+                    course_overrides = {}
+                course_overrides[toggle_data["course_id"]] = toggle_data["override_choice"]
+                self.toggles["CourseWaffleFlag"][toggle.name].state.set_datum(
+                    "course_overrides",
+                    course_overrides,
+                    cleaned=False,
+                )
+
 
                 LOGGER.info(
                     'Adding override choice for course {} to waffle flag {}'.format(toggle_data["course_id"], toggle.name)

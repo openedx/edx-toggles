@@ -127,14 +127,37 @@ class ToggleState(object):
         self._raw_state_data = data
         self._cleaned_state_data = collections.defaultdict(str)
 
-    def add_cleaned_data(self, key, value):
+    def get_datum(self, key, cleaned=True):
         """
-        Adding data to _cleaned_state_data dict.
+        get data from either _raw_state_data dict or _cleaned_state_data dict
 
-        Using this functions allows you to skip the _prepare_state_data function call and put
-        data directly in _cleaned_state_data dict(which is used to out data)
+        Arguments:
+            key: the key name for data
+            cleaned: Whether to get datum from _raw_state_data dict or _cleaned_state_data
+                By default, this will get datum to _cleaned_state_data:
         """
-        self._cleaned_state_data[key] = value
+        if cleaned:
+            self._prepare_state_data()
+            return self._cleaned_state_data.get(key, "")
+        else:
+            return self._raw_state_data.get(key, "")
+
+    def set_datum(self, key, value, cleaned=True):
+        """
+        Adding data to either _raw_state_data dict or _cleaned_state_data dict
+        
+        Arguments:
+            key: key name for addition to dict
+            value: data to add to dict
+            cleaned: Whether to add data to _raw_state_data dict or _cleaned_state_data
+                By default, this will add datum to _cleaned_state_data:
+                    Using this functions allows you to skip the _prepare_state_data function call and put
+                    datum directly in _cleaned_state_data dict(which is used to out data)
+        """
+        if cleaned:
+            self._cleaned_state_data[key] = value
+        else:
+            self._raw_state_data[key] = value
 
     @property
     def state(self):
@@ -221,5 +244,10 @@ class ToggleState(object):
                 self._cleaned_state_data[k] = len(list(filter(
                     lambda x: x not in ['null', 'Null', 'NULL', 'None'], v
                 )))
+            elif k == "course_overrides":
+                courses_with_flag_on = [course for course, value in v.items() if value == "on"]
+                courses_with_flag_off = [course for course, value in v.items() if value == "off"]
+                self._cleaned_state_data["num_courses_on"] = len(courses_with_flag_on)
+                self._cleaned_state_data["num_courses_off"] = len(courses_with_flag_off)
             else:
                 self._cleaned_state_data[k] = v
