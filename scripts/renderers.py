@@ -32,7 +32,7 @@ class CsvRenderer():
         for env, idas in envs_data.items():
             for ida_name, ida in idas.items():
                 for toggle_type, toggles in ida.toggles.items():
-                    for toggle in toggles:
+                    for toggle_name, toggle in toggles.items():
                         data_dict = toggle.full_data()
                         data_dict["toggle_type"] = toggle_type
                         # In case you want the report to call the ida by a different ida_name

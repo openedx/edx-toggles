@@ -22,7 +22,7 @@ class IDA(object):
 
     def __init__(self, name, configuration=None):
         self.name = name
-        self.toggles = collections.defaultdict(list)
+        self.toggles = collections.defaultdict(dict)
         self.annotation_report_path = None
         self.configuration = configuration if configuration else {}
 
@@ -53,15 +53,37 @@ class IDA(object):
             elif row['model'] == "waffle.switch":
                 toggle_type = "WaffleSwitch"
             elif row['model'] == "WaffleUtilsWaffleflagcourseoverridemodel":
-                toggle_type = "CourseWaffleFlag"
+                toggle_type = "CourseWaffleFlag/CourseOverride"
             else:
                 toggle_type = row['model']
 
             toggle_data = row['fields']
             toggle_state = ToggleState(toggle_type, toggle_data)
             toggle = Toggle(toggle_name, toggle_state)
+            if toggle_type not in self.toggles.keys():
+                self.toggles[toggle_type] = {}
 
-            self.toggles[toggle_type].append(toggle)
+            if toggle_type == "CourseWaffleFlag/CourseOverride":
+                if toggle.name not in self.toggles[toggle_type].keys():
+                    # if a "CourseWaffleFlag/CourseOverride" was found in data before its corresponding
+                    # CourseWaffleFlag, create an empty toggle to add course override data
+                    toggle_state = ToggleState("CourseWaffleFlag", {})
+                    toggle = Toggle(toggle_name, toggle_state)
+                    self.toggles["CourseWaffleFlag"][toggle_name] = toggle
+
+                # add course override data to toggle output
+                self.toggles["CourseWaffleFlag"][toggle.name].state.add_cleaned_data(toggle_data["course_id"], toggle_data["override_choice"])
+                LOGGER.info(
+                    'Adding override choice for course {} to waffle flag {}'.format(toggle_data["course_id"], toggle.name)
+                )
+            elif toggle_type == "CourseWaffleFlag":
+                if toggle_name in self.toggles[toggle_type].keys():
+                    self.toggles[toggle_type][toggle_name].state._raw_state_data = toggle_data
+                else:
+                    self.toggles[toggle_type][toggle.name] = toggle
+            else:
+                self.toggles[toggle_type][toggle.name] = toggle
+
         LOGGER.info(
             'Finished collecting toggle state for {}'.format(self.name)
         )
@@ -87,7 +109,7 @@ class IDA(object):
         )
         for toggle_type in self.toggles.keys():
             annotation_count = len(
-                list(filter(lambda t: t.annotations, self.toggles[toggle_type]))
+                list(filter(lambda t: t.annotations, [value for key, value in self.toggles[toggle_type].items()]))
             )
             LOGGER.info(
                 '- Collected annotated {}: {}'.format(
@@ -179,20 +201,20 @@ class IDA(object):
                 annotation_type = toggle_annotation._raw_annotation_data[
                     'implementation'
                 ][0]
-                if self._contains(annotation_type, annotation_name):
-                    LOGGER.info(
-                        'Found a match for {}'.format(annotation_name) +
-                        'in the data pulled from the database.'
-                    )
-                    i = self._get_index(annotation_type, annotation_name)
-                    self.toggles[annotation_type][i].annotations = toggle_annotation
+                if annotation_type not in self.toggles.keys():
+                    #TODO(jinder): check to make sure this should not be a defaultdict
+                    self.toggles[annotation_type] = {}
+
+                if annotation_name in self.toggles[annotation_type].keys():
+                    self.toggles[annotation_type][annotation_name].annotations = toggle_annotation
                 else:
                     LOGGER.info(
-                        'Could not find any matches for {}'.format(annotation_name) +
-                        'in the data pulled from the database.'
+                    'Could not find any matches for {}'.format(annotation_name) +
+                    'in the data pulled from the database.'
                     )
                     toggle = Toggle(annotation_name, annotations=toggle_annotation)
-                    self.toggles[annotation_type].append(toggle)
+                    self.toggles[annotation_type][toggle.name]=toggle
+
 
     def _contains(self, toggle_type, toggle_name):
         """

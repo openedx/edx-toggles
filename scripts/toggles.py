@@ -127,6 +127,15 @@ class ToggleState(object):
         self._raw_state_data = data
         self._cleaned_state_data = collections.defaultdict(str)
 
+    def add_cleaned_data(self, key, value):
+        """
+        Adding data to _cleaned_state_data dict.
+
+        Using this functions allows you to skip the _prepare_state_data function call and put
+        data directly in _cleaned_state_data dict(which is used to out data)
+        """
+        self._cleaned_state_data[key] = value
+
     @property
     def state(self):
         """
