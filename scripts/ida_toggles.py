@@ -92,6 +92,8 @@ class IDA(object):
                     'Adding override choice for course {} to waffle flag {}'.format(toggle_data["course_id"], toggle.name)
                 )
             elif toggle_type == "CourseWaffleFlag":
+                #TODO(jinder): Will state data ever have data for just CourseWaffleFlag
+                #TODO(jinder): This block might not be necessary
                 # in case, overrides data already added this toggle to data, make sure not to delete data
                 if toggle_name in self.toggles[toggle_type].keys():
                     for k, v in toggle_data:
