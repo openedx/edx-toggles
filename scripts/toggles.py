@@ -247,7 +247,7 @@ class ToggleState(object):
             elif k == "course_overrides":
                 courses_with_flag_on = [course for course, value in v.items() if value == "on"]
                 courses_with_flag_off = [course for course, value in v.items() if value == "off"]
-                self._cleaned_state_data["num_courses_on"] = len(courses_with_flag_on)
-                self._cleaned_state_data["num_courses_off"] = len(courses_with_flag_off)
+                self._cleaned_state_data["num_courses_forced_on"] = len(courses_with_flag_on)
+                self._cleaned_state_data["num_courses_forced_off"] = len(courses_with_flag_off)
             else:
                 self._cleaned_state_data[k] = v

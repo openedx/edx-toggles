@@ -204,7 +204,7 @@ class IDA(object):
                         source_file= source_file,
                         )
                     if toggle_annotation.line_numbers:
-                        line_num = "#L{line_number}".format(line_number=toggle_annotation.line_numbers[0])
+                        line_num = "#L{first_line_num}-L{last_line_num}".format(first_line_num=toggle_annotation.line_numbers[0], last_line_num=toggle_annotation.line_numbers[-1])
                         url = url + line_num
                     toggle_annotation.github_url = url
 
