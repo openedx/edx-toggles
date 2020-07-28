@@ -4,10 +4,24 @@ Common classes to represent toggles withint IDAs.
 import collections
 import re
 import logging
+from enum import Enum
 
 
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
+
+
+class ToggleTypes(Enum):
+    WAFFLE_FLAG = "WaffleFlag"
+    WAFFLE_SWITCH = "WaffleSwitch"
+    WAFFLE_SAMPLE = "WaffleSample"
+    EXPERIMET_WAFFLE_FLAG = "ExperimentWaffleFlag"
+    COURSE_WAFFLE_FLAG = "CourseWaffleFlag"
+    COURSE_WAFFLE_FLAG_course_override = "WaffleUtilsWaffleflagcourseoverridemodel"
+    DJANGO_SETTING = "DjangoSetting"
+    CONFIGURATION_MODEL = "ConfigurationModel"
+    UNKNOWN = "model name not recognized"
+
 
 class Toggle:
     """
@@ -152,7 +166,7 @@ class ToggleState(object):
             cleaned: Whether to add data to _raw_state_data dict or _cleaned_state_data
                 By default, this will add datum to _cleaned_state_data:
                     Using this functions allows you to skip the _prepare_state_data function call and put
-                    datum directly in _cleaned_state_data dict(which is used to out data)
+                    datum directly in _cleaned_state_data dict (which is used by renderer to output data)
         """
         if cleaned:
             self._cleaned_state_data[key] = value
@@ -245,9 +259,9 @@ class ToggleState(object):
                     lambda x: x not in ['null', 'Null', 'NULL', 'None'], v
                 )))
             elif k == "course_overrides":
-                courses_with_flag_on = [course for course, value in v.items() if value == "on"]
-                courses_with_flag_off = [course for course, value in v.items() if value == "off"]
-                self._cleaned_state_data["num_courses_forced_on"] = len(courses_with_flag_on)
-                self._cleaned_state_data["num_courses_forced_off"] = len(courses_with_flag_off)
+                courses_forced_on = [course for course, value in v.items() if value == "on"]
+                courses_forced_off = [course for course, value in v.items() if value == "off"]
+                self._cleaned_state_data["num_courses_forced_on"] = len(courses_forced_on)
+                self._cleaned_state_data["num_courses_forced_off"] = len(courses_forced_off)
             else:
                 self._cleaned_state_data[k] = v

@@ -12,7 +12,6 @@ from collections import OrderedDict
 import click
 import jinja2
 
-
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
@@ -32,6 +31,7 @@ class CsvRenderer():
         for env, idas in envs_data.items():
             for ida_name, ida in idas.items():
                 for toggle_type, toggles in ida.toggles.items():
+                    # pdb.set_trace()
                     for toggle_name, toggle in toggles.items():
                         data_dict = toggle.full_data()
                         data_dict["toggle_type"] = toggle_type
@@ -60,7 +60,7 @@ class CsvRenderer():
             if isinstance(toggle_type_filter, str):
                 toggle_type_filter = [toggle_type_filter]
             for toggle_dict in toggles_data:
-                if toggle_dict["toggle_type"] in toggle_type_filter:
+                if toggle_dict["toggle_type"].value in toggle_type_filter:
                     data_to_render.append(toggle_dict)
 
         # sort data by either annotation_name or state_name
@@ -90,7 +90,8 @@ class CsvRenderer():
 
         output = []
         if initial_header is not None:
-            # put things in initial header at the beginning of the output(though only if there is data on it)
+            # put columns in initial header at the beginning of the output
+            # - though only if there is data on it
             for column in initial_header:
                 if column in header:
                     output.append(column)
