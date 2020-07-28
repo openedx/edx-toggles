@@ -53,8 +53,8 @@ def test_adding_annotation_data():
     switch_2 = Toggle('my-sample-switch', ToggleState('WaffleSwitch', {}))
     switch_3 = Toggle('another-sample-switch', ToggleState('WaffleSwitch', {}))
     flag_1 = Toggle('sample-flag', ToggleState('WaffleFlag', {}))
-    ida.toggles['WaffleSwitch'] = [switch_1, switch_2, switch_3]
-    ida.toggles['WaffleFlag'] = [flag_1]
+    ida.toggles['WaffleSwitch'] = {switch_1.name:switch_1, switch_2.name:switch_2, switch_3.name:switch_3}
+    ida.toggles['WaffleFlag'] = {flag_1.name:flag_1}
     annotation_groups = {
         'path/to/source/code.py': [
             # A feature toggle annotation, but not one we care about linking
@@ -159,7 +159,7 @@ def test_adding_annotation_data():
 
     ida._add_annotation_data_to_toggle_state(annotation_groups)
 
-    annotation = ida.toggles['WaffleSwitch'][1].annotations
+    annotation = ida.toggles['WaffleSwitch'][switch_2.name].annotations
     assert annotation.report_group_id == 2
     assert annotation.line_range() == (561, 563)
     assert annotation._raw_annotation_data == expected_data
@@ -170,7 +170,7 @@ def test_adding_annotation_data():
         'default': True,
     }
 
-    annotation = ida.toggles['WaffleSwitch'][3].annotations
+    annotation = ida.toggles['WaffleSwitch'][expected_data['name']].annotations
     assert annotation.report_group_id == 2
     assert annotation.line_range() == (761, 763)
     assert annotation._raw_annotation_data == expected_data

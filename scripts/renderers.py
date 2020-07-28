@@ -89,11 +89,12 @@ class CsvRenderer():
 
 
         output = []
-        # put things in initial header at the beginning of the output(though only if there is data on it)
-        for column in initial_header:
-            if column in header:
-                output.append(column)
-                header.remove(column)
+        if initial_header is not None:
+            # put things in initial header at the beginning of the output(though only if there is data on it)
+            for column in initial_header:
+                if column in header:
+                    output.append(column)
+                    header.remove(column)
         header = sorted(list(header), key=sorting_header)
         output.extend(header)
         return output
