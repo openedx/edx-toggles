@@ -17,10 +17,35 @@ class ToggleTypes(Enum):
     WAFFLE_SAMPLE = "WaffleSample"
     EXPERIMET_WAFFLE_FLAG = "ExperimentWaffleFlag"
     COURSE_WAFFLE_FLAG = "CourseWaffleFlag"
-    COURSE_WAFFLE_FLAG_course_override = "WaffleUtilsWaffleflagcourseoverridemodel"
+    COURSE_WAFFLE_FLAG_COURSE_OVERRIDE = "WaffleUtilsWaffleflagcourseoverridemodel"
     DJANGO_SETTING = "DjangoSetting"
     CONFIGURATION_MODEL = "ConfigurationModel"
     UNKNOWN = "model name not recognized"
+
+    @classmethod
+    def get_toggle_type_from_table_name(cls, table_name):
+        """
+        Assign toggle type to model types
+        """
+
+        # convert sql dump model name to annotation report toggle type name
+        # this is usually the case with just devstack data dump, particularly from ecommerce
+        if table_name == "waffle.flag":
+            toggle_type = cls.WAFFLE_FLAG
+        elif table_name == "waffle.switch":
+            toggle_type = cls.WAFFLE_SWITCH
+        elif table_name == "waffle.sample":
+            toggle_type = cls.WAFFLE_SAMPLE
+        else:
+            try:
+                toggle_type = cls(table_name)
+            except:
+                LOGGER.warning(
+                'Name of model not recognized: {}'.format(table_name)
+                )
+                toggle_type = cls.UNKNOWN
+        return toggle_type
+
 
 
 class Toggle:
