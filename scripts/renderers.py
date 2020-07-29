@@ -12,7 +12,6 @@ from collections import OrderedDict
 import click
 import jinja2
 
-
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
@@ -32,7 +31,7 @@ class CsvRenderer():
         for env, idas in envs_data.items():
             for ida_name, ida in idas.items():
                 for toggle_type, toggles in ida.toggles.items():
-                    for toggle in toggles:
+                    for toggle_name, toggle in toggles.items():
                         data_dict = toggle.full_data()
                         data_dict["toggle_type"] = toggle_type
                         # In case you want the report to call the ida by a different ida_name
@@ -60,22 +59,18 @@ class CsvRenderer():
             if isinstance(toggle_type_filter, str):
                 toggle_type_filter = [toggle_type_filter]
             for toggle_dict in toggles_data:
-                if toggle_dict["toggle_type"] in toggle_type_filter:
+                if toggle_dict["toggle_type"].value in toggle_type_filter:
                     data_to_render.append(toggle_dict)
 
         # sort data by either annotation_name or state_name
         sorting_key = lambda datum: datum.get("name", "")
         return sorted(data_to_render, key=sorting_key)
 
-    def get_sorted_headers_from_toggles(self, flattened_toggles_data):
+    def get_sorted_headers_from_toggles(self, flattened_toggles_data, initial_header=None):
         # get header from data
         header = set()
         for datum in flattened_toggles_data:
             header = header.union(set(datum.keys()))
-
-        # removing "name" from header so that it is not part of sorting later
-        # will add it back as first column before returning header list
-        header.remove("name")
 
         def sorting_header(key):
             """
@@ -91,17 +86,26 @@ class CsvRenderer():
             sort_by.append(key)
             return tuple(sort_by)
 
-        header = sorted(list(header), key=sorting_header)
-        header.insert(0, "name")
-        return header
 
-    def render_csv_report(self, envs_ida_toggle_data, file_path="report.csv", toggle_types=None):
+        output = []
+        if initial_header is not None:
+            # put columns in initial header at the beginning of the output
+            # - though only if there is data on it
+            for column in initial_header:
+                if column in header:
+                    output.append(column)
+                    header.remove(column)
+        header = sorted(list(header), key=sorting_header)
+        output.extend(header)
+        return output
+
+    def render_csv_report(self, envs_ida_toggle_data, file_path="report.csv", toggle_types=None, header=None):
         """
         takes data, processes it, and outputs it in csv form
         """
         toggles_data = self.transform_toggle_data_for_csv(envs_ida_toggle_data)
         data_to_render = self.filter_and_sort_toggles(toggles_data, toggle_types)
-        header = self.get_sorted_headers_from_toggles(data_to_render)
+        header = self.get_sorted_headers_from_toggles(data_to_render, header)
         self.write_csv(file_path, data_to_render, header)
 
     def write_csv(self, file_name, data, fieldnames):

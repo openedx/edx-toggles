@@ -14,6 +14,8 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+* Adding course overrides data to toggles report
+* refractored code to generate toggles report
 * Added output for waffle flag course overrides to data gatherer
 * Upgraded dependencies
 

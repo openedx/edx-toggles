@@ -108,10 +108,11 @@ def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, to
         # add data for each ida
         if show_state:
             add_toggle_state_to_idas(total_info[env_name], env_data_path, configuration.get("ida", defaultdict(dict)))
+
         add_toggle_annotations_to_idas(total_info[env_name], annotations_dir, configuration.get("ida", defaultdict(dict)))
 
     renderer = CsvRenderer()
-    renderer.render_csv_report(total_info, output_file_path, toggle_type_filter)
+    renderer.render_csv_report(total_info, output_file_path, toggle_type_filter, ["name"])
 
 
 if __name__ == '__main__':

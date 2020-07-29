@@ -3,7 +3,7 @@ from unittest import mock, TestCase
 
 from scripts.renderers import CsvRenderer
 from scripts.ida_toggles import IDA
-from scripts.toggles import Toggle
+from scripts.toggles import Toggle, ToggleTypes
 
 csv_renderer = CsvRenderer()
 tc = TestCase()
@@ -19,13 +19,13 @@ def test_transform_toggle_data_for_csv(mocked_toggle):
     for env_name, env in envs_data.items():
         for ida_name, ida in env.items():
             ida.toggles = {}
-            ida.toggles['WaffleFlag'] = []
-            ida.toggles['WaffleFlag'].append(Toggle("n1"))
-            ida.toggles['WaffleFlag'].append(Toggle("n2"))
-            ida.toggles['WaffleSwitch'] = []
-            ida.toggles['WaffleSwitch'].append(Toggle("n3"))
-            ida.toggles['WaffleSwitch'].append(Toggle("n4"))
-            ida.toggles['WaffleSwitch'].append(Toggle("n5"))
+            ida.toggles['WaffleFlag'] = {}
+            ida.toggles['WaffleFlag']["n1"] = Toggle("n1")
+            ida.toggles['WaffleFlag']['n2'] = Toggle("n2")
+            ida.toggles['WaffleSwitch'] = {}
+            ida.toggles['WaffleSwitch']['n3'] = Toggle("n3")
+            ida.toggles['WaffleSwitch']['n4'] = Toggle("n4")
+            ida.toggles['WaffleSwitch']['n5'] = Toggle("n5")
             total_num_of_loops += 1
     mocked_toggle.full_data = lambda: {'d1':1, 'd2':2, 'd3':3}
     output_data = csv_renderer.transform_toggle_data_for_csv(envs_data)
@@ -48,7 +48,7 @@ def test_get_sorted_headers_from_toggles():
     """
     unsorted_headers = ["env_name", "aaaaa", "ida_name", "bbbbb", "name", "not_s"]
     flattened_data = [{key:True for key in unsorted_headers} for num in range(20)]
-    sorted_header = csv_renderer.get_sorted_headers_from_toggles(flattened_data)
+    sorted_header = csv_renderer.get_sorted_headers_from_toggles(flattened_data, ["name"])
     assert sorted_header[0] == "name"
     assert sorted_header[2] == "ida_name"
     assert sorted_header[3] == "not_s"
@@ -58,9 +58,8 @@ def test_filter_and_sort_toggles_filtering():
     """
     There are cases where we might just want a subset of data,
     """
-    toggle_types = ["WaffleFlag", "WaffleSwitch", "DjangoSettings", "Random1", "Random2"]
-    names = ["n{}".format(num) for num in range(5*len(toggle_types))]
-    data = [{"name":name, "toggle_type":random.choice(toggle_types)} for name in names]
+    names = ["n{}".format(num) for num in range(5*len(ToggleTypes))]
+    data = [{"name":name, "toggle_type":random.choice(list(ToggleTypes))} for name in names]
 
     # test with no filtering
     filtered_data = csv_renderer.filter_and_sort_toggles(data)
@@ -68,15 +67,15 @@ def test_filter_and_sort_toggles_filtering():
 
     # filter by WaffleFlag as str input
     filtered_data = csv_renderer.filter_and_sort_toggles(data, "WaffleFlag")
-    tc.assertCountEqual([datum for datum in data if datum["toggle_type"]=="WaffleFlag"], filtered_data)
+    tc.assertCountEqual([datum for datum in data if datum["toggle_type"]==ToggleTypes.WAFFLE_FLAG], filtered_data)
 
     # filter by WaffleFlag as list input
     filtered_data = csv_renderer.filter_and_sort_toggles(data, ["WaffleFlag"])
-    tc.assertCountEqual([datum for datum in data if datum["toggle_type"]=="WaffleFlag"], filtered_data)
+    tc.assertCountEqual([datum for datum in data if datum["toggle_type"]==ToggleTypes.WAFFLE_FLAG], filtered_data)
 
     # filter by WaffleFlag and WaffleSwitch
     filtered_data = csv_renderer.filter_and_sort_toggles(data, ["WaffleFlag", "WaffleSwitch"])
-    tc.assertCountEqual([datum for datum in data if datum["toggle_type"]=="WaffleFlag" or datum["toggle_type"]=="WaffleSwitch"], filtered_data)
+    tc.assertCountEqual([datum for datum in data if datum["toggle_type"]==ToggleTypes.WAFFLE_FLAG or datum["toggle_type"]==ToggleTypes.WAFFLE_SWITCH], filtered_data)
 
 def test_filter_and_sort_toggles_sorting():
     """

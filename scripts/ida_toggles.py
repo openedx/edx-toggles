@@ -10,8 +10,9 @@ import logging
 import os
 import re
 import yaml
+from enum import Enum
 
-from scripts.toggles import Toggle, ToggleAnnotation, ToggleState
+from scripts.toggles import Toggle, ToggleAnnotation, ToggleState, ToggleTypes
 
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -22,7 +23,7 @@ class IDA(object):
 
     def __init__(self, name, configuration=None):
         self.name = name
-        self.toggles = collections.defaultdict(list)
+        self.toggles = collections.defaultdict(dict)
         self.annotation_report_path = None
         self.configuration = configuration if configuration else {}
 
@@ -42,22 +43,78 @@ class IDA(object):
                 raise
         self._add_toggle_data(dump_contents)
 
+
+    def _handle_course_waffle_flag_data(self, row_data):
+        """
+        Function to handle special case of CourseWaffleFlags.
+            # - a CourseWaffleFlag can have multiple overrides (one per course)
+            # - each course override is defined by its waffle flag and its course
+            # - each course override will have its own row_data that needs to be added
+                to its CourseWafleFlag
+        """
+        toggle_name = row_data['fields']['waffle_flag']
+        toggle_data = row_data['fields']
+        toggle_type = ToggleTypes.COURSE_WAFFLE_FLAG
+        if toggle_type not in self.toggles.keys():
+            self.toggles[toggle_type] = {}
+        toggle = self.toggles[toggle_type].get(toggle_name, None)
+        
+        if toggle is None:
+            # if a CourseWaffleFlag's course override data was found before its corresponding
+            # waffle flag, create an empty toggle to add course override data
+            toggle = Toggle(toggle_name, None)
+            self.toggles[toggle_type][toggle_name] = toggle
+
+        if toggle.state is None:
+            toggle_state = ToggleState(toggle_type, {})
+            toggle.state = toggle_state
+
+        # add course override data to toggle output
+
+        # get dict with all course_overrides and add new course to it
+        course_overrides = toggle.state.get_datum(
+                                "course_overrides",
+                                cleaned=False,
+                                )
+
+        if not course_overrides:
+            course_overrides = {}
+
+        course_overrides[toggle_data["course_id"]] = toggle_data["override_choice"]
+        toggle.state.set_datum(
+            "course_overrides",
+            course_overrides,
+            cleaned=False,
+        )
+
+        LOGGER.info(
+            'Adding override choice for course {} to waffle flag {}'.format(toggle_data["course_id"], toggle.name)
+        )
+
     def _add_toggle_data(self, dump_contents):
+        """
+        Add toggles state data to toggles
+        if toggle already exists, replace its state with this content.
+        else: create new toggle with this data
+        """
         for row in dump_contents:
-            toggle_name = row['fields']['name']
-            # convert sql dump model name to annotation report toggle type name
-            if row['model'] == "waffle.flag":
-                toggle_type = "WaffleFlag"
-            elif row['model'] == "waffle.switch":
-                toggle_type = "WaffleSwitch"
+            toggle_type = ToggleTypes.get_toggle_type_from_table_name(row['model'])
+            if toggle_type == ToggleTypes.COURSE_WAFFLE_FLAG:
+                self._handle_course_waffle_flag_data(row)
             else:
-                toggle_type = row['model']
+                toggle_name = row['fields'].get('name', None)
+                toggle_data = row['fields']
 
-            toggle_data = row['fields']
-            toggle_state = ToggleState(toggle_type, toggle_data)
-            toggle = Toggle(toggle_name, toggle_state)
+                if toggle_type not in self.toggles.keys():
+                    self.toggles[toggle_type] = {}
 
-            self.toggles[toggle_type].append(toggle)
+                toggle = self.toggles[toggle_type].get(toggle_name, None)
+                if toggle is None:
+                    toggle = Toggle(toggle_name, None)
+                    self.toggles[toggle_type][toggle_name] = toggle
+
+                toggle_state = ToggleState(toggle_type, toggle_data)
+                toggle.state = toggle_state
         LOGGER.info(
             'Finished collecting toggle state for {}'.format(self.name)
         )
@@ -67,6 +124,8 @@ class IDA(object):
                     toggle_type, len(self.toggles[toggle_type])
                 )
             )
+
+
 
     def add_annotations(self):
         """
@@ -82,9 +141,11 @@ class IDA(object):
             'Finished collecting annotations for {}'.format(self.name)
         )
         for toggle_type in self.toggles.keys():
+            # count number of toggles that have annotations
             annotation_count = len(
-                list(filter(lambda t: t.annotations, self.toggles[toggle_type]))
-            )
+                [value.annotations for _, value in self.toggles[toggle_type].items() if value.annotations]
+                )
+
             LOGGER.info(
                 '- Collected annotated {}: {}'.format(
                     toggle_type, annotation_count
@@ -159,7 +220,10 @@ class IDA(object):
                         source_file= source_file,
                         )
                     if toggle_annotation.line_numbers:
-                        line_num = "#L{line_number}".format(line_number=toggle_annotation.line_numbers[0])
+                        line_num = "#L{first_line_num}-L{last_line_num}".format(
+                            first_line_num=toggle_annotation.line_numbers[0],
+                            last_line_num=toggle_annotation.line_numbers[-1],
+                        )
                         url = url + line_num
                     toggle_annotation.github_url = url
 
@@ -172,23 +236,26 @@ class IDA(object):
                     continue
 
                 annotation_name = _get_annotation_data('name', group)
-                annotation_type = toggle_annotation._raw_annotation_data[
-                    'implementation'
-                ][0]
-                if self._contains(annotation_type, annotation_name):
-                    LOGGER.info(
-                        'Found a match for {}'.format(annotation_name) +
-                        'in the data pulled from the database.'
+                try:
+                    annotation_type = ToggleTypes(toggle_annotation._raw_annotation_data['implementation'][0])
+                except ValueError:
+                    annotation_type = ToggleTypes.UNKNOWN
+                    LOGGER.warning(
+                    'Name of model not recognized: {}'.format(toggle_annotation._raw_annotation_data['implementation'][0])
                     )
-                    i = self._get_index(annotation_type, annotation_name)
-                    self.toggles[annotation_type][i].annotations = toggle_annotation
+                if annotation_type not in self.toggles.keys():
+                    self.toggles[annotation_type] = {}
+
+                if annotation_name in self.toggles[annotation_type].keys():
+                    self.toggles[annotation_type][annotation_name].annotations = toggle_annotation
                 else:
                     LOGGER.info(
-                        'Could not find any matches for {}'.format(annotation_name) +
-                        'in the data pulled from the database.'
+                    'Could not find any matches for {}'.format(annotation_name) +
+                    'in the data pulled from the database.'
                     )
                     toggle = Toggle(annotation_name, annotations=toggle_annotation)
-                    self.toggles[annotation_type].append(toggle)
+                    self.toggles[annotation_type][toggle.name]=toggle
+
 
     def _contains(self, toggle_type, toggle_name):
         """
