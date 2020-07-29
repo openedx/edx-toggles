@@ -15,9 +15,8 @@ class ToggleTypes(Enum):
     WAFFLE_FLAG = "WaffleFlag"
     WAFFLE_SWITCH = "WaffleSwitch"
     WAFFLE_SAMPLE = "WaffleSample"
-    EXPERIMET_WAFFLE_FLAG = "ExperimentWaffleFlag"
+    EXPERIMENT_WAFFLE_FLAG = "ExperimentWaffleFlag"
     COURSE_WAFFLE_FLAG = "CourseWaffleFlag"
-    COURSE_WAFFLE_FLAG_COURSE_OVERRIDE = "WaffleUtilsWaffleflagcourseoverridemodel"
     DJANGO_SETTING = "DjangoSetting"
     CONFIGURATION_MODEL = "ConfigurationModel"
     UNKNOWN = "model name not recognized"
@@ -36,6 +35,8 @@ class ToggleTypes(Enum):
             toggle_type = cls.WAFFLE_SWITCH
         elif table_name == "waffle.sample":
             toggle_type = cls.WAFFLE_SAMPLE
+        elif table_name == "WaffleUtilsWaffleflagcourseoverridemodel":
+            toggle_type = cls.COURSE_WAFFLE_FLAG
         else:
             try:
                 toggle_type = cls(table_name)

@@ -44,13 +44,17 @@ class IDA(object):
         self._add_toggle_data(dump_contents)
 
 
-    def _handle_course_override_data(self, row_data):
+    def _handle_course_waffle_flag_data(self, row_data):
         """
-        Function to handle special case of Course overrides.
+        Function to handle special case of CourseWaffleFlags.
+            # - a CourseWaffleFlag can have multiple overrides (one per course)
+            # - each course override is defined by its waffle flag and its course
+            # - each course override will have its own row_data that needs to be added
+                to its CourseWafleFlag
         """
         toggle_name = row_data['fields']['waffle_flag']
-        toggle_type = ToggleTypes.COURSE_WAFFLE_FLAG
         toggle_data = row_data['fields']
+        toggle_type = ToggleTypes.COURSE_WAFFLE_FLAG
         if toggle_type not in self.toggles.keys():
             self.toggles[toggle_type] = {}
         toggle = self.toggles[toggle_type].get(toggle_name, None)
@@ -66,8 +70,6 @@ class IDA(object):
             toggle.state = toggle_state
 
         # add course override data to toggle output
-        # - a CourseWaffleFlag can have multiple overrides (one per course)
-        # - each course override is defined by its waffle flag and its course
 
         # get dict with all course_overrides and add new course to it
         course_overrides = toggle.state.get_datum(
@@ -97,8 +99,8 @@ class IDA(object):
         """
         for row in dump_contents:
             toggle_type = ToggleTypes.get_toggle_type_from_table_name(row['model'])
-            if toggle_type == ToggleTypes.COURSE_WAFFLE_FLAG_COURSE_OVERRIDE:
-                self._handle_course_override_data(row)
+            if toggle_type == ToggleTypes.COURSE_WAFFLE_FLAG:
+                self._handle_course_waffle_flag_data(row)
             else:
                 toggle_name = row['fields'].get('name', None)
                 toggle_data = row['fields']
