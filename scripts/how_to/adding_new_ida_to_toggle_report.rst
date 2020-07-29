@@ -2,6 +2,8 @@
 Enabling Toggles Report for a new IDA
 =====================================
 
+The generation of toggles report for an IDA has been automated. However, for now, the automation has only been used on lms. This document lists what needs to be done to automate toggle report generation for other IDAs.
+
 .. contents:: Steps
 
 Gathering Data
