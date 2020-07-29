@@ -22,7 +22,7 @@ The steps to collect annotations is automated through a jenkins job
 
 steps
 ~~~~~
-* add a `generate-feature-toggle-annotation-report.sh`_ to repository, used linked file as example
+* add a `generate-feature-toggle-annotation-report.sh`_ to repository, use linked file as example
 * checkout your IDA code repository in groovy using git block
 .. code:: java
 
@@ -53,6 +53,8 @@ steps
                 "cd ${target_directory}\nbash scripts/generate-feature-toggle-annotation-report.sh"
             )
         }
+
+
 .. _generate-feature-toggle-annotation-report.sh: https://github.com/edx/edx-platform/blob/master/scripts/generate-feature-toggle-annotation-report.sh
 
 
@@ -71,7 +73,7 @@ problems with current approach
 
 State Data from Database
 ------------------------
-Toggles states are stored in the database for each production environment. The database is queried using `gather_feature-toggle_state.py`_.
+Toggles states are stored in the database for each production environment. IDA specification and code to query database is located in `gather_feature-toggle_state.py`_.
 
 .. _gather_feature-toggle_state.py: https://github.com/edx/edx-toggles/blob/master/scripts/gather_feature_toggle_state.py
 
@@ -84,13 +86,12 @@ The steps to collect annotations is automated through a jenkins job
 steps
 ~~~~~
   - add IDA specification in main function in `gather_feature_toggle_state.py`_
-  - add specification for your database to `edx-internal/*/feature-toggle-report-generator.yml`_
+  - add environment specification for your database to `edx-internal/*/feature-toggle-report-generator.yml`_
 
 problems with current approach
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * the code to gather database info has somethings that are very specific to lms
     - fix: make things more general
-        + this should not be too difficult
 
 
 .. _edx-internal/*/feature-toggle-report-generator.yml: https://github.com/edx/edx-internal/blob/master/tools-edx-jenkins/feature-toggle-report-generator.yml
