@@ -107,6 +107,12 @@ The annotation data and Toggle state data dump should be stored in s3 buckets. T
 
 As long as the data is structured correctly(specified in `README`_), nothing should be necessary
 
+possible improvements
+---------------------
+
+* Add ability to filter idas in report
+
+
 
 Publishing Data
 ===============
