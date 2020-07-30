@@ -108,7 +108,7 @@ Processing Data
 
 The annotation data and Toggle state data dump should be stored in s3 buckets. The automated publish-feature-toggle-report job (in `groovy job specification`_) pulls the data from s3 buckets and calls `feature_toggle_report_generator.py`_ to process  the data and output it as a csv file. 
 
-As long as the data is structured correctly(specified in `README`_), nothing should be necessary
+As long as the data is structured correctly (specified in `README`_), nothing should be necessary
 
 possible improvements
 ---------------------
