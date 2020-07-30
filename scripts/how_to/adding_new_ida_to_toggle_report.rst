@@ -13,7 +13,7 @@ Annotation Data
 ---------------
 The toggles are annotated in code following edX code annotation:`writing annotations`_. The `code_annotations`_ tool is used to collect annotations into a report.
 
-The steps to collect annotations is automated through a jenkins job
+The steps to collect annotations are automated through a jenkins job
   - `groovy job specification`_ in "generate-code-annotation-report"
   - `Jenkins Job folder`_
   - once the job is done, its data is pushed to s3 bucket: `script to push data to s3 bucket`_
