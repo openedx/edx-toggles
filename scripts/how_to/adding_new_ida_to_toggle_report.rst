@@ -19,7 +19,7 @@ The steps to collect annotations is automated through a jenkins job
   - once the job is done, its data is pushed to s3 bucket: `script to push data to s3 bucket`_
 
 
-.. _writing anntations: https://code-annotations.readthedocs.io/en/latest/writing_annotations.html
+.. _writing annotations: https://code-annotations.readthedocs.io/en/latest/writing_annotations.html
 .. _code_annotations: https://www.github.com/edx/code-annotations
 
 steps
