@@ -46,7 +46,7 @@ steps
 .. code:: java
 
         virtualenv {
-            pythonName('System-CPython-3.5')
+            pythonName('System-CPython-3.6')
             clear(true)
             systemSitePackages(false)
             nature('shell')
