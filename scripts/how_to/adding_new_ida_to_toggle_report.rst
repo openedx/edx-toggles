@@ -20,7 +20,7 @@ The steps to collect annotations is automated through a jenkins job
 
 
 .. _writing annotations: https://code-annotations.readthedocs.io/en/latest/writing_annotations.html
-.. _code_annotations: https://www.github.com/edx/code-annotations
+.. _code_annotations: https://github.com/edx/code-annotations
 
 steps
 ~~~~~
