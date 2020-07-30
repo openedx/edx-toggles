@@ -11,7 +11,7 @@ Gathering Data
 
 Annotation Data
 ---------------
-The toggles are should be annotated in code following edX code annotation:`writing annotations`_. The `code_annotations`_ tool is used to collect annotations into a report.
+The toggles are annotated in code following edX code annotation:`writing annotations`_. The `code_annotations`_ tool is used to collect annotations into a report.
 
 The steps to collect annotations is automated through a jenkins job
   - `groovy job specification`_ in "generate-code-annotation-report"
