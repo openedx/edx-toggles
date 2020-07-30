@@ -67,7 +67,7 @@ problems with current approach
 * if job fails
     - it will block collection of annotation in other repositories
     - archbom is alway notified on failure
-    - fix: Use to same approach as the upgrade jobs, create multiple jobs based on list which contains repository link, and contact email. One job per IDA/repository
+    - fix: Use the same approach as the upgrade jobs, create multiple jobs based on list which contains repository link, and contact email. One job per IDA/repository
 * need to add custom script to every IDA that needs to be in IDA repository
     - fix: create shell script in job to do the job instead. code_annotations should be able to work across repositories and any custom commands should not be necessary
 
