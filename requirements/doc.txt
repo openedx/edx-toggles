@@ -27,7 +27,6 @@ importlib-metadata==2.0.0  # via -r requirements/test.txt, pluggy, pytest
 iniconfig==1.1.1          # via -r requirements/test.txt, pytest
 jinja2==2.11.2            # via -r requirements/test.txt, code-annotations, sphinx
 markupsafe==1.1.1         # via -r requirements/test.txt, jinja2
-mysql-connector-python-rf==2.2.2  # via -r requirements/test.txt
 newrelic==5.22.0.151      # via -r requirements/test.txt, edx-django-utils
 oauthlib==3.1.0           # via -r requirements/test.txt, atlassian-python-api, requests-oauthlib
 packaging==20.4           # via -r requirements/test.txt, bleach, pytest, sphinx

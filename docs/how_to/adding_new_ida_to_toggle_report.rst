@@ -1,40 +1,51 @@
 .. _adding_new_ida:
 
 =============================================
-How to: Enabling Toggles Report for a new IDA
+How-to: Enabling toggles report for a new IDA
 =============================================
 
-The generation of toggles report for an IDA has been automated. However, for now, the automation has only been used on lms. This document lists what needs to be done to automate toggle report generation for other IDAs.
+The generation of toggles report for an IDA has been automated for the LMS.
+This document lists what needs to be done to automate toggle report generation for other IDAs.
+There are a number of references in here that are specific to edX.org's
+automation infrastructure and internal configuration repos,
+but there should be enough detail provided for Open edX users to set up something similar.
 
 .. contents:: Steps
 
 Gathering Data
 ==============
 
-Annotation Data
+Annotation data
 ---------------
-The toggles are annotated in code following edX code annotation:`writing annotations`_. The `code_annotations`_ tool is used to collect annotations into a report.
+The toggles are annotated in code following edX code annotation: `writing annotations`_.
+The `code_annotations`_ tool is used to collect annotations into a report.
 
-The steps to collect annotations are automated through a jenkins job
+The steps to collect annotations are automated through a jenkins job:
 
-- `groovy job specification`_ in "generate-code-annotation-report"
+- `groovy job specification`_ in ``generate-code-annotation-report``
 - `Jenkins Job folder`_
-- once the job is done, its data is pushed to s3 bucket: `script to push data to s3 bucket`_
+- Once the job is done, the annotations data is pushed to an S3 bucket: `script to push data to s3 bucket`_
+
+The job creates files with names like `<ida_name>-annotations.yml`.
+The feature toggle report generator will key off the `ida_name`
+in the filename in order to be able to link this data to the toggle state data
+collected in the next step.
 
 .. _writing annotations: https://code-annotations.readthedocs.io/en/latest/writing_annotations.html
 .. _code_annotations: https://github.com/edx/code-annotations
 
-steps
+Steps
 ~~~~~
 
-* add a `generate-feature-toggle-annotation-report.sh`_ to repository, use linked file as example
-* checkout your IDA code repository in groovy using git block
+- Add a `generate-feature-toggle-annotation-report.sh`_ to repository, use linked file as example
+- Add IDA specification in ``scripts/configuration.yaml``
+- Checkout your IDA code repository in the Jenkins job using a ``git`` block:
 
 .. code:: java
 
-    git {
+        git {
             remote {
-                url(Link to IDA code)
+                url(<IDA_GIT_REPO_URL>)
             }
             branch('*/master')
             extensions {
@@ -44,8 +55,7 @@ steps
             }
         }
 
-
-* add virtualenv step to run annotation generation
+- Add virtualenv step to run annotation generation
 
 .. code:: java
 
@@ -56,7 +66,7 @@ steps
         nature('shell')
         ignoreExitCode(false)
         command(
-            "cd ${target_directory}\nbash scripts/generate-feature-toggle-annotation-report.sh"
+            "cd <IDA_CHECKOUT_DIR>\n scripts/generate-feature-toggle-annotation-report.sh"
         )
     }
 
@@ -64,45 +74,54 @@ steps
 .. _generate-feature-toggle-annotation-report.sh: https://github.com/edx/edx-platform/blob/master/scripts/generate-feature-toggle-annotation-report.sh
 
 
-problems with current approach
+Problems with current approach
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* if job fails
-    - it will block collection of annotation in other repositories
-    - archbom is alway notified on failure
-    - fix: Use the same approach as the upgrade jobs, create multiple jobs based on list which contains repository link, and contact email. One job per IDA/repository
-* need to add custom script to every IDA that needs to be in IDA repository
-    - fix: create shell script in job to do the job instead. code_annotations should be able to work across repositories and any custom commands should not be necessary
+* If job fails:
+
+    - It will block collection of annotation in other repositories
+    - Arch-bom is alway notified on failure
+    - Fix: Use the same approach as the upgrade jobs, create multiple jobs based on list which contains repository link, and contact email. One job per IDA/repository.
+
+* Need to add custom script to every IDA that needs to be in IDA repository
+
+    - Fix: create shell script in job to do the job instead. ``code_annotations`` should be able to work across repositories and any custom commands should not be necessary
 
 
 
-State Data from Database
-------------------------
-Toggles states are stored in the database for each production environment. IDA specification and code to query database is located in `gather_feature-toggle_state.py`_.
+State data from HTTP endpoint
+-----------------------------
+Toggles state is stored in the database for each deployment and must be retrieved
+either directly from the database or via the application.
 
-.. _gather_feature-toggle_state.py: https://github.com/edx/edx-toggles/blob/master/scripts/gather_feature_toggle_state.py
+Collection of state data is automated through a jenkins job.
 
-The steps to collect annotations is automated through a jenkins job:
-
-- `groovy job specification`_  in "gather-${environment}-feature-toggle-state" job
+- `groovy job specification`_  in ``gather-${ida['name']}-${environment}-feature-toggle-state`` job
 - `Jenkins Job folder`_
-- The specifications for each database is located at: `edx-internal/*/feature-toggle-report-generator.yml`_
-- once the job is done, its data is pushed to s3 bucket: `script to push data to s3 bucket`_
+- Once the job is done, the state data is pushed to an S3 bucket: `script to push data to s3 bucket`_
 
-steps
+Steps
 ~~~~~
-  - add IDA specification in main function in `gather_feature_toggle_state.py`_
-  - add environment specification for your database to `edx-internal/*/feature-toggle-report-generator.yml`_
+- Add the edx-toggles Django app to the IDA:
 
-problems with current approach
+    - Include ``edx-toggles`` in the ``base.in`` requirements file.
+      It provides a Django view that allows staff users to retrieve
+      a JSON document containing the boolean waffle switches and settings.
+      (**TODO:** Not yet possible! Functionality still in ``waffle_utils`` in edx-platform;
+      will be moved into edx-toggles.)
+    - Add it to your ``urls.py``: ``url(r'^api/toggles/', include('edx_toggles.views.TODO'))``
+      (**TODO:** As above, and names have yet to be decided.)
+
+- Add environment specification for your database to `edx-internal/*/feature-toggle-report-generator.yml`_
+
+
+Problems with current approach
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* the code to gather database info has somethings that are very specific to lms
-    - fix: make things more general
-
+- The toggle state Django app hasn't been moved into edx-toggles yet,
+  so this only works for the LMS so far
 
 .. _edx-internal/*/feature-toggle-report-generator.yml: https://github.com/edx/edx-internal/blob/master/tools-edx-jenkins/feature-toggle-report-generator.yml
-.. _gather_feature_toggle_state.py: https://github.com/edx/edx-toggles/blob/master/scripts/gather_feature_toggle_state.py
 
 
 Processing Data

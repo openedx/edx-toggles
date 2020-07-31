@@ -16,7 +16,6 @@ edx-django-utils==3.9.0   # via -r requirements/base.txt
 idna==2.10                # via requests
 jinja2==2.11.2            # via -r requirements/base.txt, code-annotations
 markupsafe==1.1.1         # via -r requirements/base.txt, jinja2
-mysql-connector-python-rf==2.2.2  # via -r requirements/scripts.in
 newrelic==5.22.0.151      # via -r requirements/base.txt, edx-django-utils
 oauthlib==3.1.0           # via atlassian-python-api, requests-oauthlib
 pbr==5.5.1                # via -r requirements/base.txt, stevedore

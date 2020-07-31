@@ -1,4 +1,5 @@
 ida:
   lms:
     github_url: https://github.com/edx/edx-platform
-    rename: edxapp
+  credentials:
+    github_url: https://github.com/edx/credentials

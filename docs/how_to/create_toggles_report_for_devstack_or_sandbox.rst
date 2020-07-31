@@ -38,7 +38,7 @@ Example:
             - discovery_waffle.json
 
 When creating report for just one environment
-++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++
 
 For this use case, you can either follow the directory structure listed above, or do the following:
 
@@ -50,8 +50,8 @@ Example:
         - discovery_waffle.json
 
 
-Grab annoatations data
-----------------------
+Grab annotatations data
+-----------------------
 
 Use instructions found in `get feature toggles annotation data document <https://edx-toggles.readthedocs.io/en/latest/how_to/documenting_new_feature_toggles.html>`__ to collect annotations data.
 

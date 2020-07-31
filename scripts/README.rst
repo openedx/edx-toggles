@@ -1,66 +1,41 @@
-Feature Toggle Reporter:
-------------------------
+Feature Toggle Reporter
+-----------------------
 
 We make extensive use of a variety of feature toggles at edX. However, it has
 the downside of making the state of a deployed application somewhat opaque.
-This tool anaylzes data from the codebases of deployed applications, as well
+This tool analyzes data from the codebases of deployed applications, as well
 as their databases, to provide a summary of the feature toggles in use in a
 given deployment. For more information, please see:
 
 https://open-edx-proposals.readthedocs.io/en/latest/oep-0017-bp-feature-toggles.html
 
-Prerequisites:
---------------
-
 In order to create a feature toggle report for a given deployment, you need
-two types of data: feature toggle annotation data and feature toggle data from
+two types of data: feature toggle annotation data and feature toggle state data from
 an application's database.
 
 Feature Toggle Annotation Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use instructions found in `get feature toggles annotation data document <https://edx-toggles.readthedocs.io/en/latest/how_to/documenting_new_feature_toggles.html>`__ to collect annotations data.
+Any toggles that are annotated according to the instructions in
+`get feature toggles annotation data document <docs/how_to/documenting_new_feature_toggles.html>`_
+will be included in the report.
 
-Rename the resulting yml file `<ida_name>-annotations.yml`. This step is
-necessary, as the feature toggle report generator will key off the `ida_name`
-in the filename in order to be able to link this data to the toggle state data
-collected in the next step. Create a directory called `annotation-data`, and
-place the resulting annotation report from each IDA into this directory.
 
 Feature Toggle State Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The current state of certain feature toggles (i.e. django-waffle, waffle-utils)
 is not captured in the codebase, as it is decoupled from the deployment of
-code. Rather, it must read from the database of an application.
+code. Rather, it must read from the deployed application.
 
-Assuming you have a provisioned `devstack`_, run the following make command
-in devstack to generate the feature toggle state data files.
-
-.. code:: bash
-
-    make feature-toggle-state
-
-This will create a new directory called `feature-toggle-data`, containing
-a data dump file for each ida that makes use of waffle feature toggles.
-
-NOTE: To run this against a real environment, you will need to set the following
-environment variables (the defaults work with devstack):
-
-* DB_USER
-* DB_PASSWORD
-* DB_HOST
-* DB_PORT
-
-Additionally, you must set an environment variable to specify the database
-name for each IDA that you are querying about, in following form:
-<ida_name>_DB. For example:
-* LMS_DB
+Each IDA exposes an HTTP endpoint provided by the [TODO: pending] edx-toggles Django app.
+A scheduled job can use an OAuth client associated with a staff user to get a JWT,
+and then use the JWT against each configured IDA's toggle state endpoint.
 
 Creating a Feature Toggle Report
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Assuming you have the two prerequisites mentioned above, install the
+Assuming you have already run the two prerequisites mentioned above, install the
 dependencies for the report generator, and run it, passing the following
 values on the command line:
 
@@ -93,7 +68,7 @@ By default, the generated report contains only essential information. To get a c
 
 IMPORTANT: Example of annotations_dir structure:
     - annotations_dir/
-        -  lms_annotations.yml
+        - lms_annotations.yml
         - discovery_annotations.yml
     - toggle_data_dir
         - prod_env/
@@ -129,6 +104,3 @@ Valid keys in configuration file:
     - toggle_type: list the toggle types you want in report
     - ida: list configurations settings for each ida, following are valid keys under ida:
         - github_url: url to github repository for that ida
-        - rename: a new name to replace the ida name used in the file names. example: lms => edxapp
-
-.. _devstack: https://www.github.com/edx/devstack

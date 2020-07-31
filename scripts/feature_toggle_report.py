@@ -32,7 +32,7 @@ logging.basicConfig(level=logging.INFO)
     '--env',
     multiple=True,  # allows user to get union of multiple envs
     default=None,
-    help='specify env names if you want data from certain envs',
+    help='Specify env names if you only want data from certain envs',
     )
 @click.option(
     '--toggle-type',
@@ -53,7 +53,6 @@ def main(annotations_dir, toggle_data_dir, output_file_path, env, toggle_type, v
     """
     Script to process annotation and state data for toggles and output it a report.
 
-    \b
     Arguments:
         * annotations_dir: path to where toggle data is location
         * toggle_data_dir:  a path to directory containing directories containing json files with sql data dump
@@ -86,7 +85,7 @@ def main(annotations_dir, toggle_data_dir, output_file_path, env, toggle_type, v
 
     # find all the dirs in toggle_data_dir whose name match pattern
 
-    env_data_paths = []
+    env_data_paths = [] # list of (path, env name) tuples
     toggle_data_dir_content = os.listdir(toggle_data_dir)
     for path in toggle_data_dir_content:
         env_name_search = env_name_pattern.search(path)

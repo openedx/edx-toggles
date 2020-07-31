@@ -7,9 +7,7 @@ edx-toggles
 Library and utilities for feature toggles. This repo is intended to house a utility
 for enhanced feature toggle management in Django apps used throughout the edX
 ecosystem. Currenty, it only contains some scripts for reporting on the status of
-feature toggles. See this `README`_ for more information.
-
-.. _README: scripts/README.rst
+feature toggles. See the `scripts README <scripts/README.rst>`_ for more information.
 
 License
 -------
