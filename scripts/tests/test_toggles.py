@@ -1,5 +1,5 @@
-from scripts.ida_toggles import IDA
-from scripts.toggles import Toggle, ToggleState
+from scripts.toggles import ToggleState
+
 
 def test_toggle_date_format():
     switch = ToggleState(
@@ -18,7 +18,7 @@ def test_toggle_date_format():
 
 
 def test_toggle_state():
-    flag = ToggleState(
+    flag_state = ToggleState(
         'WaffleFlag',
         {
             'note': 'blank',
@@ -35,4 +35,5 @@ def test_toggle_state():
             'groups': []
         }
     )
-    assert not flag.state
+    # TODO: Either kill the .state property, or add better tests.
+    assert not flag_state.state

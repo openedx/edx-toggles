@@ -1,50 +1,65 @@
+import pytest
+
 from scripts.ida_toggles import IDA
 from scripts.toggles import Toggle, ToggleState, ToggleTypes
 
+_WAFFLE_FLAG_DATA = [
+    {
+        'model': 'WaffleFlag',
+        'pk': 1,
+        'fields': {
+            'everyone': True,
+            'name': 'test_waffle_flag',
+        },
+    },
+    {
+        'model': 'WaffleFlag',
+        'pk': 2,
+        'fields': {
+            'everyone': True,
+            'name': 'test_course_waffle_flag',
+        },
+    },
+]
+_COURSE_WAFFLE_FLAG_DATA = [
+    {
+        'model': 'WaffleUtilsWaffleflagcourseoverridemodel',
+        'pk': 1,
+        'fields': {
+          'waffle_flag': 'test_course_waffle_flag',
+          'override_choice': 'on',
+          'course_id': 'course-v1:edX+DemoX+Demo_Course'
+        }
+    },
+    {
+        'model': 'WaffleUtilsWaffleflagcourseoverridemodel',
+        'pk': 2,
+        'fields': {
+            'waffle_flag': 'test_another_course_waffle_flag',
+            'override_choice': 'on',
+            'course_id': 'course-v1:edX+DemoX+Demo_Course'
+        }
+    },
+]
 
-def test_adding_toggle_data():
+@pytest.mark.parametrize('dump_data', [
+    (_COURSE_WAFFLE_FLAG_DATA + _WAFFLE_FLAG_DATA),
+    (_WAFFLE_FLAG_DATA + _COURSE_WAFFLE_FLAG_DATA),
+])
+def test_adding_course_waffle_toggle_data(dump_data):
     ida = IDA('my-ida')
-    flag_data =[{'fields': {
-                'authenticated': False,
-                'created': '2017-06-21T16:06:20.833Z',
-                'everyone': True,
-                'groups': [],
-                'languages': '',
-                'modified': '2020-04-01T18:31:24.930Z',
-                'name': 'enable_client_side_checkout',
-                'note': 'This flag determines if the integrated/client-side checkout flow should be enabled.',
-                'percent': None,
-                'rollout': False,
-                'staff': False,
-                'superusers': True,
-                'testing': False,
-                'users': []
-                },
-            'model': 'waffle.flag',
-            'pk': 1
-            },
-            {'fields': {
-                'authenticated': False,
-                'created': '2020-04-01T18:28:47.829Z',
-                'everyone': None,
-                'groups': [],
-                'languages': '',
-                'modified': '2020-04-01T18:28:47.829Z',
-                'name': 'disable_microfrontend_for_basket_page',
-                'note': '',
-                'percent': None,
-                'rollout': False,
-                'staff': False,
-                'superusers': False,
-                'testing': False,
-                'users': []
-                },
-          'model': 'waffle.flag',
-          'pk': 2
-          }
-          ]
-    ida._add_toggle_data(flag_data)
-    assert len(ida.toggles[ToggleTypes.WAFFLE_FLAG]) == 2
+    ida._add_toggle_data(dump_data)
+
+    expected_waffle_flag_names = set(['test_waffle_flag'])
+    assert len(ida.toggles[ToggleTypes.WAFFLE_FLAG]) == 1
+    assert set(ida.toggles[ToggleTypes.WAFFLE_FLAG].keys()) == expected_waffle_flag_names
+
+    expected_course_waffle_flag_names = set(['test_course_waffle_flag', 'test_another_course_waffle_flag'])
+    assert len(ida.toggles[ToggleTypes.COURSE_WAFFLE_FLAG]) == 2
+    assert set(ida.toggles[ToggleTypes.COURSE_WAFFLE_FLAG].keys()) == expected_course_waffle_flag_names
+    course_waffle_flag = ida.toggles[ToggleTypes.COURSE_WAFFLE_FLAG]['test_course_waffle_flag']
+    assert course_waffle_flag.state.get_datum('everyone') == 'Yes'
+    assert course_waffle_flag.state.get_datum('num_courses_forced_on') == 1
 
 
 def test_adding_annotation_data():
@@ -53,8 +68,9 @@ def test_adding_annotation_data():
     switch_2 = Toggle('my-sample-switch', ToggleState(ToggleTypes.WAFFLE_SWITCH, {}))
     switch_3 = Toggle('another-sample-switch', ToggleState(ToggleTypes.WAFFLE_SWITCH, {}))
     flag_1 = Toggle('sample-flag', ToggleState(ToggleTypes.WAFFLE_FLAG, {}))
+    flag_2 = Toggle('sample-course-waffle-flag', ToggleState(ToggleTypes.WAFFLE_FLAG, {}))
     ida.toggles[ToggleTypes.WAFFLE_SWITCH] = {switch_1.name:switch_1, switch_2.name:switch_2, switch_3.name:switch_3}
-    ida.toggles[ToggleTypes.WAFFLE_FLAG] = {flag_1.name:flag_1}
+    ida.toggles[ToggleTypes.WAFFLE_FLAG] = {flag_1.name:flag_1, flag_2.name:flag_2}
     annotation_groups = {
         'path/to/source/code.py': [
             # A feature toggle annotation, but not one we care about linking
@@ -147,7 +163,21 @@ def test_adding_annotation_data():
                 'found_by': 'python',
                 'line_number': 763,
                 'report_group_id': 2
-            }
+            }, {
+                'annotation_data': 'sample-course-waffle-flag',
+                'annotation_token': '.. toggle_name:',
+                'filename': ' path/to/other/source/code.py',
+                'found_by': 'python',
+                'line_number': 28,
+                'report_group_id': 3,
+            }, {
+                'annotation_data': ['CourseWaffleFlag'],
+                'annotation_token': '.. toggle_implementation:',
+                'filename': 'path/to/other/source/code.py',
+                'found_by': 'python',
+                'line_number': 29,
+                'report_group_id': 3,
+            },
         ]
     }
 
@@ -175,4 +205,13 @@ def test_adding_annotation_data():
     assert annotation.line_range() == (761, 763)
     assert annotation._raw_annotation_data == expected_data
 
+    # the annotation should turn the WaffleFlag into a CourseWaffleFlag
+    expected_data = {
+        'name': 'sample-course-waffle-flag',
+        'implementation': ['CourseWaffleFlag'],
+    }
 
+    annotation = ida.toggles[ToggleTypes.COURSE_WAFFLE_FLAG][expected_data['name']].annotations
+    assert annotation.report_group_id == 3
+    assert annotation.line_range() == (28, 29)
+    assert annotation._raw_annotation_data == expected_data
