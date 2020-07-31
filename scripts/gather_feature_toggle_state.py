@@ -11,10 +11,8 @@
 
 import datetime
 import decimal
-import io
 import json
 import os
-import re
 import shutil
 import sys
 

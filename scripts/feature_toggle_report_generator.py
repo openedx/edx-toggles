@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import datetime
-import io
 import os
 import re
 import yaml
@@ -9,7 +7,6 @@ import logging
 from collections import defaultdict
 
 import click
-import jinja2
 
 from scripts.ida_toggles import IDA, add_toggle_state_to_idas, add_toggle_annotations_to_idas
 from scripts.renderers import CsvRenderer

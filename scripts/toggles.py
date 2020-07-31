@@ -22,31 +22,23 @@ class ToggleTypes(Enum):
     UNKNOWN = "model name not recognized"
 
     @classmethod
-    def get_toggle_type_from_table_name(cls, table_name):
+    def get_toggle_type_from_model_name(cls, model_name):
         """
         Assign toggle type to model types
         """
 
         # convert sql dump model name to annotation report toggle type name
-        # this is usually the case with just devstack data dump, particularly from ecommerce
-        if table_name == "waffle.flag":
-            toggle_type = cls.WAFFLE_FLAG
-        elif table_name == "waffle.switch":
-            toggle_type = cls.WAFFLE_SWITCH
-        elif table_name == "waffle.sample":
-            toggle_type = cls.WAFFLE_SAMPLE
-        elif table_name == "WaffleUtilsWaffleflagcourseoverridemodel":
+        if model_name == "WaffleUtilsWaffleflagcourseoverridemodel":
             toggle_type = cls.COURSE_WAFFLE_FLAG
         else:
             try:
-                toggle_type = cls(table_name)
+                toggle_type = cls(model_name)
             except:
                 LOGGER.warning(
-                'Name of model not recognized: {}'.format(table_name)
+                'Name of model not recognized: {}'.format(model_name)
                 )
                 toggle_type = cls.UNKNOWN
         return toggle_type
-
 
 
 class Toggle:
@@ -164,28 +156,34 @@ class ToggleState(object):
 
     def __init__(self, toggle_type, data):
         self.toggle_type = toggle_type
-        self._raw_state_data = data
+        self._raw_state_data = collections.defaultdict(str, data)
         self._cleaned_state_data = collections.defaultdict(str)
+
+    def update_data(self, data):
+        """
+        Updates the state data.
+        """
+        self._raw_state_data.update(data)
 
     def get_datum(self, key, cleaned=True):
         """
-        get data from either _raw_state_data dict or _cleaned_state_data dict
+        Get data from either _raw_state_data dict or _cleaned_state_data dict
 
         Arguments:
             key: the key name for data
             cleaned: Whether to get datum from _raw_state_data dict or _cleaned_state_data
-                By default, this will get datum to _cleaned_state_data:
+                By default, this will get datum from _cleaned_state_data:
         """
         if cleaned:
             self._prepare_state_data()
-            return self._cleaned_state_data.get(key, str())
+            return self._cleaned_state_data.get(key)
         else:
-            return self._raw_state_data.get(key, str())
+            return self._raw_state_data.get(key)
 
     def set_datum(self, key, value, cleaned=True):
         """
         Adding data to either _raw_state_data dict or _cleaned_state_data dict
-        
+
         Arguments:
             key: key name for addition to dict
             value: data to add to dict
