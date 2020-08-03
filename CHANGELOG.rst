@@ -6,7 +6,7 @@ Change Log
    in this file.  It adheres to the structure of https://keepachangelog.com/ ,
    but in reStructuredText instead of Markdown (for ease of incorporation into
    Sphinx documentation and the PyPI description).
-   
+
    This project adheres to Semantic Versioning (https://semver.org/).
 
 .. There should always be an "Unreleased" section for changes pending release.
@@ -14,32 +14,21 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
-* Adding course overrides data to toggles report
-* refractored code to generate toggles report
-* Added output for waffle flag course overrides to data gatherer
-* Upgraded dependencies
+* Add ADR for the purpose of this repository.
+* Add ADR for implementing a Toggle State endpoint.
+* Add toggles report with CSV output using new CsvRenderer.
+* Add CourseWaffleFlag and course override data to toggle report.
+* Add output for waffle flag course overrides to data gatherer
+* Add additional options to scripts/feature_toggle_report_generator
+
+  * filter toggle types and envs, add github_url, and change name of ida in report
+
+* Modified scripts/feature_toggle_report_generator to work based on envs
+* Removed confluence integration
+* Moved HtmlRenderer to its own file
 
 [NOTE: None of these versions have actually been released to PyPI, even though
 the version number has been bumped.]
-
-2020-07-23
-~~~~~~~~~~
-* Added more options to scripts/feature_toggle_report_generator
-    - filter toggle types and envs, add github_url, and change name of ida in report
-
-2020-07-08
-~~~~~~~~~~
-* Modified scripts/feature_toggle_report_generator to work based on envs
-
-2020-06-30
-~~~~~~~~~~
-* Added CsvRenderer
-* Removed confluence integration
-
-2020-06-29
-~~~~~~~~~~
-* Moved HtmlRenderer to its own file
-    - getting files ready to add a CsvResnderer
 
 [0.2.0] - 2020-05-27
 ~~~~~~~~~~~~~~~~~~~~
