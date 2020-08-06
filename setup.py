@@ -84,7 +84,7 @@ setup(
         "lms.djangoapp": [
             "toggles = edx_toggles.apps:EdxTogglesConfig"
         ]
-    }
+    },
     include_package_data=True,
     install_requires=load_requirements('requirements/base.in'),
     license="AGPL 3.0",
