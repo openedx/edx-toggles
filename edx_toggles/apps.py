@@ -5,7 +5,7 @@ edx_toggles Django application initialization.
 from django.apps import AppConfig
 
 from edx_django_utils.plugins.constants import (
-        ProjectType, SettingsType, PluginURLs, PluginSettings, PluginContexts
+        PluginURLs, PluginSettings, PluginContexts
     )
 
 
@@ -22,7 +22,7 @@ class EdxTogglesConfig(AppConfig):
             PluginURLs.CONFIG: {
 
                 # Configure the Plugin URLs for each project type, as needed.
-                ProjectType.LMS: {
+                "lms.djangoapp": {
 
                     # The namespace to provide to django's urls.include.
                     PluginURLs.NAMESPACE: 'toggles',
