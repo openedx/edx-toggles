@@ -48,13 +48,13 @@ class EdxTogglesConfig(AppConfig):
             #     ProjectType.LMS: {
 
             #         # Configure each Settings Type, as needed.
-            #         SettingsType.PRODUCTION: {
+            #         "production": {
 
             #             # The python path (relative to this app) to the settings module for the relevant Project Type and Settings Type.
             #             # Optional; Defaults to u'settings'.
             #             PluginSettings.RELATIVE_PATH: u'settings.production',
             #         },
-            #         SettingsType.COMMON: {
+            #         "common": {
             #             PluginSettings.RELATIVE_PATH: u'settings.common',
             #         },
             #     }
