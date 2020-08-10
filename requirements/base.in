@@ -4,4 +4,3 @@
 
 Django>=2.2                # Web application framework
 django-waffle==0.12.0      # pinned to match the version in edx/edx-platform
-edx-django-utils
