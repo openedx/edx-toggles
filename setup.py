@@ -80,10 +80,10 @@ setup(
     packages=[
         'edx_toggles',
     ],
-    entry_point={
+    entry_points={
         "lms.djangoapp": [
-            "toggles = edx_toggles.apps:EdxTogglesConfig"
-        ]
+            "toggles = edx_toggles.apps:TogglesConfig",
+        ],
     },
     include_package_data=True,
     install_requires=load_requirements('requirements/base.in'),
