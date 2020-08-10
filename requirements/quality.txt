@@ -4,7 +4,6 @@
 #
 #    make upgrade
 #
--e git+https://github.com/edx/edx-django-utils.git@msingh/extract/plugins_infra#egg=edx-django-utils  # via -r requirements/test.txt
 astroid==2.3.3            # via pylint, pylint-celery
 atlassian-python-api==1.16.0  # via -r requirements/test.txt
 attrs==19.3.0             # via -r requirements/test.txt, pytest
@@ -16,6 +15,7 @@ code-annotations==0.3.3   # via -c requirements/constraints.txt, -r requirements
 coverage==5.2.1           # via -r requirements/test.txt, pytest-cov
 django-waffle==0.12.0     # via -r requirements/test.txt, edx-django-utils
 django==2.2.15            # via -c requirements/constraints.txt, -r requirements/test.txt, code-annotations, edx-django-utils
+edx-django-utils==3.7.0   # via -r requirements/test.txt
 edx-lint==1.5.0           # via -r requirements/quality.in
 idna==2.10                # via -r requirements/test.txt, requests
 iniconfig==1.0.1          # via -r requirements/test.txt, pytest

@@ -4,7 +4,6 @@
 #
 #    make upgrade
 #
--e git+https://github.com/edx/edx-django-utils.git@msingh/extract/plugins_infra#egg=edx-django-utils  # via -r requirements/base.txt
 atlassian-python-api==1.16.0  # via -r requirements/scripts.in
 certifi==2020.6.20        # via requests
 chardet==3.0.4            # via requests
@@ -12,6 +11,7 @@ click==7.1.2              # via code-annotations
 code-annotations==0.3.3   # via -c requirements/constraints.txt, -r requirements/scripts.in
 django-waffle==0.12.0     # via -r requirements/base.txt, edx-django-utils
 django==2.2.15            # via -c requirements/constraints.txt, -r requirements/base.txt, code-annotations, edx-django-utils
+edx-django-utils==3.7.0   # via -r requirements/base.txt
 idna==2.10                # via requests
 jinja2==2.11.2            # via code-annotations
 markupsafe==1.1.1         # via jinja2
