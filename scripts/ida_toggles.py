@@ -27,21 +27,21 @@ class IDA(object):
         self.annotation_report_path = None
         self.configuration = configuration if configuration else {}
 
-    def add_toggle_data(self, dump_file_path):
+    def add_toggle_data(self, state_data_path):
         """
         Given the path to a file containing the SQL dump for a
         feature toggle type in an IDA, parse out the information relevant
         to each toggle and add it to this IDA.
         """
-        with io.open(dump_file_path) as dump_file:
+        with io.open(state_data_path) as data_file:
             try:
-                dump_contents = json.loads(dump_file.read())
+                state_data = json.loads(data_file.read())
             except:
                 LOGGER.error(
-                'Loading json file at: {} failed, check toggle data in file is formatted correctly'.format(dump_file_path)
+                'Loading json file at: {} failed, check toggle data in file is formatted correctly'.format(state_data_path)
                 )
                 raise
-        self._add_toggle_data(dump_contents)
+        self._add_toggle_data(state_data)
 
     def _handle_course_waffle_flag_override_data(self, row_data):
         """
@@ -66,20 +66,24 @@ class IDA(object):
             'Adding override choice for course {} to waffle flag {}'.format(override_data['course_id'], toggle.name)
         )
 
-    def _add_toggle_data(self, dump_contents):
+    def _add_toggle_data(self, state_data):
         """
         Add toggles state data to toggles
         if toggle already exists, replace its state with this content.
         else: create new toggle with this data
+        Arguments:
+            state_data: dict with structure: {toggle_types_1:[toggle_dicts], toggle_types_2:[toggles_dicts]}
         """
-        for row in dump_contents:
-            toggle_type = ToggleTypes.get_toggle_type_from_model_name(row['model'])
-            if toggle_type == ToggleTypes.COURSE_WAFFLE_FLAG:
-                self._handle_course_waffle_flag_override_data(row)
-            else:
-                toggle_name = row['fields'].get('name')
-                toggle_data = row['fields']
-                self._get_or_create_toggle_and_state(toggle_type, toggle_name, toggle_data)
+        for toggle_type, toggles_data in state_data.items():
+            for toggle_info in toggles_data:
+                # TODO(jinder): Determine if ToggleTypes needs to exist anymore
+                toggle_type = ToggleTypes.get_toggle_type_from_model_name(toggle_type)
+                if toggle_type == ToggleTypes.COURSE_WAFFLE_FLAG:
+                    # TODO(jinder): This function might not be necessary anymore
+                    self._handle_course_waffle_flag_override_data(row)
+                else:
+                    toggle_name = toggle_info.get('name')
+                    self._get_or_create_toggle_and_state(toggle_type, toggle_name, toggle_info)
 
         LOGGER.info(
             'Finished collecting toggle state for {}'.format(self.name)
@@ -293,7 +297,7 @@ class IDA(object):
                 return index
 
 
-def add_toggle_state_to_idas(idas, dump_file_path, idas_configuration=None):
+def add_toggle_state_to_idas(idas, state_data_path, idas_configuration=None):
     """
     Given a dictionary of IDAs to consider, and the path to a directory
     containing the SQL dumps for feature toggles in said IDAs, read each dump
@@ -301,10 +305,10 @@ def add_toggle_state_to_idas(idas, dump_file_path, idas_configuration=None):
     """
     ida_name_pattern = re.compile(r'(?P<ida>[a-z]*)_.*json')
     sql_dump_files = [
-        f for f in os.listdir(dump_file_path) if ida_name_pattern.search(f)
+        f for f in os.listdir(state_data_path) if ida_name_pattern.search(f)
     ]
     for sql_dump_file in sql_dump_files:
-        sql_dump_file_path = os.path.join(dump_file_path, sql_dump_file)
+        sql_dump_file_path = os.path.join(state_data_path, sql_dump_file)
         ida_name = ida_name_pattern.search(sql_dump_file).group('ida')
         if ida_name not in idas:
             idas[ida_name] = IDA(ida_name, idas_configuration.get(ida_name, None))
