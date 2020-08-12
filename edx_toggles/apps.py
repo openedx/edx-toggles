@@ -4,6 +4,7 @@ edx_toggles Django application initialization.
 """
 from django.apps import AppConfig
 
+
 class TogglesConfig(AppConfig):
     """
     Configuration for the edx_toggles Django application.
