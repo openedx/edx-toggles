@@ -51,6 +51,7 @@ class IDA(object):
             # - each course override will have its own row_data that needs to be added
                 to its CourseWaffleFlag
         """
+        # TODO(jinder): either delete this function or change row_data to toggle_info and modify gets below
         toggle_name = row_data['fields']['waffle_flag']
         override_data = row_data['fields']
         toggle_type = ToggleTypes.COURSE_WAFFLE_FLAG
@@ -80,7 +81,7 @@ class IDA(object):
                 toggle_type = ToggleTypes.get_toggle_type_from_model_name(toggle_type)
                 if toggle_type == ToggleTypes.COURSE_WAFFLE_FLAG:
                     # TODO(jinder): This function might not be necessary anymore
-                    self._handle_course_waffle_flag_override_data(row)
+                    self._handle_course_waffle_flag_override_data(toggle_info)
                 else:
                     toggle_name = toggle_info.get('name')
                     self._get_or_create_toggle_and_state(toggle_type, toggle_name, toggle_info)
