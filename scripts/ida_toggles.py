@@ -12,7 +12,7 @@ import re
 import yaml
 from enum import Enum
 
-from scripts.toggles import Toggle, ToggleAnnotation, ToggleState, ToggleTypes
+from scripts.toggles import Toggle, ToggleAnnotation, ToggleState
 
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -43,30 +43,6 @@ class IDA(object):
                 raise
         self._add_toggle_data(state_data)
 
-    def _handle_course_waffle_flag_override_data(self, row_data):
-        """
-        Function to handle special case of CourseWaffleFlag override data.
-            # - a CourseWaffleFlag can have multiple overrides (one per course)
-            # - each course override is defined by its waffle flag and its course
-            # - each course override will have its own row_data that needs to be added
-                to its CourseWaffleFlag
-        """
-        # TODO(jinder): either delete this function or change row_data to toggle_info and modify gets below
-        toggle_name = row_data['fields']['waffle_flag']
-        override_data = row_data['fields']
-        toggle_type = ToggleTypes.COURSE_WAFFLE_FLAG
-        waffle_flag_data = {}
-        toggle = self._get_or_create_toggle_and_state(toggle_type, toggle_name, waffle_flag_data)
-
-        # add course override data with new course to toggle state
-        course_overrides = toggle.state.get_datum('course_overrides', cleaned=False) or {}
-        course_overrides[override_data['course_id']] = override_data['override_choice']
-        toggle.state.set_datum('course_overrides', course_overrides, cleaned=False)
-
-        LOGGER.info(
-            'Adding override choice for course {} to waffle flag {}'.format(override_data['course_id'], toggle.name)
-        )
-
     def _add_toggle_data(self, state_data):
         """
         Add toggles state data to toggles
@@ -77,14 +53,9 @@ class IDA(object):
         """
         for toggle_type, toggles_data in state_data.items():
             for toggle_info in toggles_data:
-                # TODO(jinder): Determine if ToggleTypes needs to exist anymore
-                toggle_type = ToggleTypes.get_toggle_type_from_model_name(toggle_type)
-                if toggle_type == ToggleTypes.COURSE_WAFFLE_FLAG:
-                    # TODO(jinder): This function might not be necessary anymore
-                    self._handle_course_waffle_flag_override_data(toggle_info)
-                else:
-                    toggle_name = toggle_info.get('name')
-                    self._get_or_create_toggle_and_state(toggle_type, toggle_name, toggle_info)
+                toggle_name = toggle_info.get('name')
+                # TODO(jinder): make sure toggles are added correctly
+                toggle = self._get_or_create_toggle_and_state(toggle_type, toggle_name, toggle_info)
 
         LOGGER.info(
             'Finished collecting toggle state for {}'.format(self.name)
@@ -95,16 +66,12 @@ class IDA(object):
                     toggle_type, len(self.toggles[toggle_type])
                 )
             )
-
     def _get_or_create_toggle_and_state(self, toggle_type, toggle_name, toggle_state_data=None):
         """
         Gets a toggle and updates its state or creates a toggle and its state,
         and returns the toggle.
         """
-        # NOTE: CourseWaffleFlags are a special case
-        toggle = self._get_or_change_to_course_waffle_flag(toggle_type, toggle_name)
-        if not toggle:
-            toggle = self.toggles[toggle_type].get(toggle_name, None)
+        toggle = self.toggles[toggle_type].get(toggle_name, None)
 
         if toggle:
             if toggle_state_data:
@@ -118,38 +85,6 @@ class IDA(object):
             self.toggles[toggle_type][toggle_name] = toggle
 
         return toggle
-
-    def _get_or_change_to_course_waffle_flag(self, toggle_type, toggle_name):
-        """
-        Returns a CourseWaffleFlag under certain conditions, or None.
-
-        If toggle_type is WaffleFlag:
-            If a CourseWaffleFlag is found for this name, return it.
-        If toggle_type is CourseWaffleFlag:
-            If a CourseWaffleFlag is found for this name, return it.
-            If a WaffleFlag is found for this name, change it to be a
-                CourseWaffleFlag and return it. This happens when we
-                learn the WaffleFlag is really a CourseWaffleFlag based
-                on new data (course override or annotation).
-        Otherwise, return None.
-
-        """
-        if toggle_type not in (ToggleTypes.WAFFLE_FLAG, ToggleTypes.COURSE_WAFFLE_FLAG):
-            return None
-
-        course_waffle_flag = self.toggles[ToggleTypes.COURSE_WAFFLE_FLAG].get(toggle_name, None)
-        if course_waffle_flag:
-            return course_waffle_flag
-
-        if toggle_type == ToggleTypes.COURSE_WAFFLE_FLAG:
-            # use pop to remove the WaffleFlag if found
-            waffle_toggle = self.toggles[ToggleTypes.WAFFLE_FLAG].pop(toggle_name, None)
-            if waffle_toggle:
-                # now insert the WaffleFlag as a CourseWaffleFlag
-                self.toggles[ToggleTypes.COURSE_WAFFLE_FLAG][toggle_name] = waffle_toggle
-            return waffle_toggle
-
-        return None
 
     def add_annotations(self):
         """
@@ -260,14 +195,9 @@ class IDA(object):
                     continue
 
                 annotation_name = _get_annotation_data('name', group)
-                try:
-                    annotation_type = ToggleTypes(toggle_annotation._raw_annotation_data['implementation'][0])
-                except ValueError:
-                    annotation_type = ToggleTypes.UNKNOWN
-                    LOGGER.warning(
-                        'Name of implementation not recognized: {}'.format(toggle_annotation._raw_annotation_data['implementation'][0])
-                    )
+                annotation_type = toggle_annotation._raw_annotation_data['implementation'][0]
 
+                # make sure annotations can be added to a toggle if it already exits
                 toggle = self._get_or_create_toggle_and_state(annotation_type, annotation_name)
                 toggle.annotations = toggle_annotation
 
