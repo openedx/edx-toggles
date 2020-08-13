@@ -54,7 +54,6 @@ class IDA(object):
         for toggle_type, toggles_data in state_data.items():
             for toggle_info in toggles_data:
                 toggle_name = toggle_info.get('name')
-                # TODO(jinder): make sure toggles are added correctly
                 toggle = self._get_or_create_toggle_and_state(toggle_type, toggle_name, toggle_info)
 
         LOGGER.info(
@@ -197,7 +196,6 @@ class IDA(object):
                 annotation_name = _get_annotation_data('name', group)
                 annotation_type = toggle_annotation._raw_annotation_data['implementation'][0]
 
-                # make sure annotations can be added to a toggle if it already exits
                 toggle = self._get_or_create_toggle_and_state(annotation_type, annotation_name)
                 toggle.annotations = toggle_annotation
 
