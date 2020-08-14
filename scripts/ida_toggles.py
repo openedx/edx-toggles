@@ -52,9 +52,9 @@ class IDA(object):
             state_data: dict with structure: {toggle_types_1:[toggle_dicts], toggle_types_2:[toggles_dicts]}
         """
         for toggle_type, toggles_data in state_data.items():
-            for toggle_info in toggles_data:
-                toggle_name = toggle_info.get('name')
-                toggle = self._get_or_create_toggle_and_state(toggle_type, toggle_name, toggle_info)
+            for toggle_data in toggles_data:
+                toggle_name = toggle_data.get('name')
+                toggle = self._get_or_create_toggle_and_state(toggle_type, toggle_name, toggle_data)
 
         LOGGER.info(
             'Finished collecting toggle state for {}'.format(self.name)

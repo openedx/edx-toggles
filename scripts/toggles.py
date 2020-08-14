@@ -4,6 +4,7 @@ Common classes to represent toggles withint IDAs.
 import collections
 import re
 import logging
+import datetime
 
 
 LOGGER = logging.getLogger(__name__)
@@ -213,21 +214,12 @@ class ToggleState(object):
 
     def _prepare_state_data(self):
         def _format_date(date_string):
-            return "" # TODO(Jinder): figure out correct regex for datetime output of endpoint
-            datetime_pattern = re.compile(
-                r'(?P<date>20\d\d-\d\d-\d\d)T(?P<time>\d\d:\d\d):\d*.*'
-            )
-            offset_pattern = re.compile(
-                r'.*T\d\d:\d\d:\d+.*(?P<offset>[Z+-].*)'
-            )
-            date = re.search(datetime_pattern, date_string).group('date')
-            time = re.search(datetime_pattern, date_string).group('time')
-            offset = re.search(offset_pattern, date_string).group('offset')
+            date_time_obj = datetime.datetime.strptime(date_string.replace("+00:00",""), '%Y-%m-%d %H:%M:%S.%f')
+            
+            date = date_time_obj.date()
+            time = date_time_obj.date()
 
-            if offset == 'Z':
-                offset = 'UTC'
-
-            return "{} {} {}".format(date, time, offset)
+            return "{} {}".format(date, time)
         def null_or_number(n): return n if isinstance(n, int) else 0
 
         for k, v in self._raw_state_data.items():
