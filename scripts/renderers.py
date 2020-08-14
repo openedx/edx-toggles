@@ -7,8 +7,7 @@ import os
 import re
 import csv
 import logging
-from collections import OrderedDict, defaultdict
-import pdb
+from collections import OrderedDict, defaultdict, Hashable
 
 import click
 import jinja2
@@ -159,8 +158,9 @@ class CsvRenderer():
             same_keys = []
             # check if all values for a key are same
             for key, values in reorganized_data.items():
-                if len(values)== len(data) and len(set(values)) == 1:
-                    same_keys.append(key)
+                if [True for value in values if isinstance(value, Hashable)]:
+                    if len(values)== len(data) and len(set(values)) == 1:
+                        same_keys.append(key)
             return reorganized_data.keys(), same_keys
 
         # end results: {key*:True for keys that are same, key*:False}
@@ -180,14 +180,17 @@ class CsvRenderer():
     def summarize_data(self, toggles_data):
         data_to_render = []
         same_keys = self.get_keys_that_are_always_same(toggles_data)
-        for toggle_name, data in toggles_data.items():
+        for _, data in toggles_data.items():
             summary_datum = {}
-            summary_datum["oldest_created"] = str(min([datum["created"] for datum in data if "created" in datum]))
-            summary_datum["newest_modified"] = str(max([datum["modified"] for datum in data if "modified" in datum]))
+            summary_datum["oldest_created"] = min([datum["created"] for datum in data if "created" in datum], default="")
+            summary_datum["newest_modified"] = max([datum["modified"] for datum in data if "modified" in datum], default="")
             summary_datum["note"] = ", ".join([datum["note"] for datum in data if "note" in datum])
             # add info for stuff that should be same for in each env
             # this includes things such as: annotation_data, ida_name, code_owner, class name ...
-            summary_datum.update({key:value for key, value in data[0].items if key in same_keys})
+            common_items = {key:value for key, value in data[0].items() if key in same_keys}
+
+            if common_items:
+                summary_datum.update(common_items)
 
             # add info that is specific to each env
             for datum in data:
