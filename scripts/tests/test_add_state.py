@@ -24,9 +24,9 @@ def test_correct_num_added(sample_ida):
     # assert number of django_settings toggles
     assert len(sample_ida.toggles["django_settings"]) == 1
     # assert number of waffle_switches toggles
-    assert len(sample_ida.toggles["waffle_switches"]) == 1
+    assert len(sample_ida.toggles["WaffleSwitch"]) == 1
     # assert number of waffle_flags toggles
-    assert len(sample_ida.toggles["waffle_flags"]) == 2
+    assert len(sample_ida.toggles["WaffleFlag"]) == 2
 
 def test_course_waffle_flag_handling(sample_ida):
     """
