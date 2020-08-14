@@ -103,7 +103,7 @@ class CsvRenderer():
         toggles_data = self.transform_toggle_data_for_csv(envs_ida_toggle_data)
         return toggles_data
 
-    def combine_envs_data_under_toggle_name(self, envs_data):
+    def combine_envs_data_under_toggle_name(self, envs_data, type_filter=None):
         """
         envs data is structured: envs->ida->toggles, this converts to (toggle, ida)->{env1_toggle_data, env2_toggle_data}
         """
@@ -111,6 +111,8 @@ class CsvRenderer():
         for env, idas in envs_data.items():
             for ida_name, ida in idas.items():
                 for toggle_type, toggles in ida.toggles.items():
+                    if type_filter is not None and toggle_type not in type_filter:
+                        continue
                     for toggle_name, toggle in toggles.items():
                         data_dict = toggle.full_data()
                         data_dict["toggle_type"] = toggle_type
@@ -118,6 +120,7 @@ class CsvRenderer():
                         # In case you want the report to call the ida by a different ida_name
                         # example: lms should be called edxapp in report
                         ida_name = ida.configuration.get("rename", ida_name)
+                        data_dict["ida_name"] = ida_name
                         toggle_identifier = (toggle_name, ida_name)
                         # toggles are unique by its name and by the ida it belongs to
                         if toggle_identifier in toggles_data:
@@ -200,7 +203,7 @@ class CsvRenderer():
         return data_to_render
 
 
-    def output_summary(self, envs_ida_toggle_data):
+    def output_summary(self, envs_ida_toggle_data, types_filter=None):
         """
         Experiment with an additional CSV format (to enhance, not replace, the original format)
 
@@ -215,7 +218,7 @@ class CsvRenderer():
             - code_owner
             - etc.
         """
-        toggles_data = self.combine_envs_data_under_toggle_name(envs_ida_toggle_data)
+        toggles_data = self.combine_envs_data_under_toggle_name(envs_ida_toggle_data, types_filter)
         return self.summarize_data(toggles_data)
 
 
@@ -224,7 +227,7 @@ class CsvRenderer():
         takes data, processes it, and outputs it in csv form
         """
         if summarize:
-            output_data_list = self.output_summary(envs_ida_toggle_data)
+            output_data_list = self.output_summary(envs_ida_toggle_data, toggle_types)
         else:
             output_data_list = self.output_full_data(envs_ida_toggle_data)
 
