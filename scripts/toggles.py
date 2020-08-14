@@ -4,41 +4,11 @@ Common classes to represent toggles withint IDAs.
 import collections
 import re
 import logging
-from enum import Enum
+import datetime
 
 
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
-
-
-class ToggleTypes(Enum):
-    WAFFLE_FLAG = "WaffleFlag"
-    WAFFLE_SWITCH = "WaffleSwitch"
-    WAFFLE_SAMPLE = "WaffleSample"
-    EXPERIMENT_WAFFLE_FLAG = "ExperimentWaffleFlag"
-    COURSE_WAFFLE_FLAG = "CourseWaffleFlag"
-    DJANGO_SETTING = "DjangoSetting"
-    CONFIGURATION_MODEL = "ConfigurationModel"
-    UNKNOWN = "model name not recognized"
-
-    @classmethod
-    def get_toggle_type_from_model_name(cls, model_name):
-        """
-        Assign toggle type to model types
-        """
-
-        # convert sql dump model name to annotation report toggle type name
-        if model_name == "WaffleUtilsWaffleflagcourseoverridemodel":
-            toggle_type = cls.COURSE_WAFFLE_FLAG
-        else:
-            try:
-                toggle_type = cls(model_name)
-            except:
-                LOGGER.warning(
-                'Name of model not recognized: {}'.format(model_name)
-                )
-                toggle_type = cls.UNKNOWN
-        return toggle_type
 
 
 class Toggle:
@@ -244,20 +214,12 @@ class ToggleState(object):
 
     def _prepare_state_data(self):
         def _format_date(date_string):
-            datetime_pattern = re.compile(
-                r'(?P<date>20\d\d-\d\d-\d\d)T(?P<time>\d\d:\d\d):\d*.*'
-            )
-            offset_pattern = re.compile(
-                r'.*T\d\d:\d\d:\d+.*(?P<offset>[Z+-].*)'
-            )
-            date = re.search(datetime_pattern, date_string).group('date')
-            time = re.search(datetime_pattern, date_string).group('time')
-            offset = re.search(offset_pattern, date_string).group('offset')
+            date_time_obj = datetime.datetime.strptime(date_string.replace("+00:00",""), '%Y-%m-%d %H:%M:%S.%f')
+            
+            date = date_time_obj.date()
+            time = date_time_obj.date()
 
-            if offset == 'Z':
-                offset = 'UTC'
-
-            return "{} {} {}".format(date, time, offset)
+            return "{} {}".format(date, time)
         def null_or_number(n): return n if isinstance(n, int) else 0
 
         for k, v in self._raw_state_data.items():

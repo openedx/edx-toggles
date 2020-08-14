@@ -1,0 +1,44 @@
+{
+    "django_settings": [{
+        "name": "SOME_SETTING['CHILD_SETTING']",
+        "is_active": false
+    }],
+    "waffle_switches": [{
+        "name": "some.switch",
+        "is_active": false,
+        "note": "Some note",
+        "created": "2020-06-22 20:59:15.6+00:00",
+        "modified": "2020-06-23 18:05:40.594923+00:00"
+    }],
+    "waffle_flags": [{
+            "name": "some.flag",
+            "everyone": "yes|unknown|no",
+            "note": "Some note",
+            "created": "2020-06-23 18:05:40.594923+00:00",
+            "modified": "2020-06-22 20:59:15.5+00:00",
+
+            "percent": 0.5,
+            "testing": false,
+            "superusers": false,
+            "staff": false,
+            "authenticated": false,
+            "languages": "some string",
+            "rollout": false,
+            "groups": [1],
+            "users": [2, 25],
+
+            "class": "WaffleFlag",
+            "module": "some.module",
+            "code_owner": "some-owner",
+            "calculated_status": "on|off|both"
+        },
+        {
+            "name": "some.coursewaffleflag",
+            "course_overrides": {
+                "some/courseid/1": "on",
+                "some/courseid/2": "off",
+                "some/courseid/3": "on"
+            }
+        }
+    ]
+}

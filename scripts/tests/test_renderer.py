@@ -3,7 +3,7 @@ from unittest import mock, TestCase
 
 from scripts.renderers import CsvRenderer
 from scripts.ida_toggles import IDA
-from scripts.toggles import Toggle, ToggleTypes
+from scripts.toggles import Toggle
 
 csv_renderer = CsvRenderer()
 tc = TestCase()
@@ -58,8 +58,9 @@ def test_filter_and_sort_toggles_filtering():
     """
     There are cases where we might just want a subset of data,
     """
-    names = ["n{}".format(num) for num in range(5*len(ToggleTypes))]
-    data = [{"name":name, "toggle_type":random.choice(list(ToggleTypes))} for name in names]
+    toggle_types = ["WaffleFlag", "WaffleSwitch", "DjangoSetting"]
+    names = ["n{}".format(num) for num in range(5*len(toggle_types))]
+    data = [{"name":name, "toggle_type":random.choice(list(toggle_types))} for name in names]
 
     # test with no filtering
     filtered_data = csv_renderer.filter_and_sort_toggles(data)
@@ -67,15 +68,15 @@ def test_filter_and_sort_toggles_filtering():
 
     # filter by WaffleFlag as str input
     filtered_data = csv_renderer.filter_and_sort_toggles(data, "WaffleFlag")
-    tc.assertCountEqual([datum for datum in data if datum["toggle_type"]==ToggleTypes.WAFFLE_FLAG], filtered_data)
+    tc.assertCountEqual([datum for datum in data if datum["toggle_type"]=="WaffleFlag"], filtered_data)
 
     # filter by WaffleFlag as list input
     filtered_data = csv_renderer.filter_and_sort_toggles(data, ["WaffleFlag"])
-    tc.assertCountEqual([datum for datum in data if datum["toggle_type"]==ToggleTypes.WAFFLE_FLAG], filtered_data)
+    tc.assertCountEqual([datum for datum in data if datum["toggle_type"]=="WaffleFlag"], filtered_data)
 
     # filter by WaffleFlag and WaffleSwitch
     filtered_data = csv_renderer.filter_and_sort_toggles(data, ["WaffleFlag", "WaffleSwitch"])
-    tc.assertCountEqual([datum for datum in data if datum["toggle_type"]==ToggleTypes.WAFFLE_FLAG or datum["toggle_type"]==ToggleTypes.WAFFLE_SWITCH], filtered_data)
+    tc.assertCountEqual([datum for datum in data if datum["toggle_type"]=="WaffleFlag" or datum["toggle_type"]=="WaffleSwitch"], filtered_data)
 
 def test_filter_and_sort_toggles_sorting():
     """
