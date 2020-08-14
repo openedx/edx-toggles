@@ -179,11 +179,11 @@ class CsvRenderer():
     def summarize_data(self, toggles_data):
         data_to_render = []
         same_keys = self.get_keys_that_are_always_same(toggles_data)
-        for _, data in toggles_data.items():
+        for toggle_identifier, data in toggles_data.items():
             summary_datum = {}
-            summary_datum["oldest_created"] = min([datum["created"] for datum in data if "created" in datum], default="")
-            summary_datum["newest_modified"] = max([datum["modified"] for datum in data if "modified" in datum], default="")
-            summary_datum["note"] = ", ".join([datum["note"] for datum in data if "note" in datum])
+            summary_datum["oldest_created"] = min([datum["created_s"] for datum in data if "created_s" in datum], default="")
+            summary_datum["newest_modified"] = max([datum["modified_s"] for datum in data if "modified_s" in datum], default="")
+            summary_datum["note"] = ", ".join([datum["note_s"] for datum in data if "note_s" in datum])
             # add info for stuff that should be same for in each env
             # this includes things such as: annotation_data, ida_name, code_owner, class name ...
             common_items = {key:value for key, value in data[0].items() if key in same_keys}
@@ -195,7 +195,7 @@ class CsvRenderer():
             for datum in data:
                 env_name = datum["env_name"]
                 # TODO(jinder): finalize name of is_active and check if its the same for all toggle types
-                summary_datum["is_active_{}".format(env_name)] = datum.get("is_active", None)
+                summary_datum["is_active_{}".format(env_name)] = datum.get("is_active_s", None)
             data_to_render.append(summary_datum)
         return data_to_render
 
