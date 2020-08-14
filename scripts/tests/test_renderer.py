@@ -1,9 +1,10 @@
 import random
+import pytest
 from unittest import mock, TestCase
 
 from scripts.renderers import CsvRenderer
 from scripts.ida_toggles import IDA
-from scripts.toggles import Toggle
+from scripts.toggles import Toggle, ToggleState, ToggleAnnotation
 
 csv_renderer = CsvRenderer()
 tc = TestCase()
@@ -89,3 +90,25 @@ def test_filter_and_sort_toggles_sorting():
     sorted_names = sorted(names)
     test_sorted_names = [datum["name"] for datum in sorted_data]
     assert sorted_names == test_sorted_names
+
+def test_get_keys_that_are_always_same():
+    toggles_data={
+    "n1":[{"s1":1,"s2":True, "d1":1, "d2":True},{"s1":1,"s2":True, "d1":2, "d2":False},{"s1":1,"s2":True, "d1":3, "d2":True}],
+    "n2":[{"s1":2,"s2":False, "d1":1, "d2":True},{"s1":2,"s2":False, "d1":5, "d2":False},{"s1":2,"s2":False, "d1":3, "d2":False}],
+    "n3":[{"s3":2,"s4":False, "d1":1, "d2":True},{"s3":2,"s4":False, "d1":7, "d2":False},{"s3":2,"s4":False, "d1":20, "d2":True}],
+    "n4":[{"s3":1,"s4":True, "d1":1, "d2":False},{"s3":1,"s4":True, "d1":8, "d2":False},{"s3":1,"s4":True, "d1":6, "d2":True}],
+    }
+    same_keys = csv_renderer.get_keys_that_are_always_same(toggles_data)
+    assert "s1" in same_keys
+    assert "s2" in same_keys
+    assert "s3" in same_keys
+    assert "s4" in same_keys
+    assert "d1" not in same_keys
+    assert "d2" not in same_keys
+
+
+def test_summarize_data():
+    """
+    Make sure data is summarized correctly
+    """
+    pass

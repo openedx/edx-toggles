@@ -8,6 +8,7 @@ import re
 import csv
 import logging
 from collections import OrderedDict, defaultdict
+import pdb
 
 import click
 import jinja2
@@ -131,10 +132,12 @@ class CsvRenderer():
 
         return toggles_data
 
-    def check_keys_that_are_always_same(self, toggles_data):
+    def get_keys_that_are_always_same(self, toggles_data):
         """
-        Finds keys whose values are same regardless of env.
-        This sameness property has to be true for all toggles(as long as key exists in a toggle)
+        Gets keys whose values are always same for each individual toggle for every env
+        This is a search across toggles, so this will ignore keys whose values are same in one toggle but are different in another toggle
+            - such as: everyone or is_active(which can be the same, but are not always the same)
+        This will include keys like: any annotation keys, Waffle Flag class name, code_owner, etc.
         """
         def get_identical_keys_for_toggle(toggle_data):
             """
@@ -158,10 +161,10 @@ class CsvRenderer():
             for key, values in reorganized_data.items():
                 if len(values)== len(data) and len(set(values)) == 1:
                     same_keys.append(key)
-            return all_keys, same_keys
+            return reorganized_data.keys(), same_keys
 
         # end results: {key*:True for keys that are same, key*:False}
-        is_key_same = defaultdict(False)
+        is_key_same = defaultdict(bool)
         for toggle_name, data in toggles_data.items():
             all_keys, toggle_same_keys = get_identical_keys_for_toggle(data)
             for key in all_keys:
@@ -169,24 +172,21 @@ class CsvRenderer():
                     is_key_same[key] = False
                 if key not in is_key_same.keys() and key in toggle_same_keys:
                     is_key_same[key] = True
-        return [key for key, value in is_key_same if value]
+        return [key for key, value in is_key_same.items() if value]
 
 
 
 
     def summarize_data(self, toggles_data):
         data_to_render = []
-
-        # TODO(jinder): there might be better name for this
-        same_keys = self.check_keys_that_are_always_same(toggles_data)
+        same_keys = self.get_keys_that_are_always_same(toggles_data)
         for toggle_name, data in toggles_data.items():
             summary_datum = {}
-            summary_datum["oldest_created"] = str(min([datum["created"] for datum in data]))
-            summary_datum["newest_modified"] = str(max([datum["modified"] for datum in data]))
-            # TODO(jinder): check to see if note is always in datum, is this if necessary
+            summary_datum["oldest_created"] = str(min([datum["created"] for datum in data if "created" in datum]))
+            summary_datum["newest_modified"] = str(max([datum["modified"] for datum in data if "modified" in datum]))
             summary_datum["note"] = ", ".join([datum["note"] for datum in data if "note" in datum])
             # add info for stuff that should be same for in each env
-            # this includes things such as: annotation_data, ida_name, name...
+            # this includes things such as: annotation_data, ida_name, code_owner, class name ...
             summary_datum.update({key:value for key, value in data[0].items if key in same_keys})
 
             # add info that is specific to each env
