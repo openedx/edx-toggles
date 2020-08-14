@@ -7,7 +7,7 @@ import os
 import re
 import csv
 import logging
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 
 import click
 import jinja2
@@ -99,12 +99,134 @@ class CsvRenderer():
         output.extend(header)
         return output
 
-    def render_csv_report(self, envs_ida_toggle_data, file_path="report.csv", toggle_types=None, header=None):
+    def output_full_data(self, envs_ida_toggle_data):
+        toggles_data = self.transform_toggle_data_for_csv(envs_ida_toggle_data)
+        return toggles_data
+
+    def combine_envs_data_under_toggle_name(self, envs_data):
+        """
+        envs data is structured: envs->ida->toggles, this converts to (toggle, ida)->envs
+        TODO(jinder): fix docstring once code matures
+
+        envs_data is a dict with a complex structure of environments, idas and toggles by toggle type.
+        Return a flattened list for each toggle in a specific environment in preparation for csv output.
+        """
+        toggles_data = {}
+        for env, idas in envs_data.items():
+            for ida_name, ida in idas.items():
+                for toggle_type, toggles in ida.toggles.items():
+                    for toggle_name, toggle in toggles.items():
+                        data_dict = toggle.full_data()
+                        data_dict["toggle_type"] = toggle_type
+                        data_dict["env_name"] = env
+                        # In case you want the report to call the ida by a different ida_name
+                        # example: lms should be called edxapp in report
+                        ida_name = ida.configuration.get("rename", ida_name)
+                        toggle_identifier = (toggle_name, ida_name)
+                        # toggles are unique by its name and by the ida it belongs to
+                        if toggle_identifier in toggles_data:
+                            toggles_data[toggle_identifier].append(data_dict)
+                        else:
+                            toggles_data[toggle_identifier] = [data_dict]
+
+        return toggles_data
+
+    def check_keys_that_are_always_same(self, toggles_data):
+        """
+        Finds keys whose values are same regardless of env.
+        This sameness property has to be true for all toggles(as long as key exists in a toggle)
+        """
+        def get_identical_keys_for_toggle(toggle_data):
+            """
+            Finds keys that have the same values for every env in data for **one** toggle
+            Argument:
+                toggle_data: list of dicts, [{env1_data}, {env2_data}]
+            returns:
+                all_keys: list of all keys that existed in data
+                same_keys: list of all keys whose values were the same in each env(if a key only exists in one env, it is not included)
+            """
+            # reorganize data by key
+            reorganized_data = {}
+            for datum in data:
+                for key, value in datum.items():
+                    if key in reorganized_data:
+                        reorganized_data[key].append(value)
+                    else:
+                        reorganized_data[key] = [value]
+            same_keys = []
+            # check if all values for a key are same
+            for key, values in reorganized_data.items():
+                if len(values)== len(data) and len(set(values)) == 1:
+                    same_keys.append(key)
+            return all_keys, same_keys
+
+        # end results: {key*:True for keys that are same, key*:False}
+        is_key_same = defaultdict(False)
+        for toggle_name, data in toggles_data.items():
+            all_keys, toggle_same_keys = get_identical_keys_for_toggle(data)
+            for key in all_keys:
+                if key in is_key_same.keys() and key not in toggle_same_keys:
+                    is_key_same[key] = False
+                if key not in is_key_same.keys() and key in toggle_same_keys:
+                    is_key_same[key] = True
+        return [key for key, value in is_key_same if value]
+
+
+
+
+    def summarize_data(self, toggles_data):
+        data_to_render = []
+
+        # TODO(jinder): there might be better name for this
+        same_keys = self.check_keys_that_are_always_same(toggles_data)
+        for toggle_name, data in toggles_data.items():
+            summary_datum = {}
+            summary_datum["oldest_created"] = str(min([datum["created"] for datum in data]))
+            summary_datum["newest_modified"] = str(max([datum["modified"] for datum in data]))
+            # TODO(jinder): check to see if note is always in datum, is this if necessary
+            summary_datum["note"] = ", ".join([datum["note"] for datum in data if "note" in datum])
+            # add info for stuff that should be same for in each env
+            # this includes things such as: annotation_data, ida_name, name...
+            summary_datum.update({key:value for key, value in data[0].items if key in same_keys})
+
+            # add info that is specific to each env
+            for datum in data:
+                env_name = datum["env_name"]
+                # TODO(jinder): finalize name of is_active and check if its the same for all toggle types
+                summary_datum["is_active_{}".format(env_name)] = datum.get("is_active", None)
+            data_to_render.append(summary_datum)
+        return data_to_render
+
+
+    def output_summary(self, envs_ida_toggle_data):
+        """
+        Experiment with an additional CSV format (to enhance, not replace, the original format)
+
+        One line per toggle.
+        is_active (contains calculated_status for waffle flag) column per environment
+            - toggle_active_stage? toggle_active_prod
+        column for oldest_created, newest_modified (nice to have, or prototype can just take any value here and not compare)
+        Combine waffle notes from each environment into a single column
+        Other data to include would be anything that is always the same for all environments:
+            - Annotation data
+            - Waffle Flag class name
+            - code_owner
+            - etc.
+        """
+        toggles_data = self.combine_envs_data_under_toggle_name(envs_ida_toggle_data)
+        return self.summarize_data(toggles_data)
+
+
+    def render_csv_report(self, envs_ida_toggle_data, file_path="report.csv", toggle_types=None, header=None, summarize=False):
         """
         takes data, processes it, and outputs it in csv form
         """
-        toggles_data = self.transform_toggle_data_for_csv(envs_ida_toggle_data)
-        data_to_render = self.filter_and_sort_toggles(toggles_data, toggle_types)
+        if summarize:
+            output_data_list = self.output_summary(envs_ida_toggle_data)
+        else:
+            output_data_list = self.output_full_data(envs_ida_toggle_data)
+
+        data_to_render = self.filter_and_sort_toggles(output_data_list, toggle_types)
         header = self.get_sorted_headers_from_toggles(data_to_render, header)
         self.write_csv(file_path, data_to_render, header)
 
