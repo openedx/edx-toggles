@@ -156,11 +156,14 @@ class ToggleState(object):
 
     def _prepare_state_data(self):
         def _format_date(date_string):
-            return ""
-            date_time_obj = datetime.datetime.strptime(date_string.replace("+00:00",""), '%Y-%m-%d %H:%M:%S.%f')
-            
+            pattern = re.compile("(\.[0-9]*)?\+[0-9]*\:[0-9]*$")
+            pattern_match = pattern.search(date_string)
+            if pattern_match:
+                date_string = date_string.replace(pattern_match.group(0), "")
+            date_time_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d %H:%M:%S')
+
             date = date_time_obj.date()
-            time = date_time_obj.date()
+            time = date_time_obj.time()
 
             return "{} {}".format(date, time)
         def null_or_number(n): return n if isinstance(n, int) else 0
