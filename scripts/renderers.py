@@ -105,11 +105,7 @@ class CsvRenderer():
 
     def combine_envs_data_under_toggle_name(self, envs_data):
         """
-        envs data is structured: envs->ida->toggles, this converts to (toggle, ida)->envs
-        TODO(jinder): fix docstring once code matures
-
-        envs_data is a dict with a complex structure of environments, idas and toggles by toggle type.
-        Return a flattened list for each toggle in a specific environment in preparation for csv output.
+        envs data is structured: envs->ida->toggles, this converts to (toggle, ida)->{env1_toggle_data, env2_toggle_data}
         """
         toggles_data = {}
         for env, idas in envs_data.items():
@@ -137,6 +133,7 @@ class CsvRenderer():
         This is a search across toggles, so this will ignore keys whose values are same in one toggle but are different in another toggle
             - such as: everyone or is_active(which can be the same, but are not always the same)
         This will include keys like: any annotation keys, Waffle Flag class name, code_owner, etc.
+        A key does not have to exist in all toggles for it to be included
         """
         def get_identical_keys_for_toggle(toggle_data):
             """
@@ -168,8 +165,10 @@ class CsvRenderer():
         for toggle_name, data in toggles_data.items():
             all_keys, toggle_same_keys = get_identical_keys_for_toggle(data)
             for key in all_keys:
+                # if a key has been seen before and it does not have the same values for this toggle, set it to false
                 if key in is_key_same.keys() and key not in toggle_same_keys:
                     is_key_same[key] = False
+                # only set to true the key has same values for this toggle and it has not been seen before
                 if key not in is_key_same.keys() and key in toggle_same_keys:
                     is_key_same[key] = True
         return [key for key, value in is_key_same.items() if value]
