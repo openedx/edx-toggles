@@ -156,6 +156,7 @@ class ToggleState(object):
 
     def _prepare_state_data(self):
         def _format_date(date_string):
+            return ""
             date_time_obj = datetime.datetime.strptime(date_string.replace("+00:00",""), '%Y-%m-%d %H:%M:%S.%f')
             
             date = date_time_obj.date()

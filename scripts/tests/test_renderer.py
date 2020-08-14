@@ -38,6 +38,29 @@ def test_transform_toggle_data_for_csv(mocked_toggle):
     assert total_num_of_loops*2 == [datum['toggle_type'] for datum in output_data].count('WaffleFlag')
     assert total_num_of_loops*3 == [datum['toggle_type'] for datum in output_data].count('WaffleSwitch')
 
+def test_combine_envs_data_under_toggle_name():
+    """Test to make sure data is flattened correctly"""
+
+    env1 = {'lms':IDA('lms', {"rename": "edxapp"}), 'cms':IDA('cms')}
+    env2 = {'lms':IDA('lms', {"rename": "edxapp"}), 'cms':IDA('cms')}
+    envs_data = {'env1':env1, 'env2':env2}
+    total_num_of_loops = 0
+    for env_name, env in envs_data.items():
+        for ida_name, ida in env.items():
+            ida.toggles = {}
+            ida.toggles['WaffleFlag'] = {}
+            ida.toggles['WaffleFlag']["n1"] = Toggle("n1", ToggleState("n1", {'d1':1, 'd2':2, 'd3':3}))
+            ida.toggles['WaffleFlag']['n2'] = Toggle("n2", ToggleState("n2", {'d1':3, 'd2':3, 'd3':5}))
+            ida.toggles['WaffleSwitch'] = {}
+            ida.toggles['WaffleSwitch']['n3'] = Toggle("n3", ToggleState("n3", {'d1':4, 'd2':6, 'd3':3}))
+            ida.toggles['WaffleSwitch']['n4'] = Toggle("n4", ToggleState("n4", {'d1':1, 'd2':2, 'd3':5}))
+            ida.toggles['WaffleSwitch']['n5'] = Toggle("n5", ToggleState("n5", {'d1':1, 'd2':7, 'd3':3}))
+            total_num_of_loops += 1
+    output_data = csv_renderer.combine_envs_data_under_toggle_name(envs_data)
+
+    # test to make sure renaming happened correctly
+    assert ('n4', 'cms') in output_data
+    # TODO(jinder): add more to test
 
 def test_get_sorted_headers_from_toggles():
     """

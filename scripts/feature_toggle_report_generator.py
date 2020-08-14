@@ -44,11 +44,15 @@ logging.basicConfig(level=logging.INFO)
     help='specify toggle types if you only want data on certain toggle type',
     )
 @click.option(
+    '--summarize', is_flag=True,
+    help="if you want a simplified version of report",
+)
+@click.option(
     '--configuration',
     default=None,
     help='alternative method to do configuration, the command-line options will have priority',
     )
-def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, toggle_type, configuration):
+def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, toggle_type, summarize, configuration):
     """
     Script to process annotation and state data for toggles and output it a report.
 
@@ -58,7 +62,6 @@ def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, to
         * toggle_data_dir:  a path to directory containing directories containing json files with sql data dump
         * output_file_path: name of file to which to write report
     """
-
     # Read configuration file:
     if configuration is not None:
         with open(configuration) as yaml_file:
@@ -109,7 +112,7 @@ def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, to
         add_toggle_annotations_to_idas(total_info[env_name], annotations_dir, configuration.get("ida", defaultdict(dict)))
 
     renderer = CsvRenderer()
-    renderer.render_csv_report(total_info, output_file_path, toggle_type_filter, ["name"])
+    renderer.render_csv_report(total_info, output_file_path, toggle_type_filter, ["name"], summarize)
 
 
 if __name__ == '__main__':

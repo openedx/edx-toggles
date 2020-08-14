@@ -52,6 +52,14 @@ class IDA(object):
             state_data: dict with structure: {toggle_types_1:[toggle_dicts], toggle_types_2:[toggles_dicts]}
         """
         for toggle_type, toggles_data in state_data.items():
+            # TODO(jinder): fix naming diff between annotation and state data
+            if toggle_type == "waffle_flags":
+                toggle_type = "WaffleFlag"
+            elif toggle_type == 'waffle_switches':
+                toggle_type = "WaffleSwitch"
+            elif toggle_type == 'CourseWaffleFlag':
+                toggle_type = "WaffleFlag"
+
             for toggle_data in toggles_data:
                 toggle_name = toggle_data.get('name')
                 toggle = self._get_or_create_toggle_and_state(toggle_type, toggle_name, toggle_data)
@@ -70,6 +78,8 @@ class IDA(object):
         Gets a toggle and updates its state or creates a toggle and its state,
         and returns the toggle.
         """
+        if toggle_type in ['CourseWaffleFlag', 'ExperimentWaffleFlag']:
+            toggle_type = "WaffleFlag"
         toggle = self.toggles[toggle_type].get(toggle_name, None)
 
         if toggle:
@@ -198,32 +208,6 @@ class IDA(object):
 
                 toggle = self._get_or_create_toggle_and_state(annotation_type, annotation_name)
                 toggle.annotations = toggle_annotation
-
-    def _contains(self, toggle_type, toggle_name):
-        """
-        helper function for determining if a feature toggle is configured
-        in an IDA, searching by toggle type and toggle name
-        """
-        try:
-            present = any(
-                map(
-                    lambda t: t.name == toggle_name,
-                    self.toggles[toggle_type]
-                )
-            )
-        except KeyError:
-            return False
-        return present
-
-    def _get_index(self, toggle_type, toggle_name):
-        """
-        helper function for getting the index of a given feature toggle
-        in the data structure holding all toggles for this IDA
-        """
-        names = [t.name for t in self.toggles[toggle_type]]
-        for index, name in enumerate(names):
-            if name == toggle_name:
-                return index
 
 
 def add_toggle_state_to_idas(idas, state_data_path, idas_configuration=None):
