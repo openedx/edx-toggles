@@ -59,6 +59,8 @@ class IDA(object):
                 toggle_type = "WaffleSwitch"
             elif toggle_type == 'CourseWaffleFlag':
                 toggle_type = "WaffleFlag"
+            elif toggle_type == "django_settings":
+                toggle_type = "DjangoSetting"
 
             for toggle_data in toggles_data:
                 toggle_name = toggle_data.get('name')

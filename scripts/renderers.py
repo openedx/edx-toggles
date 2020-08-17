@@ -7,6 +7,7 @@ import os
 import re
 import csv
 import logging
+import pdb
 from collections import OrderedDict, defaultdict, Hashable
 
 import click
@@ -80,8 +81,11 @@ class CsvRenderer():
             # setting key for keys with name to False causes them to appear first in header
             sort_by.append(False if "name" in key else True)
             # show states first
-            pattern = re.compile(".*_s$")
-            sort_by.append(False if pattern.search(key) else True)
+            state_pattern = re.compile(".*_s$")
+            annotation_pattern = re.compile(".*_a$")
+            sort_by.append(True if annotation_pattern.search(key) or state_pattern.search(key) else False)
+            sort_by.append(False if state_pattern.search(key) else True)
+            sort_by.append(True if annotation_pattern.search(key) else False)
             # finally sort by alphabetical order
             sort_by.append(key)
             return tuple(sort_by)
@@ -103,7 +107,7 @@ class CsvRenderer():
         toggles_data = self.transform_toggle_data_for_csv(envs_ida_toggle_data)
         return toggles_data
 
-    def combine_envs_data_under_toggle_name(self, envs_data, type_filter=None):
+    def combine_envs_data_under_toggle_identifier(self, envs_data, type_filter=None):
         """
         envs data is structured: envs->ida->toggles, this converts to (toggle, ida)->{env1_toggle_data, env2_toggle_data}
         """
@@ -111,7 +115,7 @@ class CsvRenderer():
         for env, idas in envs_data.items():
             for ida_name, ida in idas.items():
                 for toggle_type, toggles in ida.toggles.items():
-                    if type_filter is not None and toggle_type not in type_filter:
+                    if type_filter and toggle_type not in type_filter:
                         continue
                     for toggle_name, toggle in toggles.items():
                         data_dict = toggle.full_data()
@@ -121,7 +125,7 @@ class CsvRenderer():
                         # example: lms should be called edxapp in report
                         ida_name = ida.configuration.get("rename", ida_name)
                         data_dict["ida_name"] = ida_name
-                        toggle_identifier = (toggle_name, ida_name)
+                        toggle_identifier = (toggle_name, ida_name, toggle_type)
                         # toggles are unique by its name and by the ida it belongs to
                         if toggle_identifier in toggles_data:
                             toggles_data[toggle_identifier].append(data_dict)
@@ -194,11 +198,15 @@ class CsvRenderer():
             if common_items:
                 summary_datum.update(common_items)
 
+            all_envs_match = set()
             # add info that is specific to each env
             for datum in data:
                 env_name = datum["env_name"]
-                # TODO(jinder): finalize name of is_active and check if its the same for all toggle types
-                summary_datum["is_active_{}".format(env_name)] = datum.get("is_active_s", None)
+                summary_datum["computed_status_{}".format(env_name)] = datum.get("computed_status_s", datum.get("is_active_s", None))
+                all_envs_match.add(summary_datum["computed_status_{}".format(env_name)])
+                if "code_owner_s" in datum:
+                    summary_datum["code_owner"] = datum["code_owner_s"]
+            summary_datum["all_envs_match"] = True if len(all_envs_match) == 1 else False
             data_to_render.append(summary_datum)
         return data_to_render
 
@@ -218,7 +226,7 @@ class CsvRenderer():
             - code_owner
             - etc.
         """
-        toggles_data = self.combine_envs_data_under_toggle_name(envs_ida_toggle_data, types_filter)
+        toggles_data = self.combine_envs_data_under_toggle_identifier(envs_ida_toggle_data, types_filter)
         return self.summarize_data(toggles_data)
 
 
