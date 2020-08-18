@@ -26,6 +26,7 @@ Unreleased
 * Modified scripts/feature_toggle_report_generator to work based on envs
 * Removed confluence integration
 * Moved HtmlRenderer to its own file
+* Add ADR for new DjangoSettingToggle.
 
 [NOTE: None of these versions have actually been released to PyPI, even though
 the version number has been bumped.]
