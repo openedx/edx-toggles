@@ -5,8 +5,8 @@
 #    make upgrade
 #
 alabaster==0.7.12         # via sphinx
-atlassian-python-api==1.16.0  # via -r requirements/test.txt
-attrs==19.3.0             # via -r requirements/test.txt, pytest
+atlassian-python-api==1.16.1  # via -r requirements/test.txt
+attrs==20.1.0             # via -r requirements/test.txt, pytest
 babel==2.8.0              # via sphinx
 bleach==3.1.5             # via readme-renderer
 certifi==2020.6.20        # via -r requirements/test.txt, requests
