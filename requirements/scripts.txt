@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-atlassian-python-api==1.16.0  # via -r requirements/scripts.in
+atlassian-python-api==1.16.1  # via -r requirements/scripts.in
 certifi==2020.6.20        # via requests
 chardet==3.0.4            # via requests
 click==7.1.2              # via code-annotations
