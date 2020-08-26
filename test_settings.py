@@ -6,7 +6,6 @@ Django applications, so these settings will not be used.
 """
 
 
-
 from os.path import abspath, dirname, join
 
 
@@ -18,26 +17,26 @@ def root(*args):
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'default.db',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "default.db",
+        "USER": "",
+        "PASSWORD": "",
+        "HOST": "",
+        "PORT": "",
     }
 }
 
 INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'edx_toggles',
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "edx_toggles",
 )
 
 LOCALE_PATHS = [
-    root('edx_toggles', 'conf', 'locale'),
+    root("edx_toggles", "conf", "locale"),
 ]
 
-ROOT_URLCONF = 'edx_toggles.urls'
+ROOT_URLCONF = "edx_toggles.urls"
 
-SECRET_KEY = 'insecure-secret-key'
+SECRET_KEY = "insecure-secret-key"

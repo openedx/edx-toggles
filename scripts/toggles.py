@@ -48,18 +48,18 @@ class Toggle:
         the ToggleState and ToggleAnnotations for this Toggle for
         use in templating the confluence report.
         """
-        if component ==  "state":
+        if component == "state":
             if self.state:
                 self.state._prepare_state_data()
                 return self.state._cleaned_state_data[data_name]
             else:
-                return '-'
+                return "-"
         elif component == "annotation":
             if self.annotations:
                 self.annotations._prepare_annotation_data()
                 return self.annotations._cleaned_annotation_data[data_name]
             else:
-                return '-'
+                return "-"
 
     def full_data(self):
         """
@@ -112,7 +112,7 @@ class ToggleAnnotation(object):
         self._cleaned_annotation_data["line_number"] = self.line_numbers
         self._cleaned_annotation_data["url"] = self.github_url
         for k, v in self._raw_annotation_data.items():
-            if k == 'implementation':
+            if k == "implementation":
                 self._cleaned_annotation_data[k] = v[0]
             else:
                 self._cleaned_annotation_data[k] = v
@@ -174,7 +174,7 @@ class ToggleState(object):
         """
 
         def bool_for_null_numbers(n):
-            if n == 'null':
+            if n == "null":
                 return False
             elif isinstance(n, int):
                 return int(n) > 0
@@ -183,71 +183,79 @@ class ToggleState(object):
 
         def bool_for_null_lists(l):
             if l:
-                return any(
-                    map(lambda x: x not in ['null', 'Null', 'NULL', 'None'], l)
-                )
+                return any(map(lambda x: x not in ["null", "Null", "NULL", "None"], l))
             else:
                 return False
 
-        if self.toggle_type == 'WaffleSwitch':
-            return self._raw_state_data['active']
-        elif self.toggle_type == 'WaffleFlag':
+        if self.toggle_type == "WaffleSwitch":
+            return self._raw_state_data["active"]
+        elif self.toggle_type == "WaffleFlag":
             # the WaffleFlag option `everyone` overrides all other options.
             # However, it must be explicitly set to Yes(True) or No(False)
             # in the GUI. Otherwise, it is set to Unknown(None) and WaffleFlag
             # defers to the other options to determine the state of the flag.
-            if self._raw_state_data['everyone']:
+            if self._raw_state_data["everyone"]:
                 return True
-            elif self._raw_state_data['everyone'] is False:
+            elif self._raw_state_data["everyone"] is False:
                 return False
             else:
                 return (
-                    bool_for_null_numbers(self._raw_state_data['percent']) or
-                    self._raw_state_data['testing'] or
-                    self._raw_state_data['superusers'] or
-                    self._raw_state_data['staff'] or
-                    self._raw_state_data['authenticated'] or
-                    bool(self._raw_state_data['languages']) or
-                    bool_for_null_lists(self._raw_state_data['users']) or
-                    bool_for_null_lists(self._raw_state_data['groups'])
+                    bool_for_null_numbers(self._raw_state_data["percent"])
+                    or self._raw_state_data["testing"]
+                    or self._raw_state_data["superusers"]
+                    or self._raw_state_data["staff"]
+                    or self._raw_state_data["authenticated"]
+                    or bool(self._raw_state_data["languages"])
+                    or bool_for_null_lists(self._raw_state_data["users"])
+                    or bool_for_null_lists(self._raw_state_data["groups"])
                 )
 
     def _prepare_state_data(self):
         def _format_date(date_string):
-            date_time_obj = datetime.datetime.strptime(date_string.replace("+00:00",""), '%Y-%m-%d %H:%M:%S.%f')
-            
+            date_time_obj = datetime.datetime.strptime(
+                date_string.replace("+00:00", ""), "%Y-%m-%d %H:%M:%S.%f"
+            )
+
             date = date_time_obj.date()
             time = date_time_obj.date()
 
             return "{} {}".format(date, time)
-        def null_or_number(n): return n if isinstance(n, int) else 0
+
+        def null_or_number(n):
+            return n if isinstance(n, int) else 0
 
         for k, v in self._raw_state_data.items():
 
-            if k in ['created', 'modified']:
+            if k in ["created", "modified"]:
                 self._cleaned_state_data[k] = _format_date(v)
-            elif k == 'percent':
+            elif k == "percent":
                 self._cleaned_state_data[k] = null_or_number(v)
-            elif k == 'languages':
-                self._cleaned_state_data[k] = filter(
-                    lambda x: x != '', v.split(',')
-                )
-            elif k == 'everyone':
-                if self._raw_state_data['everyone']:
+            elif k == "languages":
+                self._cleaned_state_data[k] = filter(lambda x: x != "", v.split(","))
+            elif k == "everyone":
+                if self._raw_state_data["everyone"]:
                     everyone_string = "Yes"
-                elif self._raw_state_data['everyone'] is False:
+                elif self._raw_state_data["everyone"] is False:
                     everyone_string = "No"
                 else:
                     everyone_string = "Unknown"
                 self._cleaned_state_data[k] = everyone_string
-            elif k in ['users', 'groups']:
-                self._cleaned_state_data[k] = len(list(filter(
-                    lambda x: x not in ['null', 'Null', 'NULL', 'None'], v
-                )))
+            elif k in ["users", "groups"]:
+                self._cleaned_state_data[k] = len(
+                    list(filter(lambda x: x not in ["null", "Null", "NULL", "None"], v))
+                )
             elif k == "course_overrides":
-                courses_forced_on = [course for course, value in v.items() if value == "on"]
-                courses_forced_off = [course for course, value in v.items() if value == "off"]
-                self._cleaned_state_data["num_courses_forced_on"] = len(courses_forced_on)
-                self._cleaned_state_data["num_courses_forced_off"] = len(courses_forced_off)
+                courses_forced_on = [
+                    course for course, value in v.items() if value == "on"
+                ]
+                courses_forced_off = [
+                    course for course, value in v.items() if value == "off"
+                ]
+                self._cleaned_state_data["num_courses_forced_on"] = len(
+                    courses_forced_on
+                )
+                self._cleaned_state_data["num_courses_forced_off"] = len(
+                    courses_forced_off
+                )
             else:
                 self._cleaned_state_data[k] = v

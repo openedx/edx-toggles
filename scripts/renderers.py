@@ -15,7 +15,8 @@ import jinja2
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
-class CsvRenderer():
+
+class CsvRenderer:
     """
     Used to output toggles+annotations data as CSS
     """
@@ -36,7 +37,9 @@ class CsvRenderer():
                         data_dict["toggle_type"] = toggle_type
                         # In case you want the report to call the ida by a different ida_name
                         # example: lms should be called edxapp in report
-                        data_dict["ida_name"] = ida.configuration.get("rename", ida_name)
+                        data_dict["ida_name"] = ida.configuration.get(
+                            "rename", ida_name
+                        )
                         data_dict["env_name"] = env
                         toggles_data.append(data_dict)
         return toggles_data
@@ -66,7 +69,9 @@ class CsvRenderer():
         sorting_key = lambda datum: datum.get("name", "")
         return sorted(data_to_render, key=sorting_key)
 
-    def get_sorted_headers_from_toggles(self, flattened_toggles_data, initial_header=None):
+    def get_sorted_headers_from_toggles(
+        self, flattened_toggles_data, initial_header=None
+    ):
         # get header from data
         header = set()
         for datum in flattened_toggles_data:
@@ -76,7 +81,7 @@ class CsvRenderer():
             """
             there are multiple criterion by which we should sort header keys
             """
-            sort_by=[]
+            sort_by = []
             # setting key for keys with name to False causes them to appear first in header
             sort_by.append(False if "name" in key else True)
             # show states first
@@ -85,7 +90,6 @@ class CsvRenderer():
             # finally sort by alphabetical order
             sort_by.append(key)
             return tuple(sort_by)
-
 
         output = []
         if initial_header is not None:
@@ -99,7 +103,13 @@ class CsvRenderer():
         output.extend(header)
         return output
 
-    def render_csv_report(self, envs_ida_toggle_data, file_path="report.csv", toggle_types=None, header=None):
+    def render_csv_report(
+        self,
+        envs_ida_toggle_data,
+        file_path="report.csv",
+        toggle_types=None,
+        header=None,
+    ):
         """
         takes data, processes it, and outputs it in csv form
         """

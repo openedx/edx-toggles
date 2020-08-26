@@ -8,47 +8,59 @@ from collections import defaultdict
 
 import click
 
-from scripts.ida_toggles import IDA, add_toggle_state_to_idas, add_toggle_annotations_to_idas
+from scripts.ida_toggles import (
+    IDA,
+    add_toggle_state_to_idas,
+    add_toggle_annotations_to_idas,
+)
 from scripts.renderers import CsvRenderer
 
 
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
+
 @click.command()
 @click.argument(
-    'annotations_dir',
-    type=click.Path(exists=True),
+    "annotations_dir", type=click.Path(exists=True),
 )
 @click.argument(
-    'toggle_data_dir',
-    type=click.Path(exists=True),
+    "toggle_data_dir", type=click.Path(exists=True),
 )
 @click.argument(
-    'output_file_path', default="feature_toggle_report",
+    "output_file_path", default="feature_toggle_report",
 )
 @click.option(
-    '--show-state', is_flag=True,
+    "--show-state",
+    is_flag=True,
     help="if this is present, the report will include toggle state",
 )
 @click.option(
-    '--env',
+    "--env",
     multiple=True,  # allows user to get union of multiple envs
     default=None,
-    help='specify env names if you want data from certain envs',
-    )
+    help="specify env names if you want data from certain envs",
+)
 @click.option(
-    '--toggle-type',
-    multiple=True,    # allows user to get union of multiple toggle-types
+    "--toggle-type",
+    multiple=True,  # allows user to get union of multiple toggle-types
     default=None,
-    help='specify toggle types if you only want data on certain toggle type',
-    )
+    help="specify toggle types if you only want data on certain toggle type",
+)
 @click.option(
-    '--configuration',
+    "--configuration",
     default=None,
-    help='alternative method to do configuration, the command-line options will have priority',
-    )
-def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, toggle_type, configuration):
+    help="alternative method to do configuration, the command-line options will have priority",
+)
+def main(
+    annotations_dir,
+    toggle_data_dir,
+    output_file_path,
+    show_state,
+    env,
+    toggle_type,
+    configuration,
+):
     """
     Script to process annotation and state data for toggles and output it a report.
 
@@ -82,7 +94,7 @@ def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, to
     # each env should have a folder with all its sql dump with toggle data
     # folders name as: <env_name>_env
     # example: prod_env, stage_env, devstack_env
-    env_name_pattern = re.compile(r'(?P<env>[a-z0-9]*)_env')
+    env_name_pattern = re.compile(r"(?P<env>[a-z0-9]*)_env")
 
     # find all the dirs in toggle_data_dir whose name match pattern
 
@@ -91,7 +103,9 @@ def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, to
     for path in toggle_data_dir_content:
         env_name_search = env_name_pattern.search(path)
         if os.path.isdir(os.path.join(toggle_data_dir, path)) and env_name_search:
-            env_data_paths.append((os.path.join(toggle_data_dir, path), env_name_search.group('env')))
+            env_data_paths.append(
+                (os.path.join(toggle_data_dir, path), env_name_search.group("env"))
+            )
 
     total_info = {}
     for env_data_path, env_name in env_data_paths:
@@ -104,13 +118,23 @@ def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, to
 
         # add data for each ida
         if show_state:
-            add_toggle_state_to_idas(total_info[env_name], env_data_path, configuration.get("ida", defaultdict(dict)))
+            add_toggle_state_to_idas(
+                total_info[env_name],
+                env_data_path,
+                configuration.get("ida", defaultdict(dict)),
+            )
 
-        add_toggle_annotations_to_idas(total_info[env_name], annotations_dir, configuration.get("ida", defaultdict(dict)))
+        add_toggle_annotations_to_idas(
+            total_info[env_name],
+            annotations_dir,
+            configuration.get("ida", defaultdict(dict)),
+        )
 
     renderer = CsvRenderer()
-    renderer.render_csv_report(total_info, output_file_path, toggle_type_filter, ["name"])
+    renderer.render_csv_report(
+        total_info, output_file_path, toggle_type_filter, ["name"]
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

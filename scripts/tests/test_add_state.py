@@ -4,16 +4,19 @@ import json
 from scripts.ida_toggles import IDA
 from scripts.toggles import Toggle, ToggleState
 
+
 @pytest.fixture
 def toggles_data_dict():
     with open("scripts/tests/toggle_data.json") as json_file:
         return json.load(json_file)
 
+
 @pytest.fixture
 def sample_ida(toggles_data_dict):
-    ida = IDA('my-ida')
+    ida = IDA("my-ida")
     ida._add_toggle_data(toggles_data_dict)
     return ida
+
 
 def test_correct_num_added(sample_ida):
     """
@@ -27,6 +30,7 @@ def test_correct_num_added(sample_ida):
     assert len(sample_ida.toggles["waffle_switches"]) == 1
     # assert number of waffle_flags toggles
     assert len(sample_ida.toggles["waffle_flags"]) == 2
+
 
 def test_course_waffle_flag_handling(sample_ida):
     """
