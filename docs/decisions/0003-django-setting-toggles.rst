@@ -27,18 +27,33 @@ There are several problems with this style of implicit definition:
 Decision
 --------
 
-We will introduce a simple wrapping class that can be used to explicitly define a Django Setting toggle.
+We will introduce a simple wrapping class (or classes) that can be used to explicitly define a Django Setting toggle.
 
 Here are some example instances::
 
-    EXAMPLE_SETTING_TOGGLE = DjangoSettingToggle("EXAMPLE_TOGGLE", default_value=False)
+    # Toggle setting
+    EXAMPLE_SETTING_TOGGLE = DjangoSettingToggle("EXAMPLE_TOGGLE", default=False)
 
     # or
 
+    # Toggle setting in a dict: Option 1
     EXAMPLE_SETTING_TOGGLE = DjangoSettingToggle(
         "EXAMPLE_SETTING_DICT['EXAMPLE_TOGGLE']",
-        default_value=False,
+        default=False,
     )
+
+    # or
+
+    # Toggle setting in a dict: Option 2
+    EXAMPLE_SETTING_TOGGLE = DjangoSettingDictToggle(
+        'EXAMPLE_SETTING_DICT',
+        'EXAMPLE_TOGGLE',
+        default=False,
+    )
+
+    # TODO: Before implementing, we'll need to choose between Option 1 and Option 2 for
+    #   toggle setting in a dict. We can update this decision once this has been decided,
+    #   and move the rejected option, explaining why.
 
 It's usage can now match that of the waffle wrapping classes (e.g. WaffleFlag).
 
@@ -51,7 +66,7 @@ DjangoSettingToggle will allow for expicit toggle definitions, with the followin
 * The definition can live with the app where it will be used, rather than in `common.py` or with no explicit definition.
 * The explicit definition can be annotated with documentation.
 * The explicit definition provides a single place to set a consistent default value.
-* The `toggle state endpoint`_ can provide the location and code ownership of all DjangoSettingToggle instances used in an enviroment.
+* The `toggle state endpoint`_ can provide the location and code ownership of all DjangoSettingToggle instances used in an enviroment, because the class will track its instances.
 * Additional linting would be possible to ensure manually created annotations are consistent with the code (e.g. default).
 
 Note: The method of using ``defaults.py`` for Django Setting defaults, as detailed in `OEP-45: Configuring and Operating Open edX`_, should only be used if the given IDA requires a different default from the one provided in code. The default provided in code should be the mostly widely used, or the safest from a security perspective, but may not be appropriate for all IDAs.
