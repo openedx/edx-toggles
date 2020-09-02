@@ -14,6 +14,7 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+* Document the writing of feature toggles annotations.
 * Add ADR for the purpose of this repository.
 * Add ADR for implementing a Toggle State endpoint.
 * Add toggles report with CSV output using new CsvRenderer.
