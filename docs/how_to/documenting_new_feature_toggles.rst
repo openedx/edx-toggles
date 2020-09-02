@@ -1,6 +1,8 @@
-===============================
-Documenting new feature toggles
-===============================
+.. _documenting_new_feature_toggles:
+
+=======================================
+How to: Documenting new feature toggles
+=======================================
 
 Feature toggles are boolean values that enable or disable the use of a certain feature. There are many of those across the Open edX codebase: in the form of Django settings, Waffle flags and switches, and  Configuration models, for example. It is important that these feature toggles be correctly annotated to address the following scenarios:
 
