@@ -43,7 +43,7 @@ Here are some example instances::
         default=False,
     )
 
-It's usage can now match that of the waffle wrapping classes (e.g. WaffleFlag).
+Its usage can now match that of the waffle wrapping classes (e.g. WaffleFlag).
 
 Here is an example usage::
 
