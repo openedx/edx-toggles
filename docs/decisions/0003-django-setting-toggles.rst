@@ -76,6 +76,7 @@ Implementation Steps:
 * Any existing settings can be refactored to use instances of the new class.
 
   * Cleaning up `common.py` where appropriate by removing unnecessary defaults should also be done.
+  * We can define these in a `toggles.py` file in the apps. We can consider moving (permanent) waffle definitions from `waffle.py` to `toggles.py`.
 
 .. _toggle state endpoint: https://github.com/edx/edx-platform/blob/master/openedx/core/djangoapps/waffle_utils/views.py#L19
 
