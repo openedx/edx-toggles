@@ -71,7 +71,7 @@ Implementation Steps:
 * SettingToggle and SettingDictToggle classes need to be implemented.
 
   * The implementation should include tracking instances like WaffleFlag. This should be done in SettingToggle and SettingDictToggle should be a subclass.
-  
+
 * The new class should be added to the `toggle state endpoint`_, including querying all instances (like WaffleFlag).
 * Any existing settings can be refactored to use instances of the new class.
 
