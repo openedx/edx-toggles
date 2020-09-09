@@ -4,7 +4,7 @@ Django Setting Toggles
 Status
 ------
 
-Draft
+Accepted
 
 Context
 -------
@@ -32,41 +32,29 @@ We will introduce a simple wrapping class (or classes) that can be used to expli
 Here are some example instances::
 
     # Toggle setting
-    EXAMPLE_SETTING_TOGGLE = DjangoSettingToggle("EXAMPLE_TOGGLE", default=False)
+    EXAMPLE_SETTING_TOGGLE = SettingToggle("EXAMPLE_TOGGLE", default=False)
 
     # or
 
-    # Toggle setting in a dict: Option 1
-    EXAMPLE_SETTING_TOGGLE = DjangoSettingToggle(
-        "EXAMPLE_SETTING_DICT['EXAMPLE_TOGGLE']",
-        default=False,
-    )
-
-    # or
-
-    # Toggle setting in a dict: Option 2
-    EXAMPLE_SETTING_TOGGLE = DjangoSettingDictToggle(
+    # Toggle setting in a dict
+    EXAMPLE_SETTING_TOGGLE = SettingDictToggle(
         'EXAMPLE_SETTING_DICT',
         'EXAMPLE_TOGGLE',
         default=False,
     )
 
-    # TODO: Before implementing, we'll need to choose between Option 1 and Option 2 for
-    #   toggle setting in a dict. We can update this decision once this has been decided,
-    #   and move the rejected option, explaining why.
-
-It's usage can now match that of the waffle wrapping classes (e.g. WaffleFlag).
+Its usage can now match that of the waffle wrapping classes (e.g. WaffleFlag).
 
 Here is an example usage::
 
     EXAMPLE_SETTING_TOGGLE.is_enabled()
 
-DjangoSettingToggle will allow for expicit toggle definitions, with the following benefits:
+SettingToggle will allow for explicit toggle definitions, with the following benefits:
 
 * The definition can live with the app where it will be used, rather than in `common.py` or with no explicit definition.
 * The explicit definition can be annotated with documentation.
 * The explicit definition provides a single place to set a consistent default value.
-* The `toggle state endpoint`_ can provide the location and code ownership of all DjangoSettingToggle instances used in an enviroment, because the class will track its instances.
+* The `toggle state endpoint`_ can provide the location and code ownership of all SettingToggle instances used in an enviroment, because the class will track its instances.
 * Additional linting would be possible to ensure manually created annotations are consistent with the code (e.g. default).
 
 Note: The method of using ``defaults.py`` for Django Setting defaults, as detailed in `OEP-45: Configuring and Operating Open edX`_, should only be used if the given IDA requires a different default from the one provided in code. The default provided in code should be the mostly widely used, or the safest from a security perspective, but may not be appropriate for all IDAs.
@@ -76,18 +64,19 @@ Note: The method of using ``defaults.py`` for Django Setting defaults, as detail
 Consequences
 ------------
 
-The main negative consequence is that developers would need to get used to a non-standard interface to working with Django Settings. Hopefully, the consistency with other toggle classes, like WaffleFlag and WaffleSwitch, should make this issue relatively trivial. Additionally, the decision to implement DjangoSettingToggle assumes the many advantages listed above outweigh this negative.
+The main negative consequence is that developers would need to get used to a non-standard interface to working with Django Settings. Hopefully, the consistency with other toggle classes, like WaffleFlag and WaffleSwitch, should make this issue relatively trivial. Additionally, the decision to implement SettingToggle assumes the many advantages listed above outweigh this negative.
 
 Implementation Steps:
 
-* DjangoSettingToggle class needs to be implemented.
+* SettingToggle and SettingDictToggle classes need to be implemented.
 
-  * Note: To implement a toggle in a dict (e.g. "EXAMPLE_SETTING_DICT['EXAMPLE_TOGGLE']"), do not use `exec(...)`, but parse and recurse through the settings. Also, if we only accept single quotes around the key name, it would ensure consistent naming that would be simpler to search for.
+  * The implementation should include tracking instances like WaffleFlag. This should be done in SettingToggle and SettingDictToggle should be a subclass.
 
 * The new class should be added to the `toggle state endpoint`_, including querying all instances (like WaffleFlag).
 * Any existing settings can be refactored to use instances of the new class.
 
   * Cleaning up `common.py` where appropriate by removing unnecessary defaults should also be done.
+  * We can define these in a `toggles.py` file in the apps. We can consider moving (permanent) waffle definitions from `waffle.py` to `toggles.py`.
 
 .. _toggle state endpoint: https://github.com/edx/edx-platform/blob/master/openedx/core/djangoapps/waffle_utils/views.py#L19
 
