@@ -1,6 +1,8 @@
-=====================================
-Enabling Toggles Report for a new IDA
-=====================================
+.. _adding_new_ida:
+
+=============================================
+How to: Enabling Toggles Report for a new IDA
+=============================================
 
 The generation of toggles report for an IDA has been automated. However, for now, the automation has only been used on lms. This document lists what needs to be done to automate toggle report generation for other IDAs.
 
@@ -14,18 +16,20 @@ Annotation Data
 The toggles are annotated in code following edX code annotation:`writing annotations`_. The `code_annotations`_ tool is used to collect annotations into a report.
 
 The steps to collect annotations are automated through a jenkins job
-  - `groovy job specification`_ in "generate-code-annotation-report"
-  - `Jenkins Job folder`_
-  - once the job is done, its data is pushed to s3 bucket: `script to push data to s3 bucket`_
 
+- `groovy job specification`_ in "generate-code-annotation-report"
+- `Jenkins Job folder`_
+- once the job is done, its data is pushed to s3 bucket: `script to push data to s3 bucket`_
 
 .. _writing annotations: https://code-annotations.readthedocs.io/en/latest/writing_annotations.html
 .. _code_annotations: https://github.com/edx/code-annotations
 
 steps
 ~~~~~
+
 * add a `generate-feature-toggle-annotation-report.sh`_ to repository, use linked file as example
 * checkout your IDA code repository in groovy using git block
+
 .. code:: java
 
     git {
@@ -45,20 +49,19 @@ steps
 
 .. code:: java
 
-        virtualenv {
-            pythonName('System-CPython-3.6')
-            clear(true)
-            systemSitePackages(false)
-            nature('shell')
-            ignoreExitCode(false)
-            command(
-                "cd ${target_directory}\nbash scripts/generate-feature-toggle-annotation-report.sh"
-            )
-        }
+    virtualenv {
+        pythonName('System-CPython-3.6')
+        clear(true)
+        systemSitePackages(false)
+        nature('shell')
+        ignoreExitCode(false)
+        command(
+            "cd ${target_directory}\nbash scripts/generate-feature-toggle-annotation-report.sh"
+        )
+    }
 
 
 .. _generate-feature-toggle-annotation-report.sh: https://github.com/edx/edx-platform/blob/master/scripts/generate-feature-toggle-annotation-report.sh
-
 
 
 problems with current approach
@@ -79,11 +82,12 @@ Toggles states are stored in the database for each production environment. IDA s
 
 .. _gather_feature-toggle_state.py: https://github.com/edx/edx-toggles/blob/master/scripts/gather_feature_toggle_state.py
 
-The steps to collect annotations is automated through a jenkins job
-  - `groovy job specification`_  in "gather-${environment}-feature-toggle-state" job
-  - `Jenkins Job folder`_
-  - The specifications for each database is located at: `edx-internal/*/feature-toggle-report-generator.yml`_
-  - once the job is done, its data is pushed to s3 bucket: `script to push data to s3 bucket`_
+The steps to collect annotations is automated through a jenkins job:
+
+- `groovy job specification`_  in "gather-${environment}-feature-toggle-state" job
+- `Jenkins Job folder`_
+- The specifications for each database is located at: `edx-internal/*/feature-toggle-report-generator.yml`_
+- once the job is done, its data is pushed to s3 bucket: `script to push data to s3 bucket`_
 
 steps
 ~~~~~
@@ -92,6 +96,7 @@ steps
 
 problems with current approach
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 * the code to gather database info has somethings that are very specific to lms
     - fix: make things more general
 
@@ -106,7 +111,7 @@ Processing Data
 `feature_toggle_report_generator.py`_
 
 
-The annotation data and Toggle state data dump should be stored in s3 buckets. The automated publish-feature-toggle-report job (in `groovy job specification`_) pulls the data from s3 buckets and calls `feature_toggle_report_generator.py`_ to process  the data and output it as a csv file. 
+The annotation data and Toggle state data dump should be stored in s3 buckets. The automated publish-feature-toggle-report job (in `groovy job specification`_) pulls the data from s3 buckets and calls `feature_toggle_report_generator.py`_ to process  the data and output it as a csv file.
 
 As long as the data is structured correctly (specified in `README`_), nothing should be necessary
 
@@ -120,7 +125,7 @@ possible improvements
 Publishing Data
 ===============
 
-As of now, the toggle csv reports are retained as artifacts in Jenkins job: `publish-feature-toggle-report`_. 
+As of now, the toggle csv reports are retained as artifacts in Jenkins job: `publish-feature-toggle-report`_.
 
 The plan is to eventually find a different home for it (possibly in google sheets).
 

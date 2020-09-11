@@ -17,6 +17,8 @@ Contents:
    testing
    internationalization
    modules
+   how_to/adding_new_ida_to_toggle_report
+   how_to/documenting_new_feature_toggles
    changelog
 
 
