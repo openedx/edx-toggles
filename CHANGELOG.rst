@@ -11,10 +11,17 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
-Unreleased
-~~~~~~~~~~
+[NOTE: None of these versions have actually been released to PyPI, even though
+the version number has been bumped.]
+
+[0.2.2] - 2020-09-11
+~~~~~~~~~~~~~~~~~~~~
 
 * Document the writing of feature toggles annotations.
+
+[0.2.1] - 2020-08-03
+~~~~~~~~~~~~~~~~~~~~
+
 * Add ADR for the purpose of this repository.
 * Add ADR for implementing a Toggle State endpoint.
 * Add toggles report with CSV output using new CsvRenderer.
@@ -22,15 +29,12 @@ Unreleased
 * Add output for waffle flag course overrides to data gatherer
 * Add additional options to scripts/feature_toggle_report_generator
 
-  * filter toggle types and envs, add github_url, and change name of ida in report
+    * filter toggle types and envs, add github_url, and change name of ida in report
 
 * Modified scripts/feature_toggle_report_generator to work based on envs
 * Removed confluence integration
 * Moved HtmlRenderer to its own file
 * Add ADR for new SettingToggle. (see 0003-django-setting-toggles.rst)
-
-[NOTE: None of these versions have actually been released to PyPI, even though
-the version number has been bumped.]
 
 [0.2.0] - 2020-05-27
 ~~~~~~~~~~~~~~~~~~~~
