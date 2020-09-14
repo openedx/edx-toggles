@@ -10,7 +10,7 @@ django-waffle==0.12.0     # via -r requirements/base.in
 django==2.2.16            # via -c requirements/constraints.txt, -r requirements/base.in, code-annotations
 jinja2==2.11.2            # via code-annotations
 markupsafe==1.1.1         # via jinja2
-pbr==5.4.5                # via stevedore
+pbr==5.5.0                # via stevedore
 python-slugify==4.0.1     # via code-annotations
 pytz==2020.1              # via django
 pyyaml==5.3.1             # via code-annotations
