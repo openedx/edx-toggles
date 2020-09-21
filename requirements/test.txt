@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-atlassian-python-api==1.17.4  # via -r requirements/scripts.txt
+atlassian-python-api==1.17.5  # via -r requirements/scripts.txt
 attrs==20.2.0             # via pytest
 certifi==2020.6.20        # via -r requirements/scripts.txt, requests
 chardet==3.0.4            # via -r requirements/scripts.txt, requests
@@ -27,7 +27,7 @@ pluggy==0.13.1            # via pytest
 py==1.9.0                 # via pytest
 pyparsing==2.4.7          # via packaging
 pytest-cov==2.10.1        # via -r requirements/test.in
-pytest-django==3.9.0      # via -r requirements/test.in
+pytest-django==3.10.0     # via -r requirements/test.in
 pytest==6.0.2             # via pytest-cov, pytest-django
 python-slugify==4.0.1     # via -r requirements/base.txt, -r requirements/scripts.txt, code-annotations
 pytz==2020.1              # via -r requirements/base.txt, -r requirements/scripts.txt, django
