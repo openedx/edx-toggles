@@ -14,6 +14,11 @@ Change Log
 [NOTE: None of these versions have actually been released to PyPI, even though
 the version number has been bumped.]
 
+[0.3.0] - 2020-09-23
+~~~~~~~~~~~~~~~~~~~~
+
+* Implement ``SettingToggle`` and ``SettingDictToggle``.
+
 [0.2.2] - 2020-09-11
 ~~~~~~~~~~~~~~~~~~~~
 

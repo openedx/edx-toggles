@@ -64,7 +64,9 @@ requirements: ## install development environment requirements
 	pip install -qr requirements/pip-tools.txt
 	pip-sync requirements/dev.txt requirements/private.*
 
-test: clean ## run tests in the current virtualenv
+test: clean test-python ## run tests in the current virtualenv
+
+test-python: ## run all python tests
 	pytest
 
 diff_cover: test ## find diff lines that need test coverage
