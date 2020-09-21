@@ -20,6 +20,41 @@ class CsvRenderer():
     Used to output toggles+annotations data as CSS
     """
 
+    def render_csv_report(self, envs_ida_toggle_data, file_path="report.csv", toggle_types=None, header=None, summarize=False):
+        """
+        takes data, processes it, and outputs it in csv form
+        """
+        if summarize:
+            output_data_list = self.output_summary(envs_ida_toggle_data, toggle_types)
+        else:
+            output_data_list = self.output_full_data(envs_ida_toggle_data)
+
+        data_to_render = self.filter_and_sort_toggles(output_data_list, toggle_types)
+        header = self.get_sorted_headers_from_toggles(data_to_render, header)
+        self.write_csv(file_path, data_to_render, header)
+
+    def output_summary(self, envs_ida_toggle_data, types_filter=None):
+        """
+        Experiment with an additional CSV format (to enhance, not replace, the original format)
+
+        One line per toggle.
+        is_active (contains calculated_status for waffle flag) column per environment
+            - toggle_active_stage? toggle_active_prod
+        column for oldest_created, newest_modified (nice to have, or prototype can just take any value here and not compare)
+        Combine waffle notes from each environment into a single column
+        Other data to include would be anything that is always the same for all environments:
+            - Annotation data
+            - Waffle Flag class name
+            - code_owner
+            - etc.
+        """
+        toggles_data = self.combine_envs_data_under_toggle_identifier(envs_ida_toggle_data, types_filter)
+        return self.summarize_data(toggles_data)
+
+    def output_full_data(self, envs_ida_toggle_data):
+        toggles_data = self.transform_toggle_data_for_csv(envs_ida_toggle_data)
+        return toggles_data
+
     def transform_toggle_data_for_csv(self, envs_data):
         """
         Retrieve list of individual toggle datums from envs_data
@@ -102,10 +137,6 @@ class CsvRenderer():
         output.extend(header)
         return output
 
-    def output_full_data(self, envs_ida_toggle_data):
-        toggles_data = self.transform_toggle_data_for_csv(envs_ida_toggle_data)
-        return toggles_data
-
     def combine_envs_data_under_toggle_identifier(self, envs_data, type_filter=None):
         """
         envs data is structured: envs->ida->toggles, this converts to (toggle, ida)->{env1_toggle_data, env2_toggle_data}
@@ -181,10 +212,10 @@ class CsvRenderer():
                     is_key_same[key] = True
         return [key for key, value in is_key_same.items() if value]
 
-
-
-
     def summarize_data(self, toggles_data):
+        """
+        Returns only subset containing the essential information
+        """
         data_to_render = []
         same_keys = self.get_keys_that_are_always_same(toggles_data)
         for toggle_identifier, data in toggles_data.items():
@@ -210,39 +241,6 @@ class CsvRenderer():
             summary_datum["all_envs_match"] = True if len(all_envs_match) == 1 else False
             data_to_render.append(summary_datum)
         return data_to_render
-
-
-    def output_summary(self, envs_ida_toggle_data, types_filter=None):
-        """
-        Experiment with an additional CSV format (to enhance, not replace, the original format)
-
-        One line per toggle.
-        is_active (contains calculated_status for waffle flag) column per environment
-            - toggle_active_stage? toggle_active_prod
-        column for oldest_created, newest_modified (nice to have, or prototype can just take any value here and not compare)
-        Combine waffle notes from each environment into a single column
-        Other data to include would be anything that is always the same for all environments:
-            - Annotation data
-            - Waffle Flag class name
-            - code_owner
-            - etc.
-        """
-        toggles_data = self.combine_envs_data_under_toggle_identifier(envs_ida_toggle_data, types_filter)
-        return self.summarize_data(toggles_data)
-
-
-    def render_csv_report(self, envs_ida_toggle_data, file_path="report.csv", toggle_types=None, header=None, summarize=False):
-        """
-        takes data, processes it, and outputs it in csv form
-        """
-        if summarize:
-            output_data_list = self.output_summary(envs_ida_toggle_data, toggle_types)
-        else:
-            output_data_list = self.output_full_data(envs_ida_toggle_data)
-
-        data_to_render = self.filter_and_sort_toggles(output_data_list, toggle_types)
-        header = self.get_sorted_headers_from_toggles(data_to_render, header)
-        self.write_csv(file_path, data_to_render, header)
 
     def write_csv(self, file_name, data, fieldnames):
         """
