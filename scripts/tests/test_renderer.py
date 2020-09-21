@@ -38,6 +38,7 @@ def test_transform_toggle_data_for_csv(mocked_toggle):
     assert total_num_of_loops*2 == [datum['toggle_type'] for datum in output_data].count('WaffleFlag')
     assert total_num_of_loops*3 == [datum['toggle_type'] for datum in output_data].count('WaffleSwitch')
 
+
 def test_combine_envs_data_under_toggle_identifier():
     """Test to make sure data is flattened correctly"""
 
@@ -60,7 +61,7 @@ def test_combine_envs_data_under_toggle_identifier():
 
     # test to make sure renaming happened correctly
     assert ('n4', 'cms', 'WaffleSwitch') in output_data
-    # TODO(jinder): add more to test
+    assert ('n1', 'cms', 'WaffleFlag') in output_data
 
 def test_get_sorted_headers_from_toggles():
     """
@@ -115,6 +116,9 @@ def test_filter_and_sort_toggles_sorting():
     assert sorted_names == test_sorted_names
 
 def test_get_keys_that_are_always_same():
+    """
+    Make sure the correct keys are in same_keys
+    """
     toggles_data={
     "n1":[{"s1":1,"s2":True, "d1":1, "d2":True},{"s1":1,"s2":True, "d1":2, "d2":False},{"s1":1,"s2":True, "d1":3, "d2":True}],
     "n2":[{"s1":2,"s2":False, "d1":1, "d2":True},{"s1":2,"s2":False, "d1":5, "d2":False},{"s1":2,"s2":False, "d1":3, "d2":False}],
@@ -132,6 +136,14 @@ def test_get_keys_that_are_always_same():
 
 def test_summarize_data():
     """
-    Make sure data is summarized correctly
+    Make sure correct data is output for summary
     """
-    pass
+    toggles_data={
+    "n1":[{"s1":1,"s2":True, "d1":1, "d2":True, "env_name":'env1'},{"s1":1,"s2":True, "d1":2, "d2":False, "env_name":'env2'},{"s1":1,"s2":True, "d1":3, "d2":True, "env_name":'env3'}],
+    "n2":[{"s1":2,"s2":False, "d1":1, "d2":True, "env_name":'env1'},{"s1":2,"s2":False, "d1":5, "d2":False, "env_name":'env2'},{"s1":2,"s2":False, "d1":3, "d2":False, "env_name":'env3'}],
+    "n3":[{"s3":2,"s4":False, "d1":1, "d2":True, "env_name":'env1'},{"s3":2,"s4":False, "d1":7, "d2":False, "env_name":'env2'},{"s3":2,"s4":False, "d1":20, "d2":True, "env_name":'env3'}],
+    "n4":[{"s3":1,"s4":True, "d1":1, "d2":False, "env_name":'env1'},{"s3":1,"s4":True, "d1":8, "d2":False, "env_name":'env2'},{"s3":1,"s4":True, "d1":6, "d2":True, "env_name":'env3'}],
+    }
+    summarized_data = csv_renderer.summarize_data(toggles_data)
+    assert "s1" in summarized_data[0]
+    # TODO(jinder): Add more here if the output summary has been fully designed

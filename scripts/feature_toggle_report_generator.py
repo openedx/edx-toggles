@@ -9,6 +9,7 @@ from collections import defaultdict
 import click
 
 from scripts.ida_toggles import IDA, add_toggle_state_to_idas, add_toggle_annotations_to_idas
+from scripts.toggles import ToggleTypes
 from scripts.renderers import CsvRenderer
 
 
@@ -73,7 +74,7 @@ def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, to
     # commandline-option inputs overwrite stuff in configuration file
     toggle_type_filter = toggle_type
     if not toggle_type and "toggle_type" in configuration.keys():
-        toggle_type_filter = configuration["toggle_type"]
+        toggle_type_filter = [configuration["toggle_type"]
 
     requested_envs = env
     if not env and "env" in configuration.keys():

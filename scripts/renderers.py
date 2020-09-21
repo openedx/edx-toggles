@@ -139,7 +139,7 @@ class CsvRenderer():
 
     def combine_envs_data_under_toggle_identifier(self, envs_data, type_filter=None):
         """
-        envs data is structured: envs->ida->toggles, this converts to (toggle, ida)->{env1_toggle_data, env2_toggle_data}
+        envs data is structured: envs->ida->toggles, this converts to (toggle, ida, toggle_type)->{env1_toggle_data, env2_toggle_data}
         """
         toggles_data = {}
         for env, idas in envs_data.items():
