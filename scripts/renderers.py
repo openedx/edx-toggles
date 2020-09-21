@@ -7,7 +7,6 @@ import os
 import re
 import csv
 import logging
-import pdb
 from collections import OrderedDict, defaultdict, Hashable
 
 import click
@@ -162,7 +161,9 @@ class CsvRenderer():
             same_keys = []
             # check if all values for a key are same
             for key, values in reorganized_data.items():
-                if [True for value in values if isinstance(value, Hashable)]:
+                # make sure all the values are Hasable
+                if all([True if isinstance(value, Hashable) else False for value in values]):
+                    # the key has to have a value in each env and has to be same in all envs
                     if len(values)== len(data) and len(set(values)) == 1:
                         same_keys.append(key)
             return reorganized_data.keys(), same_keys
