@@ -12,7 +12,7 @@ import re
 import yaml
 from enum import Enum
 
-from scripts.toggles import Toggle, ToggleAnnotation, ToggleState
+from scripts.toggles import Toggle, ToggleAnnotation, ToggleState, ToggleTypes
 
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -52,15 +52,7 @@ class IDA(object):
             state_data: dict with structure: {toggle_types_1:[toggle_dicts], toggle_types_2:[toggles_dicts]}
         """
         for toggle_type, toggles_data in state_data.items():
-            # TODO(jinder): fix naming diff between annotation and state data
-            if toggle_type == "waffle_flags":
-                toggle_type = "WaffleFlag"
-            elif toggle_type == 'waffle_switches':
-                toggle_type = "WaffleSwitch"
-            elif toggle_type == 'CourseWaffleFlag':
-                toggle_type = "WaffleFlag"
-            elif toggle_type == "django_settings":
-                toggle_type = "DjangoSetting"
+            toggle_type = ToggleTypes.get_internally_consistent_toggle_type(toggle_type)
 
             for toggle_data in toggles_data:
                 toggle_name = toggle_data.get('name')
@@ -80,8 +72,7 @@ class IDA(object):
         Gets a toggle and updates its state or creates a toggle and its state,
         and returns the toggle.
         """
-        if toggle_type in ['CourseWaffleFlag', 'ExperimentWaffleFlag']:
-            toggle_type = "WaffleFlag"
+        toggle_type = ToggleTypes.get_internally_consistent_toggle_type(toggle_type)
         toggle = self.toggles[toggle_type].get(toggle_name, None)
 
         if toggle:

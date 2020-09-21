@@ -11,6 +11,34 @@ LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 
+class ToggleTypes():
+    valid_toggle_types = ("WaffleFlag", "WaffleSwitch", "DjangoSetting")
+
+    @classmethod
+    def get_internally_consistent_toggle_type(cls, input_type):
+        """
+        Annotations report and toggles state outputs define their types slightly differently.
+        This function corrects between the two
+        """
+
+        if input_type == "waffle_flags":
+            toggle_type = "WaffleFlag"
+        elif input_type == 'waffle_switches':
+            toggle_type = "WaffleSwitch"
+        elif input_type == 'CourseWaffleFlag':
+            toggle_type = "WaffleFlag"
+        elif input_type == "django_settings":
+            toggle_type = "DjangoSetting"
+        else:
+            toggle_type = input_type
+
+        if toggle_type not in cls.valid_toggle_types:
+            LOGGER.warning(
+            'Name of model not recognized: {}'.format(input_type)
+            )
+        return toggle_type
+
+
 class Toggle:
     """
     Represents a feature toggle in an IDA, including the current state of the
