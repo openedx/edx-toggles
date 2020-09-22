@@ -113,7 +113,7 @@ def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, to
         add_toggle_annotations_to_idas(total_info[env_name], annotations_dir, configuration.get("ida", defaultdict(dict)))
 
     renderer = CsvRenderer()
-    renderer.render_csv_report(total_info, output_file_path, toggle_type_filter, ["name", "ida_name", "code_owner", "oldest_created", "newest_modified"], summarize)
+    renderer.render_env_diff_csv_report(total_info, output_file_path, toggle_type_filter, ["name", "ida_name", "code_owner", "oldest_created", "newest_modified"], summarize)
 
 
 if __name__ == '__main__':

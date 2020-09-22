@@ -20,7 +20,29 @@ class CsvRenderer():
     Used to output toggles+annotations data as CSS
     """
 
-    def render_csv_report(self, envs_ida_toggle_data, file_path="report.csv", toggle_types=None, header=None, summarize=False):
+    def render_toggles_report(self, toggles_data, file_path="report.csv", toggle_types=None, header=None, summarize=False):
+        """
+        takes data, processes it, and outputs it in csv form
+        """
+
+        # most of the code in CsvRenderer class expects data from multiple envs
+        # Following hack takes in data just from one env and modifies it to the form expected by functions below
+        psuedo_env_data = {"env": toggles_data}
+        if summarize:
+            output_data_list = self.output_summary(psuedo_env_data, toggle_types)
+        else:
+            output_data_list = self.output_full_data(psuedo_env_data)
+
+        data_to_render = self.filter_and_sort_toggles(output_data_list, toggle_types)
+        
+        # removing env info from output data(this was added above cause most of renderer expects toggles to be organized by env)
+        for single_toggle_dict in data_to_render:
+            single_toggle_dict.pop("env_name", None)
+
+        header = self.get_sorted_headers_from_toggles(data_to_render, header)
+        self.write_csv(file_path, data_to_render, header)
+
+    def render_env_diff_csv_report(self, envs_ida_toggle_data, file_path="report.csv", toggle_types=None, header=None, summarize=False):
         """
         takes data, processes it, and outputs it in csv form
         """
