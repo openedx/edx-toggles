@@ -4,7 +4,7 @@
 Status
 ------
 
-Superseded 
+Superseded
 
 Context
 -------
