@@ -184,6 +184,17 @@ class CsvRenderer():
                         else:
                             toggles_data[toggle_identifier] = [data_dict]
 
+        # some of the toggles only exist is subset of envs
+        # To do comparison correctly, we need to add an empty dict as placeholder for missing data
+        num_envs = len(envs_data)
+        env_names = set(envs_data.keys())
+        for toggle_identifier, data in toggles_data.items():
+            if len(data)<num_envs:
+                existing_envs = set(env["env_name"] for env in data)
+                missing_envs = env_names - existing_envs
+                for env in missing_envs:
+                    data.append({"env_name":env})
+
         return toggles_data
 
     def summarize_data(self, toggles_data):
@@ -200,18 +211,22 @@ class CsvRenderer():
             summary_datum["newest_modified"] = max([datum["modified_s"] for datum in data if "modified_s" in datum], default="")
             summary_datum["note"] = ", ".join([datum["note_s"] for datum in data if "note_s" in datum])
 
-            all_envs_match = set()
+            envs_states = []
+
             # add info that is specific to each env
             for datum in data:
                 env_name = datum["env_name"]
                 summary_datum["computed_status_{}".format(env_name)] = datum.get("computed_status_s", datum.get("is_active_s", None))
-                all_envs_match.add(summary_datum["computed_status_{}".format(env_name)])
+                envs_states.append(summary_datum["computed_status_{}".format(env_name)])
                 if "code_owner_s" in datum:
                     summary_datum["code_owner"] = datum["code_owner_s"]
-            # add info comparing envs only if multiple envs exist
             if len(data) > 1:
-                summary_datum["all_envs_match"] = True if len(all_envs_match) == 1 else False
+                summary_datum["all_envs_match"] = True if len(envs_states) == len(data) and len(set(envs_states)) == 1 and envs_states[0] is not None else False
+            
 
+            if len(data) == 2:
+                import pdb
+                pdb.set_trace()
             # adding annotations to output
             annotation_pattern = re.compile(".*_a$")
             for key, value in data[0].items():
