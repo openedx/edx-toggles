@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 class ToggleTypes():
-    valid_toggle_types = ("WaffleFlag", "WaffleSwitch", "DjangoSetting")
+    valid_toggle_types = ("waffle_flags", "waffle_switches", "django_settings")
 
     @classmethod
     def get_internally_consistent_toggle_type(cls, input_type):
@@ -21,20 +21,22 @@ class ToggleTypes():
         This function corrects between the two
         """
 
-        if input_type == "waffle_flags":
-            toggle_type = "WaffleFlag"
-        elif input_type == 'waffle_switches':
-            toggle_type = "WaffleSwitch"
+        if input_type == "WaffleFlag":
+            toggle_type = "waffle_flags"
+        elif input_type == "WaffleSwitch":
+            toggle_type = 'waffle_switches'
         elif input_type == 'CourseWaffleFlag':
-            toggle_type = "WaffleFlag"
-        elif input_type == "django_settings":
-            toggle_type = "DjangoSetting"
+            toggle_type = 'waffle_switches'
+        elif input_type == "DjangoSetting":
+            toggle_type = "django_settings"
+        elif input_type == "ExperimentWaffleFlag":
+            toggle_type = "waffle_flags"
         else:
             toggle_type = input_type
 
         if toggle_type not in cls.valid_toggle_types:
             LOGGER.warning(
-            'Name of model not recognized: {}'.format(input_type)
+            'Name of model not recognized: {}'.format(toggle_type)
             )
         return toggle_type
 

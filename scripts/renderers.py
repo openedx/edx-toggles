@@ -186,71 +186,19 @@ class CsvRenderer():
 
         return toggles_data
 
-    def get_keys_that_are_always_same(self, toggles_data):
-        """
-        Gets keys whose values are always same for each individual toggle for every env
-        This is a search across toggles, so this will ignore keys whose values are same in one toggle but are different in another toggle
-            - such as: everyone or is_active(which can be the same, but are not always the same)
-        This will include keys like: any annotation keys, Waffle Flag class name, code_owner, etc.
-        A key does not have to exist in all toggles for it to be included
-        """
-        def get_identical_keys_for_toggle(toggle_data):
-            """
-            Finds keys that have the same values for every env in data for **one** toggle
-            Argument:
-                toggle_data: list of dicts, [{env1_data}, {env2_data}]
-            returns:
-                all_keys: list of all keys that existed in data
-                same_keys: list of all keys whose values were the same in each env(if a key only exists in one env, it is not included)
-            """
-            # reorganize data by key
-            reorganized_data = {}
-            for datum in data:
-                for key, value in datum.items():
-                    if key in reorganized_data:
-                        reorganized_data[key].append(value)
-                    else:
-                        reorganized_data[key] = [value]
-            same_keys = []
-            # check if all values for a key are same
-            for key, values in reorganized_data.items():
-                # make sure all the values are Hasable
-                if all([True if isinstance(value, Hashable) else False for value in values]):
-                    # the key has to have a value in each env and has to be same in all envs
-                    if len(values)== len(data) and len(set(values)) == 1:
-                        same_keys.append(key)
-            return reorganized_data.keys(), same_keys
-
-        # end results: {key*:True for keys that are same, key*:False}
-        is_key_same = defaultdict(bool)
-        for toggle_name, data in toggles_data.items():
-            all_keys, toggle_same_keys = get_identical_keys_for_toggle(data)
-            for key in all_keys:
-                # if a key has been seen before and it does not have the same values for this toggle, set it to false
-                if key in is_key_same.keys() and key not in toggle_same_keys:
-                    is_key_same[key] = False
-                # only set to true the key has same values for this toggle and it has not been seen before
-                if key not in is_key_same.keys() and key in toggle_same_keys:
-                    is_key_same[key] = True
-        return [key for key, value in is_key_same.items() if value]
-
     def summarize_data(self, toggles_data):
         """
         Returns only subset containing the essential information
         """
         data_to_render = []
-        same_keys = self.get_keys_that_are_always_same(toggles_data)
         for toggle_identifier, data in toggles_data.items():
             summary_datum = {}
+            summary_datum["name"] = toggle_identifier[0]
+            summary_datum["ida_name"] = toggle_identifier[1]
+            summary_datum["toggle_type"] = toggle_identifier[2]
             summary_datum["oldest_created"] = min([datum["created_s"] for datum in data if "created_s" in datum], default="")
             summary_datum["newest_modified"] = max([datum["modified_s"] for datum in data if "modified_s" in datum], default="")
             summary_datum["note"] = ", ".join([datum["note_s"] for datum in data if "note_s" in datum])
-            # add info for stuff that should be same for in each env
-            # this includes things such as: annotation_data, ida_name, code_owner, class name ...
-            common_items = {key:value for key, value in data[0].items() if key in same_keys}
-
-            if common_items:
-                summary_datum.update(common_items)
 
             all_envs_match = set()
             # add info that is specific to each env
@@ -260,7 +208,15 @@ class CsvRenderer():
                 all_envs_match.add(summary_datum["computed_status_{}".format(env_name)])
                 if "code_owner_s" in datum:
                     summary_datum["code_owner"] = datum["code_owner_s"]
-            summary_datum["all_envs_match"] = True if len(all_envs_match) == 1 else False
+            # add info comparing envs only if multiple envs exist
+            if len(data) > 1:
+                summary_datum["all_envs_match"] = True if len(all_envs_match) == 1 else False
+
+            # adding annotations to output
+            annotation_pattern = re.compile(".*_a$")
+            for key, value in data[0].items():
+                if annotation_pattern.search(key):
+                    summary_datum[key] = value
             data_to_render.append(summary_datum)
         return data_to_render
 
