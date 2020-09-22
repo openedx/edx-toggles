@@ -8,7 +8,7 @@ Approved
 Context
 -------
 
-edX uses feature toggles to modify code behaviour during run time.
+edX uses feature toggles to modify code behavior during run time.
 We use code annotations(comments above toggle declaration) to document various info about our feature toggles.
 
 Very few of our toggles are documented properly.
@@ -28,7 +28,7 @@ The work for this decision is located at: `scripts/feature_toggle_report.py`
 Concequences
 ------------
 
-We will be repuposing code, which will result is some hacks in our code.
+We will be repurposing code, which will result is some hacks in our code.
 
 
 .. note:: This ADR is supersededs docs/decisions/0003-feature-toggles-state-in-different-environments.rst
