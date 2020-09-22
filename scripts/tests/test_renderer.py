@@ -115,34 +115,15 @@ def test_filter_and_sort_toggles_sorting():
     test_sorted_names = [datum["name"] for datum in sorted_data]
     assert sorted_names == test_sorted_names
 
-def test_get_keys_that_are_always_same():
-    """
-    Make sure the correct keys are in same_keys
-    """
-    toggles_data={
-    "n1":[{"s1":1,"s2":True, "d1":1, "d2":True},{"s1":1,"s2":True, "d1":2, "d2":False},{"s1":1,"s2":True, "d1":3, "d2":True}],
-    "n2":[{"s1":2,"s2":False, "d1":1, "d2":True},{"s1":2,"s2":False, "d1":5, "d2":False},{"s1":2,"s2":False, "d1":3, "d2":False}],
-    "n3":[{"s3":2,"s4":False, "d1":1, "d2":True},{"s3":2,"s4":False, "d1":7, "d2":False},{"s3":2,"s4":False, "d1":20, "d2":True}],
-    "n4":[{"s3":1,"s4":True, "d1":1, "d2":False},{"s3":1,"s4":True, "d1":8, "d2":False},{"s3":1,"s4":True, "d1":6, "d2":True}],
-    }
-    same_keys = csv_renderer.get_keys_that_are_always_same(toggles_data)
-    assert "s1" in same_keys
-    assert "s2" in same_keys
-    assert "s3" in same_keys
-    assert "s4" in same_keys
-    assert "d1" not in same_keys
-    assert "d2" not in same_keys
-
-
 def test_summarize_data():
     """
     Make sure correct data is output for summary
     """
     toggles_data={
-    "n1":[{"s1":1,"s2":True, "d1":1, "d2":True, "env_name":'env1'},{"s1":1,"s2":True, "d1":2, "d2":False, "env_name":'env2'},{"s1":1,"s2":True, "d1":3, "d2":True, "env_name":'env3'}],
-    "n2":[{"s1":2,"s2":False, "d1":1, "d2":True, "env_name":'env1'},{"s1":2,"s2":False, "d1":5, "d2":False, "env_name":'env2'},{"s1":2,"s2":False, "d1":3, "d2":False, "env_name":'env3'}],
-    "n3":[{"s3":2,"s4":False, "d1":1, "d2":True, "env_name":'env1'},{"s3":2,"s4":False, "d1":7, "d2":False, "env_name":'env2'},{"s3":2,"s4":False, "d1":20, "d2":True, "env_name":'env3'}],
-    "n4":[{"s3":1,"s4":True, "d1":1, "d2":False, "env_name":'env1'},{"s3":1,"s4":True, "d1":8, "d2":False, "env_name":'env2'},{"s3":1,"s4":True, "d1":6, "d2":True, "env_name":'env3'}],
+    ("n1","lms", "type1"):[{"s1":1,"s2":True, "d1":1, "d2":True, "env_name":'env1'},{"s1":1,"s2":True, "d1":2, "d2":False, "env_name":'env2'},{"s1":1,"s2":True, "d1":3, "d2":True, "env_name":'env3'}],
+    ("n2", "lms", "type1"):[{"s1":2,"s2":False, "d1":1, "d2":True, "env_name":'env1'},{"s1":2,"s2":False, "d1":5, "d2":False, "env_name":'env2'},{"s1":2,"s2":False, "d1":3, "d2":False, "env_name":'env3'}],
+    ("n3", "lms", "type1"):[{"s3":2,"s4":False, "d1":1, "d2":True, "env_name":'env1'},{"s3":2,"s4":False, "d1":7, "d2":False, "env_name":'env2'},{"s3":2,"s4":False, "d1":20, "d2":True, "env_name":'env3'}],
+    ("n4", "lms", "type1"):[{"s3":1,"s4":True, "d1":1, "d2":False, "env_name":'env1'},{"s3":1,"s4":True, "d1":8, "d2":False, "env_name":'env2'},{"s3":1,"s4":True, "d1":6, "d2":True, "env_name":'env3'}],
     }
     summarized_data = csv_renderer.summarize_data(toggles_data)
 

@@ -6,13 +6,13 @@ from scripts.toggles import Toggle, ToggleState
 
 def test_adding_annotation_data():
     ida = IDA('my-ida')
-    switch_1 = Toggle('the-first-waffle-switch', ToggleState("WaffleSwitch", {}))
-    switch_2 = Toggle('my-sample-switch', ToggleState("WaffleSwitch", {}))
-    switch_3 = Toggle('another-sample-switch', ToggleState("WaffleSwitch", {}))
-    flag_1 = Toggle('sample-flag', ToggleState("WaffleFlag", {}))
-    flag_2 = Toggle('sample-course-waffle-flag', ToggleState("WaffleFlag", {}))
-    ida.toggles["WaffleSwitch"] = {switch_1.name:switch_1, switch_2.name:switch_2, switch_3.name:switch_3}
-    ida.toggles["WaffleFlag"] = {flag_1.name:flag_1, flag_2.name:flag_2}
+    switch_1 = Toggle('the-first-waffle-switch', ToggleState("waffle_switches", {}))
+    switch_2 = Toggle('my-sample-switch', ToggleState("waffle_switches", {}))
+    switch_3 = Toggle('another-sample-switch', ToggleState("waffle_switches", {}))
+    flag_1 = Toggle('sample-flag', ToggleState("waffle_flags", {}))
+    flag_2 = Toggle('sample-course-waffle-flag', ToggleState("waffle_flags", {}))
+    ida.toggles["waffle_switches"] = {switch_1.name:switch_1, switch_2.name:switch_2, switch_3.name:switch_3}
+    ida.toggles["waffle_flags"] = {flag_1.name:flag_1, flag_2.name:flag_2}
     annotation_groups = {
         'path/to/source/code.py': [
             # A feature toggle annotation, but not one we care about linking
@@ -131,7 +131,7 @@ def test_adding_annotation_data():
 
     ida._add_annotation_data_to_toggle_state(annotation_groups)
 
-    annotation = ida.toggles["WaffleSwitch"][switch_2.name].annotations
+    annotation = ida.toggles["waffle_switches"][switch_2.name].annotations
     assert annotation.report_group_id == 2
     assert annotation.line_range() == (561, 563)
     assert annotation._raw_annotation_data == expected_data
@@ -142,7 +142,7 @@ def test_adding_annotation_data():
         'default': True,
     }
 
-    annotation = ida.toggles["WaffleSwitch"][expected_data['name']].annotations
+    annotation = ida.toggles["waffle_switches"][expected_data['name']].annotations
     assert annotation.report_group_id == 2
     assert annotation.line_range() == (761, 763)
     assert annotation._raw_annotation_data == expected_data
