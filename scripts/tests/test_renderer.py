@@ -145,5 +145,9 @@ def test_summarize_data():
     "n4":[{"s3":1,"s4":True, "d1":1, "d2":False, "env_name":'env1'},{"s3":1,"s4":True, "d1":8, "d2":False, "env_name":'env2'},{"s3":1,"s4":True, "d1":6, "d2":True, "env_name":'env3'}],
     }
     summarized_data = csv_renderer.summarize_data(toggles_data)
-    assert "s1" in summarized_data[0]
-    # TODO(jinder): Add more here if the output summary has been fully designed
+
+    # the computed status is named: "computed_status_{env_name}"
+    assert "computed_status_env1" in summarized_data[0]
+    assert "computed_status_env2" in summarized_data[0]
+    assert "computed_status_env3" in summarized_data[0]
+    assert "newest_modified" in summarized_data[0]
