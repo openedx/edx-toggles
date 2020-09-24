@@ -25,7 +25,7 @@ class CsvRenderer():
         takes data, processes it, and outputs it in csv form
         """
         if summarize:
-            output_data_list = self.output_summary(ida_toggle_data, toggle_types)
+            output_data_list = self.summarize_data(ida_toggle_data)
         else:
             output_data_list = self.output_full_data(ida_toggle_data)
 
@@ -42,22 +42,6 @@ class CsvRenderer():
         header = self.get_sorted_headers_from_toggles(data_to_render, header)
         self.write_csv(file_path, data_to_render, header)
 
-    def output_summary(self, toggles_data, types_filter=None):
-        """
-        Experiment with an additional CSV format (to enhance, not replace, the original format)
-
-        One line per toggle.
-        is_active (contains calculated_status for waffle flag) column per environment
-            - toggle_active_stage? toggle_active_prod
-        column for oldest_created, newest_modified (nice to have, or prototype can just take any value here and not compare)
-        Combine waffle notes from each environment into a single column
-        Other data to include would be anything that is always the same for all environments:
-            - Annotation data
-            - Waffle Flag class name
-            - code_owner
-            - etc.
-        """
-        return self.summarize_data(toggles_data)
 
     def output_full_data(self, toggles_data):
         data_to_render = []

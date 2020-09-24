@@ -9,60 +9,6 @@ from scripts.toggles import Toggle, ToggleState, ToggleAnnotation
 csv_renderer = CsvRenderer()
 tc = TestCase()
 
-@mock.patch('scripts.toggles.Toggle')
-def test_transform_toggle_data_for_csv(mocked_toggle):
-    """Test to make sure data is flattened correctly"""
-
-    env1 = {'lms':IDA('lms', {"rename": "edxapp"}), 'cms':IDA('cms')}
-    env2 = {'lms':IDA('lms', {"rename": "edxapp"}), 'cms':IDA('cms')}
-    envs_data = {'env1':env1, 'env2':env2}
-    total_num_of_loops = 0
-    for env_name, env in envs_data.items():
-        for ida_name, ida in env.items():
-            ida.toggles = {}
-            ida.toggles['WaffleFlag'] = {}
-            ida.toggles['WaffleFlag']["n1"] = Toggle("n1")
-            ida.toggles['WaffleFlag']['n2'] = Toggle("n2")
-            ida.toggles['WaffleSwitch'] = {}
-            ida.toggles['WaffleSwitch']['n3'] = Toggle("n3")
-            ida.toggles['WaffleSwitch']['n4'] = Toggle("n4")
-            ida.toggles['WaffleSwitch']['n5'] = Toggle("n5")
-            total_num_of_loops += 1
-    mocked_toggle.full_data = lambda: {'d1':1, 'd2':2, 'd3':3}
-    output_data = csv_renderer.transform_toggle_data_for_csv(envs_data)
-
-    # test to make sure renaming happened correctly
-    assert 'lms' not in [datum['ida_name'] for datum in output_data]
-    assert "edxapp" in [datum['ida_name'] for datum in output_data]
-    # test to make sure everything is collected
-    assert total_num_of_loops*2 == [datum['toggle_type'] for datum in output_data].count('WaffleFlag')
-    assert total_num_of_loops*3 == [datum['toggle_type'] for datum in output_data].count('WaffleSwitch')
-
-
-def test_combine_envs_data_under_toggle_identifier():
-    """Test to make sure data is flattened correctly"""
-
-    env1 = {'lms':IDA('lms', {"rename": "edxapp"}), 'cms':IDA('cms')}
-    env2 = {'lms':IDA('lms', {"rename": "edxapp"}), 'cms':IDA('cms')}
-    envs_data = {'env1':env1, 'env2':env2}
-    total_num_of_loops = 0
-    for env_name, env in envs_data.items():
-        for ida_name, ida in env.items():
-            ida.toggles = {}
-            ida.toggles['WaffleFlag'] = {}
-            ida.toggles['WaffleFlag']["n1"] = Toggle("n1", ToggleState("n1", {'d1':1, 'd2':2, 'd3':3}))
-            ida.toggles['WaffleFlag']['n2'] = Toggle("n2", ToggleState("n2", {'d1':3, 'd2':3, 'd3':5}))
-            ida.toggles['WaffleSwitch'] = {}
-            ida.toggles['WaffleSwitch']['n3'] = Toggle("n3", ToggleState("n3", {'d1':4, 'd2':6, 'd3':3}))
-            ida.toggles['WaffleSwitch']['n4'] = Toggle("n4", ToggleState("n4", {'d1':1, 'd2':2, 'd3':5}))
-            ida.toggles['WaffleSwitch']['n5'] = Toggle("n5", ToggleState("n5", {'d1':1, 'd2':7, 'd3':3}))
-            total_num_of_loops += 1
-    output_data = csv_renderer.combine_envs_data_under_toggle_identifier(envs_data)
-
-    # test to make sure renaming happened correctly
-    assert ('n4', 'cms', 'WaffleSwitch') in output_data
-    assert ('n1', 'cms', 'WaffleFlag') in output_data
-
 def test_get_sorted_headers_from_toggles():
     """
     CSV column should be ordered by the following ordered list of rules::
@@ -114,21 +60,3 @@ def test_filter_and_sort_toggles_sorting():
     sorted_names = sorted(names)
     test_sorted_names = [datum["name"] for datum in sorted_data]
     assert sorted_names == test_sorted_names
-
-def test_summarize_data():
-    """
-    Make sure correct data is output for summary
-    """
-    toggles_data={
-    ("n1","lms", "type1"):[{"s1":1,"s2":True, "d1":1, "d2":True, "env_name":'env1'},{"s1":1,"s2":True, "d1":2, "d2":False, "env_name":'env2'},{"s1":1,"s2":True, "d1":3, "d2":True, "env_name":'env3'}],
-    ("n2", "lms", "type1"):[{"s1":2,"s2":False, "d1":1, "d2":True, "env_name":'env1'},{"s1":2,"s2":False, "d1":5, "d2":False, "env_name":'env2'},{"s1":2,"s2":False, "d1":3, "d2":False, "env_name":'env3'}],
-    ("n3", "lms", "type1"):[{"s3":2,"s4":False, "d1":1, "d2":True, "env_name":'env1'},{"s3":2,"s4":False, "d1":7, "d2":False, "env_name":'env2'},{"s3":2,"s4":False, "d1":20, "d2":True, "env_name":'env3'}],
-    ("n4", "lms", "type1"):[{"s3":1,"s4":True, "d1":1, "d2":False, "env_name":'env1'},{"s3":1,"s4":True, "d1":8, "d2":False, "env_name":'env2'},{"s3":1,"s4":True, "d1":6, "d2":True, "env_name":'env3'}],
-    }
-    summarized_data = csv_renderer.summarize_data(toggles_data)
-
-    # the computed status is named: "computed_status_{env_name}"
-    assert "computed_status_env1" in summarized_data[0]
-    assert "computed_status_env2" in summarized_data[0]
-    assert "computed_status_env3" in summarized_data[0]
-    assert "newest_modified" in summarized_data[0]
