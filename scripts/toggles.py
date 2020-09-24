@@ -51,32 +51,74 @@ class Toggle:
     only one of the above components could be identified.
     """
 
-    def __init__(self, name, state=None, annotations=None):
+    def __init__(self, name, state=None, annotations=None, ida_name=None):
         self.name = name
-        self.state = state
+        self.states = []
+        if state is not None:
+            self.states.append(state)
+        else:
+            self.state = []
         self.annotations = annotations
+        self.ida_name = ida_name 
 
     def __str__(self):
         return self.name
 
-    def data_for_template(self, component, data_name):
-        """
-        A helper function for easily accessing various data from both
-        the ToggleState and ToggleAnnotations for this Toggle for
-        use in templating the confluence report.
-        """
-        if component ==  "state":
-            if self.state:
-                self.state._prepare_state_data()
-                return self.state._cleaned_state_data[data_name]
-            else:
-                return '-'
-        elif component == "annotation":
-            if self.annotations:
-                self.annotations._prepare_annotation_data()
-                return self.annotations._cleaned_annotation_data[data_name]
-            else:
-                return '-'
+    def add_state(self, state):
+        self.states.append(state)
+
+    def get_summary_report(self, summarize=True):
+        report = {}
+        if summarize:
+            report["state"] = self.get_state_summary()
+        report["annotations"] = self.get_annotations()
+        return report
+
+    def get_full_reports(self):
+        data = []
+        for state in self.states:
+            report = {}
+            state._prepare_state_data()
+            report['state'] = state._cleaned_state_data
+            report["annotations"] = self.get_annotations()
+            data.append(report)
+        return data
+
+
+    def get_annotations(self):
+        output = {}
+        if self.annotations:
+            self.annotations._prepare_annotation_data()
+            output.update(self.annotations._cleaned_annotation_data)
+        else:
+            LOGGER.debug("{} Toggle's annotations is None".format(self.name))
+        return output
+
+    def get_state_summary(self):
+        data = []
+        for state in self.states:
+            state._prepare_state_data()
+            data.append(state._cleaned_state_data)
+
+        summary = {}
+        summary["name"] = self.name
+        summary["ida_name"] = self.ida_name
+        summary["oldest_created"] = min([datum["created"] for datum in data if "created" in datum], default="")
+        summary["newest_modified"] = max([datum["modified"] for datum in data if "modified" in datum], default="")
+        summary["note"] = ", ".join([datum["note"] for datum in data if "note" in datum])
+
+        # add info that is specific to each env
+        envs_states=[]
+        for datum in data:
+            env_name = datum["env_name"]
+            summary["computed_status_{}".format(env_name)] = datum.get("computed_status", datum.get("is_active", None))
+            envs_states.append(summary["computed_status_{}".format(env_name)])
+            if "code_owner" in datum:
+                summary["code_owner"] = datum["code_owner"]
+        if len(data) > 1:
+            summary["all_envs_match"] = True if len(envs_states) == len(data) and len(set(envs_states)) == 1 and envs_states[0] is not None else False
+
+        return summary
 
     def full_data(self):
         """
@@ -141,10 +183,11 @@ class ToggleState(object):
     as pulled from the IDA's database.
     """
 
-    def __init__(self, toggle_type, data):
+    def __init__(self, toggle_type, data, env_name):
         self.toggle_type = toggle_type
         self._raw_state_data = collections.defaultdict(str, data)
         self._cleaned_state_data = collections.defaultdict(str)
+        self.env_name = env_name
 
     def update_data(self, data):
         """
@@ -227,3 +270,4 @@ class ToggleState(object):
                 self._cleaned_state_data["num_courses_forced_off"] = len(courses_forced_off)
             else:
                 self._cleaned_state_data[k] = v
+        self._cleaned_state_data["env_name"] = self.env_name

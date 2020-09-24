@@ -104,16 +104,15 @@ def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, to
         if requested_envs and env_name not in requested_envs:
             LOGGER.debug("Skip reading toggle state data for {} env".format(env_name))
             continue
-        total_info[env_name] = {}
 
         # add data for each ida
         if show_state:
-            add_toggle_state_to_idas(total_info[env_name], env_data_path, configuration.get("ida", defaultdict(dict)))
+            add_toggle_state_to_idas(total_info, env_data_path, configuration.get("ida", defaultdict(dict)), env_name=env_name)
 
-        add_toggle_annotations_to_idas(total_info[env_name], annotations_dir, configuration.get("ida", defaultdict(dict)))
+        add_toggle_annotations_to_idas(total_info, annotations_dir, configuration.get("ida", defaultdict(dict)))
 
     renderer = CsvRenderer()
-    renderer.render_env_diff_csv_report(total_info, output_file_path, toggle_type_filter, ["name", "ida_name", "code_owner", "oldest_created", "newest_modified"], summarize)
+    renderer.render_csv_report(total_info, output_file_path, toggle_type_filter, ["name", "ida_name", "code_owner", "oldest_created", "newest_modified"], summarize)
 
 
 if __name__ == '__main__':

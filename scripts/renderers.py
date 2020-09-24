@@ -20,42 +20,29 @@ class CsvRenderer():
     Used to output toggles+annotations data as CSS
     """
 
-    def render_toggles_report(self, toggles_data, file_path="report.csv", toggle_types=None, header=None, summarize=False):
-        """
-        takes data, processes it, and outputs it in csv form
-        """
-
-        # most of the code in CsvRenderer class expects data from multiple envs
-        # Following hack takes in data just from one env and modifies it to the form expected by functions below
-        psuedo_env_data = {"env": toggles_data}
-        if summarize:
-            output_data_list = self.output_summary(psuedo_env_data, toggle_types)
-        else:
-            output_data_list = self.output_full_data(psuedo_env_data)
-
-        data_to_render = self.filter_and_sort_toggles(output_data_list, toggle_types)
-        
-        # removing env info from output data(this was added above cause most of renderer expects toggles to be organized by env)
-        for single_toggle_dict in data_to_render:
-            single_toggle_dict.pop("env_name", None)
-
-        header = self.get_sorted_headers_from_toggles(data_to_render, header)
-        self.write_csv(file_path, data_to_render, header)
-
-    def render_env_diff_csv_report(self, envs_ida_toggle_data, file_path="report.csv", toggle_types=None, header=None, summarize=False):
+    def render_csv_report(self, ida_toggle_data, file_path="report.csv", toggle_types=None, header=None, summarize=False):
         """
         takes data, processes it, and outputs it in csv form
         """
         if summarize:
-            output_data_list = self.output_summary(envs_ida_toggle_data, toggle_types)
+            output_data_list = self.output_summary(ida_toggle_data, toggle_types)
         else:
-            output_data_list = self.output_full_data(envs_ida_toggle_data)
+            output_data_list = self.output_full_data(ida_toggle_data)
 
-        data_to_render = self.filter_and_sort_toggles(output_data_list, toggle_types)
+        temp_data = []
+        for data in output_data_list:
+            toggle_dict_info = {}
+            for key in data["state"].keys():
+                toggle_dict_info["{}_s".format(key)] = data["state"][key]
+            for key in data["annotations"].keys():
+                toggle_dict_info["{}_a".format(key)] = data["annotations"][key]
+            temp_data.append(toggle_dict_info)
+
+        data_to_render = self.filter_and_sort_toggles(temp_data, toggle_types)
         header = self.get_sorted_headers_from_toggles(data_to_render, header)
         self.write_csv(file_path, data_to_render, header)
 
-    def output_summary(self, envs_ida_toggle_data, types_filter=None):
+    def output_summary(self, toggles_data, types_filter=None):
         """
         Experiment with an additional CSV format (to enhance, not replace, the original format)
 
@@ -70,33 +57,13 @@ class CsvRenderer():
             - code_owner
             - etc.
         """
-        toggles_data = self.combine_envs_data_under_toggle_identifier(envs_ida_toggle_data, types_filter)
         return self.summarize_data(toggles_data)
 
-    def output_full_data(self, envs_ida_toggle_data):
-        toggles_data = self.transform_toggle_data_for_csv(envs_ida_toggle_data)
-        return toggles_data
-
-    def transform_toggle_data_for_csv(self, envs_data):
-        """
-        Retrieve list of individual toggle datums from envs_data
-
-        envs_data is a dict with a complex structure of environments, idas and toggles by toggle type.
-        Return a flattened list for each toggle in a specific environment in preparation for csv output.
-        """
-        toggles_data = []
-        for env, idas in envs_data.items():
-            for ida_name, ida in idas.items():
-                for toggle_type, toggles in ida.toggles.items():
-                    for toggle_name, toggle in toggles.items():
-                        data_dict = toggle.full_data()
-                        data_dict["toggle_type"] = toggle_type
-                        # In case you want the report to call the ida by a different ida_name
-                        # example: lms should be called edxapp in report
-                        data_dict["ida_name"] = ida.configuration.get("rename", ida_name)
-                        data_dict["env_name"] = env
-                        toggles_data.append(data_dict)
-        return toggles_data
+    def output_full_data(self, toggles_data):
+        data_to_render = []
+        for ida_name, ida in toggles_data.items():
+            data_to_render.extend(ida.get_full_report())
+        return data_to_render
 
     def filter_and_sort_toggles(self, toggles_data, toggle_type_filter=None):
         """
@@ -159,80 +126,13 @@ class CsvRenderer():
         output.extend(header)
         return output
 
-    def combine_envs_data_under_toggle_identifier(self, envs_data, type_filter=None):
-        """
-        envs data is structured: envs->ida->toggles, this converts to (toggle, ida, toggle_type)->{env1_toggle_data, env2_toggle_data}
-        """
-        toggles_data = {}
-        for env, idas in envs_data.items():
-            for ida_name, ida in idas.items():
-                for toggle_type, toggles in ida.toggles.items():
-                    if type_filter and toggle_type not in type_filter:
-                        continue
-                    for toggle_name, toggle in toggles.items():
-                        data_dict = toggle.full_data()
-                        data_dict["toggle_type"] = toggle_type
-                        data_dict["env_name"] = env
-                        # In case you want the report to call the ida by a different ida_name
-                        # example: lms should be called edxapp in report
-                        ida_name = ida.configuration.get("rename", ida_name)
-                        data_dict["ida_name"] = ida_name
-                        toggle_identifier = (toggle_name, ida_name, toggle_type)
-                        # toggles are unique by its name and by the ida it belongs to
-                        if toggle_identifier in toggles_data:
-                            toggles_data[toggle_identifier].append(data_dict)
-                        else:
-                            toggles_data[toggle_identifier] = [data_dict]
-
-        # some of the toggles only exist is subset of envs
-        # To do comparison correctly, we need to add an empty dict as placeholder for missing data
-        num_envs = len(envs_data)
-        env_names = set(envs_data.keys())
-        for toggle_identifier, data in toggles_data.items():
-            if len(data)<num_envs:
-                existing_envs = set(env["env_name"] for env in data)
-                missing_envs = env_names - existing_envs
-                for env in missing_envs:
-                    data.append({"env_name":env})
-
-        return toggles_data
-
     def summarize_data(self, toggles_data):
         """
         Returns only subset containing the essential information
         """
         data_to_render = []
-        for toggle_identifier, data in toggles_data.items():
-            summary_datum = {}
-            summary_datum["name"] = toggle_identifier[0]
-            summary_datum["ida_name"] = toggle_identifier[1]
-            summary_datum["toggle_type"] = toggle_identifier[2]
-            summary_datum["oldest_created"] = min([datum["created_s"] for datum in data if "created_s" in datum], default="")
-            summary_datum["newest_modified"] = max([datum["modified_s"] for datum in data if "modified_s" in datum], default="")
-            summary_datum["note"] = ", ".join([datum["note_s"] for datum in data if "note_s" in datum])
-
-            envs_states = []
-
-            # add info that is specific to each env
-            for datum in data:
-                env_name = datum["env_name"]
-                summary_datum["computed_status_{}".format(env_name)] = datum.get("computed_status_s", datum.get("is_active_s", None))
-                envs_states.append(summary_datum["computed_status_{}".format(env_name)])
-                if "code_owner_s" in datum:
-                    summary_datum["code_owner"] = datum["code_owner_s"]
-            if len(data) > 1:
-                summary_datum["all_envs_match"] = True if len(envs_states) == len(data) and len(set(envs_states)) == 1 and envs_states[0] is not None else False
-            
-
-            if len(data) == 2:
-                import pdb
-                pdb.set_trace()
-            # adding annotations to output
-            annotation_pattern = re.compile(".*_a$")
-            for key, value in data[0].items():
-                if annotation_pattern.search(key):
-                    summary_datum[key] = value
-            data_to_render.append(summary_datum)
+        for ida_name, ida in toggles_data.items():
+            data_to_render.extend(ida.get_toggles_data_summary())
         return data_to_render
 
     def write_csv(self, file_name, data, fieldnames):
