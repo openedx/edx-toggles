@@ -24,22 +24,7 @@ the `code_annotations`_ tool, to annotate and summarize the definitions of
 these components with information regarding their purpose, default values and
 planned expiration dates.
 
-Here is an example of a fully annotated CourseWaffleFlag:
-
-.. code:: python
-
-    # .. toggle_name: course_experience.show_reviews_tool
-    # .. toggle_implementation: CourseWaffleFlag
-    # .. toggle_default: False
-    # .. toggle_description: Used with our integration with CourseTalk to display reviews for a course.
-    # .. toggle_category: course_experience
-    # .. toggle_use_cases: monitored_rollout
-    # .. toggle_creation_date: 2017-06-19
-    # .. toggle_expiration_date: ???
-    # .. toggle_warnings: We are no longer integrating with CourseTalk, so this probably should be deprecated and the code for reviews should be removed.
-    # .. toggle_tickets: DEPR-48
-    # .. toggle_status: unsupported
-    SHOW_REVIEWS_TOOL_FLAG = CourseWaffleFlag(WAFFLE_FLAG_NAMESPACE, 'show_reviews_tool')
+See the `How To with annotation format of feature toggles <https://edx-toggles.readthedocs.io/en/latest/how_to/documenting_new_feature_toggles.html>`__.
 
 To run the code-annotations tool to collect annotations into a report, run the
 command (in the codebase of your choice):
