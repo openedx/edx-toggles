@@ -8,14 +8,14 @@ Approved
 Context
 -------
 
-edX uses feature toggles to modify code behavior during run time.
-We use code annotations(comments above toggle declaration) to document various info about our feature toggles.
+EdX uses feature toggles to modify code behavior during run time. We use code annotations (comments above toggle declaration) to document various info about our feature toggles.
 
-Very few of our toggles are documented properly.
+However, there are several problems:
 
-Second context:
+* It is difficult to discover which toggles are missing annotations, and many of them are missing annotations.
+* It is difficult to see toggle state data from an environment, combined with toggle annotations from code.
 
-The team has already has already been working on a script to create a report on toggle state in our various environments(documented in `docs/decisions/0003-env-diff.rst`). Creating diff report between envirnonments is no longer a priority.
+A feature toggle report script was already in progress to address these concerns, however it was focused on the ability to compare toggle state across environments, which has since been de-prioritized. The greater priority is for code owners to be able to determine what toggles could be deprecated.
 
 
 Decision
