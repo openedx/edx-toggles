@@ -92,7 +92,7 @@ def main(annotations_dir, toggle_data_dir, output_file_path, env, toggle_type, s
 
     # if no env folders were found at toggle_data_dir, assume that dir contains data for one env
     if not env_data_paths:
-        env_name_search = env_name_pattern.search(os.path.dirname(toggle_data_dir))
+        env_name_search = env_name_pattern.search(os.path.basename(toggle_data_dir))
         if env_name_search:
             env_data_paths.append((toggle_data_dir, env_name_search.group('env')))
         else:
