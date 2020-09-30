@@ -29,19 +29,32 @@ class CsvRenderer():
         else:
             output_data_list = self.output_full_data(ida_toggle_data)
 
-        temp_data = []
-        for data in output_data_list:
-            toggle_dict_info = {}
-            for key in data["state"].keys():
-                toggle_dict_info["{}_s".format(key)] = data["state"][key]
-            for key in data["annotations"].keys():
-                toggle_dict_info["{}_a".format(key)] = data["annotations"][key]
-            temp_data.append(toggle_dict_info)
+        toggles_data = self.add_info_source_to_dict_key(output_data_list)
 
         data_to_render = self.filter_and_sort_toggles(temp_data, toggle_types)
         header = self.get_sorted_headers_from_toggles(data_to_render, header)
         self.write_csv(file_path, data_to_render, header)
 
+
+    def add_info_source_to_dict_key(self, toggles_data):
+        """
+        This function flattens the dicts in toggles_data list
+
+        toggles_data is a list of dicts with two keys: state, annotations
+        These keys are the location of where the info came from
+        (state: toggles endpoint, asnnotations: from code annotations)
+
+        This function flattens dict by adding source info to keys
+        """
+        temp_data = []
+        for datum in toggles_data:
+            toggle_dict_info = {}
+            for key in datum["state"].keys():
+                toggle_dict_info["{}_s".format(key)] = datum["state"][key]
+            for key in datum["annotations"].keys():
+                toggle_dict_info["{}_a".format(key)] = datum["annotations"][key]
+            temp_data.append(toggle_dict_info)
+        return temp_data
 
     def output_full_data(self, toggles_data):
         data_to_render = []
