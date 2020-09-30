@@ -28,7 +28,4 @@ Decision
 Consequences
 ------------
 
-We will be repurposing code, which will result is some hacks in our code.
-
-
-.. note:: This ADR is supersededs docs/decisions/0003-feature-toggles-state-in-different-environments.rst
+Reusing shared code from the original environment diff script has the benefit of retaining the capabilities of the environment diff script, as well as making this a smaller change, not having to refactor the entire script. This approach has the disadvantage of having a data structure and code that is more complicated than necessary in the simple case of a single environment.
