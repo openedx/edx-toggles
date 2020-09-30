@@ -29,10 +29,6 @@ logging.basicConfig(level=logging.INFO)
     'output_file_path', default="feature_toggle_report",
 )
 @click.option(
-    '--show-state', is_flag=True,
-    help="if this is present, the report will include toggle state",
-)
-@click.option(
     '--env',
     multiple=True,  # allows user to get union of multiple envs
     default=None,
@@ -53,7 +49,7 @@ logging.basicConfig(level=logging.INFO)
     default=None,
     help='alternative method to do configuration, the command-line options will have priority',
     )
-def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, toggle_type, summarize, configuration):
+def main(annotations_dir, toggle_data_dir, output_file_path, env, toggle_type, summarize, configuration):
     """
     Script to process annotation and state data for toggles and output it a report.
 
@@ -80,9 +76,6 @@ def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, to
     if not env and "env" in configuration.keys():
         requested_envs = configuration["env"]
 
-    if "show_state" in configuration.keys():
-        show_state = configuration["show_state"]
-
     # each env should have a folder with all its sql dump with toggle data
     # folders name as: <env_name>_env
     # example: prod_env, stage_env, devstack_env
@@ -97,6 +90,15 @@ def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, to
         if os.path.isdir(os.path.join(toggle_data_dir, path)) and env_name_search:
             env_data_paths.append((os.path.join(toggle_data_dir, path), env_name_search.group('env')))
 
+    # if no env folders were found at toggle_data_dir, assume that dir contains data for one env
+    if not env_data_paths:
+        env_name_search = env_name_pattern.search(os.path.dirname(toggle_data_dir))
+        if env_name_search:
+            env_data_paths.append((toggle_data_dir, env_name_search.group('env')))
+        else:
+            raise Exception('Directory at {} does not match required structure, see readme for more info'.format(toggle_data_dir))
+
+
     total_info = {}
     for env_data_path, env_name in env_data_paths:
         # if an env is specified in requested_envs, filter out everyother env
@@ -106,8 +108,7 @@ def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, to
             continue
 
         # add data for each ida
-        if show_state:
-            add_toggle_state_to_idas(total_info, env_data_path, configuration.get("ida", defaultdict(dict)), env_name=env_name)
+        add_toggle_state_to_idas(total_info, env_data_path, configuration.get("ida", defaultdict(dict)), env_name=env_name)
 
         add_toggle_annotations_to_idas(total_info, annotations_dir, configuration.get("ida", defaultdict(dict)))
 

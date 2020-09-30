@@ -31,7 +31,7 @@ class CsvRenderer():
 
         toggles_data = self.add_info_source_to_dict_key(output_data_list)
 
-        data_to_render = self.filter_and_sort_toggles(temp_data, toggle_types)
+        data_to_render = self.filter_and_sort_toggles(toggles_data, toggle_types)
         header = self.get_sorted_headers_from_toggles(data_to_render, header)
         self.write_csv(file_path, data_to_render, header)
 
