@@ -120,33 +120,6 @@ class Toggle:
 
         return summary
 
-    def full_data(self):
-        """
-        Returns a dict with all info on toggle state and annotations
-        """
-        full_data = {}
-        full_data["name"] = self.name
-        if self.state:
-            self.state._prepare_state_data()
-            for key, value in self.state._cleaned_state_data.items():
-                if key == "name":
-                    continue
-                # data that is received from state data dump is postfixed with a "_s"
-                full_data["{}_s".format(key)] = value
-        else:
-            LOGGER.debug("{} Toggle's state is None".format(self.name))
-
-        if self.annotations:
-            self.annotations._prepare_annotation_data()
-            for key, value in self.annotations._cleaned_annotation_data.items():
-                if key == "name":
-                    continue
-                # data that is received from annotations is postfixed with a "_a"
-                full_data["{}_a".format(key)] = value
-        else:
-            LOGGER.debug("{} Toggle's annotations is None".format(self.name))
-        return full_data
-
 
 class ToggleAnnotation(object):
     """
