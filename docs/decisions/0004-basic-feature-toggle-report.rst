@@ -25,7 +25,7 @@ Decision
 * We will rename the existing script to ``env_diff_feature_toggle_report.py``.
 * We will share code between the two scripts.
 
-Concequences
+Consequences
 ------------
 
 We will be repurposing code, which will result is some hacks in our code.
