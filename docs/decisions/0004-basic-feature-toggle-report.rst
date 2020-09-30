@@ -21,9 +21,9 @@ A feature toggle report script was already in progress to address these concerns
 Decision
 --------
 
-Repurpose code written for `docs/decisions/0003-feature-toggles-state-in-different-environments.rst` and use it to output a report which contains state(from just one env) and annotations data about feature toggles.
-
-The work for this decision is located at: `scripts/feature_toggle_report.py`
+* We will introduce a new script ``feature_toggle_report.py`` with a simplified script API to report against toggle state from a single environment.
+* We will rename the existing script to ``env_diff_feature_toggle_report.py``.
+* We will share code between the two scripts.
 
 Concequences
 ------------
