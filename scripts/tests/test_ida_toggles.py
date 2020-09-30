@@ -6,11 +6,11 @@ from scripts.toggles import Toggle, ToggleState
 
 def test_adding_annotation_data():
     ida = IDA('my-ida')
-    switch_1 = Toggle('the-first-waffle-switch', ToggleState("waffle_switches", {}))
-    switch_2 = Toggle('my-sample-switch', ToggleState("waffle_switches", {}))
-    switch_3 = Toggle('another-sample-switch', ToggleState("waffle_switches", {}))
-    flag_1 = Toggle('sample-flag', ToggleState("waffle_flags", {}))
-    flag_2 = Toggle('sample-course-waffle-flag', ToggleState("waffle_flags", {}))
+    switch_1 = Toggle('the-first-waffle-switch', ToggleState("waffle_switches", {}, env_name="env"))
+    switch_2 = Toggle('my-sample-switch', ToggleState("waffle_switches", {}, env_name="env"))
+    switch_3 = Toggle('another-sample-switch', ToggleState("waffle_switches", {}, env_name="env"))
+    flag_1 = Toggle('sample-flag', ToggleState("waffle_flags", {}, env_name="env"))
+    flag_2 = Toggle('sample-course-waffle-flag', ToggleState("waffle_flags", {}, env_name="env"))
     ida.toggles["waffle_switches"] = {switch_1.name:switch_1, switch_2.name:switch_2, switch_3.name:switch_3}
     ida.toggles["waffle_flags"] = {flag_1.name:flag_1, flag_2.name:flag_2}
     annotation_groups = {
