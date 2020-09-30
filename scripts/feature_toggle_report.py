@@ -71,7 +71,7 @@ def main(annotations_dir, toggle_data_dir, output_file_path, show_state, env, to
         configuration = {}
 
     # process configuration
-    # commandline-option inputs overwrite stuff in configuration file
+    # commandline-option inputs overwrite configuration file data
     toggle_type_filter = toggle_type
     if not toggle_type and "toggle_type" in configuration.keys():
         toggle_type_filter = [ToggleTypes.get_internally_consistent_toggle_type(toggle_type) for toggle_type in configuration["toggle_type"]]
