@@ -13,7 +13,7 @@ def toggles_data_dict():
 @pytest.fixture
 def sample_ida(toggles_data_dict):
     ida = IDA('my-ida')
-    ida._add_toggle_data(toggles_data_dict)
+    ida._add_toggle_data(toggles_data_dict, "env")
     return ida
 
 def test_correct_num_added(sample_ida):
