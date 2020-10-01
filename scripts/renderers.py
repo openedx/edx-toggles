@@ -41,7 +41,7 @@ class CsvRenderer():
         Essentially, one row per toggle state(one toggle with multiple states will have multilple rows)
         """
         output = []
-        for ida_name, ida in idas.items():
+        for ida in idas.values():
             output.extend(ida.get_full_report())
         return output
 
@@ -51,7 +51,7 @@ class CsvRenderer():
         Essentially, one row per toggle
         """
         output = []
-        for ida_name, ida in idas.items():
+        for ida in idas.values():
             output.extend(ida.get_toggles_data_summary())
         return output
 
