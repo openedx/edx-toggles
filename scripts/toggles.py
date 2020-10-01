@@ -15,7 +15,7 @@ class ToggleTypes():
     valid_toggle_types = ("django_settings", "waffle_flags", "waffle_switches")
     valid_converstions = {
             "CourseWaffleFlag": "waffle_flags",
-            "ExperimentWaffleFlag": "waffle_flags"
+            "ExperimentWaffleFlag": "waffle_flags",
             "DjangoSetting": "django_settings",
             "WaffleFlag": "waffle_flags",
             "WaffleSwitch": "waffle_switches",
@@ -27,7 +27,7 @@ class ToggleTypes():
         Annotations report and toggles state outputs define their types slightly differently.
         This function corrects between the two
         """
-        toggle_type = valid_converstions.get(input_type, input_type)
+        toggle_type = cls.valid_converstions.get(input_type, input_type)
 
         if toggle_type not in cls.valid_toggle_types:
             LOGGER.warning(

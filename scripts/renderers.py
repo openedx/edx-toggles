@@ -40,14 +40,20 @@ class CsvRenderer():
         return full data about toggles
         Essentially, one row per toggle state(one toggle with multiple states will have multilple rows)
         """
-        return [ida.get_full_report() for ida in idas.values()]
+        output = []
+        for ida_name, ida in idas.items():
+            output.extend(ida.get_full_report())
+        return output
 
     def summarize_data(self, idas):
         """
         Returns only subset containing the essential information
         Essentially, one row per toggle
         """
-        return [ida.get_toggles_data_summary() for ida in idas.values()]
+        output = []
+        for ida_name, ida in idas.items():
+            output.extend(ida.get_toggles_data_summary())
+        return output
 
     def add_info_source_to_dict_keys(self, toggle_info_structured_dicts):
         """

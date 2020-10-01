@@ -29,19 +29,19 @@ def test_correct_num_added(sample_ida):
     # assert number of waffle_flags toggles
     assert len(sample_ida.toggles["waffle_flags"]) == 2
 
-# #TODO(jinder): unocomment and fix
-# def test_course_waffle_flag_handling(sample_ida):
-#     """
-#     Tests to make sure the raw data was properly processed
-#     """
-#     # retreive prepared data for each toggle
-#     total_prepared_data = {}
-#     for toggle_type, toggles in sample_ida.toggles.items():
-#         for toggle_name, toggle in toggles.items():
-#             total_prepared_data[toggle_name] = toggle.full_data()
+def test_course_waffle_flag_handling(sample_ida):
+    """
+    Tests to make sure the raw data was properly processed
+    """
+    # retreive prepared data for each toggle
+    raw_report = sample_ida.get_full_report()
+    course_waffle_flag_toggle = None
 
-#     assert "some.coursewaffleflag" in total_prepared_data
-#     assert "num_courses_forced_on_s" in total_prepared_data["some.coursewaffleflag"]
-#     assert "num_courses_forced_off_s" in total_prepared_data["some.coursewaffleflag"]
-#     assert total_prepared_data["some.coursewaffleflag"]["num_courses_forced_on_s"] == 2
-#     assert total_prepared_data["some.coursewaffleflag"]["num_courses_forced_off_s"] == 1
+    for toggle_dict in raw_report:
+        if toggle_dict["state"]["name"] == "some.coursewaffleflag":
+            course_waffle_flag_toggle = toggle_dict
+    assert course_waffle_flag_toggle is not None
+    assert "num_courses_forced_on" in course_waffle_flag_toggle["state"]
+    assert "num_courses_forced_off" in course_waffle_flag_toggle["state"] 
+    assert course_waffle_flag_toggle["state"]["num_courses_forced_on"] == 2
+    assert course_waffle_flag_toggle["state"]["num_courses_forced_off"] == 1
