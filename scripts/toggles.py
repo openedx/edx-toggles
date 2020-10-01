@@ -12,7 +12,14 @@ logging.basicConfig(level=logging.INFO)
 
 
 class ToggleTypes():
-    valid_toggle_types = ("waffle_flags", "waffle_switches", "django_settings")
+    valid_toggle_types = ("django_settings", "waffle_flags", "waffle_switches")
+    valid_converstions = {
+            "CourseWaffleFlag": "waffle_flags",
+            "ExperimentWaffleFlag": "waffle_flags"
+            "DjangoSetting": "django_settings",
+            "WaffleFlag": "waffle_flags",
+            "WaffleSwitch": "waffle_switches",
+        }
 
     @classmethod
     def get_internally_consistent_toggle_type(cls, input_type):
@@ -20,19 +27,7 @@ class ToggleTypes():
         Annotations report and toggles state outputs define their types slightly differently.
         This function corrects between the two
         """
-
-        if input_type == "WaffleFlag":
-            toggle_type = "waffle_flags"
-        elif input_type == "WaffleSwitch":
-            toggle_type = 'waffle_switches'
-        elif input_type == 'CourseWaffleFlag':
-            toggle_type = 'waffle_switches'
-        elif input_type == "DjangoSetting":
-            toggle_type = "django_settings"
-        elif input_type == "ExperimentWaffleFlag":
-            toggle_type = "waffle_flags"
-        else:
-            toggle_type = input_type
+        toggle_type = valid_converstions.get(input_type, input_type)
 
         if toggle_type not in cls.valid_toggle_types:
             LOGGER.warning(
@@ -53,11 +48,7 @@ class Toggle:
 
     def __init__(self, name, state=None, annotations=None, ida_name=None):
         self.name = name
-        self.states = []
-        if state is not None:
-            self.states.append(state)
-        else:
-            self.state = []
+        self.states = [state] if state is not None else []
         self.annotations = annotations
         self.ida_name = ida_name 
 

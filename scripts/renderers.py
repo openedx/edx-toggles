@@ -103,9 +103,9 @@ class CsvRenderer():
             # show states first
             state_pattern = re.compile(".*_s$")
             annotation_pattern = re.compile(".*_a$")
-            sort_by.append(True if annotation_pattern.search(key) or state_pattern.search(key) else False)
-            sort_by.append(False if state_pattern.search(key) else True)
-            sort_by.append(True if annotation_pattern.search(key) else False)
+            sort_by.append(bool(annotation_pattern.search(key) or state_pattern.search(key)))
+            sort_by.append(not bool(state_pattern.search(key)))
+            sort_by.append(bool(annotation_pattern.search(key)))
             # finally sort by alphabetical order
             sort_by.append(key)
             return tuple(sort_by)
@@ -127,10 +127,7 @@ class CsvRenderer():
         """
         Returns only subset containing the essential information
         """
-        data_to_render = []
-        for ida_name, ida in toggles_data.items():
-            data_to_render.extend(ida.get_toggles_data_summary())
-        return data_to_render
+        return [ida.get_toggles_data_summary() for ida in toggles_data.values()]
 
     def write_csv(self, file_name, data, fieldnames):
         """
