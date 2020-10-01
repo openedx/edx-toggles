@@ -29,7 +29,6 @@ class IDA(object):
 
     def get_toggles_data_summary(self):
         data = []
-        # TODO(jinder): decide if this toggle types is layer is necessary
         for toggle_type, toggles in self.toggles.items():
             for toggle_name, toggle in toggles.items():
                 data.append(toggle.get_summary_report())
@@ -37,7 +36,6 @@ class IDA(object):
 
     def get_full_report(self):
         data = []
-        # TODO(jinder): decide if this toggle types is layer is necessary
         for toggle_type, toggles in self.toggles.items():
             for toggle_name, toggle in toggles.items():
                 data.extend(toggle.get_full_reports())

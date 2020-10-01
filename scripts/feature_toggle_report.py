@@ -99,7 +99,7 @@ def main(annotations_dir, toggle_data_dir, output_file_path, env, toggle_type, s
             raise Exception('Directory at {} does not match required structure, see readme for more info'.format(toggle_data_dir))
 
 
-    total_info = {}
+    idas = {}
     for env_data_path, env_name in env_data_paths:
         # if an env is specified in requested_envs, filter out everyother env
         # if no env is specified, assume all envs are valid
@@ -108,12 +108,12 @@ def main(annotations_dir, toggle_data_dir, output_file_path, env, toggle_type, s
             continue
 
         # add data for each ida
-        add_toggle_state_to_idas(total_info, env_data_path, configuration.get("ida", defaultdict(dict)), env_name=env_name)
+        add_toggle_state_to_idas(idas, env_data_path, configuration.get("ida", defaultdict(dict)), env_name=env_name)
 
-        add_toggle_annotations_to_idas(total_info, annotations_dir, configuration.get("ida", defaultdict(dict)))
+        add_toggle_annotations_to_idas(idas, annotations_dir, configuration.get("ida", defaultdict(dict)))
 
     renderer = CsvRenderer()
-    renderer.render_csv_report(total_info, output_file_path, toggle_type_filter, ["name", "ida_name", "code_owner", "oldest_created", "newest_modified"], summarize)
+    renderer.render_csv_report(idas, output_file_path, toggle_type_filter, ["name", "ida_name", "code_owner", "oldest_created", "newest_modified"], summarize)
 
 
 if __name__ == '__main__':

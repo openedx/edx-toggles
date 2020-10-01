@@ -20,34 +20,47 @@ class CsvRenderer():
     Used to output toggles+annotations data as CSS
     """
 
-    def render_csv_report(self, ida_toggle_data, file_path="report.csv", toggle_types=None, header=None, summarize=False):
+    def render_csv_report(self, idas, file_path="report.csv", toggle_types=None, header=None, summarize=False):
         """
         takes data, processes it, and outputs it in csv form
         """
         if summarize:
-            output_data_list = self.summarize_data(ida_toggle_data)
+            toggle_info_structured_dicts = self.summarize_data(idas)
         else:
-            output_data_list = self.output_full_data(ida_toggle_data)
+            toggle_info_structured_dicts = self.output_full_data(idas)
 
-        toggles_data = self.add_info_source_to_dict_key(output_data_list)
+        toggles_info_flattened_dicts = self.add_info_source_to_dict_keys(toggle_info_structured_dicts)
 
-        data_to_render = self.filter_and_sort_toggles(toggles_data, toggle_types)
-        header = self.get_sorted_headers_from_toggles(data_to_render, header)
-        self.write_csv(file_path, data_to_render, header)
+        sorted_toggles_dicts = self.filter_and_sort_toggles(toggles_info_flattened_dicts, toggle_types)
+        header = self.get_sorted_headers_from_toggles(sorted_toggles_dicts, header)
+        self.write_csv(file_path, sorted_toggles_dicts, header)
 
-
-    def add_info_source_to_dict_key(self, toggles_data):
+    def output_full_data(self, idas):
         """
-        This function flattens the dicts in toggles_data list
+        return full data about toggles
+        Essentially, one row per toggle state(one toggle with multiple states will have multilple rows)
+        """
+        return [ida.get_full_report() for ida in idas.values()]
 
-        toggles_data is a list of dicts with two keys: state, annotations
+    def summarize_data(self, idas):
+        """
+        Returns only subset containing the essential information
+        Essentially, one row per toggle
+        """
+        return [ida.get_toggles_data_summary() for ida in idas.values()]
+
+    def add_info_source_to_dict_keys(self, toggle_info_structured_dicts):
+        """
+        This function flattens the dicts in toggle_info_structured_dicts list
+
+        toggle_info_structured_dicts is a list of dicts with two keys: state, annotations
         These keys are the location of where the info came from
         (state: toggles endpoint, asnnotations: from code annotations)
 
         This function flattens dict by adding source info to keys
         """
         temp_data = []
-        for datum in toggles_data:
+        for datum in toggle_info_structured_dicts:
             toggle_dict_info = {}
             for key in datum["state"].keys():
                 toggle_dict_info["{}_s".format(key)] = datum["state"][key]
@@ -56,16 +69,10 @@ class CsvRenderer():
             temp_data.append(toggle_dict_info)
         return temp_data
 
-    def output_full_data(self, toggles_data):
-        data_to_render = []
-        for ida_name, ida in toggles_data.items():
-            data_to_render.extend(ida.get_full_report())
-        return data_to_render
-
-    def filter_and_sort_toggles(self, toggles_data, toggle_type_filter=None):
+    def filter_and_sort_toggles(self, toggles_info_flattened_dicts, toggle_type_filter=None):
         """
         Arguments:
-            - toggles_data: list[dict] dicts should have all relevant data relating to one toggle
+            - toggles_info_flattened_dicts: list[dict] dicts should have all relevant data relating to one toggle
             - toggle_type_filter: list of type names: there are multiple toggle types, so which would you like to output
                      if set to None, everything will be outputted
         Returns:
@@ -75,11 +82,11 @@ class CsvRenderer():
         # filter toggles by toggle_types
         data_to_render = []
         if not toggle_type_filter:
-            data_to_render = toggles_data
+            data_to_render = toggles_info_flattened_dicts
         else:
             if isinstance(toggle_type_filter, str):
                 toggle_type_filter = [toggle_type_filter]
-            for toggle_dict in toggles_data:
+            for toggle_dict in toggles_info_flattened_dicts:
                 if toggle_dict["toggle_type"] in toggle_type_filter:
                     data_to_render.append(toggle_dict)
 
@@ -122,12 +129,6 @@ class CsvRenderer():
         header = sorted(list(header), key=sorting_header)
         output.extend(header)
         return output
-
-    def summarize_data(self, toggles_data):
-        """
-        Returns only subset containing the essential information
-        """
-        return [ida.get_toggles_data_summary() for ida in toggles_data.values()]
 
     def write_csv(self, file_name, data, fieldnames):
         """
