@@ -109,6 +109,11 @@ class CsvRenderer():
         def sorting_header(key):
             """
             there are multiple criterion by which we should sort header keys
+
+            Sorting algorithm:
+            order first by keys that have the word "name" in it
+            Order second by keys that orginate from state data(postfixed by "_s")
+            Order Third by alphabetically
             """
             sort_by=[]
             # setting key for keys with name to False causes them to appear first in header
