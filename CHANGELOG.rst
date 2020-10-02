@@ -11,11 +11,14 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
-[NOTE: None of these versions have actually been released to PyPI, even though
-the version number has been bumped.]
+Unreleased
+~~~~~~~~~~
+
 
 [0.3.0] - 2020-09-23
 ~~~~~~~~~~~~~~~~~~~~
+
+First release to PyPI (2020-10-02)
 
 * Implement ``SettingToggle`` and ``SettingDictToggle``.
 
