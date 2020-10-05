@@ -29,15 +29,15 @@ class IDA(object):
 
     def get_toggles_data_summary(self):
         data = []
-        for toggle_type, toggles in self.toggles.items():
-            for toggle_name, toggle in toggles.items():
+        for toggles in self.toggles.values():
+            for toggle in toggles.values():
                 data.append(toggle.get_summary_report())
         return data
 
     def get_full_report(self):
         data = []
-        for toggle_type, toggles in self.toggles.items():
-            for toggle_name, toggle in toggles.items():
+        for toggles in self.toggles.values():
+            for toggle in toggles.values():
                 data.extend(toggle.get_full_reports())
         return data
 

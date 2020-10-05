@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.INFO)
 
 class ToggleTypes():
     valid_toggle_types = ("django_settings", "waffle_flags", "waffle_switches")
-    valid_converstions = {
+    annotation_to_state_toggle_type_map = {
             "CourseWaffleFlag": "waffle_flags",
             "ExperimentWaffleFlag": "waffle_flags",
             "DjangoSetting": "django_settings",
@@ -27,7 +27,7 @@ class ToggleTypes():
         Annotations report and toggles state outputs define their types slightly differently.
         This function converts from the annotation toggle type to the state toggle type.
         """
-        toggle_type = cls.valid_converstions.get(input_type, input_type)
+        toggle_type = cls.annotation_to_state_toggle_type_map.get(input_type, input_type)
 
         if toggle_type not in cls.valid_toggle_types:
             LOGGER.warning(
