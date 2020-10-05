@@ -31,7 +31,7 @@ class ToggleTypes():
 
         if toggle_type not in cls.valid_toggle_types:
             LOGGER.warning(
-            'Name of model not recognized: {}'.format(toggle_type)
+            'Name of annotation toggle type not recognized: {}'.format(toggle_type)
             )
         return toggle_type
 
