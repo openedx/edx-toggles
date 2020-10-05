@@ -113,8 +113,8 @@ class CsvRenderer():
 
             Sorting algorithm:
             order first by keys that have the word "name" in it
-            Order second by keys that orginate from state data(postfixed by "_s")
-            Order Third by alphabetically
+            Order second by keys that originate from state data (postfixed by "_s")
+            Order Third alphabetically
             """
             sort_by=[]
             # setting key for keys with name to False causes them to appear first in header
