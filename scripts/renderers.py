@@ -62,7 +62,7 @@ class CsvRenderer():
 
         toggle_info_structured_dicts is a list of dicts with two keys: state, annotations
         These keys are the location of where the info came from
-        (state: toggles endpoint, asnnotations: from code annotations)
+        (state: toggles endpoint, annotations: from code annotations)
 
         This function flattens dict by adding source info to keys
         """
