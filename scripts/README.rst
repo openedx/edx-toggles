@@ -134,7 +134,7 @@ IMPORTANT: toggles_data_dir can have two structures:
             - discovery_waffle.json
 
 or
-    - prod_env(name of toggle_data_dir)
+    - prod_env/ (name of toggle_data_dir)
         - lms_waffle.json
         - discovery_waffle.json
 
