@@ -18,7 +18,7 @@ Decision
 
 All implementation code should be moved to an ``internal`` module. The Public API will be exposed as follows in ``edx_toggles/toggles/__init__.py``::
 
-    from .internal import ...
+    from .internal.togglemodule import ...
 
 The benefits of this setup include:
 
