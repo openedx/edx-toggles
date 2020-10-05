@@ -37,8 +37,9 @@ class CsvRenderer():
 
     def output_full_data(self, idas):
         """
-        return full data about toggles
-        Essentially, one row per toggle state(one toggle with multiple states will have multilple rows)
+        Return full data about toggles.
+
+        Essentially, one row per toggle state (one toggle with multiple states will have multiple rows)
         """
         output = []
         for ida in idas.values():
