@@ -125,7 +125,7 @@ IMPORTANT: Example of annotations_dir structure:
             - discovery_waffle.json
 
 IMPORTANT: toggles_data_dir can have two structures:
-    - toggle_data_dir
+    - toggle_data_dir/
         - prod_env/
             - lms_waffle.json
             - discovery_waffle.json
