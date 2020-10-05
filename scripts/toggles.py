@@ -25,7 +25,7 @@ class ToggleTypes():
     def get_internally_consistent_toggle_type(cls, input_type):
         """
         Annotations report and toggles state outputs define their types slightly differently.
-        This function corrects between the two
+        This function converts from the annotation toggle type to the state toggle type.
         """
         toggle_type = cls.valid_converstions.get(input_type, input_type)
 
