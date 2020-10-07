@@ -20,41 +20,16 @@ class CsvRenderer():
     Used to output toggles+annotations data as CSS
     """
 
-    def render_csv_report(self, idas, file_path="report.csv", toggle_types=None, header=None, summarize=False):
+    def render_csv_report(self, toggle_info_structured_dicts, file_path="report.csv", toggle_types=None, header=None, summarize=False):
         """
         takes data, processes it, and outputs it in csv form
         """
-        if summarize:
-            toggle_info_structured_dicts = self.summarize_data(idas)
-        else:
-            toggle_info_structured_dicts = self.output_full_data(idas)
 
         toggles_info_flattened_dicts = self.add_info_source_to_dict_keys(toggle_info_structured_dicts)
 
         sorted_toggles_dicts = self.filter_and_sort_toggles(toggles_info_flattened_dicts, toggle_types)
         header = self.get_sorted_headers_from_toggles(sorted_toggles_dicts, header)
         self.write_csv(file_path, sorted_toggles_dicts, header)
-
-    def output_full_data(self, idas):
-        """
-        Return full data about toggles.
-
-        Essentially, one row per toggle state (one toggle with multiple states will have multiple rows)
-        """
-        output = []
-        for ida in idas.values():
-            output.extend(ida.get_full_report())
-        return output
-
-    def summarize_data(self, idas):
-        """
-        Returns only subset containing the essential information
-        Essentially, one row per toggle
-        """
-        output = []
-        for ida in idas.values():
-            output.extend(ida.get_toggles_data_summary())
-        return output
 
     def add_info_source_to_dict_keys(self, toggle_info_structured_dicts):
         """

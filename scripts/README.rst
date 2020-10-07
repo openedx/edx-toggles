@@ -100,7 +100,7 @@ To get help output for script:
 
     python -m scripts.feature_toggle_report --help
 
-To generate report with everything:
+To generate default report:
 
 .. code:: bash
 
@@ -111,6 +111,12 @@ To generate report with data for specific envs and toggle types:
 .. code:: bash
 
     python -m scripts.feature_toggle_report annotation_dir_path toggle_data_dir_path output_path --env devstack --env prod --toggle-type WaffleFlag --toggle-type WaffleSwitch
+
+By default, the generated report contains only essential information. To get a csv containing all information in state data and annotation data, add --verbose_report flag:
+
+.. code:: bash
+
+    python -m scripts.feature_toggle_report annotation_dir_path toggle_data_dir_path output_path --verbose_report
 
 IMPORTANT: Example of annotations_dir structure:
     - annotations_dir/

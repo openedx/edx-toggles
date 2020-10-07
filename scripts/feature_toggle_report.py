@@ -41,15 +41,15 @@ logging.basicConfig(level=logging.INFO)
     help='specify toggle types if you only want data on certain toggle type',
     )
 @click.option(
-    '--summarize', is_flag=True,
-    help="if you want a simplified version of report",
+    '--verbose_report', is_flag=True,
+    help="To get more verbosed version of report. This will result in one row per state data(from each new env) for a toggle",
 )
 @click.option(
     '--configuration',
     default=None,
     help='alternative method to do configuration, the command-line options will have priority',
     )
-def main(annotations_dir, toggle_data_dir, output_file_path, env, toggle_type, summarize, configuration):
+def main(annotations_dir, toggle_data_dir, output_file_path, env, toggle_type, verbose_report, configuration):
     """
     Script to process annotation and state data for toggles and output it a report.
 
@@ -112,8 +112,17 @@ def main(annotations_dir, toggle_data_dir, output_file_path, env, toggle_type, s
 
         add_toggle_annotations_to_idas(idas, annotations_dir, configuration.get("ida", defaultdict(dict)))
 
+    toggle_data = []
+    if verbose_report:
+        for ida in idas.values():
+            toggle_data.extend(ida.get_full_report())
+    else:
+        for ida in idas.values():
+            toggle_data.extend(ida.get_toggles_data_summary())
+
+
     renderer = CsvRenderer()
-    renderer.render_csv_report(idas, output_file_path, toggle_type_filter, ["name", "ida_name", "code_owner", "oldest_created", "newest_modified"], summarize)
+    renderer.render_csv_report(toggle_data, output_file_path, toggle_type_filter, ["name", "ida_name", "code_owner", "oldest_created", "newest_modified"])
 
 
 if __name__ == '__main__':
