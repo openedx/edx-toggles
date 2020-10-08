@@ -42,7 +42,7 @@ logging.basicConfig(level=logging.INFO)
     )
 @click.option(
     '--verbose_report', is_flag=True,
-    help="To get more verbosed version of report. This will result in one row per state data(from each new env) for a toggle",
+    help="To get a more verbose version of the report. This will result in one row per state data (from each new env) for a toggle",
 )
 @click.option(
     '--configuration',
