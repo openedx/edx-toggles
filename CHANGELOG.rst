@@ -14,6 +14,10 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[0.3.1] - 2020-10-12
+~~~~~~~~~~~~~~~~~~~~
+
+* Fix ``SettingDictToggle`` constructor.
 
 [0.3.0] - 2020-09-23
 ~~~~~~~~~~~~~~~~~~~~
