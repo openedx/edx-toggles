@@ -30,8 +30,8 @@ class SettingDictToggle(BaseToggle):
 
     _class_instances = WeakSet()
 
-    def __init__(self, name, key, default=False):
-        super().__init__(name, default=default)
+    def __init__(self, name, key, default=False, module_name=""):
+        super().__init__(name, default=default, module_name=module_name)
         self.key = key
 
     def is_enabled(self):

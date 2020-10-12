@@ -12,6 +12,7 @@ class SettingToggleTests(TestCase):
     """
     SettingToggle tests
     """
+
     def test_toggle_for_absent_setting(self):
         toggle1 = toggles.SettingToggle("NAME1", True)
         toggle2 = toggles.SettingToggle("NAME1", False)
@@ -36,9 +37,14 @@ class SettingDictToggleTests(TestCase):
     """
     SettingDictToggle tests
     """
+
     def test_toggle_for_absent_setting(self):
-        toggle1 = toggles.SettingDictToggle("NAME1", "key1", True)
-        toggle2 = toggles.SettingDictToggle("NAME2", "key2", False)
+        toggle1 = toggles.SettingDictToggle(
+            "NAME1", "key1", True, module_name="module1"
+        )
+        toggle2 = toggles.SettingDictToggle(
+            "NAME2", "key2", False, module_name="module1"
+        )
         self.assertTrue(toggle1.is_enabled())
         self.assertFalse(toggle2.is_enabled())
 
@@ -59,6 +65,7 @@ class ToggleInstancesTests(TestCase):
     """
     Class instance-tracking tests
     """
+
     def test_created_instances(self):
         toggle1 = toggles.SettingToggle("NAME1", default=False, module_name="module1")
         toggle2 = toggles.SettingToggle("NAME2", default=False, module_name="module2")
