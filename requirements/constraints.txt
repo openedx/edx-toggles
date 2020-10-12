@@ -12,7 +12,7 @@
 Django<3
 
 # zipp > 1.2.0 does not work with Python 3.5
-zipp==1.2.0
+zipp<=1.2.0
 
 # stevedore > 1.32.0 does not work with Python 3.5
 stevedore==1.32.0
