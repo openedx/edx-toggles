@@ -17,8 +17,9 @@ codecov==2.1.10           # via -r requirements/travis.txt
 coverage==5.3             # via -r requirements/quality.txt, -r requirements/travis.txt, codecov, pytest-cov
 diff-cover==4.0.1         # via -r requirements/dev.in
 distlib==0.3.1            # via -r requirements/travis.txt, virtualenv
+django-crum==0.7.7        # via -r requirements/quality.txt
 django-waffle==2.0.0      # via -r requirements/quality.txt
-django==2.2.16            # via -c requirements/constraints.txt, -r requirements/quality.txt, code-annotations, edx-i18n-tools
+django==2.2.16            # via -c requirements/constraints.txt, -r requirements/quality.txt, code-annotations, django-crum, edx-i18n-tools
 edx-i18n-tools==0.5.3     # via -r requirements/dev.in
 edx-lint==1.5.2           # via -r requirements/quality.txt
 filelock==3.0.12          # via -r requirements/travis.txt, tox, virtualenv
