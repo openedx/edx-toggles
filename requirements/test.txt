@@ -11,6 +11,7 @@ chardet==3.0.4            # via -r requirements/scripts.txt, requests
 click==7.1.2              # via -r requirements/base.txt, -r requirements/scripts.txt, code-annotations
 code-annotations==0.9.0   # via -r requirements/base.txt, -r requirements/scripts.txt, -r requirements/test.in
 coverage==5.3             # via pytest-cov
+django-crum==0.7.7        # via -r requirements/base.txt, -r requirements/scripts.txt
 django-waffle==2.0.0      # via -r requirements/base.txt, -r requirements/scripts.txt
 idna==2.10                # via -r requirements/scripts.txt, requests
 importlib-metadata==2.0.0  # via pluggy, pytest

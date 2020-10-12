@@ -14,8 +14,9 @@ chardet==3.0.4            # via -r requirements/test.txt, doc8, requests
 click==7.1.2              # via -r requirements/test.txt, code-annotations
 code-annotations==0.9.0   # via -r requirements/test.txt
 coverage==5.3             # via -r requirements/test.txt, pytest-cov
+django-crum==0.7.7        # via -r requirements/test.txt
 django-waffle==2.0.0      # via -r requirements/test.txt
-django==2.2.16            # via -c requirements/constraints.txt, -r requirements/test.txt, code-annotations
+django==2.2.16            # via -c requirements/constraints.txt, -r requirements/test.txt, code-annotations, django-crum
 doc8==0.8.1               # via -r requirements/doc.in
 docutils==0.16            # via doc8, readme-renderer, restructuredtext-lint, sphinx
 edx-sphinx-theme==1.5.0   # via -r requirements/doc.in

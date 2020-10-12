@@ -9,8 +9,9 @@ certifi==2020.6.20        # via requests
 chardet==3.0.4            # via requests
 click==7.1.2              # via -r requirements/base.txt, code-annotations
 code-annotations==0.9.0   # via -r requirements/base.txt, -r requirements/scripts.in
+django-crum==0.7.7        # via -r requirements/base.txt
 django-waffle==2.0.0      # via -r requirements/base.txt
-django==2.2.16            # via -c requirements/constraints.txt, -r requirements/base.txt, code-annotations
+django==2.2.16            # via -c requirements/constraints.txt, -r requirements/base.txt, code-annotations, django-crum
 idna==2.10                # via requests
 jinja2==2.11.2            # via -r requirements/base.txt, code-annotations
 markupsafe==1.1.1         # via -r requirements/base.txt, jinja2
