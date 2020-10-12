@@ -1,6 +1,8 @@
 """
 Setting-derived feature toggles
 """
+from weakref import WeakSet
+
 from django.conf import settings
 
 from .base import BaseToggle
@@ -13,6 +15,8 @@ class SettingToggle(BaseToggle):
         MY_FEATURE = SettingToggle("SETTING_NAME", default=False, module_name=__name__)
     """
 
+    _class_instances = WeakSet()
+
     def is_enabled(self):
         return bool(getattr(settings, self.name, self.default))
 
@@ -23,6 +27,8 @@ class SettingDictToggle(BaseToggle):
 
         MY_FEATURE = SettingDictToggle("SETTING_NAME", "key" default=False, module_name=__name__)
     """
+
+    _class_instances = WeakSet()
 
     def __init__(self, name, key, default=False):
         super().__init__(name, default=default)
