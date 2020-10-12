@@ -14,6 +14,7 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+* Extract waffle classes from edx-platform and move them here.
 * Fix pinned requirements and incorrect root url that overrode edx-platform's.
 
 [0.3.0] - 2020-09-23
