@@ -98,7 +98,6 @@ def main(annotations_dir, toggle_data_dir, output_file_path, env, toggle_type, v
         else:
             raise Exception('Directory at {} does not match required structure, see readme for more info'.format(toggle_data_dir))
 
-
     idas = {}
     for env_data_path, env_name in env_data_paths:
         # if an env is specified in requested_envs, filter out everyother env
@@ -122,7 +121,9 @@ def main(annotations_dir, toggle_data_dir, output_file_path, env, toggle_type, v
 
 
     renderer = CsvRenderer()
-    renderer.render_csv_report(toggle_data, output_file_path, toggle_type_filter, ["name", "ida_name", "code_owner", "oldest_created", "newest_modified"])
+    # any keys in this header will be prioritized first by header sorting algorithm in renderer
+    partial_header = ["name", "ida_name", "code_owner", "oldest_created", "newest_modified"]
+    renderer.render_csv_report(toggle_data, output_file_path, toggle_type_filter, partial_header)
 
 
 if __name__ == '__main__':
