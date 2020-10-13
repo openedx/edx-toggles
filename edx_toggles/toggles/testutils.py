@@ -26,8 +26,6 @@ class override_waffle_flag(override_flag):
             ...
     """
 
-    _cached_value = None
-
     def __init__(self, flag, active):
         """
 
@@ -37,9 +35,8 @@ class override_waffle_flag(override_flag):
         """
         self.flag = flag
         waffle_namespace = flag.waffle_namespace
-        name = waffle_namespace._namespaced_name(
-            flag.flag_name
-        )
+        name = waffle_namespace._namespaced_name(flag.flag_name)
+        self._cached_value = None
         super(override_waffle_flag, self).__init__(name, active)
 
     def __enter__(self):

@@ -45,6 +45,7 @@ class OverrideWaffleFlagTests(TestCase):
         """
         Temporarily override flag.
         """
+
         @override_waffle_flag(self.waffle_flag, True)
         def test_func():
             """
@@ -85,3 +86,20 @@ class OverrideWaffleFlagTests(TestCase):
             self.assertTrue(self.waffle_flag.is_enabled())
 
         self.assertFalse(self.waffle_flag.is_enabled())
+
+    def test_interlocked_overrides(self):
+        waffle_flag1 = self.waffle_flag
+        waffle_flag2 = WaffleFlag(self.namespace, waffle_flag1.flag_name + "2")
+        # pylint: disable=protected-access
+        self.namespace._cached_flags[waffle_flag2.namespaced_flag_name] = True
+
+        self.assertFalse(waffle_flag1.is_enabled())
+        self.assertTrue(waffle_flag2.is_enabled())
+
+        with override_waffle_flag(waffle_flag1, True):
+            with override_waffle_flag(waffle_flag2, False):
+                self.assertTrue(waffle_flag1.is_enabled())
+                self.assertFalse(waffle_flag2.is_enabled())
+
+        self.assertFalse(waffle_flag1.is_enabled())
+        self.assertTrue(waffle_flag2.is_enabled())
