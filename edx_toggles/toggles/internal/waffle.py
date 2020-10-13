@@ -1,9 +1,48 @@
 """
 Waffle classes in the context of edx-platform and other IDAs.
+
+Includes namespacing and caching for waffle flags.
+
+Usage:
+
+For Waffle Flags, first set up the namespace, and then create flags using the
+namespace.  For example::
+
+   WAFFLE_FLAG_NAMESPACE = WaffleFlagNamespace(name='my_namespace')
+   SOME_FLAG = WaffleFlag(WAFFLE_FLAG_NAMESPACE, 'some_feature', __name__)
+
+You can check theis flag in code using the following::
+
+    SOME_FLAG.is_enabled()
+
+To test these WaffleFlags, see testutils.py.
+
+In the above examples, you will use Django Admin "waffle" section to configure
+for a flag named: my_namespace.some_course_feature
+
+You could also use the Django Admin "waffle_utils" section to configure a course
+override for this same flag (e.g. my_namespace.some_course_feature).
+
+For Waffle Switches, first set up the namespace, and then create the flag name.
+For example::
+
+    WAFFLE_SWITCHES = WaffleSwitchNamespace(name=WAFFLE_NAMESPACE)
+
+    ESTIMATE_FIRST_ATTEMPTED = 'estimate_first_attempted'
+
+You can then use the switch as follows::
+
+    WAFFLE_SWITCHES.is_enabled(waffle.ESTIMATE_FIRST_ATTEMPTED)
+
+For long-lived flags, you may want to change the default for devstack, sandboxes,
+or new Open edX releases. For help with this, see:
+openedx/core/djangoapps/waffle_utils/docs/decisions/0001-refactor-waffle-flag-default.rst
+
+Also see ``WAFFLE_FLAG_CUSTOM_ATTRIBUTES`` and docstring for _set_waffle_flag_attribute
+for temporarily instrumenting/monitoring waffle flag usage.
 """
 from functools import lru_cache
 import logging
-from contextlib import contextmanager
 from weakref import WeakSet
 
 import crum
@@ -35,58 +74,6 @@ class WaffleSwitchNamespace(BaseNamespace):
             value = switch_is_active(namespaced_switch_name)
             self._cached_switches[namespaced_switch_name] = value
         return value
-
-    @contextmanager
-    def override(self, switch_name, active=True):
-        """
-        Overrides the active value for the given switch for the duration of this
-        contextmanager.
-        Note: The value is overridden in the request cache AND in the model.
-        """
-        previous_active = self.is_enabled(switch_name)
-        try:
-            self.override_for_request(switch_name, active)
-            with self.override_in_model(switch_name, active):
-                yield
-        finally:
-            self.override_for_request(switch_name, previous_active)
-
-    def override_for_request(self, switch_name, active=True):
-        """
-        Overrides the active value for the given switch for the remainder of
-        this request (as this is not a context manager).
-        Note: The value is overridden in the request cache, not in the model.
-        """
-        namespaced_switch_name = self._namespaced_name(switch_name)
-        self._cached_switches[namespaced_switch_name] = active
-        log.info(
-            "%sSwitch '%s' set to %s for request.",
-            self.log_prefix,
-            namespaced_switch_name,
-            active,
-        )
-
-    @contextmanager
-    def override_in_model(self, switch_name, active=True):
-        """
-        Overrides the active value for the given switch for the duration of this
-        contextmanager.
-        Note: The value is overridden in the model, not the request cache.
-        Note: This should probably be moved to a test class.
-        """
-        # Import is placed here to avoid model import at project startup.
-        # pylint: disable=import-outside-toplevel
-        from waffle.testutils import override_switch as waffle_override_switch
-
-        namespaced_switch_name = self._namespaced_name(switch_name)
-        with waffle_override_switch(namespaced_switch_name, active):
-            log.info(
-                "%sSwitch '%s' set to %s in model.",
-                self.log_prefix,
-                namespaced_switch_name,
-                active,
-            )
-            yield
 
     @property
     def _cached_switches(self):
@@ -132,11 +119,6 @@ class WaffleSwitch(BaseToggle):
 
     def is_enabled(self):
         return self.waffle_namespace.is_enabled(self.switch_name)
-
-    @contextmanager
-    def override(self, active=True):
-        with self.waffle_namespace.override(self.switch_name, active):
-            yield
 
 
 class WaffleFlagNamespace(BaseNamespace):
@@ -218,7 +200,8 @@ class WaffleFlagNamespace(BaseNamespace):
         set_custom_attribute("warn_flag_no_request_return_value", value)
         return value
 
-    def _monitor_value(self, namespaced_flag_name, value):
+    @staticmethod
+    def _monitor_value(namespaced_flag_name, value):
         """
         Send waffle flag value to monitoring. We keep this method such that it can be called by child classes (such as
         the CourseWaffleFlag), but it should not be considered a stable API.

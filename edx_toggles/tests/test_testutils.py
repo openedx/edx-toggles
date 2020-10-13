@@ -7,6 +7,7 @@ import crum
 from django.test import TestCase
 from django.test.client import RequestFactory
 from edx_django_utils.cache import RequestCache
+
 from edx_toggles.toggles import WaffleFlag, WaffleFlagNamespace
 from edx_toggles.toggles.testutils import override_waffle_flag
 
