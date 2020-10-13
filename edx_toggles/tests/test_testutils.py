@@ -6,22 +6,9 @@ Tests for waffle utils test utilities.
 import crum
 from django.test import TestCase
 from django.test.client import RequestFactory
-
+from edx_django_utils.cache import RequestCache
 from edx_toggles.toggles import WaffleFlag, WaffleFlagNamespace
 from edx_toggles.toggles.testutils import override_waffle_flag
-
-
-class WaffleFlagNamespaceWithCache(WaffleFlagNamespace):
-    """
-    Waffle flag namespace that implements basic instance-level caching.
-    """
-
-    @property
-    def _cached_flags(self):
-        if not hasattr(self, "_cached_flags_dict"):
-            # pylint: disable=attribute-defined-outside-init
-            self._cached_flags_dict = {}
-        return self._cached_flags_dict
 
 
 class OverrideWaffleFlagTests(TestCase):
@@ -34,12 +21,15 @@ class OverrideWaffleFlagTests(TestCase):
         namespace_name = "test_namespace"
         flag_name = "test_flag"
         self.namespaced_flag_name = namespace_name + "." + flag_name
-        self.namespace = WaffleFlagNamespaceWithCache(namespace_name)
+        self.namespace = WaffleFlagNamespace(namespace_name)
         self.waffle_flag = WaffleFlag(self.namespace, flag_name)
 
-        self.addCleanup(crum.set_current_request, None)
         request = RequestFactory().request()
         crum.set_current_request(request)
+        RequestCache.clear_all_namespaces()
+
+        self.addCleanup(crum.set_current_request, None)
+        self.addCleanup(RequestCache.clear_all_namespaces)
 
     def temporarily_enable_flag(self):
         """
