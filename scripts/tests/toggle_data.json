@@ -33,12 +33,28 @@
             "calculated_status": "on|off|both"
         },
         {
-            "name": "some.coursewaffleflag",
-            "course_overrides": {
-                "some/courseid/1": "on",
-                "some/courseid/2": "off",
-                "some/courseid/3": "on"
+          "name": "some.coursewaffleflag",
+          "course_overrides": [
+            {
+              "course_id": "course_1",
+              "force": "on",
+              "modified": "2020-07-28 17:17:20.999596+00:00",
+              "created": "2020-07-08 06:31:40.121082+00:00"
+            },
+            {
+              "course_id": "course_2",
+              "force": "on",
+              "modified": "2020-06-28 17:17:20.999596+00:00",
+              "created": "2020-04-08 06:31:40.121082+00:00"
+            },
+            {
+              "course_id": "course_3",
+              "force": "off",
+              "modified": "2020-06-28 17:17:20.999596+00:00",
+              "created": "2020-04-08 06:31:40.121082+00:00"
             }
+          ],
+          "computed_status": "both"
         }
     ]
 }

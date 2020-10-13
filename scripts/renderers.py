@@ -7,7 +7,7 @@ import os
 import re
 import csv
 import logging
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict, Hashable
 
 import click
 import jinja2
@@ -20,31 +20,41 @@ class CsvRenderer():
     Used to output toggles+annotations data as CSS
     """
 
-    def transform_toggle_data_for_csv(self, envs_data):
+    def render_csv_report(self, toggle_info_structured_dicts, file_path="report.csv", toggle_types=None, header=None, summarize=False):
         """
-        Retrieve list of individual toggle datums from envs_data
-
-        envs_data is a dict with a complex structure of environments, idas and toggles by toggle type.
-        Return a flattened list for each toggle in a specific environment in preparation for csv output.
+        takes data, processes it, and outputs it in csv form
         """
-        toggles_data = []
-        for env, idas in envs_data.items():
-            for ida_name, ida in idas.items():
-                for toggle_type, toggles in ida.toggles.items():
-                    for toggle_name, toggle in toggles.items():
-                        data_dict = toggle.full_data()
-                        data_dict["toggle_type"] = toggle_type
-                        # In case you want the report to call the ida by a different ida_name
-                        # example: lms should be called edxapp in report
-                        data_dict["ida_name"] = ida.configuration.get("rename", ida_name)
-                        data_dict["env_name"] = env
-                        toggles_data.append(data_dict)
-        return toggles_data
 
-    def filter_and_sort_toggles(self, toggles_data, toggle_type_filter=None):
+        toggles_info_flattened_dicts = self.add_info_source_to_dict_keys(toggle_info_structured_dicts)
+
+        sorted_toggles_dicts = self.filter_and_sort_toggles(toggles_info_flattened_dicts, toggle_types)
+        header = self.get_sorted_headers_from_toggles(sorted_toggles_dicts, header)
+        self.write_csv(file_path, sorted_toggles_dicts, header)
+
+    def add_info_source_to_dict_keys(self, toggle_info_structured_dicts):
+        """
+        This function flattens the dicts in toggle_info_structured_dicts list
+
+        toggle_info_structured_dicts is a list of dicts with two keys: state, annotations
+        These keys are the location of where the info came from
+        (state: toggles endpoint, annotations: from code annotations)
+
+        This function flattens dict by adding source info to keys
+        """
+        temp_data = []
+        for datum in toggle_info_structured_dicts:
+            toggle_dict_info = {}
+            for key in datum["state"].keys():
+                toggle_dict_info["{}_s".format(key)] = datum["state"][key]
+            for key in datum["annotations"].keys():
+                toggle_dict_info["{}_a".format(key)] = datum["annotations"][key]
+            temp_data.append(toggle_dict_info)
+        return temp_data
+
+    def filter_and_sort_toggles(self, toggles_info_flattened_dicts, toggle_type_filter=None):
         """
         Arguments:
-            - toggles_data: list[dict] dicts should have all relevant data relating to one toggle
+            - toggles_info_flattened_dicts: list[dict] dicts should have all relevant data relating to one toggle
             - toggle_type_filter: list of type names: there are multiple toggle types, so which would you like to output
                      if set to None, everything will be outputted
         Returns:
@@ -54,11 +64,11 @@ class CsvRenderer():
         # filter toggles by toggle_types
         data_to_render = []
         if not toggle_type_filter:
-            data_to_render = toggles_data
+            data_to_render = toggles_info_flattened_dicts
         else:
             if isinstance(toggle_type_filter, str):
                 toggle_type_filter = [toggle_type_filter]
-            for toggle_dict in toggles_data:
+            for toggle_dict in toggles_info_flattened_dicts:
                 if toggle_dict["toggle_type"] in toggle_type_filter:
                     data_to_render.append(toggle_dict)
 
@@ -75,13 +85,21 @@ class CsvRenderer():
         def sorting_header(key):
             """
             there are multiple criterion by which we should sort header keys
+
+            Sorting algorithm:
+            order first by keys that have the word "name" in it
+            Order second by keys that originate from state data (postfixed by "_s")
+            Order Third alphabetically
             """
             sort_by=[]
             # setting key for keys with name to False causes them to appear first in header
             sort_by.append(False if "name" in key else True)
             # show states first
-            pattern = re.compile(".*_s$")
-            sort_by.append(False if pattern.search(key) else True)
+            state_pattern = re.compile(".*_s$")
+            annotation_pattern = re.compile(".*_a$")
+            sort_by.append(bool(annotation_pattern.search(key) or state_pattern.search(key)))
+            sort_by.append(not bool(state_pattern.search(key)))
+            sort_by.append(bool(annotation_pattern.search(key)))
             # finally sort by alphabetical order
             sort_by.append(key)
             return tuple(sort_by)
@@ -98,15 +116,6 @@ class CsvRenderer():
         header = sorted(list(header), key=sorting_header)
         output.extend(header)
         return output
-
-    def render_csv_report(self, envs_ida_toggle_data, file_path="report.csv", toggle_types=None, header=None):
-        """
-        takes data, processes it, and outputs it in csv form
-        """
-        toggles_data = self.transform_toggle_data_for_csv(envs_ida_toggle_data)
-        data_to_render = self.filter_and_sort_toggles(toggles_data, toggle_types)
-        header = self.get_sorted_headers_from_toggles(data_to_render, header)
-        self.write_csv(file_path, data_to_render, header)
 
     def write_csv(self, file_name, data, fieldnames):
         """

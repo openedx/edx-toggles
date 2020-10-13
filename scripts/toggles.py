@@ -11,6 +11,31 @@ LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 
+class ToggleTypes():
+    valid_toggle_types = ("django_settings", "waffle_flags", "waffle_switches")
+    annotation_to_state_toggle_type_map = {
+            "CourseWaffleFlag": "waffle_flags",
+            "ExperimentWaffleFlag": "waffle_flags",
+            "DjangoSetting": "django_settings",
+            "WaffleFlag": "waffle_flags",
+            "WaffleSwitch": "waffle_switches",
+        }
+
+    @classmethod
+    def get_internally_consistent_toggle_type(cls, input_type):
+        """
+        Annotations report and toggles state outputs define their types slightly differently.
+        This function converts from the annotation toggle type to the state toggle type.
+        """
+        toggle_type = cls.annotation_to_state_toggle_type_map.get(input_type, input_type)
+
+        if toggle_type not in cls.valid_toggle_types:
+            LOGGER.warning(
+            'Name of annotation toggle type not recognized: {}'.format(toggle_type)
+            )
+        return toggle_type
+
+
 class Toggle:
     """
     Represents a feature toggle in an IDA, including the current state of the
@@ -21,72 +46,70 @@ class Toggle:
     only one of the above components could be identified.
     """
 
-    def __init__(self, name, state=None, annotations=None):
+    def __init__(self, name, state=None, annotations=None, ida_name=None):
         self.name = name
-        self.state = state
+        self.states = [state] if state is not None else []
         self.annotations = annotations
+        self.ida_name = ida_name 
 
     def __str__(self):
         return self.name
 
-    @property
-    def state_msg(self):
-        """
-        The human readable representation of whether or not this toggle is
-        turned on.
-        """
-        if not self.state:
-            return "Not found in database"
-        elif self.state.state:
-            return "On"
-        else:
-            return "Off"
+    def add_state(self, state):
+        self.states.append(state)
 
-    def data_for_template(self, component, data_name):
-        """
-        A helper function for easily accessing various data from both
-        the ToggleState and ToggleAnnotations for this Toggle for
-        use in templating the confluence report.
-        """
-        if component ==  "state":
-            if self.state:
-                self.state._prepare_state_data()
-                return self.state._cleaned_state_data[data_name]
-            else:
-                return '-'
-        elif component == "annotation":
-            if self.annotations:
-                self.annotations._prepare_annotation_data()
-                return self.annotations._cleaned_annotation_data[data_name]
-            else:
-                return '-'
+    def get_summary_report(self, summarize=True):
+        report = {}
+        if summarize:
+            report["state"] = self.get_state_summary()
+        report["annotations"] = self.get_annotations()
+        return report
 
-    def full_data(self):
-        """
-        Returns a dict with all info on toggle state and annotations
-        """
-        full_data = {}
-        full_data["name"] = self.name
-        if self.state:
-            self.state._prepare_state_data()
-            for key, value in self.state._cleaned_state_data.items():
-                if key == "name":
-                    continue
-                # data that is received from state data dump is postfixed with a "_s"
-                full_data["{}_s".format(key)] = value
-        else:
-            LOGGER.debug("{} Toggle's state is None".format(self.name))
+    def get_full_reports(self):
+        data = []
+        for state in self.states:
+            report = {}
+            state._prepare_state_data()
+            report['state'] = state._cleaned_state_data
+            report["annotations"] = self.get_annotations()
+            data.append(report)
+        return data
 
+
+    def get_annotations(self):
+        output = {}
         if self.annotations:
             self.annotations._prepare_annotation_data()
-            for key, value in self.annotations._cleaned_annotation_data.items():
-                if key == "name":
-                    continue
-                # data that is received from annotations is postfixed with a "_a"
-                full_data["{}_a".format(key)] = value
+            output.update(self.annotations._cleaned_annotation_data)
         else:
             LOGGER.debug("{} Toggle's annotations is None".format(self.name))
-        return full_data
+        return output
+
+    def get_state_summary(self):
+        data = []
+        for state in self.states:
+            state._prepare_state_data()
+            data.append(state._cleaned_state_data)
+
+        summary = {}
+        summary["name"] = self.name
+        summary["ida_name"] = self.ida_name
+        summary["oldest_created"] = min([datum["created"] for datum in data if "created" in datum], default="")
+        summary["newest_modified"] = max([datum["modified"] for datum in data if "modified" in datum], default="")
+        summary["note"] = ", ".join([datum["note"] for datum in data if "note" in datum])
+
+        # add info that is specific to each env
+        envs_states=[]
+        for datum in data:
+            env_name = datum["env_name"]
+            summary["computed_status_{}".format(env_name)] = datum.get("computed_status", datum.get("is_active", None))
+            envs_states.append(summary["computed_status_{}".format(env_name)])
+            if "code_owner" in datum:
+                summary["code_owner"] = datum["code_owner"]
+        if len(data) > 1:
+            summary["all_envs_match"] = True if len(envs_states) == len(data) and len(set(envs_states)) == 1 and envs_states[0] is not None else False
+
+        return summary
 
 
 class ToggleAnnotation(object):
@@ -124,10 +147,11 @@ class ToggleState(object):
     as pulled from the IDA's database.
     """
 
-    def __init__(self, toggle_type, data):
+    def __init__(self, toggle_type, data, env_name):
         self.toggle_type = toggle_type
         self._raw_state_data = collections.defaultdict(str, data)
         self._cleaned_state_data = collections.defaultdict(str)
+        self.env_name = env_name
 
     def update_data(self, data):
         """
@@ -167,57 +191,16 @@ class ToggleState(object):
         else:
             self._raw_state_data[key] = value
 
-    @property
-    def state(self):
-        """
-        Return the overall state of the toggle. In other words, is it on or off
-        """
-
-        def bool_for_null_numbers(n):
-            if n == 'null':
-                return False
-            elif isinstance(n, int):
-                return int(n) > 0
-            else:
-                return False
-
-        def bool_for_null_lists(l):
-            if l:
-                return any(
-                    map(lambda x: x not in ['null', 'Null', 'NULL', 'None'], l)
-                )
-            else:
-                return False
-
-        if self.toggle_type == 'WaffleSwitch':
-            return self._raw_state_data['active']
-        elif self.toggle_type == 'WaffleFlag':
-            # the WaffleFlag option `everyone` overrides all other options.
-            # However, it must be explicitly set to Yes(True) or No(False)
-            # in the GUI. Otherwise, it is set to Unknown(None) and WaffleFlag
-            # defers to the other options to determine the state of the flag.
-            if self._raw_state_data['everyone']:
-                return True
-            elif self._raw_state_data['everyone'] is False:
-                return False
-            else:
-                return (
-                    bool_for_null_numbers(self._raw_state_data['percent']) or
-                    self._raw_state_data['testing'] or
-                    self._raw_state_data['superusers'] or
-                    self._raw_state_data['staff'] or
-                    self._raw_state_data['authenticated'] or
-                    bool(self._raw_state_data['languages']) or
-                    bool_for_null_lists(self._raw_state_data['users']) or
-                    bool_for_null_lists(self._raw_state_data['groups'])
-                )
-
     def _prepare_state_data(self):
         def _format_date(date_string):
-            date_time_obj = datetime.datetime.strptime(date_string.replace("+00:00",""), '%Y-%m-%d %H:%M:%S.%f')
-            
+            pattern = re.compile("(\.[0-9]*)?\+[0-9]*\:[0-9]*$")
+            pattern_match = pattern.search(date_string)
+            if pattern_match:
+                date_string = date_string.replace(pattern_match.group(0), "")
+            date_time_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d %H:%M:%S')
+
             date = date_time_obj.date()
-            time = date_time_obj.date()
+            time = date_time_obj.time()
 
             return "{} {}".format(date, time)
         def null_or_number(n): return n if isinstance(n, int) else 0
@@ -245,9 +228,10 @@ class ToggleState(object):
                     lambda x: x not in ['null', 'Null', 'NULL', 'None'], v
                 )))
             elif k == "course_overrides":
-                courses_forced_on = [course for course, value in v.items() if value == "on"]
-                courses_forced_off = [course for course, value in v.items() if value == "off"]
+                courses_forced_on = [course for course in v if course["force"] == "on"]
+                courses_forced_off = [course for course in v if course["force"] == "off"]
                 self._cleaned_state_data["num_courses_forced_on"] = len(courses_forced_on)
                 self._cleaned_state_data["num_courses_forced_off"] = len(courses_forced_off)
             else:
                 self._cleaned_state_data[k] = v
+        self._cleaned_state_data["env_name"] = self.env_name

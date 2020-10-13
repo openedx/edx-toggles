@@ -12,7 +12,7 @@ import re
 import yaml
 from enum import Enum
 
-from scripts.toggles import Toggle, ToggleAnnotation, ToggleState
+from scripts.toggles import Toggle, ToggleAnnotation, ToggleState, ToggleTypes
 
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -27,7 +27,21 @@ class IDA(object):
         self.annotation_report_path = None
         self.configuration = configuration if configuration else {}
 
-    def add_toggle_data(self, state_data_path):
+    def get_toggles_data_summary(self):
+        data = []
+        for toggles in self.toggles.values():
+            for toggle in toggles.values():
+                data.append(toggle.get_summary_report())
+        return data
+
+    def get_full_report(self):
+        data = []
+        for toggles in self.toggles.values():
+            for toggle in toggles.values():
+                data.extend(toggle.get_full_reports())
+        return data
+
+    def add_toggle_data(self, state_data_path, env_name):
         """
         Given the path to a file containing the SQL dump for a
         feature toggle type in an IDA, parse out the information relevant
@@ -41,9 +55,9 @@ class IDA(object):
                 'Loading json file at: {} failed, check toggle data in file is formatted correctly'.format(state_data_path)
                 )
                 raise
-        self._add_toggle_data(state_data)
+        self._add_toggle_data(state_data, env_name)
 
-    def _add_toggle_data(self, state_data):
+    def _add_toggle_data(self, state_data, env_name):
         """
         Add toggles state data to toggles
         if toggle already exists, replace its state with this content.
@@ -52,9 +66,11 @@ class IDA(object):
             state_data: dict with structure: {toggle_types_1:[toggle_dicts], toggle_types_2:[toggles_dicts]}
         """
         for toggle_type, toggles_data in state_data.items():
+            toggle_type = ToggleTypes.get_internally_consistent_toggle_type(toggle_type)
+
             for toggle_data in toggles_data:
                 toggle_name = toggle_data.get('name')
-                toggle = self._get_or_create_toggle_and_state(toggle_type, toggle_name, toggle_data)
+                toggle = self._get_or_create_toggle_and_state(toggle_type, toggle_name, toggle_data, env_name)
 
         LOGGER.info(
             'Finished collecting toggle state for {}'.format(self.name)
@@ -65,22 +81,25 @@ class IDA(object):
                     toggle_type, len(self.toggles[toggle_type])
                 )
             )
-    def _get_or_create_toggle_and_state(self, toggle_type, toggle_name, toggle_state_data=None):
+
+    def _get_or_create_toggle_and_state(self, toggle_type, toggle_name, toggle_state_data=None, env_name=None):
         """
         Gets a toggle and updates its state or creates a toggle and its state,
         and returns the toggle.
         """
+        toggle_type = ToggleTypes.get_internally_consistent_toggle_type(toggle_type)
         toggle = self.toggles[toggle_type].get(toggle_name, None)
 
         if toggle:
             if toggle_state_data:
-                toggle.state.update_data(toggle_state_data)
+                toggle_state = ToggleState(toggle_type, toggle_state_data, env_name=env_name)
+                toggle.add_state(toggle_state)
         else:
             if toggle_state_data is None:
                 toggle_state = None
             else:
-                toggle_state = ToggleState(toggle_type, toggle_state_data)
-            toggle = Toggle(toggle_name, toggle_state)
+                toggle_state = ToggleState(toggle_type, toggle_state_data, env_name=env_name)
+            toggle = Toggle(toggle_name, toggle_state, ida_name=self.name)
             self.toggles[toggle_type][toggle_name] = toggle
 
         return toggle
@@ -199,34 +218,8 @@ class IDA(object):
                 toggle = self._get_or_create_toggle_and_state(annotation_type, annotation_name)
                 toggle.annotations = toggle_annotation
 
-    def _contains(self, toggle_type, toggle_name):
-        """
-        helper function for determining if a feature toggle is configured
-        in an IDA, searching by toggle type and toggle name
-        """
-        try:
-            present = any(
-                map(
-                    lambda t: t.name == toggle_name,
-                    self.toggles[toggle_type]
-                )
-            )
-        except KeyError:
-            return False
-        return present
 
-    def _get_index(self, toggle_type, toggle_name):
-        """
-        helper function for getting the index of a given feature toggle
-        in the data structure holding all toggles for this IDA
-        """
-        names = [t.name for t in self.toggles[toggle_type]]
-        for index, name in enumerate(names):
-            if name == toggle_name:
-                return index
-
-
-def add_toggle_state_to_idas(idas, state_data_path, idas_configuration=None):
+def add_toggle_state_to_idas(idas, state_data_path, idas_configuration=None, env_name=None):
     """
     Given a dictionary of IDAs to consider, and the path to a directory
     containing the SQL dumps for feature toggles in said IDAs, read each dump
@@ -246,7 +239,7 @@ def add_toggle_state_to_idas(idas, state_data_path, idas_configuration=None):
                 sql_dump_file_path, ida_name
             )
         )
-        idas[ida_name].add_toggle_data(sql_dump_file_path)
+        idas[ida_name].add_toggle_data(sql_dump_file_path, env_name=env_name)
         LOGGER.info('=' * 100)
 
 

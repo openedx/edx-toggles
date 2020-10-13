@@ -18,23 +18,3 @@ def test_toggle_date_format():
     assert switch._cleaned_state_data['modified'] == modified_timestamp
 
 
-def test_toggle_state():
-    flag_state = ToggleState(
-        'WaffleFlag',
-        {
-            'note': 'blank',
-            'created': '2019-04-23 14:21:44.765727+00:00',
-            'modified': '2019-04-23 14:21:44.765738+00:00',
-            'everyone': False,
-            'percent': 'null',
-            'testing': False,
-            'superusers': False,
-            'staff': False,
-            'authenticated': False,
-            'languages': False,
-            'users': ['NULL'],
-            'groups': []
-        }
-    )
-    # TODO: Either kill the .state property, or add better tests.
-    assert not flag_state.state
