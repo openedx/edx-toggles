@@ -20,19 +20,8 @@ To test these WaffleFlags, see testutils.py.
 In the above examples, you will use Django Admin "waffle" section to configure
 for a flag named: my_namespace.some_course_feature
 
-You could also use the Django Admin "waffle_utils" section to configure a course
-override for this same flag (e.g. my_namespace.some_course_feature).
-
-For Waffle Switches, first set up the namespace, and then create the flag name.
-For example::
-
-    WAFFLE_SWITCHES = WaffleSwitchNamespace(name=WAFFLE_NAMESPACE)
-
-    ESTIMATE_FIRST_ATTEMPTED = 'estimate_first_attempted'
-
-You can then use the switch as follows::
-
-    WAFFLE_SWITCHES.is_enabled(waffle.ESTIMATE_FIRST_ATTEMPTED)
+For Waffle Switches, follow the example above for WaffleFlags, but instead use the WaffleSwitchNamespace and
+WaffleSwitch classes.
 
 For long-lived flags, you may want to change the default for devstack, sandboxes,
 or new Open edX releases. For help with this, see:
@@ -41,7 +30,6 @@ openedx/core/djangoapps/waffle_utils/docs/decisions/0001-refactor-waffle-flag-de
 Also see ``WAFFLE_FLAG_CUSTOM_ATTRIBUTES`` and docstring for _set_waffle_flag_attribute
 for temporarily instrumenting/monitoring waffle flag usage.
 """
-from functools import lru_cache
 import logging
 from weakref import WeakSet
 
@@ -156,7 +144,7 @@ class WaffleFlagNamespace(BaseNamespace):
 
     def _get_flag_active(self, namespaced_flag_name):
         """
-        Return the value of the flag activation without touching the _waffle_flag_attribute.
+        Return and cache the value of the flag activation. This does not handle monitoring.
         """
         # Check namespace cache
         value = self._cached_flags.get(namespaced_flag_name)
@@ -170,7 +158,7 @@ class WaffleFlagNamespace(BaseNamespace):
             return value
 
         # Return default value
-        return self._get_flag_active_default(namespaced_flag_name)
+        return self._get_flag_active_no_request(namespaced_flag_name)
 
     def _get_flag_active_request(self, namespaced_flag_name, request):
         """
@@ -182,21 +170,20 @@ class WaffleFlagNamespace(BaseNamespace):
             return value
         return None
 
-    def _get_flag_active_default(self, namespaced_flag_name):
+    def _get_flag_active_no_request(self, namespaced_flag_name):
         """
-        Return default value in the absence of any other, more specific flag value.
+        Return default value in the absence of any other, more specific flag value. This triggers warnings, as waffle
+        flag values are not supposed to be accessed in the absence of any request context.
+
+        Note: this skips the cache as the value might be different in a normal request context. This case seems to
+        occur when a page redirects to a 404, or for celery workers.
         """
-        # Check value in the absence of any context
         log.warning(
             u"%sFlag '%s' accessed without a request",
             self.log_prefix,
             namespaced_flag_name,
         )
-        # Return the Flag's Everyone value if not in a request context.
-        # Note: this skips the cache as the value might be different
-        # in a normal request context. This case seems to occur when
-        # a page redirects to a 404, or for celery workers.
-        value = is_flag_active_for_everyone(namespaced_flag_name)
+        value = _is_flag_active_for_everyone(namespaced_flag_name)
         set_custom_attribute("warn_flag_no_request_return_value", value)
         return value
 
@@ -204,7 +191,7 @@ class WaffleFlagNamespace(BaseNamespace):
     def _monitor_value(namespaced_flag_name, value):
         """
         Send waffle flag value to monitoring. We keep this method such that it can be called by child classes (such as
-        the CourseWaffleFlag), but it should not be considered a stable API.
+        edx-platform's waffle_utils.CourseWaffleFlag), but it should not be considered a stable API.
         """
         _set_waffle_flag_attribute(namespaced_flag_name, value)
 
@@ -216,7 +203,7 @@ def _get_waffle_namespace_request_cache():
     return RequestCache("WaffleNamespace").data
 
 
-def is_flag_active_for_everyone(namespaced_flag_name):
+def _is_flag_active_for_everyone(namespaced_flag_name):
     """
     Returns True if the waffle flag is configured as active for Everyone,
     False otherwise.
@@ -274,47 +261,36 @@ class WaffleFlag(BaseToggle):
         return self.waffle_namespace.is_flag_active(self.flag_name)
 
 
-# .. toggle_name: WAFFLE_FLAG_CUSTOM_ATTRIBUTES
-# .. toggle_implementation: DjangoSetting
-# .. toggle_default: False
-# .. toggle_description: A list of waffle flags to track with custom attributes having
-#   values of (True, False, or Both).
-# .. toggle_use_cases: opt_in
-# .. toggle_creation_date: 2020-06-17
-# .. toggle_warnings: Intent is for temporary research (1 day - several weeks) of a flag's usage.
-@lru_cache(maxsize=None)
-def _get_waffle_flag_custom_attributes_set():
-    attributes = getattr(settings, "WAFFLE_FLAG_CUSTOM_ATTRIBUTES", None) or []
-    return set(attributes)
-
-
 def _set_waffle_flag_attribute(name, value):
     """
     For any flag name in settings.WAFFLE_FLAG_CUSTOM_ATTRIBUTES, add name/value
     to cached values and set custom attribute if the value changed.
 
-    The name of the custom attribute will have the prefix ``flag_`` and the
-    suffix will match the name of the flag.
-    The value of the custom attribute could be False, True, or Both.
-
-    The value Both would mean that the flag had both a True and False
-    value at different times during the transaction. This is most
-    likely due to having a course override, as is the case with
-    CourseWaffleFlag.
-
-    An example NewRelic query to see the values of a flag in different
-    environments, if your waffle flag was named ``my.waffle.flag`` might
-    look like::
-
-      SELECT count(*) FROM Transaction
-      WHERE flag_my.waffle.flag IS NOT NULL
-      FACET appName, flag_my.waffle.flag
-
     Important: Remember to configure ``WAFFLE_FLAG_CUSTOM_ATTRIBUTES`` for
     LMS, Studio and Workers in order to see waffle flag usage in all
     edx-platform environments.
+
+    .. setting_name: WAFFLE_FLAG_CUSTOM_ATTRIBUTES
+    .. setting_default: False
+    .. setting_description: A set of waffle flags to track with custom attributes having
+      values of (True, False, or Both). The name of the custom attribute will have the prefix ``flag_`` and the suffix
+      will match the name of the flag. The value of the custom attribute could be False, True, or Both.
+
+      The value Both would mean that the flag had both a True and False value at different times during the
+      transaction. This is most likely due to happen in WaffleFlag child classes, such as edx-platform's
+      waffle_utils.CourseWaffleFlag.
+
+      An example NewRelic query to see the values of a flag in different environments, if your waffle flag was named
+      ``my.waffle.flag`` might look like::
+
+        SELECT count(*) FROM Transaction
+        WHERE flag_my.waffle.flag IS NOT NULL
+        FACET appName, flag_my.waffle.flag
+
+    .. setting_warning: This will work if it is a list, but it might be less performant.
     """
-    if name not in _get_waffle_flag_custom_attributes_set():
+    custom_attributes = getattr(settings, "WAFFLE_FLAG_CUSTOM_ATTRIBUTES", None) or []
+    if name not in custom_attributes:
         return
 
     flag_attribute_data = _get_waffle_namespace_request_cache().setdefault(
