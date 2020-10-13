@@ -11,6 +11,12 @@ auth.Group:
   ".. no_pii:": "This model has no PII"
 auth.Permission:
   ".. no_pii:": "This model has no PII"
+waffle.Flag:
+  ".. no_pii:": "This model has no PII"
+waffle.Sample:
+  ".. no_pii:": "This model has no PII"
+waffle.Switch:
+  ".. no_pii:": "This model has no PII"
 auth.User:
   ".. pii:": "Contains username, password, and email address, must be retired in the consumer of this app"
   ".. pii_types:" : username, email_address, password
