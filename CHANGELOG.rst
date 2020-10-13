@@ -11,8 +11,8 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
-Unreleased
-~~~~~~~~~~
+[1.0.0] - 2020-10-13
+~~~~~~~~~~~~~~~~~~~~
 
 * Fix missing ``module_name`` argument in ``SettingDictToggle`` constructor.
 * Extract waffle classes from edx-platform and move them here following ADR `#2 <docs/decisions/0002-application-toggle-state.rst>`__, `#3 <docs/decisions/0003-django-setting-toggles.rst>`__, `#4 <docs/decisions/0004-toggle-api.rst>`__. This does not introduce backward-incompatible changes, *yet*.
