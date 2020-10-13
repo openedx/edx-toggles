@@ -31,6 +31,7 @@ DATABASES = {
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'waffle',
     'edx_toggles',
 )
 
