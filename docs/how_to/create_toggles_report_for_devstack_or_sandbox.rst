@@ -42,7 +42,7 @@ When creating report for just one environment
 
 For this use case, you can either follow the directory structure listed above, or do the following:
 
-Create an empty directory named following this name pattern: `<env_name>_env`. Populate it with state data json files.
+Create an empty directory following this name pattern: `<env_name>_env`. Populate it with state data json files.
 
 Example:
     - prod_env/ (name of toggle_data_dir)
