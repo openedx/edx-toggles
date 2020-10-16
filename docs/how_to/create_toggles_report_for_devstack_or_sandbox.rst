@@ -26,7 +26,7 @@ When creating report to compare multiple environments
 +++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 For each env, create a directory named following this name pattern: `<env_name>_env`.
-Populate these env directories with their state value files(json).
+Populate these env directories with their state value files (json).
 
 Example:
     - toggle_data_dir/
