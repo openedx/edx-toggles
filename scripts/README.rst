@@ -19,19 +19,7 @@ an application's database.
 Feature Toggle Annotation Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Feature toggles are first defined in the code of an application. We make use of
-the `code_annotations`_ tool, to annotate and summarize the definitions of
-these components with information regarding their purpose, default values and
-planned expiration dates.
-
-See the `How To with annotation format of feature toggles <https://edx-toggles.readthedocs.io/en/latest/how_to/documenting_new_feature_toggles.html>`__.
-
-To run the code-annotations tool to collect annotations into a report, run the
-command (in the codebase of your choice):
-
-.. code:: bash
-
-    code_annotations static_find_annotations --config_file $VIRTUAL_ENV/lib/python3.5/site-packages/code_annotations/config_and_tools/config/feature_toggle_annotations.yaml
+Use instructions found in `get feature toggles annotation data document <https://edx-toggles.readthedocs.io/en/latest/how_to/documenting_new_feature_toggles.html>`__ to collect annotations data.
 
 Rename the resulting yml file `<ida_name>-annotations.yml`. This step is
 necessary, as the feature toggle report generator will key off the `ida_name`
@@ -143,6 +131,4 @@ Valid keys in configuration file:
         - github_url: url to github repository for that ida
         - rename: a new name to replace the ida name used in the file names. example: lms => edxapp
 
-
-.. _code_annotations: https://www.github.com/edx/code-annotations
 .. _devstack: https://www.github.com/edx/devstack
