@@ -14,3 +14,5 @@ command (in the codebase of your choice):
 .. code:: bash
 
     code_annotations static_find_annotations --config_file $VIRTUAL_ENV/lib/python3.5/site-packages/code_annotations/config_and_tools/config/feature_toggle_annotations.yaml
+
+.. _code_annotations: https://www.github.com/edx/code-annotations

@@ -131,6 +131,4 @@ Valid keys in configuration file:
         - github_url: url to github repository for that ida
         - rename: a new name to replace the ida name used in the file names. example: lms => edxapp
 
-
-.. _code_annotations: https://www.github.com/edx/code-annotations
 .. _devstack: https://www.github.com/edx/devstack
