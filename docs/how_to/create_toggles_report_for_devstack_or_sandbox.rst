@@ -37,7 +37,7 @@ Example:
             - lms_waffle.json
             - discovery_waffle.json
 
-When creating report for just one environments
+When creating report for just one environment
 ++++++++++++++++++++++++++++++++++++++++++++++
 
 For this use case, you can either follow directory structure listed above or:
