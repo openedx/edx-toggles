@@ -1,10 +1,7 @@
 Get feature toggle annotation data
 ==================================
 
-Feature toggles are first defined in the code of an application. We make use of
-the `code_annotations`_ tool, to annotate and summarize the definitions of
-these components with information regarding their purpose, default values and
-planned expiration dates.
+Feature toggles are first defined in the code of an application. We make use of the `code_annotations`_ tool, to annotate and summarize the definitions of these components with information regarding their purpose, default values and planned expiration dates.
 
 See the `How To with annotation format of feature toggles <https://edx-toggles.readthedocs.io/en/latest/how_to/documenting_new_feature_toggles.html>`__.
 
