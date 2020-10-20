@@ -69,7 +69,7 @@ class CsvRenderer():
             if isinstance(toggle_type_filter, str):
                 toggle_type_filter = [toggle_type_filter]
             for toggle_dict in toggles_info_flattened_dicts:
-                if toggle_dict["toggle_type"] in toggle_type_filter:
+                if toggle_dict["toggle_type_s"] in toggle_type_filter:
                     data_to_render.append(toggle_dict)
 
         # sort data by either annotation_name or state_name

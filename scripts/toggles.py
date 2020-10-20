@@ -97,7 +97,7 @@ class Toggle:
         summary["oldest_created"] = min([datum["created"] for datum in data if "created" in datum], default="")
         summary["newest_modified"] = max([datum["modified"] for datum in data if "modified" in datum], default="")
         summary["note"] = ", ".join([datum["note"] for datum in data if "note" in datum])
-
+        summary["toggle_type"] = [datum["toggle_type"] for datum in data if "toggle_type" in datum][0]
         # add info that is specific to each env
         envs_states=[]
         for datum in data:
@@ -235,3 +235,4 @@ class ToggleState(object):
             else:
                 self._cleaned_state_data[k] = v
         self._cleaned_state_data["env_name"] = self.env_name
+        self._cleaned_state_data["toggle_type"] = self.toggle_type
