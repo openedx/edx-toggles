@@ -99,7 +99,7 @@ class IDA(object):
                 toggle_state = None
             else:
                 toggle_state = ToggleState(toggle_type, toggle_state_data, env_name=env_name)
-            toggle = Toggle(toggle_name, toggle_state, ida_name=self.name)
+            toggle = Toggle(toggle_name, toggle_state, ida_name=self.name, toggle_type=toggle_type)
             self.toggles[toggle_type][toggle_name] = toggle
 
         return toggle

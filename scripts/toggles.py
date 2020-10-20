@@ -46,11 +46,12 @@ class Toggle:
     only one of the above components could be identified.
     """
 
-    def __init__(self, name, state=None, annotations=None, ida_name=None):
+    def __init__(self, name, state=None, annotations=None, ida_name=None, toggle_type=None):
         self.name = name
         self.states = [state] if state is not None else []
         self.annotations = annotations
-        self.ida_name = ida_name 
+        self.ida_name = ida_name
+        self.toggle_type = toggle_type
 
     def __str__(self):
         return self.name
@@ -58,11 +59,19 @@ class Toggle:
     def add_state(self, state):
         self.states.append(state)
 
+    def basic_report(self):
+        report = {}
+        report["name"] = self.name
+        report["ida_name"] = self.ida_name
+        report["toggle_type"] = self.toggle_type
+        return report
+
     def get_summary_report(self, summarize=True):
         report = {}
         if summarize:
             report["state"] = self.get_state_summary()
         report["annotations"] = self.get_annotations()
+        report.update(self.basic_report())
         return report
 
     def get_full_reports(self):
@@ -72,6 +81,7 @@ class Toggle:
             state._prepare_state_data()
             report['state'] = state._cleaned_state_data
             report["annotations"] = self.get_annotations()
+            report.update(self.basic_report())
             data.append(report)
         return data
 
@@ -92,12 +102,9 @@ class Toggle:
             data.append(state._cleaned_state_data)
 
         summary = {}
-        summary["name"] = self.name
-        summary["ida_name"] = self.ida_name
         summary["oldest_created"] = min([datum["created"] for datum in data if "created" in datum], default="")
         summary["newest_modified"] = max([datum["modified"] for datum in data if "modified" in datum], default="")
         summary["note"] = ", ".join([datum["note"] for datum in data if "note" in datum])
-        summary["toggle_type"] = [datum["toggle_type"] for datum in data if "toggle_type" in datum][0]
         # add info that is specific to each env
         envs_states=[]
         for datum in data:

@@ -43,7 +43,11 @@ class CsvRenderer():
         """
         temp_data = []
         for datum in toggle_info_structured_dicts:
-            toggle_dict_info = {}
+            base_info_keys = list(datum.keys())
+            # removing state and annotations keys cause those will be taken care of below
+            base_info_keys.remove("state")
+            base_info_keys.remove("annotations")
+            toggle_dict_info = {key:value for key, value in datum.items() if key in base_info_keys}
             for key in datum["state"].keys():
                 toggle_dict_info["{}_s".format(key)] = datum["state"][key]
             for key in datum["annotations"].keys():
@@ -69,7 +73,7 @@ class CsvRenderer():
             if isinstance(toggle_type_filter, str):
                 toggle_type_filter = [toggle_type_filter]
             for toggle_dict in toggles_info_flattened_dicts:
-                if toggle_dict["toggle_type_s"] in toggle_type_filter:
+                if toggle_dict["toggle_type"] in toggle_type_filter:
                     data_to_render.append(toggle_dict)
 
         # sort data by either annotation_name or state_name
