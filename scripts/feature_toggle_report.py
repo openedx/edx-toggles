@@ -41,7 +41,7 @@ logging.basicConfig(level=logging.INFO)
     help='specify toggle types if you only want data on certain toggle type',
     )
 @click.option(
-    '--verbose_report', is_flag=True,
+    '--verbose-report', is_flag=True,
     help="To get a more verbose version of the report. This will result in one row per state data (from each new env) for a toggle",
 )
 @click.option(
