@@ -43,11 +43,10 @@ class CsvRenderer():
         """
         temp_data = []
         for datum in toggle_info_structured_dicts:
-            base_info_keys = list(datum.keys())
+            toggle_dict_info = datum.copy()
             # removing state and annotations keys cause those will be taken care of below
-            base_info_keys.remove("state")
-            base_info_keys.remove("annotations")
-            toggle_dict_info = {key:value for key, value in datum.items() if key in base_info_keys}
+            toggle_dict_info.pop("state", None)
+            toggle_dict_info.pop("annotations", None)
             for key in datum["state"].keys():
                 toggle_dict_info["{}_s".format(key)] = datum["state"][key]
             for key in datum["annotations"].keys():
