@@ -56,12 +56,38 @@ class WaffleSwitchNamespace(BaseNamespace):
         """
         Returns and caches whether the given waffle switch is enabled.
         """
+        value = self.get_request_cache(switch_name)
         namespaced_switch_name = self._namespaced_name(switch_name)
-        value = self._cached_switches.get(namespaced_switch_name)
         if value is None:
             value = switch_is_active(namespaced_switch_name)
-            self._cached_switches[namespaced_switch_name] = value
+            self.set_request_cache(namespaced_switch_name, value)
         return value
+
+    def get_request_cache(self, namespaced_switch_name, default=None):
+        """
+        API for accessing the request cache. In general, users should avoid accessing the namespace cache.
+        """
+        return self._cached_switches.get(namespaced_switch_name, default)
+
+    def get_request_cache_with_short_name(self, switch_name, default=None):
+        """
+        Compatibility method. This will be removed soon in favor of the namespaced `get_request_cache` method.
+        """
+        return self.get_request_cache(
+            self._namespaced_name(switch_name), default=default
+        )
+
+    def set_request_cache(self, namespaced_switch_name, value):
+        """
+        Manually set the request cache value. Beware! There be dragons.
+        """
+        self._cached_switches[namespaced_switch_name] = value
+
+    def set_request_cache_with_short_name(self, switch_name, value):
+        """
+        Compatibility method. This will be removed soon in favor of the namespaced `set_request_cache` method.
+        """
+        self.set_request_cache(self._namespaced_name(switch_name), value)
 
     @property
     def _cached_switches(self):
