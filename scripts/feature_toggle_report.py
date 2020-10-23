@@ -68,9 +68,12 @@ def main(annotations_dir, toggle_data_dir, output_file_path, env, toggle_type, v
 
     # process configuration
     # commandline-option inputs overwrite configuration file data
-    toggle_type_filter = [ToggleTypes.get_internally_consistent_toggle_type(t_type) for t_type in toggle_type]
-    if not toggle_type and "toggle_type" in configuration.keys():
-        toggle_type_filter = [ToggleTypes.get_internally_consistent_toggle_type(toggle_type) for toggle_type in configuration["toggle_type"]]
+    toggle_type_filter = None
+    if toggle_type:
+        toggle_type_filter = [ToggleTypes.get_internally_consistent_toggle_type(t_type) for t_type in toggle_type]
+    else:
+        if "toggle_type" in configuration.keys():
+            toggle_type_filter = [ToggleTypes.get_internally_consistent_toggle_type(toggle_type) for toggle_type in configuration["toggle_type"]]
 
     requested_envs = env
     if not env and "env" in configuration.keys():
