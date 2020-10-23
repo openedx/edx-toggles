@@ -8,8 +8,8 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 from edx_django_utils.cache import RequestCache
 
-from edx_toggles.toggles import WaffleFlag, WaffleFlagNamespace
-from edx_toggles.toggles.testutils import override_waffle_flag
+from edx_toggles.toggles import WaffleFlag, WaffleFlagNamespace, WaffleSwitch, WaffleSwitchNamespace
+from edx_toggles.toggles.testutils import override_waffle_flag, override_waffle_switch
 
 
 class OverrideWaffleFlagTests(TestCase):
@@ -18,7 +18,7 @@ class OverrideWaffleFlagTests(TestCase):
     """
 
     def setUp(self):
-        super(OverrideWaffleFlagTests, self).setUp()
+        super().setUp()
         namespace_name = "test_namespace"
         flag_name = "test_flag"
         self.namespaced_flag_name = namespace_name + "." + flag_name
@@ -94,3 +94,18 @@ class OverrideWaffleFlagTests(TestCase):
 
         self.assertFalse(waffle_flag1.is_enabled())
         self.assertTrue(waffle_flag2.is_enabled())
+
+
+class OverrideWaffleSwitchTests(TestCase):
+    """
+    Testt override capabilities for waffle switches.
+    """
+
+    def test_override(self):
+        namespace = WaffleSwitchNamespace("test_namespace")
+        switch = WaffleSwitch(namespace, "test_switch", module_name="testmodule")
+
+        self.assertFalse(switch.is_enabled())
+        with override_waffle_switch(switch, active=True):
+            self.assertTrue(switch.is_enabled())
+        self.assertFalse(switch.is_enabled())
