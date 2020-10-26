@@ -11,6 +11,34 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
+[2.0.0] - 2020-11-05
+~~~~~~~~~~~~~~~~~~~~
+
+* BREAKING CHANGE: The ``WaffleFlagNamespace`` and ``WaffleSwitchNamespace`` classes have been removed. You can either rename to ``LegacyWaffleFlagNamespace`` and ``LegacyWaffleSwitchNamespace``, which are deprecated, or you can move to the newer waffle classes that no longer use these Namespace classes (see below).
+* BREAKING CHANGE: The ``WaffleFlag`` and ``WaffleSwitch`` classes exposed in ``toggles`` no longer use the Namespace classes and are now the classes which were previously only available in ``toggles.__future__``.
+
+    * If you were importing from ``edx_toggles.toggles.__future__`` before, then you simply need to import from ``edx_toggles.toggles``. Importing from ``__future__`` will continue to work but will trigger a deprecation warning.
+    * If you were importing from ``edx_toggles.toggles``, then you either need to:
+
+        * Migrate your legacy namespaced classes to the new-style classes (see the new behaviour below), or
+        * Import ``LegacyWaffleFlag`` instead of ``WaffleFlag`` and ``LegacyWaffleSwitch`` instead of ``WaffleSwitch``. Note that these classes will be removed soon, so it's preferable to migrate to the new classes already.
+
+    * The new Waffle classes introduce the following changes:
+
+        * They no longer use Namespace classes like ``WaffleSwitchNamespace`` or ``WaffleFlagNamespace``.
+        * The ``WaffleSwitchNamespace._namespaced_name`` and ``WaffleFlagNamespace._namespaced_name`` methods are replaced by the ``WaffleSwitch.name`` and ``WaffleFlag.name`` attributes.
+        * The ``WaffleSwitchNamespace.is_enabled`` method is replaced by the ``WaffleSwitch.is_enabled`` method.
+        * The ``WaffleSwitchNamespace.set_request_cache_with_short_name`` method has no replacement because an alternative solution should be found.  You could (but really shouldn't) use the ``WaffleSwitch._cached_switches`` property.
+        * The ``WaffleSwitch.switch_name`` attribute is deprecated: switches should only ever be referred to using their fully namespaced names.
+        * The ``WaffleSwitch.switch_name`` attribute no longer exists. Switches should only ever be referred to using their fully namespaced names.  If you need the non-namespaced name, it must be parsed from the namespaced name.
+        * The ``WaffleFlagNamespace.is_flag_active`` method is replaced by ``WaffleFlag.is_enabled``.
+        * The ``WaffleFlagNamespace._monitor_value`` method is replaced by ``WaffleFlag.set_monitor_value``.
+        * The ``WaffleFlagNamespace._cached_flags`` attribute is replaced by the ``WaffleFlag.cached_flags`` method.
+        * The ``WaffleFlag`` and ``WaffleSwitch`` ``module_name`` constructor argument is now mandatory.
+        * The ``WaffleFlag.flag_name`` attribute is deprecated.
+        * The ``WaffleFlag.flag_name`` attribute no longer exists. Flags should only ever be referred to using their fully namespaced names.  If you need the non-namespaced name, it must be parsed from the namespaced name.
+        * The ``WaffleFlag.waffle_namespace`` attribute no longer exists, since there is no longer a separate namespace object.
+
 [1.2.2] - 2020-12-22
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -24,7 +52,6 @@ More improvements to monitoring of legacy waffle class imports.
 ~~~~~~~~~~~~~~~~~~~~
 
 * Improve monitoring of legacy Waffle class imports. We should watch for "edx_toggles.toggles.internal.waffle.legacy.WaffleSwitch" custom attributes.
-
 
 [1.2.0] - 2020-11-05
 ~~~~~~~~~~~~~~~~~~~~

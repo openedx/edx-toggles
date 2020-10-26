@@ -1,8 +1,15 @@
 """
-Expose new-style waffle classes. In the future, these imports will be moved to edx_toggles.toggles. Applications that
-want to migrate to the new-style API can do so right now by importing from this module.
+This module had been created to expose new-style waffle classes. These are now available from edx_toggles.toggles.
 """
-# pylint: disable=unused-import
-from .internal.setting_toggle import SettingDictToggle, SettingToggle
-from .internal.waffle.flag import NonNamespacedWaffleFlag, WaffleFlag
-from .internal.waffle.switch import NonNamespacedWaffleSwitch, WaffleSwitch
+import warnings
+
+from . import *  # pylint: disable=unused-import,wildcard-import
+
+warnings.warn(
+    (
+        "Importing from edx_toggles.toggles.__future__ is now deprecated."
+        " You should import from edx_toggles.toggles instead."
+    ),
+    DeprecationWarning,
+    stacklevel=2,
+)

@@ -8,9 +8,7 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 from edx_django_utils.cache import RequestCache
 
-# TODO import from edx_toggles.toggles once we remove the legacy classes from the exposed API
-from edx_toggles.toggles.internal.waffle.flag import WaffleFlag
-from edx_toggles.toggles.internal.waffle.switch import WaffleSwitch
+from edx_toggles.toggles import WaffleFlag, WaffleSwitch
 from edx_toggles.toggles.testutils import override_waffle_flag, override_waffle_switch
 
 
