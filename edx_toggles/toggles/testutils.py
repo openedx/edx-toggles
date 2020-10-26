@@ -65,19 +65,13 @@ class override_waffle_switch(override_switch):
         self.switch = switch
         self._cached_value = None
         self._previous_active = None
-        super().__init__(switch.namespaced_switch_name, active)
+        super().__init__(switch.name, active)
 
     def __enter__(self):
-        self._previous_active = self.switch.waffle_namespace.is_enabled(
-            self.switch.switch_name
-        )
-        self.switch.waffle_namespace.set_request_cache(
-            self.switch.namespaced_switch_name, self.active
-        )
+        self._previous_active = self.switch.is_enabled()
+        self.switch.set_request_cache(self.active)
         super().__enter__()
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         super().__exit__(exc_type, exc_val, exc_tb)
-        self.switch.waffle_namespace.set_request_cache(
-            self.switch.namespaced_switch_name, self._previous_active
-        )
+        self.switch.set_request_cache(self._previous_active)

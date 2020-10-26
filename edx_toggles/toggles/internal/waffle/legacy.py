@@ -32,14 +32,11 @@ for temporarily instrumenting/monitoring waffle flag usage.
 """
 import warnings
 from abc import ABC
-from weakref import WeakSet
 
 from edx_django_utils.monitoring import set_custom_attribute
-from waffle import switch_is_active
 
-from ..base import BaseToggle
-from .cache import _get_waffle_request_cache as _get_waffle_namespace_request_cache
 from .flag import WaffleFlag as NewWaffleFlag
+from .switch import WaffleSwitch as NewWaffleSwitch
 
 
 class BaseNamespace(ABC):
@@ -90,93 +87,57 @@ class BaseNamespace(ABC):
 
 class WaffleSwitchNamespace(BaseNamespace):
     """
-    Provides a single namespace for a set of waffle switches.
-
-    All namespaced switch values are stored in a single request cache containing
-    all switches for all namespaces.
+    Legacy waffle switch namespace class.
     """
 
     def is_enabled(self, switch_name):
         """
-        Returns and caches whether the given waffle switch is enabled.
+        Legacy method preserved for backward compatibility.
         """
-        namespaced_switch_name = self._namespaced_name(switch_name)
-        value = self.get_request_cache(namespaced_switch_name)
-        if value is None:
-            value = switch_is_active(namespaced_switch_name)
-            self.set_request_cache(namespaced_switch_name, value)
-        return value
+        return NewWaffleSwitch(self._namespaced_name(switch_name)).is_enabled()
 
     def get_request_cache(self, namespaced_switch_name, default=None):
-        """
-        API for accessing the request cache. In general, users should avoid accessing the namespace cache.
-        """
-        return self._cached_switches.get(namespaced_switch_name, default)
+        return NewWaffleSwitch(namespaced_switch_name).get_request_cache(
+            default=default
+        )
 
     def get_request_cache_with_short_name(self, switch_name, default=None):
-        """
-        Compatibility method. This will be removed soon in favor of the namespaced `get_request_cache` method.
-        """
         return self.get_request_cache(
             self._namespaced_name(switch_name), default=default
         )
 
     def set_request_cache(self, namespaced_switch_name, value):
-        """
-        Manually set the request cache value. Beware! There be dragons.
-        """
-        self._cached_switches[namespaced_switch_name] = value
+        NewWaffleSwitch(namespaced_switch_name).set_request_cache(value)
 
     def set_request_cache_with_short_name(self, switch_name, value):
-        """
-        Compatibility method. This will be removed soon in favor of the namespaced `set_request_cache` method.
-        """
         self.set_request_cache(self._namespaced_name(switch_name), value)
 
-    @property
-    def _cached_switches(self):
-        """
-        Return a dictionary of all namespaced switches in the request cache.
-        """
-        return _get_waffle_namespace_request_cache().setdefault("switches", {})
 
-
-class WaffleSwitch(BaseToggle):
+class WaffleSwitch(NewWaffleSwitch):
     """
-    Represents a single waffle switch, using a cached namespace.
+    Legacy namespaced waffle switch class.
     """
-
-    NAMESPACE_CLASS = WaffleSwitchNamespace
-    _class_instances = WeakSet()
 
     def __init__(self, waffle_namespace, switch_name, module_name=None):
-        """
-        Arguments:
-            waffle_namespace (Namespace | String): Namespace for this switch.
-            switch_name (String): The name of the switch (without namespacing).
-            module_name (String): The name of the module where the flag is created. This should be ``__name__`` in most
-            cases.
-        """
-        if isinstance(waffle_namespace, str):
-            waffle_namespace = self.NAMESPACE_CLASS(name=waffle_namespace)
+        warnings.warn(
+            (
+                "{} is deprecated. Please use non-namespaced edx_toggles.toggles.WaffleSwitch instead."
+            ).format(self.__class__.__name__),
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        set_custom_attribute("deprecated_edx_toggles_waffle", "WaffleSwitch")
+        if not isinstance(waffle_namespace, str):
+            waffle_namespace = waffle_namespace.name
 
-        self.waffle_namespace = waffle_namespace
+        # Non-namespaced flag_name attribute preserved for backward compatibility
         self.switch_name = switch_name
-
-        # Note that the waffle constructor does not provide a default
-        name = self.waffle_namespace._namespaced_name(self.switch_name)
-        super().__init__(name, default=False, module_name=module_name)
+        name = "{}.{}".format(waffle_namespace, switch_name)
+        super().__init__(name, module_name=module_name)
 
     @property
     def namespaced_switch_name(self):
-        """
-        For backward compatibility, we still provide the `namespaced_switch_name`, property, even though users should
-        now use the `name` attribute.
-        """
         return self.name
-
-    def is_enabled(self):
-        return self.waffle_namespace.is_enabled(self.switch_name)
 
 
 class WaffleFlagNamespace(BaseNamespace):

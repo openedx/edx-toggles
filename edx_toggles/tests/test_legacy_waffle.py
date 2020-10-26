@@ -7,7 +7,7 @@ from edx_toggles.toggles.internal.waffle.legacy import (
     WaffleFlag,
     WaffleFlagNamespace,
     WaffleSwitch,
-    WaffleSwitchNamespace,
+    WaffleSwitchNamespace
 )
 
 
@@ -16,18 +16,35 @@ class TestWaffleSwitch(TestCase):
     Tests the WaffleSwitch.
     """
 
-    NAMESPACE_NAME = "test_namespace"
-    WAFFLE_SWITCH_NAME = "test_switch_name"
-    TEST_NAMESPACE = WaffleSwitchNamespace(NAMESPACE_NAME)
-    WAFFLE_SWITCH = WaffleSwitch(TEST_NAMESPACE, WAFFLE_SWITCH_NAME, __name__)
-
     def test_namespaced_switch_name(self):
         """
         Verify namespaced_switch_name returns the correct namespace switch name
         """
-        expected = self.NAMESPACE_NAME + "." + self.WAFFLE_SWITCH_NAME
-        actual = self.WAFFLE_SWITCH.namespaced_switch_name
-        self.assertEqual(actual, expected)
+        namespace = WaffleSwitchNamespace("test_namespace")
+        switch = WaffleSwitch(namespace, "test_switch_name", __name__)
+        self.assertEqual(
+            "test_namespace.test_switch_name", switch.namespaced_switch_name
+        )
+
+    def test_default_value(self):
+        namespace = WaffleSwitchNamespace("test_namespace")
+        switch = WaffleSwitch(namespace, "test_switch_name", module_name="module1")
+        self.assertFalse(switch.is_enabled())
+        self.assertFalse(namespace.is_enabled("test_switch_name"))
+
+    def test_get_set_cache_for_request(self):
+        namespace = WaffleSwitchNamespace("test_namespace")
+        switch = WaffleSwitch(namespace, "test_switch_name", module_name="module1")
+        self.assertFalse(
+            namespace.get_request_cache_with_short_name("test_switch_name")
+        )
+        namespace.set_request_cache_with_short_name("test_switch_name", True)
+        self.assertTrue(namespace.get_request_cache_with_short_name("test_switch_name"))
+        self.assertTrue(switch.is_enabled())
+        namespace.set_request_cache_with_short_name("test_switch_name", False)
+        self.assertFalse(
+            namespace.get_request_cache_with_short_name("test_switch_name")
+        )
 
 
 class TestWaffleFlag(TestCase):
