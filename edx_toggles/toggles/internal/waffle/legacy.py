@@ -4,24 +4,24 @@ creation of namespace objects. The namespace features were all moved to the Waff
 
 To upgrade your code, use the following guidelines. Where previously you had::
 
-    from edx_toggles.toggles import WaffleSwitch, WaffleSwitchNamespace
-    SOME_NAMESPACE = WaffleSwitchNamespace("some_namespace")
-    SOME_SWITCH = WaffleSwitch(SOME_NAMESPACE, "some_switch", module_name=__name__)
+    from edx_toggles.toggles import LegacyWaffleSwitch, LegacyWaffleSwitchNamespace
+    SOME_NAMESPACE = LegacyWaffleSwitchNamespace("some_namespace")
+    SOME_SWITCH = LegacyWaffleSwitch(SOME_NAMESPACE, "some_switch", module_name=__name__)
 
 You should now write::
 
-    from edx_toggles.toggles.__future__ import WaffleSwitch
+    from edx_toggles.toggles import WaffleSwitch
     SOME_SWITCH = WaffleSwitch("some_namespace.some_switch", module_name=__name__)
 
 And similarly for waffle flags, replace::
 
-    from edx_toggles.toggles import WaffleFlag, WaffleFlagNamespace
-    SOME_NAMESPACE = WaffleFlagNamespace("some_namespace", log_prefix="some_namespace")
-    SOME_FLAG = WaffleFlag(SOME_NAMESPACE, "some_flag", module_name=__name__)
+    from edx_toggles.toggles import LegacyWaffleFlag, LegacyWaffleFlagNamespace
+    SOME_NAMESPACE = LegacyWaffleFlagNamespace("some_namespace", log_prefix="some_namespace")
+    SOME_FLAG = LegacyWaffleFlag(SOME_NAMESPACE, "some_flag", module_name=__name__)
 
 by::
 
-    from edx_toggles.toggles.__future__ import WaffleFlag
+    from edx_toggles.toggles import WaffleFlag
     SOME_FLAG = WaffleFlag("some_namespace.some_flag", module_name=__name__, log_prefix="some_namespace")
 """
 from abc import ABC
