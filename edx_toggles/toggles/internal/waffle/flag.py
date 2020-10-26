@@ -9,13 +9,13 @@ from django.conf import settings
 from edx_django_utils.monitoring import set_custom_attribute
 from waffle import flag_is_active
 
-from ..base import BaseToggle
+from .base import BaseWaffle
 from .cache import _get_waffle_request_cache
 
 log = logging.getLogger(__name__)
 
 
-class WaffleFlag(BaseToggle):
+class WaffleFlag(BaseWaffle):
     """
     Represents a single waffle flag, using both a global and a request cache.
     """
@@ -25,19 +25,9 @@ class WaffleFlag(BaseToggle):
     def __init__(self, name, module_name=None, log_prefix=""):
         """
         Waffle flag constructor
-
-        Arguments:
-            name (String): The name of the flag. This name must include a dot (".") to indicate namespacing.
-            module_name (String): The name of the module where the flag is created. This should be ``__name__`` in most
-            cases.
-            log_prefix (str): Optional string to be appended to log messages (e.g. "Grades: ").
         """
-        if "." not in name:
-            raise ValueError(
-                "Cannot create non-namespaced '{}' WaffleFlag".format(name)
-            )
         self.log_prefix = log_prefix
-        super().__init__(name, default=False, module_name=module_name)
+        super().__init__(name, module_name=module_name)
 
     def is_enabled(self):
         """
