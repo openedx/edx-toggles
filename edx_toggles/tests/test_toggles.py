@@ -97,3 +97,8 @@ class TestWaffleSwitch(TestCase):
         expected = self.NAMESPACE_NAME + "." + self.WAFFLE_SWITCH_NAME
         actual = self.WAFFLE_SWITCH.namespaced_switch_name
         self.assertEqual(actual, expected)
+
+    def test_caching(self):
+        namespace = toggles.WaffleSwitchNamespace("namespace")
+        namespace.set_request_cache_with_short_name("switch1", True)
+        self.assertTrue(namespace.is_enabled("switch1"))
