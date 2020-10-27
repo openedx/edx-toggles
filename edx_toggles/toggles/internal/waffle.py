@@ -56,8 +56,8 @@ class WaffleSwitchNamespace(BaseNamespace):
         """
         Returns and caches whether the given waffle switch is enabled.
         """
-        value = self.get_request_cache(switch_name)
         namespaced_switch_name = self._namespaced_name(switch_name)
+        value = self.get_request_cache(namespaced_switch_name)
         if value is None:
             value = switch_is_active(namespaced_switch_name)
             self.set_request_cache(namespaced_switch_name, value)
