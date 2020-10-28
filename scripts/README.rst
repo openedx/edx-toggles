@@ -1,17 +1,11 @@
 Feature Toggle Reporter
 -----------------------
 
-We make extensive use of a variety of feature toggles at edX. However, it has
-the downside of making the state of a deployed application somewhat opaque.
-This tool analyzes data from the codebases of deployed applications, as well
-as their databases, to provide a summary of the feature toggles in use in a
-given deployment. For more information, please see:
+We make extensive use of a variety of feature toggles at edX. However, it has the downside of making the state of a deployed application somewhat opaque. This tool analyzes data from the codebases of deployed applications, as well as their databases, to provide a summary of the feature toggles in use in a given deployment. For more information, please see:
 
 https://open-edx-proposals.readthedocs.io/en/latest/oep-0017-bp-feature-toggles.html
 
-In order to create a feature toggle report for a given deployment, you need
-two types of data: feature toggle annotation data and feature toggle state data from
-an application's database.
+In order to create a feature toggle report for a given deployment, you need two types of data: feature toggle annotation data and feature toggle state data from an application's database.
 
 Feature Toggle Annotation Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -24,20 +18,14 @@ will be included in the report.
 Feature Toggle State Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The current state of certain feature toggles (i.e. django-waffle, waffle-utils)
-is not captured in the codebase, as it is decoupled from the deployment of
-code. Rather, it must read from the deployed application.
+The current state of certain feature toggles (i.e. django-waffle, waffle-utils) is not captured in the codebase, as it is decoupled from the deployment of code. Rather, it must read from the deployed application.
 
-Each IDA exposes an HTTP endpoint provided by the [TODO: pending] edx-toggles Django app.
-A scheduled job can use an OAuth client associated with a staff user to get a JWT,
-and then use the JWT against each configured IDA's toggle state endpoint.
+Each IDA exposes an HTTP endpoint provided by the [TODO: pending] edx-toggles Django app. A scheduled job can use an OAuth client associated with a staff user to get a JWT, and then use the JWT against each configured IDA's toggle state endpoint.
 
 Creating a Feature Toggle Report
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Assuming you have already run the two prerequisites mentioned above, install the
-dependencies for the report generator, and run it, passing the following
-values on the command line:
+Assuming you have already run the two prerequisites mentioned above, install the dependencies for the report generator, and run it, passing the following values on the command line:
 
 
 For example:
