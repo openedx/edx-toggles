@@ -25,8 +25,7 @@ First create this empty directory. Now populate it with data based on either of 
 When creating report to compare multiple environments
 +++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-For each env, create a directory named following this name pattern: `<env_name>_env`.
-Populate these env directories with their state value files (json).
+For each env, create a directory named following this name pattern: `<env_name>_env`. Populate these env directories with their state value files (json).
 
 Example:
     - toggle_data_dir/
@@ -38,7 +37,7 @@ Example:
             - discovery_waffle.json
 
 When creating report for just one environment
-++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++
 
 For this use case, you can either follow the directory structure listed above, or do the following:
 
@@ -50,8 +49,8 @@ Example:
         - discovery_waffle.json
 
 
-Grab annoatations data
-----------------------
+Grab annotations data
+---------------------
 
 Use instructions found in `get feature toggles annotation data document <https://edx-toggles.readthedocs.io/en/latest/how_to/documenting_new_feature_toggles.html>`__ to collect annotations data.
 
