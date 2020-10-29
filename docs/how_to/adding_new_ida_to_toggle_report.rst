@@ -23,7 +23,7 @@ The steps to collect annotations are automated through a jenkins job:
 
 The job creates files with names like `<ida_name>-annotations.yml`. The feature toggle report generator will key off the `ida_name` in the filename in order to be able to link this data to the toggle state data collected in the next step.
 
-.. _writing annotations: https://code-annotations.readthedocs.io/en/latest/writing_annotations.html
+.. _writing annotations: https://github.com/edx/edx-toggles/blob/master/docs/how_to/documenting_new_feature_toggles.rst
 .. _code_annotations: https://github.com/edx/code-annotations
 
 Steps
@@ -36,9 +36,7 @@ Steps
 Problems with current approach
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- If job fails:
-
-    - Arch-bom is alway notified on failure
+- If job fails, arch-bom is always notified, rather than the owning team
 
 
 State data from HTTP endpoint
@@ -55,13 +53,8 @@ Steps
 ~~~~~
 - Add the edx-toggles Django app to the IDA:
 
-    - Include ``edx-toggles`` in the ``base.in`` requirements file.
-      It provides a Django view that allows staff users to retrieve
-      a JSON document containing the boolean waffle switches and settings.
-      (**TODO:** Not yet possible! Functionality still in ``waffle_utils`` in edx-platform;
-      will be moved into edx-toggles.)
-    - Add it to your ``urls.py``: ``url(r'^api/toggles/', include('edx_toggles.views.TODO'))``
-      (**TODO:** As above, and names have yet to be decided.)
+    - Include ``edx-toggles`` in the ``base.in`` requirements file. It provides a Django view that allows staff users to retrieve a JSON document containing the toggles state. (**TODO:** Not yet possible! Functionality still in ``waffle_utils`` in edx-platform; will be moved into edx-toggles.)
+    - Add it to your ``urls.py``: ``url(r'^api/toggles/', include('edx_toggles.views.TODO'))`` (**TODO:** As above, and names have yet to be decided.)
 
 - Add environment specification for your database to `edx-internal/*/feature-toggle-report-generator.yml`_
 
@@ -83,12 +76,6 @@ Processing data
 The annotation data and Toggle state data dump should be stored in s3 buckets. The automated publish-feature-toggle-report job (in `groovy job specification`_) pulls the data from s3 buckets and calls `feature_toggle_report_generator.py`_ to process  the data and output it as a csv file.
 
 As long as the data is structured correctly (specified in `README`_), nothing should be necessary
-
-Possible improvements
----------------------
-
-- Add ability to filter idas in report
-
 
 
 Publishing data

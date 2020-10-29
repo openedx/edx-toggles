@@ -49,7 +49,7 @@ Example:
         - discovery_waffle.json
 
 
-Grab annotatations data
+Grab annotations data
 -----------------------
 
 Use instructions found in `get feature toggles annotation data document <https://edx-toggles.readthedocs.io/en/latest/how_to/documenting_new_feature_toggles.html>`__ to collect annotations data.
