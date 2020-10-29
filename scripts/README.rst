@@ -10,9 +10,7 @@ In order to create a feature toggle report for a given deployment, you need two 
 Feature Toggle Annotation Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Any toggles that are annotated according to the instructions in
-`get feature toggles annotation data document <docs/how_to/documenting_new_feature_toggles.html>`_
-will be included in the report.
+Any toggles that are annotated according to the instructions in `get feature toggles annotation data document <docs/how_to/documenting_new_feature_toggles.html>`_ will be included in the report.
 
 
 Feature Toggle State Data
