@@ -29,41 +29,8 @@ The job creates files with names like `<ida_name>-annotations.yml`. The feature 
 Steps
 ~~~~~
 
-- Add a `generate-feature-toggle-annotation-report.sh`_ to repository, use linked file as example
+- Add IDA specification to `edx-internal/*/feature-toggle-report-generator.yml`_ under ``idas`` key
 - Add IDA specification in ``scripts/configuration.yaml``
-- Checkout your IDA code repository in the Jenkins job using a ``git`` block:
-
-.. code:: java
-
-        git {
-            remote {
-                url(<IDA_GIT_REPO_URL>)
-            }
-            branch('*/master')
-            extensions {
-                cleanAfterCheckout()
-                pruneBranches()
-                relativeTargetDirectory(${target_directory})
-            }
-        }
-
-- Add virtualenv step to run annotation generation
-
-.. code:: java
-
-    virtualenv {
-        pythonName('System-CPython-3.6')
-        clear(true)
-        systemSitePackages(false)
-        nature('shell')
-        ignoreExitCode(false)
-        command(
-            "cd <IDA_CHECKOUT_DIR>\n scripts/generate-feature-toggle-annotation-report.sh"
-        )
-    }
-
-
-.. _generate-feature-toggle-annotation-report.sh: https://github.com/edx/edx-platform/blob/master/scripts/generate-feature-toggle-annotation-report.sh
 
 
 Problems with current approach
@@ -71,14 +38,7 @@ Problems with current approach
 
 - If job fails:
 
-    - It will block collection of annotation in other repositories
     - Arch-bom is alway notified on failure
-    - Fix: Use the same approach as the upgrade jobs, create multiple jobs based on list which contains repository link, and contact email. One job per IDA/repository.
-
-- Need to add custom script to every IDA that needs to be in IDA repository
-
-    - Fix: create shell script in job to do the job instead. ``code_annotations`` should be able to work across repositories and any custom commands should not be necessary
-
 
 
 State data from HTTP endpoint
