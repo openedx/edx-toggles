@@ -8,7 +8,7 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 from edx_django_utils.cache import RequestCache
 
-from edx_toggles.toggles import WaffleFlag, WaffleFlagNamespace, WaffleSwitch, WaffleSwitchNamespace
+from edx_toggles.toggles import WaffleFlag, WaffleSwitch, WaffleSwitchNamespace
 from edx_toggles.toggles.testutils import override_waffle_flag, override_waffle_switch
 
 
@@ -19,11 +19,8 @@ class OverrideWaffleFlagTests(TestCase):
 
     def setUp(self):
         super().setUp()
-        namespace_name = "test_namespace"
-        flag_name = "test_flag"
-        self.namespaced_flag_name = namespace_name + "." + flag_name
-        self.namespace = WaffleFlagNamespace(namespace_name)
-        self.waffle_flag = WaffleFlag(self.namespace, flag_name)
+        flag_name = "test_namespace.test_flag"
+        self.waffle_flag = WaffleFlag(flag_name)
 
         request = RequestFactory().request()
         crum.set_current_request(request)
@@ -50,25 +47,25 @@ class OverrideWaffleFlagTests(TestCase):
         # checks and caches the is_enabled value
         self.assertFalse(self.waffle_flag.is_enabled())
         # pylint: disable=protected-access
-        flag_cache = self.namespace._cached_flags
-        self.assertIn(self.namespaced_flag_name, flag_cache)
+        flag_cache = self.waffle_flag._cached_flags
+        self.assertIn(self.waffle_flag.name, flag_cache)
 
         self.temporarily_enable_flag()
 
         # test cached flag is restored
-        self.assertIn(self.namespaced_flag_name, flag_cache)
+        self.assertIn(self.waffle_flag.name, flag_cache)
         self.assertFalse(self.waffle_flag.is_enabled())
 
     def test_override_waffle_flag_not_pre_cached(self):
         # check that the flag is not yet cached
         # pylint: disable=protected-access
-        flag_cache = self.namespace._cached_flags
-        self.assertNotIn(self.namespaced_flag_name, flag_cache)
+        flag_cache = self.waffle_flag._cached_flags
+        self.assertNotIn(self.waffle_flag.name, flag_cache)
 
         self.temporarily_enable_flag()
 
         # test cache is removed when no longer using decorator/context manager
-        self.assertNotIn(self.namespaced_flag_name, flag_cache)
+        self.assertNotIn(self.waffle_flag.name, flag_cache)
 
     def test_override_waffle_flag_as_context_manager(self):
         self.assertFalse(self.waffle_flag.is_enabled())
@@ -80,9 +77,9 @@ class OverrideWaffleFlagTests(TestCase):
 
     def test_interlocked_overrides(self):
         waffle_flag1 = self.waffle_flag
-        waffle_flag2 = WaffleFlag(self.namespace, waffle_flag1.flag_name + "2")
+        waffle_flag2 = WaffleFlag(waffle_flag1.name + "2")
         # pylint: disable=protected-access
-        self.namespace._cached_flags[waffle_flag2.namespaced_flag_name] = True
+        waffle_flag2._cached_flags[waffle_flag2.name] = True
 
         self.assertFalse(waffle_flag1.is_enabled())
         self.assertTrue(waffle_flag2.is_enabled())

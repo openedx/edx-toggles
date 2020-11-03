@@ -78,27 +78,3 @@ class ToggleInstancesTests(TestCase):
         toggles.SettingToggle("NAME1", default=False, module_name="module1")
         instances = toggles.SettingToggle.get_instances()
         self.assertEqual([], instances)
-
-
-class TestWaffleSwitch(TestCase):
-    """
-    Tests the WaffleSwitch.
-    """
-
-    NAMESPACE_NAME = "test_namespace"
-    WAFFLE_SWITCH_NAME = "test_switch_name"
-    TEST_NAMESPACE = toggles.WaffleSwitchNamespace(NAMESPACE_NAME)
-    WAFFLE_SWITCH = toggles.WaffleSwitch(TEST_NAMESPACE, WAFFLE_SWITCH_NAME, __name__)
-
-    def test_namespaced_switch_name(self):
-        """
-        Verify namespaced_switch_name returns the correct namespace switch name
-        """
-        expected = self.NAMESPACE_NAME + "." + self.WAFFLE_SWITCH_NAME
-        actual = self.WAFFLE_SWITCH.namespaced_switch_name
-        self.assertEqual(actual, expected)
-
-    def test_caching(self):
-        namespace = toggles.WaffleSwitchNamespace("namespace")
-        namespace.set_request_cache_with_short_name("switch1", True)
-        self.assertTrue(namespace.is_enabled("switch1"))
