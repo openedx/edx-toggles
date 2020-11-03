@@ -8,7 +8,9 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 from edx_django_utils.cache import RequestCache
 
-from edx_toggles.toggles import WaffleFlag, WaffleSwitch
+# TODO import from edx_toggles.toggles once we remove the legacy classes from the exposed API
+from edx_toggles.toggles.internal.waffle.flag import WaffleFlag
+from edx_toggles.toggles.internal.waffle.switch import WaffleSwitch
 from edx_toggles.toggles.testutils import override_waffle_flag, override_waffle_switch
 
 
@@ -20,7 +22,7 @@ class OverrideWaffleFlagTests(TestCase):
     def setUp(self):
         super().setUp()
         flag_name = "test_namespace.test_flag"
-        self.waffle_flag = WaffleFlag(flag_name)
+        self.waffle_flag = WaffleFlag(flag_name, __name__)
 
         request = RequestFactory().request()
         crum.set_current_request(request)
@@ -46,8 +48,7 @@ class OverrideWaffleFlagTests(TestCase):
     def test_override_waffle_flag_pre_cached(self):
         # checks and caches the is_enabled value
         self.assertFalse(self.waffle_flag.is_enabled())
-        # pylint: disable=protected-access
-        flag_cache = self.waffle_flag._cached_flags
+        flag_cache = self.waffle_flag.cached_flags()
         self.assertIn(self.waffle_flag.name, flag_cache)
 
         self.temporarily_enable_flag()
@@ -58,8 +59,7 @@ class OverrideWaffleFlagTests(TestCase):
 
     def test_override_waffle_flag_not_pre_cached(self):
         # check that the flag is not yet cached
-        # pylint: disable=protected-access
-        flag_cache = self.waffle_flag._cached_flags
+        flag_cache = self.waffle_flag.cached_flags()
         self.assertNotIn(self.waffle_flag.name, flag_cache)
 
         self.temporarily_enable_flag()
@@ -77,9 +77,8 @@ class OverrideWaffleFlagTests(TestCase):
 
     def test_interlocked_overrides(self):
         waffle_flag1 = self.waffle_flag
-        waffle_flag2 = WaffleFlag(waffle_flag1.name + "2")
-        # pylint: disable=protected-access
-        waffle_flag2._cached_flags[waffle_flag2.name] = True
+        waffle_flag2 = WaffleFlag(waffle_flag1.name + "2", __name__)
+        waffle_flag2.cached_flags()[waffle_flag2.name] = True
 
         self.assertFalse(waffle_flag1.is_enabled())
         self.assertTrue(waffle_flag2.is_enabled())

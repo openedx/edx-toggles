@@ -11,6 +11,16 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
+[1.2.0] - 2020-11-05
+~~~~~~~~~~~~~~~~~~~~
+
+* Start the deprecation process of the waffle namespace classes:
+
+  * Introduce LegacyWaffleFlag, LegacyWaffleSwitch for use with namespaces.
+  * Begin deprecation/refactoring of namespacing code, including deprecation monitoring and warnings.
+  * Note: WaffleFlag and WaffleSwitch still use namespaces as well (for now).
+  * Introduce the ``toggles.__future__`` module for applications that need to be forward-compatible right away.
+
 [1.1.1] - 2020-10-27
 ~~~~~~~~~~~~~~~~~~~~
 

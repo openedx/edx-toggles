@@ -1,5 +1,5 @@
 """
-Unit tests for legacy waffle objects.
+Unit tests for legacy waffle objects. These tests should be moved to test_waffle.py once the legacy classes are removed.
 """
 from django.test import TestCase
 
@@ -32,19 +32,17 @@ class TestWaffleSwitch(TestCase):
         self.assertFalse(switch.is_enabled())
         self.assertFalse(namespace.is_enabled("test_switch_name"))
 
-    def test_get_set_cache_for_request(self):
+    # pylint: disable=protected-access
+    def test_set_request_cache_with_short_name(self):
         namespace = WaffleSwitchNamespace("test_namespace")
         switch = WaffleSwitch(namespace, "test_switch_name", module_name="module1")
-        self.assertFalse(
-            namespace.get_request_cache_with_short_name("test_switch_name")
-        )
+        self.assertFalse(switch._cached_switches.get("test_namespace.test_switch_name"))
         namespace.set_request_cache_with_short_name("test_switch_name", True)
-        self.assertTrue(namespace.get_request_cache_with_short_name("test_switch_name"))
+        self.assertTrue(switch._cached_switches.get("test_namespace.test_switch_name"))
         self.assertTrue(switch.is_enabled())
         namespace.set_request_cache_with_short_name("test_switch_name", False)
-        self.assertFalse(
-            namespace.get_request_cache_with_short_name("test_switch_name")
-        )
+        self.assertFalse(switch._cached_switches.get("test_namespace.test_switch_name"))
+        self.assertFalse(switch.is_enabled())
 
 
 class TestWaffleFlag(TestCase):

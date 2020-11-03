@@ -41,17 +41,17 @@ class override_waffle_flag(override_flag):
         super().__enter__()
 
         # Store values that have been cached on the flag
-        self._cached_value = self.flag._cached_flags.get(self.name)
-        self.flag._cached_flags[self.name] = self.active
+        self._cached_value = self.flag.cached_flags().get(self.name)
+        self.flag.cached_flags()[self.name] = self.active
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         super().__exit__(exc_type, exc_val, exc_tb)
 
         # Restore the cached values
-        self.flag._cached_flags.pop(self.name, None)
+        self.flag.cached_flags().pop(self.name, None)
 
         if self._cached_value is not None:
-            self.flag._cached_flags[self.name] = self._cached_value
+            self.flag.cached_flags()[self.name] = self._cached_value
 
 
 class override_waffle_switch(override_switch):
@@ -59,19 +59,23 @@ class override_waffle_switch(override_switch):
     Overrides the active value for the given switch for the duration of this
     contextmanager.
     Note: The value is overridden in the request cache AND in the model.
+
+    Note: The implementation for overriding switches and flags differ. ``override_waffle_switch``
+    makes an explicit call to ``WaffleSwitch.is_enabled``, which fills the cache, while
+    ``override_waffle_flag`` only looks at the cached values. It is unclear whether this difference
+    is important, or just due to being developed at different times by different people.
     """
 
     def __init__(self, switch, active):
         self.switch = switch
-        self._cached_value = None
         self._previous_active = None
         super().__init__(switch.name, active)
 
     def __enter__(self):
         self._previous_active = self.switch.is_enabled()
-        self.switch.set_request_cache(self.active)
+        self.switch._cached_switches[self.switch.name] = self.active
         super().__enter__()
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         super().__exit__(exc_type, exc_val, exc_tb)
-        self.switch.set_request_cache(self._previous_active)
+        self.switch._cached_switches[self.switch.name] = self._previous_active

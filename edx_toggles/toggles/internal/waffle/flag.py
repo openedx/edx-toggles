@@ -1,5 +1,5 @@
 """
-New-style waffle classes: these classes no longer depend on namespaces to be created.
+Waffle flag classes.
 """
 import logging
 from weakref import WeakSet
@@ -17,30 +17,33 @@ log = logging.getLogger(__name__)
 
 class WaffleFlag(BaseWaffle):
     """
-    Represents a single waffle flag, using both a global and a request cache.
+    Represents a single waffle flag, enhanced with request-level caching.
     """
 
     _class_instances = WeakSet()
 
-    def __init__(self, name, module_name=None, log_prefix=""):
+    def __init__(self, name, module_name, log_prefix=""):
         """
         Waffle flag constructor
         """
         self.log_prefix = log_prefix
-        super().__init__(name, module_name=module_name)
+        super().__init__(name, module_name)
 
     def is_enabled(self):
         """
         Returns whether or not the flag is enabled.
+
+        Child classes that override this method should ensure that `set_monitor_value` is called for any
+        case not calling ``super().is_enabled()``.
         """
         value = self._get_flag_active()
-        self._monitor_value(value)
+        self.set_monitor_value(value)
         return value
 
-    @property
-    def _cached_flags(self):
+    @staticmethod
+    def cached_flags():
         """
-        Returns a dictionary of all flags in the request cache.
+        Returns a dictionary of all flags in the request cache. This method should only ever be used by child classes.
         """
         return _get_waffle_request_cache().setdefault("flags", {})
 
@@ -49,7 +52,7 @@ class WaffleFlag(BaseWaffle):
         Return and cache the value of the flag activation. This does not handle monitoring.
         """
         # Check global cache
-        value = self._cached_flags.get(self.name)
+        value = self.cached_flags().get(self.name)
         if value is not None:
             return value
 
@@ -68,7 +71,7 @@ class WaffleFlag(BaseWaffle):
         """
         if request:
             value = flag_is_active(request, self.name)
-            self._cached_flags[self.name] = value
+            self.cached_flags()[self.name] = value
             return value
         return None
 
@@ -89,12 +92,24 @@ class WaffleFlag(BaseWaffle):
         set_custom_attribute("warn_flag_no_request_return_value", value)
         return value
 
-    def _monitor_value(self, value):
+    def set_monitor_value(self, value):
         """
         Send waffle flag value to monitoring. We keep this method such that it can be called by child classes (such as
-        edx-platform's waffle_utils.CourseWaffleFlag), but it should not be considered a stable API.
+        edx-platform's waffle_utils.CourseWaffleFlag). A child class is expected to call this method if it is
+        overriding `is_enabled`, and has cases where it is not calling `super().is_enabled().
         """
         _set_waffle_flag_attribute(self.name, value)
+
+
+class NonNamespacedWaffleFlag(WaffleFlag):
+    """
+    Same as the WaffleFlag class, but does not require that the instance name be namespaced. This class is useful for
+    migrating existing Flag objects; new instances should always be namespaced.
+    """
+
+    @classmethod
+    def validate_name(cls, name):
+        pass
 
 
 def _is_flag_active_for_everyone(flag_name):
@@ -139,7 +154,8 @@ def _set_waffle_flag_attribute(name, value):
         WHERE flag_my.waffle.flag IS NOT NULL
         FACET appName, flag_my.waffle.flag
 
-    .. setting_warning: This will work if it is a list, but it might be less performant.
+    .. setting_warning: This setting should be a python set() for optimized performances. This will also work if it is
+       a list, but it might be less performant.
     """
     custom_attributes = getattr(settings, "WAFFLE_FLAG_CUSTOM_ATTRIBUTES", None) or []
     if name not in custom_attributes:
