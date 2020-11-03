@@ -15,10 +15,18 @@ class BaseToggle(ABC):
     _class_instances = None
 
     def __init__(self, name, default=False, module_name=""):
+        self.validate_name(name)
         self.name = name
         self.default = default
         self.module_name = module_name
         self._class_instances.add(self)
+
+    @classmethod
+    def validate_name(cls, name):
+        """
+        Validate the format of the instance name. This should raise a ValueError in case of incorrect format.
+        This method should only be used by child classes, mostly for overriding purposes.
+        """
 
     def is_enabled(self):
         raise NotImplementedError
