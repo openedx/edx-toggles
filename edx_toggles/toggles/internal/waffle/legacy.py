@@ -30,6 +30,7 @@ openedx/core/djangoapps/waffle_utils/docs/decisions/0001-refactor-waffle-flag-de
 Also see ``WAFFLE_FLAG_CUSTOM_ATTRIBUTES`` and docstring for _set_waffle_flag_attribute
 for temporarily instrumenting/monitoring waffle flag usage.
 """
+from abc import ABC
 import logging
 from weakref import WeakSet
 
@@ -39,9 +40,46 @@ from edx_django_utils.cache import RequestCache
 from edx_django_utils.monitoring import set_custom_attribute
 from waffle import flag_is_active, switch_is_active
 
-from .base import BaseNamespace, BaseToggle
+from ..base import BaseToggle
 
 log = logging.getLogger(__name__)
+
+
+class BaseNamespace(ABC):
+    """
+    A base class for a request cached namespace for waffle flags/switches.
+
+    An instance of this class represents a single namespace
+    (e.g. "course_experience"), and can be used to work with a set of
+    flags or switches that will all share this namespace.
+    """
+
+    def __init__(self, name, log_prefix=None):
+        """
+        Initializes the waffle namespace instance.
+
+        Arguments:
+            name (String): Namespace string appended to start of all waffle
+                flags and switches (e.g. "grades")
+            log_prefix (String): Optional string to be appended to log messages
+                (e.g. "Grades: "). Defaults to ''.
+
+        """
+        assert name, "The name is required."
+        self.name = name
+        self.log_prefix = log_prefix if log_prefix else ""
+
+    def _namespaced_name(self, setting_name):
+        """
+        Returns the namespaced name of the waffle switch/flag.
+
+        For example, the namespaced name of a waffle switch/flag would be:
+            my_namespace.my_setting_name
+
+        Arguments:
+            setting_name (String): The name of the flag or switch.
+        """
+        return "{}.{}".format(self.name, setting_name)
 
 
 class WaffleSwitchNamespace(BaseNamespace):
