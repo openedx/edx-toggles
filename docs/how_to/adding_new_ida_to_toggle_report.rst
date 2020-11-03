@@ -53,8 +53,8 @@ Steps
 ~~~~~
 - Add the edx-toggles Django app to the IDA:
 
-    - Include ``edx-toggles`` in the ``base.in`` requirements file. It provides a Django view that allows staff users to retrieve a JSON document containing the toggles state. (**TODO:** Not yet possible! Functionality still in ``waffle_utils`` in edx-platform; will be moved into edx-toggles.)
-    - Add it to your ``urls.py``: ``url(r'^api/toggles/', include('edx_toggles.views.TODO'))`` (**TODO:** As above, and names have yet to be decided.)
+  - Include ``edx-toggles`` in the ``base.in`` requirements file. It provides a Django view that allows staff users to retrieve a JSON document containing the toggles state. (**TODO:** Not yet possible! Functionality still in ``waffle_utils`` in edx-platform; will be moved into edx-toggles.)
+  - Add it to your ``urls.py``: ``url(r'^api/toggles/', include('edx_toggles.views.TODO'))`` (**TODO:** As above, and names have yet to be decided.)
 
 - Add environment specification for your database to `edx-internal/*/feature-toggle-report-generator.yml`_
 
