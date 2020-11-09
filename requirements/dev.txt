@@ -6,9 +6,9 @@
 #
 appdirs==1.4.4            # via -r requirements/travis.txt, virtualenv
 astroid==2.3.3            # via -r requirements/quality.txt, pylint, pylint-celery
-atlassian-python-api==1.17.6  # via -r requirements/quality.txt
-attrs==20.2.0             # via -r requirements/quality.txt, pytest
-certifi==2020.6.20        # via -r requirements/quality.txt, -r requirements/travis.txt, requests
+atlassian-python-api==2.0.1  # via -r requirements/quality.txt
+attrs==20.3.0             # via -r requirements/quality.txt, pytest
+certifi==2020.11.8        # via -r requirements/quality.txt, -r requirements/travis.txt, requests
 chardet==3.0.4            # via -r requirements/quality.txt, -r requirements/travis.txt, requests
 click-log==0.3.2          # via -r requirements/quality.txt, edx-lint
 click==7.1.2              # via -r requirements/pip-tools.txt, -r requirements/quality.txt, click-log, code-annotations, edx-lint, pip-tools
@@ -17,10 +17,10 @@ codecov==2.1.10           # via -r requirements/travis.txt
 coverage==5.3             # via -r requirements/quality.txt, -r requirements/travis.txt, codecov, pytest-cov
 diff-cover==4.0.1         # via -r requirements/dev.in
 distlib==0.3.1            # via -r requirements/travis.txt, virtualenv
-django-crum==0.7.7        # via -r requirements/quality.txt, edx-django-utils
+django-crum==0.7.8        # via -r requirements/quality.txt, edx-django-utils
 django-waffle==2.0.0      # via -r requirements/quality.txt, edx-django-utils
-django==2.2.16            # via -c requirements/constraints.txt, -r requirements/quality.txt, code-annotations, django-crum, edx-django-utils, edx-i18n-tools
-edx-django-utils==3.10.0  # via -r requirements/quality.txt
+django==2.2.17            # via -c requirements/constraints.txt, -r requirements/quality.txt, code-annotations, django-crum, edx-django-utils, edx-i18n-tools
+edx-django-utils==3.11.0  # via -r requirements/quality.txt
 edx-i18n-tools==0.5.3     # via -r requirements/dev.in
 edx-lint==1.5.2           # via -r requirements/quality.txt
 filelock==3.0.12          # via -r requirements/travis.txt, tox, virtualenv
