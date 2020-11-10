@@ -213,7 +213,7 @@ class IDA(object):
                     continue
 
                 annotation_name = _get_annotation_data('name', group)
-                annotation_type = toggle_annotation._raw_annotation_data['implementation'][0]
+                annotation_type = toggle_annotation._raw_annotation_data.get('implementation', ['UNKNOWN'])[0]
 
                 toggle = self._get_or_create_toggle_and_state(annotation_type, annotation_name)
                 toggle.annotations = toggle_annotation
