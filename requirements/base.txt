@@ -5,8 +5,8 @@
 #    make upgrade
 #
 click==7.1.2              # via code-annotations
-code-annotations==0.10.0  # via -r requirements/base.in
-django-crum==0.7.8        # via -r requirements/base.in, edx-django-utils
+code-annotations==0.10.1  # via -r requirements/base.in
+django-crum==0.7.9        # via -r requirements/base.in, edx-django-utils
 django-waffle==2.0.0      # via -r requirements/base.in, edx-django-utils
 django==2.2.17            # via -c requirements/constraints.txt, -r requirements/base.in, code-annotations, django-crum, edx-django-utils
 edx-django-utils==3.11.0  # via -r requirements/base.in

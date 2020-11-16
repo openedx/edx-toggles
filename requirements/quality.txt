@@ -11,9 +11,9 @@ certifi==2020.11.8        # via -r requirements/test.txt, requests
 chardet==3.0.4            # via -r requirements/test.txt, requests
 click-log==0.3.2          # via edx-lint
 click==7.1.2              # via -r requirements/test.txt, click-log, code-annotations, edx-lint
-code-annotations==0.10.0  # via -r requirements/test.txt
+code-annotations==0.10.1  # via -r requirements/test.txt
 coverage==5.3             # via -r requirements/test.txt, pytest-cov
-django-crum==0.7.8        # via -r requirements/test.txt, edx-django-utils
+django-crum==0.7.9        # via -r requirements/test.txt, edx-django-utils
 django-waffle==2.0.0      # via -r requirements/test.txt, edx-django-utils
 django==2.2.17            # via -c requirements/constraints.txt, -r requirements/test.txt, code-annotations, django-crum, edx-django-utils
 edx-django-utils==3.11.0  # via -r requirements/test.txt
@@ -48,7 +48,7 @@ python-slugify==4.0.1     # via -r requirements/test.txt, code-annotations
 pytz==2020.4              # via -r requirements/test.txt, django
 pyyaml==5.3.1             # via -r requirements/test.txt, code-annotations
 requests-oauthlib==1.3.0  # via -r requirements/test.txt, atlassian-python-api
-requests==2.24.0          # via -r requirements/test.txt, atlassian-python-api, requests-oauthlib
+requests==2.25.0          # via -r requirements/test.txt, atlassian-python-api, requests-oauthlib
 six==1.15.0               # via -r requirements/test.txt, astroid, atlassian-python-api, edx-lint, packaging, pathlib2, stevedore
 snowballstemmer==2.0.0    # via pydocstyle
 sqlparse==0.4.1           # via -r requirements/test.txt, django
@@ -56,6 +56,6 @@ stevedore==1.32.0         # via -c requirements/constraints.txt, -r requirements
 text-unidecode==1.3       # via -r requirements/test.txt, python-slugify
 toml==0.10.2              # via -r requirements/test.txt, pytest
 typed-ast==1.4.1          # via astroid
-urllib3==1.25.11          # via -r requirements/test.txt, requests
+urllib3==1.26.2           # via -r requirements/test.txt, requests
 wrapt==1.11.2             # via astroid
 zipp==1.2.0               # via -c requirements/constraints.txt, -r requirements/test.txt, importlib-metadata
