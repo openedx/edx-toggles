@@ -51,8 +51,8 @@ refer to this `list of resources`_ if you need any assistance.
     :target: https://pypi.python.org/pypi/edx-toggles/
     :alt: PyPI
 
-.. |travis-badge| image:: https://travis-ci.org/edx/edx-toggles.svg?branch=master
-    :target: https://travis-ci.org/edx/edx-toggles
+.. |travis-badge| image:: https://travis-ci.com/edx/edx-toggles.svg?branch=master
+    :target: https://travis-ci.com/edx/edx-toggles
     :alt: Travis
 
 .. |codecov-badge| image:: http://codecov.io/github/edx/edx-toggles/coverage.svg?branch=master

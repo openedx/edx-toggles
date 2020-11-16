@@ -11,6 +11,11 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
+[1.2.1] - 2020-11-16
+~~~~~~~~~~~~~~~~~~~~
+* Updated README.rst and made Build Status badge point to travis-ci.com instead of travis-ci.org
+
+
 [1.2.0] - 2020-11-05
 ~~~~~~~~~~~~~~~~~~~~
 
