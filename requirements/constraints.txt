@@ -19,3 +19,7 @@ stevedore==1.32.0
 
 # inflect 4.0.0 drops support for Python 3.5
 inflect<4.0.0
+
+
+# astroid 2.3.3 has requirement wrapt==1.11 thats why pinned it here.
+wrapt==1.11
