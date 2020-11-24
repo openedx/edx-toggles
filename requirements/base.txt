@@ -9,7 +9,7 @@ code-annotations==0.10.1  # via -r requirements/base.in
 django-crum==0.7.9        # via -r requirements/base.in, edx-django-utils
 django-waffle==2.0.0      # via -r requirements/base.in, edx-django-utils
 django==2.2.17            # via -c requirements/constraints.txt, -r requirements/base.in, code-annotations, django-crum, edx-django-utils
-edx-django-utils==3.13.0  # via -r requirements/base.in
+edx-django-utils==3.11.0  # via -r requirements/base.in
 jinja2==2.11.2            # via code-annotations
 markupsafe==1.1.1         # via jinja2
 newrelic==5.22.1.152      # via edx-django-utils
