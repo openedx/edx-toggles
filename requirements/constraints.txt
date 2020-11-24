@@ -19,3 +19,7 @@ stevedore==1.32.0
 
 # inflect 4.0.0 drops support for Python 3.5
 inflect<4.0.0
+
+
+# wrapt is conflicting with other packages.
+wrapt==1.11
