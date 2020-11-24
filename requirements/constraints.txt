@@ -21,5 +21,5 @@ stevedore==1.32.0
 inflect<4.0.0
 
 
-# astroid 2.3.3 has requirement wrapt==1.11 thats why pinned it here.
+# wrapt is conflicting with other packages.
 wrapt==1.11
