@@ -24,7 +24,7 @@ edx-django-utils==3.13.0  # via -r requirements/test.txt
 edx-sphinx-theme==1.5.0   # via -r requirements/doc.in
 idna==2.10                # via -r requirements/test.txt, requests
 imagesize==1.2.0          # via sphinx
-importlib-metadata==2.1.0  # via -r requirements/test.txt, pluggy, pytest
+importlib-metadata==2.1.1  # via -r requirements/test.txt, pluggy, pytest
 iniconfig==1.1.1          # via -r requirements/test.txt, pytest
 jinja2==2.11.2            # via -r requirements/test.txt, code-annotations, sphinx
 markupsafe==1.1.1         # via -r requirements/test.txt, jinja2

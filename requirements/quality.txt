@@ -20,7 +20,7 @@ django==2.2.17            # via -c requirements/constraints.txt, -r requirements
 edx-django-utils==3.13.0  # via -r requirements/test.txt
 edx-lint==1.5.2           # via -r requirements/quality.in
 idna==2.10                # via -r requirements/test.txt, requests
-importlib-metadata==2.1.0  # via -r requirements/test.txt, pluggy, pytest
+importlib-metadata==2.1.1  # via -r requirements/test.txt, pluggy, pytest
 iniconfig==1.1.1          # via -r requirements/test.txt, pytest
 isort==4.3.21             # via -r requirements/quality.in, pylint
 jinja2==2.11.2            # via -r requirements/test.txt, code-annotations
