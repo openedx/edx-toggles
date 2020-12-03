@@ -16,7 +16,7 @@ django-crum==0.7.9        # via -r requirements/base.txt, -r requirements/script
 django-waffle==2.0.0      # via -r requirements/base.txt, -r requirements/scripts.txt, edx-django-utils
 edx-django-utils==3.13.0  # via -r requirements/base.txt, -r requirements/scripts.txt
 idna==2.10                # via -r requirements/scripts.txt, requests
-importlib-metadata==2.1.0  # via pluggy, pytest
+importlib-metadata==2.1.1  # via pluggy, pytest
 iniconfig==1.1.1          # via pytest
 jinja2==2.11.2            # via -r requirements/base.txt, -r requirements/scripts.txt, code-annotations
 markupsafe==1.1.1         # via -r requirements/base.txt, -r requirements/scripts.txt, jinja2
