@@ -1,7 +1,7 @@
 edx-toggles
 =============================
 
-|pypi-badge| |travis-badge| |codecov-badge| |doc-badge| |pyversions-badge|
+|pypi-badge| |ci-badge| |codecov-badge| |doc-badge| |pyversions-badge|
 |license-badge|
 
 Library and utilities for feature toggles. This repo is intended to house a utility
@@ -51,9 +51,9 @@ refer to this `list of resources`_ if you need any assistance.
     :target: https://pypi.python.org/pypi/edx-toggles/
     :alt: PyPI
 
-.. |travis-badge| image:: https://travis-ci.org/edx/edx-toggles.svg?branch=master
-    :target: https://travis-ci.org/edx/edx-toggles
-    :alt: Travis
+.. |ci-badge| image:: https://github.com/edx/edx-toggles/workflows/Python%20CI/badge.svg?branch=master
+    :target: https://github.com/edx/edx-toggles/actions?query=workflow%3A%22Python+CI%22
+    :alt: Github CI
 
 .. |codecov-badge| image:: http://codecov.io/github/edx/edx-toggles/coverage.svg?branch=master
     :target: http://codecov.io/github/edx/edx-toggles?branch=master

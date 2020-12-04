@@ -42,6 +42,7 @@ upgrade: export CUSTOM_COMPILE_COMMAND=make upgrade
 upgrade: ## update the requirements/*.txt files with the latest packages satisfying requirements/*.in
 	pip install -qr requirements/pip-tools.txt
 	# Make sure to compile files after any other files they include!
+	pip-compile --upgrade --allow-unsafe --rebuild -o requirements/pip.txt requirements/pip.in
 	pip-compile --upgrade -o requirements/pip-tools.txt requirements/pip-tools.in
 	pip-compile --upgrade -o requirements/base.txt requirements/base.in
 	pip-compile --upgrade -o requirements/scripts.txt requirements/scripts.in
@@ -61,6 +62,7 @@ pii_check: ## check for PII annotations on all Django models
 	tox -e pii_check
 
 requirements: ## install development environment requirements
+	pip install -qr requirements/pip.txt
 	pip install -qr requirements/pip-tools.txt
 	pip-sync requirements/dev.txt requirements/private.*
 
