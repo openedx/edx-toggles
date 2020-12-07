@@ -8,11 +8,11 @@ appdirs==1.4.4            # via -r requirements/travis.txt, virtualenv
 astroid==2.3.3            # via -r requirements/quality.txt, pylint, pylint-celery
 atlassian-python-api==2.1.2  # via -r requirements/quality.txt
 attrs==20.3.0             # via -r requirements/quality.txt, pytest
-certifi==2020.11.8        # via -r requirements/quality.txt, -r requirements/travis.txt, requests
+certifi==2020.12.5        # via -r requirements/quality.txt, -r requirements/travis.txt, requests
 chardet==3.0.4            # via -r requirements/quality.txt, -r requirements/travis.txt, requests
 click-log==0.3.2          # via -r requirements/quality.txt, edx-lint
 click==7.1.2              # via -r requirements/pip-tools.txt, -r requirements/quality.txt, click-log, code-annotations, edx-lint, pip-tools
-code-annotations==0.10.1  # via -r requirements/quality.txt
+code-annotations==0.10.2  # via -r requirements/quality.txt
 codecov==2.1.10           # via -r requirements/travis.txt
 coverage==5.3             # via -r requirements/quality.txt, -r requirements/travis.txt, codecov, pytest-cov
 deprecated==1.2.10        # via -r requirements/quality.txt, atlassian-python-api
@@ -50,7 +50,7 @@ psutil==5.7.3             # via -r requirements/quality.txt, edx-django-utils
 py==1.9.0                 # via -r requirements/quality.txt, -r requirements/travis.txt, pytest, tox
 pycodestyle==2.6.0        # via -r requirements/quality.txt
 pydocstyle==5.1.1         # via -r requirements/quality.txt
-pygments==2.7.2           # via diff-cover
+pygments==2.7.3           # via diff-cover
 pylint-celery==0.3        # via -r requirements/quality.txt, edx-lint
 pylint-django==2.0.11     # via -r requirements/quality.txt, edx-lint
 pylint-plugin-utils==0.6  # via -r requirements/quality.txt, pylint-celery, pylint-django
