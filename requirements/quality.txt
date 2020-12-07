@@ -7,11 +7,11 @@
 astroid==2.3.3            # via pylint, pylint-celery
 atlassian-python-api==2.1.2  # via -r requirements/test.txt
 attrs==20.3.0             # via -r requirements/test.txt, pytest
-certifi==2020.11.8        # via -r requirements/test.txt, requests
+certifi==2020.12.5        # via -r requirements/test.txt, requests
 chardet==3.0.4            # via -r requirements/test.txt, requests
 click-log==0.3.2          # via edx-lint
 click==7.1.2              # via -r requirements/test.txt, click-log, code-annotations, edx-lint
-code-annotations==0.10.1  # via -r requirements/test.txt
+code-annotations==0.10.2  # via -r requirements/test.txt
 coverage==5.3             # via -r requirements/test.txt, pytest-cov
 deprecated==1.2.10        # via -r requirements/test.txt, atlassian-python-api
 django-crum==0.7.9        # via -r requirements/test.txt, edx-django-utils

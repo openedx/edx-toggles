@@ -6,10 +6,10 @@
 #
 atlassian-python-api==2.1.2  # via -r requirements/scripts.txt
 attrs==20.3.0             # via pytest
-certifi==2020.11.8        # via -r requirements/scripts.txt, requests
+certifi==2020.12.5        # via -r requirements/scripts.txt, requests
 chardet==3.0.4            # via -r requirements/scripts.txt, requests
 click==7.1.2              # via -r requirements/base.txt, -r requirements/scripts.txt, code-annotations
-code-annotations==0.10.1  # via -r requirements/base.txt, -r requirements/scripts.txt, -r requirements/test.in
+code-annotations==0.10.2  # via -r requirements/base.txt, -r requirements/scripts.txt, -r requirements/test.in
 coverage==5.3             # via pytest-cov
 deprecated==1.2.10        # via -r requirements/scripts.txt, atlassian-python-api
 django-crum==0.7.9        # via -r requirements/base.txt, -r requirements/scripts.txt, edx-django-utils
