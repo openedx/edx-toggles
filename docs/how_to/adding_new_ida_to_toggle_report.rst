@@ -4,6 +4,8 @@
 How-to: Enabling toggles report for a new IDA
 =============================================
 
+.. note:: Some of this document is specific to edX.org, but the general approach and some of the scripts are available to the wider Open edX community.
+
 The generation of toggles report for an IDA has been automated for the LMS. This document lists what needs to be done to automate toggle report generation for other IDAs. There are a number of references in here that are specific to edX.org's automation infrastructure and internal configuration repos, but there should be enough detail provided for Open edX users to set up something similar.
 
 .. contents:: Steps

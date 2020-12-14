@@ -1,3 +1,5 @@
+.. _toggle_state_decision:
+
 Application Toggle State
 ========================
 

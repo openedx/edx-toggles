@@ -4,10 +4,17 @@ edx-toggles
 |pypi-badge| |ci-badge| |codecov-badge| |doc-badge| |pyversions-badge|
 |license-badge|
 
-Library and utilities for feature toggles. This repo is intended to house a utility
-for enhanced feature toggle management in Django apps used throughout the edX
-ecosystem. Currenty, it only contains some scripts for reporting on the status of
-feature toggles. See the `scripts README <scripts/README.rst>`_ for more information.
+Library and utilities for implementing and reporting on feature toggles.
+
+Documentation is on `Read the Docs`_.  Code repository is on `GitHub`_.
+
+.. _Read the Docs: https://edx.readthedocs.io/projects/edx-toggles/en/latest/readme.html
+.. _GitHub: https://github.com/edx/edx-toggles
+
+See the `scripts README`_ for more information on the scripts for reporting on the status of
+feature toggles.
+
+.. _scripts README: https://github.com/edx/edx-toggles/blob/master/scripts/README.rst
 
 License
 -------

@@ -1,6 +1,8 @@
-=============================================
-Create toggles report for devstack or sandbox
-=============================================
+.. _report_for_devstack_or_sandbox:
+
+=====================================================
+How to: Create toggles report for devstack or sandbox
+=====================================================
 
 .. contents:: Steps to generate a toggle report for devstack
 

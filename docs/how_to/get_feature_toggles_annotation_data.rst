@@ -1,5 +1,7 @@
-Get feature toggle annotation data
-==================================
+.. _get_toggle_annotations:
+
+How to: Get feature toggle annotation data
+==========================================
 
 Feature toggles are first defined in the code of an application. We make use of the `code_annotations`_ tool, to annotate and summarize the definitions of these components with information regarding their purpose, default values and planned expiration dates.
 

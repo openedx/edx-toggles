@@ -96,7 +96,7 @@ class WaffleFlag(BaseWaffle):
         """
         Send waffle flag value to monitoring. We keep this method such that it can be called by child classes (such as
         edx-platform's waffle_utils.CourseWaffleFlag). A child class is expected to call this method if it is
-        overriding `is_enabled`, and has cases where it is not calling `super().is_enabled().
+        overriding `is_enabled`, and has cases where it is not calling `super().is_enabled()`.
         """
         _set_waffle_flag_attribute(self.name, value)
 
