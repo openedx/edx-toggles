@@ -38,7 +38,7 @@ markupsafe==1.1.1         # via -r requirements/quality.txt, jinja2
 mccabe==0.6.1             # via -r requirements/quality.txt, pylint
 newrelic==5.22.1.152      # via -r requirements/quality.txt, edx-django-utils
 oauthlib==3.1.0           # via -r requirements/quality.txt, atlassian-python-api, requests-oauthlib
-packaging==20.7           # via -r requirements/ci.txt, -r requirements/quality.txt, pytest, tox
+packaging==20.8           # via -r requirements/ci.txt, -r requirements/quality.txt, pytest, tox
 path.py==12.5.0           # via edx-i18n-tools
 path==13.1.0              # via path.py
 pathlib2==2.3.5           # via -r requirements/quality.txt, pytest
@@ -47,7 +47,7 @@ pip-tools==5.4.0          # via -r requirements/pip-tools.txt
 pluggy==0.13.1            # via -r requirements/ci.txt, -r requirements/quality.txt, diff-cover, pytest, tox
 polib==1.1.0              # via edx-i18n-tools
 psutil==5.7.3             # via -r requirements/quality.txt, edx-django-utils
-py==1.9.0                 # via -r requirements/ci.txt, -r requirements/quality.txt, pytest, tox
+py==1.10.0                # via -r requirements/ci.txt, -r requirements/quality.txt, pytest, tox
 pycodestyle==2.6.0        # via -r requirements/quality.txt
 pydocstyle==5.1.1         # via -r requirements/quality.txt
 pygments==2.7.3           # via diff-cover

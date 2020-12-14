@@ -29,12 +29,12 @@ markupsafe==1.1.1         # via -r requirements/test.txt, jinja2
 mccabe==0.6.1             # via pylint
 newrelic==5.22.1.152      # via -r requirements/test.txt, edx-django-utils
 oauthlib==3.1.0           # via -r requirements/test.txt, atlassian-python-api, requests-oauthlib
-packaging==20.7           # via -r requirements/test.txt, pytest
+packaging==20.8           # via -r requirements/test.txt, pytest
 pathlib2==2.3.5           # via -r requirements/test.txt, pytest
 pbr==5.5.1                # via -r requirements/test.txt, stevedore
 pluggy==0.13.1            # via -r requirements/test.txt, pytest
 psutil==5.7.3             # via -r requirements/test.txt, edx-django-utils
-py==1.9.0                 # via -r requirements/test.txt, pytest
+py==1.10.0                # via -r requirements/test.txt, pytest
 pycodestyle==2.6.0        # via -r requirements/quality.in
 pydocstyle==5.1.1         # via -r requirements/quality.in
 pylint-celery==0.3        # via edx-lint
