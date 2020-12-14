@@ -22,12 +22,12 @@ jinja2==2.11.2            # via -r requirements/base.txt, -r requirements/script
 markupsafe==1.1.1         # via -r requirements/base.txt, -r requirements/scripts.txt, jinja2
 newrelic==5.22.1.152      # via -r requirements/base.txt, -r requirements/scripts.txt, edx-django-utils
 oauthlib==3.1.0           # via -r requirements/scripts.txt, atlassian-python-api, requests-oauthlib
-packaging==20.7           # via pytest
+packaging==20.8           # via pytest
 pathlib2==2.3.5           # via pytest
 pbr==5.5.1                # via -r requirements/base.txt, -r requirements/scripts.txt, stevedore
 pluggy==0.13.1            # via pytest
 psutil==5.7.3             # via -r requirements/base.txt, -r requirements/scripts.txt, edx-django-utils
-py==1.9.0                 # via pytest
+py==1.10.0                # via pytest
 pyparsing==2.4.7          # via packaging
 pytest-cov==2.10.1        # via -r requirements/test.in
 pytest-django==4.1.0      # via -r requirements/test.in
