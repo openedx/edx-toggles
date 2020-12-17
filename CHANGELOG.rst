@@ -11,6 +11,12 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
+[1.2.1] - 2020-12-17
+~~~~~~~~~~~~~~~~~~~~
+
+* Improve monitoring of legacy Waffle class imports. We should watch for "edx_toggles.toggles.internal.waffle.legacy.WaffleSwitch" custom attributes.
+
+
 [1.2.0] - 2020-11-05
 ~~~~~~~~~~~~~~~~~~~~
 
