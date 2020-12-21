@@ -7,7 +7,6 @@ from edx_django_utils.monitoring import set_custom_attribute
 from ..base import BaseToggle
 
 
-# pylint: disable=abstract-method
 class BaseWaffle(BaseToggle):
     """
     Base waffle toggle class, which performs waffle name validation.
