@@ -5,15 +5,15 @@
 #    make upgrade
 #
 alabaster==0.7.12         # via sphinx
-atlassian-python-api==2.1.2  # via -r requirements/test.txt
+atlassian-python-api==2.2.0  # via -r requirements/test.txt
 attrs==20.3.0             # via -r requirements/test.txt, pytest
 babel==2.9.0              # via sphinx
 bleach==3.2.1             # via readme-renderer
 certifi==2020.12.5        # via -r requirements/test.txt, requests
-chardet==3.0.4            # via -r requirements/test.txt, doc8, requests
+chardet==4.0.0            # via -r requirements/test.txt, doc8, requests
 click==7.1.2              # via -r requirements/test.txt, code-annotations
 code-annotations==0.10.2  # via -r requirements/test.txt
-coverage==5.3             # via -r requirements/test.txt, pytest-cov
+coverage==5.3.1           # via -r requirements/test.txt, pytest-cov
 deprecated==1.2.10        # via -r requirements/test.txt, atlassian-python-api
 django-crum==0.7.9        # via -r requirements/test.txt, edx-django-utils
 django-waffle==2.0.0      # via -r requirements/test.txt, edx-django-utils
@@ -21,7 +21,7 @@ django==2.2.17            # via -c requirements/constraints.txt, -r requirements
 doc8==0.8.1               # via -r requirements/doc.in
 docutils==0.16            # via doc8, readme-renderer, restructuredtext-lint, sphinx
 edx-django-utils==3.13.0  # via -r requirements/test.txt
-edx-sphinx-theme==1.5.0   # via -r requirements/doc.in
+edx-sphinx-theme==1.6.0   # via -r requirements/doc.in
 idna==2.10                # via -r requirements/test.txt, requests
 imagesize==1.2.0          # via sphinx
 importlib-metadata==2.1.1  # via -r requirements/test.txt, pluggy, pytest
@@ -34,7 +34,7 @@ packaging==20.8           # via -r requirements/test.txt, bleach, pytest, sphinx
 pathlib2==2.3.5           # via -r requirements/test.txt, pytest
 pbr==5.5.1                # via -r requirements/test.txt, stevedore
 pluggy==0.13.1            # via -r requirements/test.txt, pytest
-psutil==5.7.3             # via -r requirements/test.txt, edx-django-utils
+psutil==5.8.0             # via -r requirements/test.txt, edx-django-utils
 py==1.10.0                # via -r requirements/test.txt, pytest
 pygments==2.7.3           # via doc8, readme-renderer, sphinx
 pyparsing==2.4.7          # via -r requirements/test.txt, packaging
@@ -46,11 +46,11 @@ pytz==2020.4              # via -r requirements/test.txt, babel, django
 pyyaml==5.3.1             # via -r requirements/test.txt, code-annotations
 readme-renderer==28.0     # via -r requirements/doc.in
 requests-oauthlib==1.3.0  # via -r requirements/test.txt, atlassian-python-api
-requests==2.25.0          # via -r requirements/test.txt, atlassian-python-api, requests-oauthlib, sphinx
+requests==2.25.1          # via -r requirements/test.txt, atlassian-python-api, requests-oauthlib, sphinx
 restructuredtext-lint==1.3.2  # via doc8
 six==1.15.0               # via -r requirements/test.txt, atlassian-python-api, bleach, doc8, edx-sphinx-theme, pathlib2, readme-renderer, stevedore
 snowballstemmer==2.0.0    # via sphinx
-sphinx==3.3.1             # via -r requirements/doc.in, edx-sphinx-theme
+sphinx==3.4.0             # via -r requirements/doc.in, edx-sphinx-theme
 sphinxcontrib-applehelp==1.0.2  # via sphinx
 sphinxcontrib-devhelp==1.0.2  # via sphinx
 sphinxcontrib-htmlhelp==1.0.3  # via sphinx
