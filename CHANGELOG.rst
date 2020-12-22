@@ -11,6 +11,15 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
+[1.2.2] - 2020-12-22
+~~~~~~~~~~~~~~~~~~~~
+
+More improvements to monitoring of legacy waffle class imports.
+
+* Add ``deprecated_incompatible_legacy_waffle_class`` custom attribute to any class (including subclasses), using the backward-incompatible imports that will be removed in 2.0.0.
+* Add ``deprecated_compatible_legacy_waffle_class`` custom attribute to any class (including subclasses) using the legacy classes compatible with 2.0.0 imports, but which should be removed in 3.0.0 (or some future major version).
+* Remove ``deprecated_edx_toggles_waffle`` custom attribute. In two cases, it was replaced by the new ``*_legacy_waffle_class`` custom attributes.  In one case, it was replaced with the already existing and more appropriate ``deprecated_waffle_legacy_method`` custom attribute.
+
 [1.2.1] - 2020-12-17
 ~~~~~~~~~~~~~~~~~~~~
 

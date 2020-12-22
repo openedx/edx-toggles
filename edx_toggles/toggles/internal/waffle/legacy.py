@@ -32,7 +32,32 @@ from .flag import WaffleFlag as NewWaffleFlag
 from .switch import WaffleSwitch as NewWaffleSwitch
 
 
-class BaseNamespace(ABC):
+class LegacyToggleMonitoringMixin():
+    """
+    Enables monitoring of legacy waffle classes.
+
+    In preparation for 2.0.0, we can ensure none of the backward-incompatible
+    imports are used. In preparation for 3.0.0, we can ensure the legacy
+    classes are no longer used altogether.
+    """
+    def _set_legacy_custom_attribute(self):
+        """
+        Example custom attribute:
+            deprecated_incompatible_legacy_waffle_class=
+                edx_toggles.toggles.internal.waffle.legacy.WaffleSwitch[sample_toggle]
+        """
+        set_custom_attribute(
+            self._get_legacy_custom_attribute_name(),
+            "{}.{}[{}]".format(
+                self.__class__.__module__, self.__class__.__name__, self.name,
+            )
+        )
+
+    def _get_legacy_custom_attribute_name(self):
+        return 'deprecated_incompatible_legacy_waffle_class'
+
+
+class BaseNamespace(ABC, LegacyToggleMonitoringMixin):
     """
     A base class for a request cached namespace for waffle flags/switches.
 
@@ -59,6 +84,7 @@ class BaseNamespace(ABC):
         assert name, "The name is required."
         self.name = name
         self.log_prefix = log_prefix if log_prefix else ""
+        self._set_legacy_custom_attribute()
 
     def _namespaced_name(self, toggle_name):
         """
@@ -94,7 +120,7 @@ class WaffleSwitchNamespace(BaseNamespace):
         NewWaffleSwitch(namespaced_name, __name__)._cached_switches[namespaced_name] = value
 
 
-class WaffleSwitch(NewWaffleSwitch):
+class WaffleSwitch(NewWaffleSwitch, LegacyToggleMonitoringMixin):
     """
     Represents a single waffle switch, enhanced with request level caching.
     """
@@ -102,11 +128,11 @@ class WaffleSwitch(NewWaffleSwitch):
     def __init__(self, waffle_namespace, switch_name, module_name=None):
         if not isinstance(waffle_namespace, str):
             waffle_namespace = waffle_namespace.name
-        set_custom_attribute("deprecated_edx_toggles_waffle", "WaffleSwitch")
 
         self._switch_name = switch_name
         name = "{}.{}".format(waffle_namespace, switch_name)
         super().__init__(name, module_name=module_name)
+        self._set_legacy_custom_attribute()
 
     @property
     def switch_name(self):
@@ -149,7 +175,8 @@ class WaffleFlagNamespace(BaseNamespace):
         Monitoring method preserved for backward compatibility. You should use `WaffleFlag.set_monitor_value` instead.
         """
         set_custom_attribute(
-            "deprecated_edx_toggles_waffle", "WaffleFlagNamespace._monitor_value"
+            "deprecated_waffle_legacy_method",
+            "WaffleFlagNamespace[{}]._monitor_value".format(self.name),
         )
         return NewWaffleFlag(
             self._namespaced_name(flag_name), module_name=__name__
@@ -167,13 +194,12 @@ class WaffleFlagNamespace(BaseNamespace):
         return NewWaffleFlag.cached_flags()
 
 
-class WaffleFlag(NewWaffleFlag):
+class WaffleFlag(NewWaffleFlag, LegacyToggleMonitoringMixin):
     """
     Legacy namespaced waffle flag preserved for backward compatibility.
     """
 
     def __init__(self, waffle_namespace, flag_name, module_name=None):
-        set_custom_attribute("deprecated_edx_toggles_waffle", "WaffleFlag")
         log_prefix = ""
         if not isinstance(waffle_namespace, str):
             log_prefix = waffle_namespace.log_prefix or log_prefix
@@ -183,6 +209,7 @@ class WaffleFlag(NewWaffleFlag):
         self._flag_name = flag_name
         name = "{}.{}".format(waffle_namespace, flag_name)
         super().__init__(name, module_name=module_name, log_prefix=log_prefix)
+        self._set_legacy_custom_attribute()
 
     @property
     def flag_name(self):
