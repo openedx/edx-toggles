@@ -9,16 +9,20 @@ from .internal.waffle.legacy import WaffleFlag, WaffleFlagNamespace, WaffleSwitc
 # We create new classes instead of using `LegacyClass = Class` statements
 # for better monitoring of legacy class usage.
 class LegacyWaffleFlag(WaffleFlag):
-    pass
+    def _get_legacy_custom_attribute_name(self):
+        return 'deprecated_compatible_legacy_waffle_class'
 
 
 class LegacyWaffleFlagNamespace(WaffleFlagNamespace):
-    pass
+    def _get_legacy_custom_attribute_name(self):
+        return 'deprecated_compatible_legacy_waffle_class'
 
 
 class LegacyWaffleSwitch(WaffleSwitch):
-    pass
+    def _get_legacy_custom_attribute_name(self):
+        return 'deprecated_compatible_legacy_waffle_class'
 
 
 class LegacyWaffleSwitchNamespace(WaffleSwitchNamespace):
-    pass
+    def _get_legacy_custom_attribute_name(self):
+        return 'deprecated_compatible_legacy_waffle_class'
