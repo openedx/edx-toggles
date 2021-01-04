@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-atlassian-python-api==2.3.0  # via -r requirements/scripts.txt
+atlassian-python-api==2.4.3  # via -r requirements/scripts.txt
 attrs==20.3.0             # via pytest
 certifi==2020.12.5        # via -r requirements/scripts.txt, requests
 chardet==4.0.0            # via -r requirements/scripts.txt, requests
