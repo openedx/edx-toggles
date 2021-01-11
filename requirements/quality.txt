@@ -8,7 +8,7 @@ astroid==2.4.2
     # via
     #   pylint
     #   pylint-celery
-atlassian-python-api==2.4.4
+atlassian-python-api==2.5.0
     # via -r requirements/test.txt
 attrs==20.3.0
     # via
