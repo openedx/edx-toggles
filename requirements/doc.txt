@@ -6,7 +6,7 @@
 #
 alabaster==0.7.12
     # via sphinx
-atlassian-python-api==2.4.4
+atlassian-python-api==2.5.0
     # via -r requirements/test.txt
 attrs==20.3.0
     # via
@@ -182,7 +182,7 @@ six==1.15.0
     #   stevedore
 snowballstemmer==2.0.0
     # via sphinx
-sphinx==3.4.2
+sphinx==3.4.3
     # via
     #   -r requirements/doc.in
     #   edx-sphinx-theme

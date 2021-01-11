@@ -13,7 +13,7 @@ astroid==2.4.2
     #   -r requirements/quality.txt
     #   pylint
     #   pylint-celery
-atlassian-python-api==2.4.4
+atlassian-python-api==2.5.0
     # via -r requirements/quality.txt
 attrs==20.3.0
     # via
@@ -55,7 +55,7 @@ deprecated==1.2.10
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
-diff-cover==4.0.1
+diff-cover==4.1.1
     # via -r requirements/dev.in
 distlib==0.3.1
     # via
@@ -290,7 +290,7 @@ toml==0.10.2
     #   tox
 tox-battery==0.6.1
     # via -r requirements/ci.txt
-tox==3.20.1
+tox==3.21.0
     # via
     #   -r requirements/ci.txt
     #   tox-battery
@@ -303,7 +303,7 @@ urllib3==1.26.2
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-virtualenv==20.2.2
+virtualenv==20.3.0
     # via
     #   -r requirements/ci.txt
     #   tox
