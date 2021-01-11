@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import os
 import re
 import yaml
@@ -98,14 +96,14 @@ def main(annotations_dir, toggle_data_dir, output_file_path, env, toggle_type, v
         if env_name_search:
             env_data_paths.append((toggle_data_dir, env_name_search.group('env')))
         else:
-            raise Exception('Directory at {} does not match required structure, see readme for more info'.format(toggle_data_dir))
+            raise Exception(f'Directory at {toggle_data_dir} does not match required structure, see readme for more info')
 
     idas = {}
     for env_data_path, env_name in env_data_paths:
         # if an env is specified in requested_envs, filter out everyother env
         # if no env is specified, assume all envs are valid
         if requested_envs and env_name not in requested_envs:
-            LOGGER.debug("Skip reading toggle state data for {} env".format(env_name))
+            LOGGER.debug(f"Skip reading toggle state data for {env_name} env")
             continue
 
         # add data for each ida

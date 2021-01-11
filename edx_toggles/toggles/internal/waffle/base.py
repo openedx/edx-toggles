@@ -27,14 +27,14 @@ class BaseWaffle(BaseToggle):
         if not module_name:
             set_custom_attribute(
                 "deprecated_module_not_supplied",
-                "{}[{}]".format(self.__class__.__name__, self.name),
+                f"{self.__class__.__name__}[{self.name}]",
             )
         # Temporarily set a custom attribute to help track usage of the legacy classes.
         # Example: edx_toggles.toggles.internal.waffle.legacy=WaffleFlag[some.flag]
         # TODO: Remove this custom attribute once internal.waffle.legacy has been removed.
         set_custom_attribute(
             self.__class__.__module__,
-            "{}[{}]".format(self.__class__.__name__, self.name),
+            f"{self.__class__.__name__}[{self.name}]",
         )
 
     @classmethod

@@ -31,7 +31,7 @@ class ToggleTypes():
 
         if toggle_type not in cls.valid_toggle_types:
             LOGGER.warning(
-            'Name of annotation toggle type not recognized: {}'.format(toggle_type)
+            f'Name of annotation toggle type not recognized: {toggle_type}'
             )
         return toggle_type
 
@@ -92,7 +92,7 @@ class Toggle:
             self.annotations._prepare_annotation_data()
             output.update(self.annotations._cleaned_annotation_data)
         else:
-            LOGGER.debug("{} Toggle's annotations is None".format(self.name))
+            LOGGER.debug(f"{self.name} Toggle's annotations is None")
         return output
 
     def get_state_summary(self):
@@ -109,8 +109,8 @@ class Toggle:
         envs_states=[]
         for datum in data:
             env_name = datum["env_name"]
-            summary["computed_status_{}".format(env_name)] = datum.get("computed_status", datum.get("is_active", None))
-            envs_states.append(summary["computed_status_{}".format(env_name)])
+            summary[f"computed_status_{env_name}"] = datum.get("computed_status", datum.get("is_active", None))
+            envs_states.append(summary[f"computed_status_{env_name}"])
             if "code_owner" in datum:
                 summary["code_owner"] = datum["code_owner"]
         if len(data) > 1:
@@ -119,7 +119,7 @@ class Toggle:
         return summary
 
 
-class ToggleAnnotation(object):
+class ToggleAnnotation:
     """
     Represents a group of individual code annotations all referencing the same
     Toggle.
@@ -148,7 +148,7 @@ class ToggleAnnotation(object):
                 self._cleaned_annotation_data[k] = v
 
 
-class ToggleState(object):
+class ToggleState:
     """
     Represents the state of a feature toggle, configured within an IDA,
     as pulled from the IDA's database.
@@ -200,7 +200,7 @@ class ToggleState(object):
 
     def _prepare_state_data(self):
         def _format_date(date_string):
-            pattern = re.compile("(\.[0-9]*)?\+[0-9]*\:[0-9]*$")
+            pattern = re.compile(r"(\.[0-9]*)?\+[0-9]*\:[0-9]*$")
             pattern_match = pattern.search(date_string)
             if pattern_match:
                 date_string = date_string.replace(pattern_match.group(0), "")
@@ -209,7 +209,7 @@ class ToggleState(object):
             date = date_time_obj.date()
             time = date_time_obj.time()
 
-            return "{} {}".format(date, time)
+            return f"{date} {time}"
         def null_or_number(n): return n if isinstance(n, int) else 0
 
         for k, v in self._raw_state_data.items():

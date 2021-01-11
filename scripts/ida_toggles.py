@@ -18,7 +18,7 @@ LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 
-class IDA(object):
+class IDA:
     """ Represents an independently deployed application. """
 
     def __init__(self, name, configuration=None):
@@ -47,12 +47,12 @@ class IDA(object):
         feature toggle type in an IDA, parse out the information relevant
         to each toggle and add it to this IDA.
         """
-        with io.open(state_data_path) as data_file:
+        with open(state_data_path) as data_file:
             try:
                 state_data = json.loads(data_file.read())
             except:
                 LOGGER.error(
-                'Loading json file at: {} failed, check toggle data in file is formatted correctly'.format(state_data_path)
+                f'Loading json file at: {state_data_path} failed, check toggle data in file is formatted correctly'
                 )
                 raise
         self._add_toggle_data(state_data, env_name)
@@ -73,7 +73,7 @@ class IDA(object):
                 toggle = self._get_or_create_toggle_and_state(toggle_type, toggle_name, toggle_data, env_name)
 
         LOGGER.info(
-            'Finished collecting toggle state for {}'.format(self.name)
+            f'Finished collecting toggle state for {self.name}'
         )
         for toggle_type in self.toggles.keys():
             LOGGER.info(
@@ -111,11 +111,11 @@ class IDA(object):
         """
         if not self.annotation_report_path:
             return
-        with io.open(self.annotation_report_path, 'r') as annotation_file:
+        with open(self.annotation_report_path, 'r') as annotation_file:
             annotation_contents = yaml.safe_load(annotation_file.read())
             self._add_annotation_data_to_toggle_state(annotation_contents)
         LOGGER.info(
-            'Finished collecting annotations for {}'.format(self.name)
+            f'Finished collecting annotations for {self.name}'
         )
         for toggle_type in self.toggles.keys():
             # count number of toggles that have annotations
@@ -141,7 +141,7 @@ class IDA(object):
             Given a list of annotations (dictionaries), get the
             `annotation_data` associated with a specified `annotation_token`.
             """
-            token = '.. toggle_{}:'.format(annotation_token)
+            token = f'.. toggle_{annotation_token}:'
             data = None
             for annotation in annotations:
                 if annotation['annotation_token'] == token:
@@ -157,7 +157,7 @@ class IDA(object):
             based on their 'report_group_id'.
             """
             groups = []
-            for i in set(a['report_group_id'] for a in annotations):
+            for i in {a['report_group_id'] for a in annotations}:
                 group = list(filter(
                     lambda a: a['report_group_id'] == i, annotations
                 ))

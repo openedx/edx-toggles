@@ -48,9 +48,9 @@ class CsvRenderer():
             toggle_dict_info.pop("state", None)
             toggle_dict_info.pop("annotations", None)
             for key in datum["state"].keys():
-                toggle_dict_info["{}_s".format(key)] = datum["state"][key]
+                toggle_dict_info[f"{key}_s"] = datum["state"][key]
             for key in datum["annotations"].keys():
-                toggle_dict_info["{}_a".format(key)] = datum["annotations"][key]
+                toggle_dict_info[f"{key}_a"] = datum["annotations"][key]
             temp_data.append(toggle_dict_info)
         return temp_data
 
