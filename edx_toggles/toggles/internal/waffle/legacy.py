@@ -32,7 +32,7 @@ from .flag import WaffleFlag as NewWaffleFlag
 from .switch import WaffleSwitch as NewWaffleSwitch
 
 
-class LegacyToggleMonitoringMixin():
+class LegacyToggleMonitoringMixin:
     """
     Enables monitoring of legacy waffle classes.
 
@@ -40,6 +40,7 @@ class LegacyToggleMonitoringMixin():
     imports are used. In preparation for 3.0.0, we can ensure the legacy
     classes are no longer used altogether.
     """
+
     def _set_legacy_custom_attribute(self):
         """
         Example custom attribute:
@@ -49,12 +50,14 @@ class LegacyToggleMonitoringMixin():
         set_custom_attribute(
             self._get_legacy_custom_attribute_name(),
             "{}.{}[{}]".format(
-                self.__class__.__module__, self.__class__.__name__, self.name,
-            )
+                self.__class__.__module__,
+                self.__class__.__name__,
+                self.name,
+            ),
         )
 
     def _get_legacy_custom_attribute_name(self):
-        return 'deprecated_incompatible_legacy_waffle_class'
+        return "deprecated_incompatible_legacy_waffle_class"
 
 
 class BaseNamespace(ABC, LegacyToggleMonitoringMixin):
@@ -108,7 +111,9 @@ class WaffleSwitchNamespace(BaseNamespace):
         """
         Returns whether or not the switch is enabled.
         """
-        return NewWaffleSwitch(self._namespaced_name(switch_name), __name__).is_enabled()
+        return NewWaffleSwitch(
+            self._namespaced_name(switch_name), __name__
+        ).is_enabled()
 
     def set_request_cache_with_short_name(self, switch_name, value):
         """
@@ -117,7 +122,9 @@ class WaffleSwitchNamespace(BaseNamespace):
         """
         namespaced_name = self._namespaced_name(switch_name)
         # pylint: disable=protected-access
-        NewWaffleSwitch(namespaced_name, __name__)._cached_switches[namespaced_name] = value
+        NewWaffleSwitch(namespaced_name, __name__)._cached_switches[
+            namespaced_name
+        ] = value
 
 
 class WaffleSwitch(NewWaffleSwitch, LegacyToggleMonitoringMixin):
