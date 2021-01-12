@@ -5,7 +5,6 @@ import logging
 from weakref import WeakSet
 
 import crum
-from django.conf import settings
 from edx_django_utils.monitoring import set_custom_attribute
 from waffle import flag_is_active
 
@@ -32,13 +31,8 @@ class WaffleFlag(BaseWaffle):
     def is_enabled(self):
         """
         Returns whether or not the flag is enabled.
-
-        Child classes that override this method should ensure that `set_monitor_value` is called for any
-        case not calling ``super().is_enabled()``.
         """
-        value = self._get_flag_active()
-        self.set_monitor_value(value)
-        return value
+        return self._get_flag_active()
 
     @staticmethod
     def cached_flags():
@@ -92,13 +86,15 @@ class WaffleFlag(BaseWaffle):
         set_custom_attribute("warn_flag_no_request_return_value", value)
         return value
 
-    def set_monitor_value(self, value):
+    def set_monitor_value(self, _value):
         """
-        Send waffle flag value to monitoring. We keep this method such that it can be called by child classes (such as
-        edx-platform's waffle_utils.CourseWaffleFlag). A child class is expected to call this method if it is
-        overriding `is_enabled`, and has cases where it is not calling `super().is_enabled()`.
+        This used to send waffle flag values to monitoring, but is now a no-op. This method is preserved for backward
+        compatibility.
         """
-        _set_waffle_flag_attribute(self.name, value)
+        set_custom_attribute(
+            "deprecated_waffle_method",
+            "WaffleFlag[{}].set_monitor_value".format(self.name),
+        )
 
 
 class NonNamespacedWaffleFlag(WaffleFlag):
@@ -126,55 +122,3 @@ def _is_flag_active_for_everyone(flag_name):
         return waffle_flag.everyone is True
     except Flag.DoesNotExist:
         return False
-
-
-def _set_waffle_flag_attribute(name, value):
-    """
-    For any flag name in settings.WAFFLE_FLAG_CUSTOM_ATTRIBUTES, add name/value
-    to cached values and set custom attribute if the value changed.
-
-    Important: Remember to configure ``WAFFLE_FLAG_CUSTOM_ATTRIBUTES`` for
-    LMS, Studio and Workers in order to see waffle flag usage in all
-    edx-platform environments.
-
-    .. setting_name: WAFFLE_FLAG_CUSTOM_ATTRIBUTES
-    .. setting_default: False
-    .. setting_description: A set of waffle flags to track with custom attributes having
-      values of (True, False, or Both). The name of the custom attribute will have the prefix ``flag_`` and the suffix
-      will match the name of the flag. The value of the custom attribute could be False, True, or Both.
-
-      The value Both would mean that the flag had both a True and False value at different times during the
-      transaction. This is most likely due to happen in WaffleFlag child classes, such as edx-platform's
-      waffle_utils.CourseWaffleFlag.
-
-      An example NewRelic query to see the values of a flag in different environments, if your waffle flag was named
-      ``my.waffle.flag`` might look like::
-
-        SELECT count(*) FROM Transaction
-        WHERE flag_my.waffle.flag IS NOT NULL
-        FACET appName, flag_my.waffle.flag
-
-    .. setting_warning: This setting should be a python set() for optimized performances. This will also work if it is
-       a list, but it might be less performant.
-    """
-    custom_attributes = getattr(settings, "WAFFLE_FLAG_CUSTOM_ATTRIBUTES", None) or []
-    if name not in custom_attributes:
-        return
-
-    flag_attribute_data = _get_waffle_request_cache().setdefault("flag_attribute", {})
-    is_value_changed = True
-    if name not in flag_attribute_data:
-        # New flag
-        flag_attribute_data[name] = str(value)
-    else:
-        # Existing flag
-        if flag_attribute_data[name] == str(value):
-            # Same value
-            is_value_changed = False
-        else:
-            # New value
-            flag_attribute_data[name] = "Both"
-
-    if is_value_changed:
-        attribute_name = "flag_{}".format(name)
-        set_custom_attribute(attribute_name, flag_attribute_data[name])

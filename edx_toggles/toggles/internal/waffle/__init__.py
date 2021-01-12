@@ -21,7 +21,4 @@ To test these WaffleFlags, see edx_toggles.toggles.testutils.
 
 In the above examples, you will use Django Admin "waffle" section to configure
 for a flag named: my_namespace.some_course_feature
-
-Also see ``WAFFLE_FLAG_CUSTOM_ATTRIBUTES`` and docstring for _set_waffle_flag_attribute
-for temporarily instrumenting/monitoring waffle flag usage.
 """
