@@ -30,6 +30,7 @@ class WaffleSwitch(BaseWaffle):
     def _cached_switches(self):
         """
         Return a dictionary of all namespaced switches in the request cache.
+        Note that this property might be used elsewhere, in edx-platform for instance (although it probably shouldn't).
         """
         return _get_waffle_request_cache().setdefault("switches", {})
 
