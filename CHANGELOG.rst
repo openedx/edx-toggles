@@ -11,6 +11,12 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
+[2.1.0] - 2021-01-12
+~~~~~~~~~~~~~~~~~~~~
+
+* Stop monitoring waffle flag values via ``WaffleFlag.set_monitor_value`` calls. The deprecated method is preserved for backward compatibility.
+
+
 [2.0.0] - 2020-11-05
 ~~~~~~~~~~~~~~~~~~~~
 

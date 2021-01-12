@@ -177,17 +177,15 @@ class WaffleFlagNamespace(BaseNamespace):
             self._namespaced_name(flag_name), module_name=__name__
         ).is_enabled()
 
-    def _monitor_value(self, flag_name, value):
+    def _monitor_value(self, _flag_name, _value):
         """
-        Monitoring method preserved for backward compatibility. You should use `WaffleFlag.set_monitor_value` instead.
+        Monitoring method preserved for backward compatibility. This is a no-op now that `WaffleFlag.set_monitor_value`
+        is deprecated.
         """
         set_custom_attribute(
             "deprecated_waffle_legacy_method",
             "WaffleFlagNamespace[{}]._monitor_value".format(self.name),
         )
-        return NewWaffleFlag(
-            self._namespaced_name(flag_name), module_name=__name__
-        ).set_monitor_value(value)
 
     @property
     def _cached_flags(self):
