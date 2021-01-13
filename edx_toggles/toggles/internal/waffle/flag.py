@@ -5,7 +5,6 @@ import logging
 from weakref import WeakSet
 
 import crum
-from edx_django_utils.monitoring import set_custom_attribute
 from waffle import flag_is_active
 
 from .base import BaseWaffle
@@ -83,18 +82,7 @@ class WaffleFlag(BaseWaffle):
             self.name,
         )
         value = _is_flag_active_for_everyone(self.name)
-        set_custom_attribute("warn_flag_no_request_return_value", value)
         return value
-
-    def set_monitor_value(self, _value):
-        """
-        This used to send waffle flag values to monitoring, but is now a no-op. This method is preserved for backward
-        compatibility.
-        """
-        set_custom_attribute(
-            "deprecated_waffle_method",
-            "WaffleFlag[{}].set_monitor_value".format(self.name),
-        )
 
 
 class NonNamespacedWaffleFlag(WaffleFlag):

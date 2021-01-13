@@ -28,39 +28,11 @@ from abc import ABC
 
 from edx_django_utils.monitoring import set_custom_attribute
 
-from .flag import WaffleFlag as NewWaffleFlag
-from .switch import WaffleSwitch as NewWaffleSwitch
+from .flag import WaffleFlag
+from .switch import WaffleSwitch
 
 
-class LegacyToggleMonitoringMixin:
-    """
-    Enables monitoring of legacy waffle classes.
-
-    In preparation for 2.0.0, we can ensure none of the backward-incompatible
-    imports are used. In preparation for 3.0.0, we can ensure the legacy
-    classes are no longer used altogether.
-    """
-
-    def _set_legacy_custom_attribute(self):
-        """
-        Example custom attribute:
-            deprecated_incompatible_legacy_waffle_class=
-                edx_toggles.toggles.internal.waffle.legacy.WaffleSwitch[sample_toggle]
-        """
-        set_custom_attribute(
-            self._get_legacy_custom_attribute_name(),
-            "{}.{}[{}]".format(
-                self.__class__.__module__,
-                self.__class__.__name__,
-                self.name,
-            ),
-        )
-
-    def _get_legacy_custom_attribute_name(self):
-        return "deprecated_incompatible_legacy_waffle_class"
-
-
-class BaseNamespace(ABC, LegacyToggleMonitoringMixin):
+class BaseNamespace(ABC):
     """
     A base class for a request cached namespace for waffle flags/switches.
 
@@ -80,14 +52,15 @@ class BaseNamespace(ABC, LegacyToggleMonitoringMixin):
                 (e.g. "Grades: "). Defaults to ''.
 
         """
-        set_custom_attribute(
-            self.__class__.__module__,
-            f"{self.__class__.__name__}[{name}]",
-        )
         assert name, "The name is required."
         self.name = name
         self.log_prefix = log_prefix if log_prefix else ""
-        self._set_legacy_custom_attribute()
+        set_custom_attribute(
+            "deprecated_legacy_waffle_class",
+            "{}.{}[{}]".format(
+                self.__class__.__module__, self.__class__.__name__, self.name
+            ),
+        )
 
     def _namespaced_name(self, toggle_name):
         """
@@ -102,7 +75,7 @@ class BaseNamespace(ABC, LegacyToggleMonitoringMixin):
         return f"{self.name}.{toggle_name}"
 
 
-class WaffleSwitchNamespace(BaseNamespace):
+class LegacyWaffleSwitchNamespace(BaseNamespace):
     """
     Legacy waffle switch namespace class.
     """
@@ -111,9 +84,7 @@ class WaffleSwitchNamespace(BaseNamespace):
         """
         Returns whether or not the switch is enabled.
         """
-        return NewWaffleSwitch(
-            self._namespaced_name(switch_name), __name__
-        ).is_enabled()
+        return WaffleSwitch(self._namespaced_name(switch_name), __name__).is_enabled()
 
     def set_request_cache_with_short_name(self, switch_name, value):
         """
@@ -122,12 +93,12 @@ class WaffleSwitchNamespace(BaseNamespace):
         """
         namespaced_name = self._namespaced_name(switch_name)
         # pylint: disable=protected-access
-        NewWaffleSwitch(namespaced_name, __name__)._cached_switches[
+        WaffleSwitch(namespaced_name, __name__)._cached_switches[
             namespaced_name
         ] = value
 
 
-class WaffleSwitch(NewWaffleSwitch, LegacyToggleMonitoringMixin):
+class LegacyWaffleSwitch(WaffleSwitch):
     """
     Represents a single waffle switch, enhanced with request level caching.
     """
@@ -139,32 +110,15 @@ class WaffleSwitch(NewWaffleSwitch, LegacyToggleMonitoringMixin):
         self._switch_name = switch_name
         name = f"{waffle_namespace}.{switch_name}"
         super().__init__(name, module_name=module_name)
-        self._set_legacy_custom_attribute()
-
-    @property
-    def switch_name(self):
-        """
-        Non-namespaced switch_name attribute preserved for backward compatibility.
-        """
         set_custom_attribute(
-            "deprecated_waffle_legacy_method",
-            f"WaffleSwitch[{self.name}].switch_name",
+            "deprecated_legacy_waffle_class",
+            "{}.{}[{}]".format(
+                self.__class__.__module__, self.__class__.__name__, self.name
+            ),
         )
-        return self._switch_name
-
-    @property
-    def namespaced_switch_name(self):
-        """
-        This is now equivalent to the switch name.
-        """
-        set_custom_attribute(
-            "deprecated_waffle_legacy_method",
-            f"WaffleSwitch[{self.name}].namespaced_switch_name",
-        )
-        return self.name
 
 
-class WaffleFlagNamespace(BaseNamespace):
+class LegacyWaffleFlagNamespace(BaseNamespace):
     """
     Legacy namespace class preserved for backward compatibility.
     """
@@ -173,33 +127,19 @@ class WaffleFlagNamespace(BaseNamespace):
         """
         Returns and caches whether the provided flag is active.
         """
-        return NewWaffleFlag(
+        return WaffleFlag(
             self._namespaced_name(flag_name), module_name=__name__
         ).is_enabled()
-
-    def _monitor_value(self, _flag_name, _value):
-        """
-        Monitoring method preserved for backward compatibility. This is a no-op now that `WaffleFlag.set_monitor_value`
-        is deprecated.
-        """
-        set_custom_attribute(
-            "deprecated_waffle_legacy_method",
-            f"WaffleFlagNamespace[{self.name}]._monitor_value",
-        )
 
     @property
     def _cached_flags(self):
         """
         Legacy property used by CourseWaffleFlag.
         """
-        set_custom_attribute(
-            "deprecated_waffle_legacy_method",
-            f"WaffleFlagNamespace[{self.name}]._cached_flags",
-        )
-        return NewWaffleFlag.cached_flags()
+        return WaffleFlag.cached_flags()
 
 
-class WaffleFlag(NewWaffleFlag, LegacyToggleMonitoringMixin):
+class LegacyWaffleFlag(WaffleFlag):
     """
     Legacy namespaced waffle flag preserved for backward compatibility.
     """
@@ -214,37 +154,9 @@ class WaffleFlag(NewWaffleFlag, LegacyToggleMonitoringMixin):
         self._flag_name = flag_name
         name = f"{waffle_namespace}.{flag_name}"
         super().__init__(name, module_name=module_name, log_prefix=log_prefix)
-        self._set_legacy_custom_attribute()
-
-    @property
-    def flag_name(self):
-        """
-        Non-namespaced flag_name attribute preserved for backward compatibility.
-        """
         set_custom_attribute(
-            "deprecated_waffle_legacy_method",
-            f"WaffleFlag[{self.name}].flag_name",
+            "deprecated_legacy_waffle_class",
+            "{}.{}[{}]".format(
+                self.__class__.__module__, self.__class__.__name__, self.name
+            ),
         )
-        return self._flag_name
-
-    @property
-    def namespaced_flag_name(self):
-        """
-        Preserved for backward compatibility.
-        """
-        set_custom_attribute(
-            "deprecated_waffle_legacy_method",
-            f"WaffleFlag[{self.name}].namespaced_flag_name",
-        )
-        return self.name
-
-    @property
-    def waffle_namespace(self):
-        """
-        Preserved for backward compatibility.
-        """
-        set_custom_attribute(
-            "deprecated_waffle_legacy_method",
-            f"WaffleFlag[{self.name}].waffle_namespace",
-        )
-        return WaffleFlagNamespace(self.name.split(".")[0], log_prefix=self.log_prefix)

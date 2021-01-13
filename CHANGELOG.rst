@@ -14,12 +14,23 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[4.0.0] - 2021-01-24
+~~~~~~~~~~~~~~~~~~~~
+
+* BREAKING CHANGE: Remove now unnecessary ``edx_toggles.toggles.__future__`` module.
+* BREAKING CHANGE: Remove the following methods and properties: ``LegacyWaffleFlagNamespace.set_monitor_value``,  ``LegacyWaffleSwitch.switch_name``, ``LegacyWaffleSwitch.namespaced_switch_name``, ``LegacyWaffleFlag.flag_name``, ``LegacyWaffleFlag.namespaced_flag_name``, ``LegacyWaffleFlag.waffle_namespace``.
+* BREAKING CHANGE: Remove ``LegacyWaffleFlagNamespace._set_monitor_value`` method
+* Monitoring:
+
+    * Add the following custom attribute: "deprecated_legacy_waffle_class"
+    * Remove the following custom attributes: "deprecated_module_not_supplied", "warn_flag_no_request_return_value", "deprecated_waffle_method", "deprecated_waffle_legacy_method", "deprecated_compatible_legacy_waffle_class".
+* Rename ``toggles.internal.legacy.Waffle*`` classes to ``toggles.internal.legacy.LegacyWaffle*``.
+
 [3.1.0] - 2021-01-18
 ~~~~~~~~~~~~~~~~~~~~
 
 * Dropped support for ``Python3.5``.
 * Fix ``toggle_type`` column value from the toggle state report for the ``SettingToggle`` and ``SettingDictToggle`` classes: the column is now set to "django_settings".
-
 
 [2.1.0] - 2021-01-12
 ~~~~~~~~~~~~~~~~~~~~

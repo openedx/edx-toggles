@@ -2,8 +2,6 @@
 Base waffle toggle classes.
 """
 
-from edx_django_utils.monitoring import set_custom_attribute
-
 from ..base import BaseToggle
 
 
@@ -23,19 +21,6 @@ class BaseWaffle(BaseToggle):
         """
         self.validate_name(name)
         super().__init__(name, default=False, module_name=module_name)
-        # Temporarily track usage of undefined module names
-        if not module_name:
-            set_custom_attribute(
-                "deprecated_module_not_supplied",
-                f"{self.__class__.__name__}[{self.name}]",
-            )
-        # Temporarily set a custom attribute to help track usage of the legacy classes.
-        # Example: edx_toggles.toggles.internal.waffle.legacy=WaffleFlag[some.flag]
-        # TODO: Remove this custom attribute once internal.waffle.legacy has been removed.
-        set_custom_attribute(
-            self.__class__.__module__,
-            f"{self.__class__.__name__}[{self.name}]",
-        )
 
     @classmethod
     def validate_name(cls, name):
