@@ -11,6 +11,12 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
+Unreleased
+~~~~~~~~~~
+
+* Fix ``toggle_type`` column value from the toggle state report for the ``SettingToggle`` and ``SettingDictToggle`` classes: the column is now set to "django_settings".
+
+
 [2.1.0] - 2021-01-12
 ~~~~~~~~~~~~~~~~~~~~
 
