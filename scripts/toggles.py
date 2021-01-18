@@ -17,6 +17,8 @@ class ToggleTypes():
             "CourseWaffleFlag": "waffle_flags",
             "ExperimentWaffleFlag": "waffle_flags",
             "DjangoSetting": "django_settings",
+            "SettingDictToggle": "django_settings",
+            "SettingToggle": "django_settings",
             "WaffleFlag": "waffle_flags",
             "WaffleSwitch": "waffle_switches",
         }
