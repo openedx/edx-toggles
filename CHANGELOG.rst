@@ -14,6 +14,10 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[3.1.0] - 2021-01-18
+~~~~~~~~~~~~~~~~~~~~
+
+* Dropped support for ``Python3.5``.
 * Fix ``toggle_type`` column value from the toggle state report for the ``SettingToggle`` and ``SettingDictToggle`` classes: the column is now set to "django_settings".
 
 

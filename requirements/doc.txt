@@ -72,11 +72,6 @@ idna==2.10
     #   requests
 imagesize==1.2.0
     # via sphinx
-importlib-metadata==2.1.1
-    # via
-    #   -r requirements/test.txt
-    #   pluggy
-    #   pytest
 iniconfig==1.1.1
     # via
     #   -r requirements/test.txt
@@ -105,10 +100,6 @@ packaging==20.8
     #   bleach
     #   pytest
     #   sphinx
-pathlib2==2.3.5
-    # via
-    #   -r requirements/test.txt
-    #   pytest
 pbr==5.5.1
     # via
     #   -r requirements/test.txt
@@ -138,7 +129,7 @@ pytest-cov==2.10.1
     # via -r requirements/test.txt
 pytest-django==4.1.0
     # via -r requirements/test.txt
-pytest==6.1.2
+pytest==6.2.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -177,7 +168,6 @@ six==1.15.0
     #   bleach
     #   doc8
     #   edx-sphinx-theme
-    #   pathlib2
     #   readme-renderer
     #   stevedore
 snowballstemmer==2.0.0
@@ -228,11 +218,6 @@ wrapt==1.11.0
     #   -c requirements/constraints.txt
     #   -r requirements/test.txt
     #   deprecated
-zipp==1.2.0
-    # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/test.txt
-    #   importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

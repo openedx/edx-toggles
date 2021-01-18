@@ -63,16 +63,11 @@ idna==2.10
     # via
     #   -r requirements/test.txt
     #   requests
-importlib-metadata==2.1.1
-    # via
-    #   -r requirements/test.txt
-    #   pluggy
-    #   pytest
 iniconfig==1.1.1
     # via
     #   -r requirements/test.txt
     #   pytest
-isort==4.3.21
+isort==5.7.0
     # via
     #   -r requirements/quality.in
     #   pylint
@@ -98,10 +93,6 @@ oauthlib==3.1.0
     #   atlassian-python-api
     #   requests-oauthlib
 packaging==20.8
-    # via
-    #   -r requirements/test.txt
-    #   pytest
-pathlib2==2.3.5
     # via
     #   -r requirements/test.txt
     #   pytest
@@ -147,7 +138,7 @@ pytest-cov==2.10.1
     # via -r requirements/test.txt
 pytest-django==4.1.0
     # via -r requirements/test.txt
-pytest==6.1.2
+pytest==6.2.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -179,7 +170,6 @@ six==1.15.0
     #   astroid
     #   atlassian-python-api
     #   edx-lint
-    #   pathlib2
     #   stevedore
 snowballstemmer==2.0.0
     # via pydocstyle
@@ -202,8 +192,6 @@ toml==0.10.2
     #   -r requirements/test.txt
     #   pylint
     #   pytest
-typed-ast==1.4.2
-    # via astroid
 urllib3==1.26.2
     # via
     #   -r requirements/test.txt
@@ -214,8 +202,3 @@ wrapt==1.11.0
     #   -r requirements/test.txt
     #   astroid
     #   deprecated
-zipp==1.2.0
-    # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/test.txt
-    #   importlib-metadata

@@ -30,7 +30,7 @@ def test_filter_and_sort_toggles_filtering():
     There are cases where we might just want a subset of data,
     """
     toggle_types = ["WaffleFlag", "WaffleSwitch", "DjangoSetting"]
-    names = ["n{}".format(num) for num in range(5*len(toggle_types))]
+    names = [f"n{num}" for num in range(5*len(toggle_types))]
     data = [{"name":name, "toggle_type":random.choice(list(toggle_types))} for name in names]
 
     # test with no filtering

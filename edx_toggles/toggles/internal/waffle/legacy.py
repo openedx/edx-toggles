@@ -82,7 +82,7 @@ class BaseNamespace(ABC, LegacyToggleMonitoringMixin):
         """
         set_custom_attribute(
             self.__class__.__module__,
-            "{}[{}]".format(self.__class__.__name__, name),
+            f"{self.__class__.__name__}[{name}]",
         )
         assert name, "The name is required."
         self.name = name
@@ -99,7 +99,7 @@ class BaseNamespace(ABC, LegacyToggleMonitoringMixin):
         Arguments:
             toggle_name (String): The name of the flag or switch.
         """
-        return "{}.{}".format(self.name, toggle_name)
+        return f"{self.name}.{toggle_name}"
 
 
 class WaffleSwitchNamespace(BaseNamespace):
@@ -137,7 +137,7 @@ class WaffleSwitch(NewWaffleSwitch, LegacyToggleMonitoringMixin):
             waffle_namespace = waffle_namespace.name
 
         self._switch_name = switch_name
-        name = "{}.{}".format(waffle_namespace, switch_name)
+        name = f"{waffle_namespace}.{switch_name}"
         super().__init__(name, module_name=module_name)
         self._set_legacy_custom_attribute()
 
@@ -148,7 +148,7 @@ class WaffleSwitch(NewWaffleSwitch, LegacyToggleMonitoringMixin):
         """
         set_custom_attribute(
             "deprecated_waffle_legacy_method",
-            "WaffleSwitch[{}].switch_name".format(self.name),
+            f"WaffleSwitch[{self.name}].switch_name",
         )
         return self._switch_name
 
@@ -159,7 +159,7 @@ class WaffleSwitch(NewWaffleSwitch, LegacyToggleMonitoringMixin):
         """
         set_custom_attribute(
             "deprecated_waffle_legacy_method",
-            "WaffleSwitch[{}].namespaced_switch_name".format(self.name),
+            f"WaffleSwitch[{self.name}].namespaced_switch_name",
         )
         return self.name
 
@@ -184,7 +184,7 @@ class WaffleFlagNamespace(BaseNamespace):
         """
         set_custom_attribute(
             "deprecated_waffle_legacy_method",
-            "WaffleFlagNamespace[{}]._monitor_value".format(self.name),
+            f"WaffleFlagNamespace[{self.name}]._monitor_value",
         )
 
     @property
@@ -194,7 +194,7 @@ class WaffleFlagNamespace(BaseNamespace):
         """
         set_custom_attribute(
             "deprecated_waffle_legacy_method",
-            "WaffleFlagNamespace[{}]._cached_flags".format(self.name),
+            f"WaffleFlagNamespace[{self.name}]._cached_flags",
         )
         return NewWaffleFlag.cached_flags()
 
@@ -212,7 +212,7 @@ class WaffleFlag(NewWaffleFlag, LegacyToggleMonitoringMixin):
 
         # Non-namespaced flag_name attribute preserved for backward compatibility
         self._flag_name = flag_name
-        name = "{}.{}".format(waffle_namespace, flag_name)
+        name = f"{waffle_namespace}.{flag_name}"
         super().__init__(name, module_name=module_name, log_prefix=log_prefix)
         self._set_legacy_custom_attribute()
 
@@ -223,7 +223,7 @@ class WaffleFlag(NewWaffleFlag, LegacyToggleMonitoringMixin):
         """
         set_custom_attribute(
             "deprecated_waffle_legacy_method",
-            "WaffleFlag[{}].flag_name".format(self.name),
+            f"WaffleFlag[{self.name}].flag_name",
         )
         return self._flag_name
 
@@ -234,7 +234,7 @@ class WaffleFlag(NewWaffleFlag, LegacyToggleMonitoringMixin):
         """
         set_custom_attribute(
             "deprecated_waffle_legacy_method",
-            "WaffleFlag[{}].namespaced_flag_name".format(self.name),
+            f"WaffleFlag[{self.name}].namespaced_flag_name",
         )
         return self.name
 
@@ -245,6 +245,6 @@ class WaffleFlag(NewWaffleFlag, LegacyToggleMonitoringMixin):
         """
         set_custom_attribute(
             "deprecated_waffle_legacy_method",
-            "WaffleFlag[{}].waffle_namespace".format(self.name),
+            f"WaffleFlag[{self.name}].waffle_namespace",
         )
         return WaffleFlagNamespace(self.name.split(".")[0], log_prefix=self.log_prefix)
