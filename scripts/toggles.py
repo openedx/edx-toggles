@@ -12,9 +12,10 @@ logging.basicConfig(level=logging.INFO)
 
 
 class ToggleTypes():
-    valid_toggle_types = ("django_settings", "waffle_flags", "waffle_switches")
+    valid_toggle_types = ("configuration_models", "django_settings", "waffle_flags", "waffle_switches")
     annotation_to_state_toggle_type_map = {
             "CourseWaffleFlag": "waffle_flags",
+            "ConfigurationModel": "configuration_models",
             "ExperimentWaffleFlag": "waffle_flags",
             "DjangoSetting": "django_settings",
             "SettingDictToggle": "django_settings",
