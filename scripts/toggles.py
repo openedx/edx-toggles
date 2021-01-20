@@ -12,9 +12,10 @@ logging.basicConfig(level=logging.INFO)
 
 
 class ToggleTypes():
-    valid_toggle_types = ("django_settings", "waffle_flags", "waffle_switches")
+    valid_toggle_types = ("configuration_models", "django_settings", "waffle_flags", "waffle_switches")
     annotation_to_state_toggle_type_map = {
             "CourseWaffleFlag": "waffle_flags",
+            "ConfigurationModel": "configuration_models",
             "ExperimentWaffleFlag": "waffle_flags",
             "DjangoSetting": "django_settings",
             "SettingDictToggle": "django_settings",
@@ -113,8 +114,10 @@ class Toggle:
             env_name = datum["env_name"]
             summary[f"computed_status_{env_name}"] = datum.get("computed_status", datum.get("is_active", None))
             envs_states.append(summary[f"computed_status_{env_name}"])
-            if "code_owner" in datum:
-                summary["code_owner"] = datum["code_owner"]
+            for property in ["code_owner", "module", "class"]:
+                if property in datum:
+                    summary[property] = datum[property]
+
         if len(data) > 1:
             summary["all_envs_match"] = True if len(envs_states) == len(data) and len(set(envs_states)) == 1 and envs_states[0] is not None else False
 
