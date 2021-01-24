@@ -84,7 +84,7 @@ Additional resources
 
 For more details on the individual annotations, see `OEP-17 <https://open-edx-proposals.readthedocs.io/en/latest/oep-0017-bp-feature-toggles.html#specification>`__.
 
-The documentation format used to annotate feature toggles is stored in the code-annotations repository: `feature_toggle_annotations.yaml <https://github.com/edx/code-annotations/blob/master/code_annotations/config_and_tools/config/feature_toggle_annotations.yaml>`__.
+The documentation format used to annotate feature toggles is stored in the code-annotations repository: `feature_toggle_annotations.yaml <https://github.com/edx/code-annotations/blob/master/code_annotations/contrib/config/feature_toggle_annotations.yaml>`__.
 
 Note that all annotation fields can be wrapped on multiple lines, as long as every line after the first is prefixed by at least two empty spaces, plus the base indentation of the first line. For instance::
 
