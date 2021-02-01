@@ -6,13 +6,13 @@
 #
 click==7.1.2
     # via code-annotations
-code-annotations==0.10.2
+code-annotations==1.0.2
     # via -r requirements/base.in
 django-crum==0.7.9
     # via
     #   -r requirements/base.in
     #   edx-django-utils
-django-waffle==2.0.0
+django-waffle==2.1.0
     # via
     #   -r requirements/base.in
     #   edx-django-utils
@@ -25,11 +25,11 @@ django==2.2.17
     #   edx-django-utils
 edx-django-utils==3.13.0
     # via -r requirements/base.in
-jinja2==2.11.2
+jinja2==2.11.3
     # via code-annotations
 markupsafe==1.1.1
     # via jinja2
-newrelic==5.24.0.153
+newrelic==6.0.1.155
     # via edx-django-utils
 pbr==5.5.1
     # via stevedore
@@ -39,7 +39,7 @@ python-slugify==4.0.1
     # via code-annotations
 pytz==2020.5
     # via django
-pyyaml==5.3.1
+pyyaml==5.4.1
     # via code-annotations
 six==1.15.0
     # via stevedore
