@@ -15,6 +15,11 @@ Unreleased
 ~~~~~~~~~~
 * Handle the case where certain toggle names come in as ``None`` when generating summary reports.
 
+[4.1.0] - 2021-02-10
+~~~~~~~~~~~~~~~~~~~~
+
+* Expose toggle state report via a Python API.
+
 [4.0.0] - 2021-01-24
 ~~~~~~~~~~~~~~~~~~~~
 
