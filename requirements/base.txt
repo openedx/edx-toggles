@@ -6,7 +6,7 @@
 #
 click==7.1.2
     # via code-annotations
-code-annotations==1.0.2
+code-annotations==1.1.0
     # via -r requirements/base.in
 django-crum==0.7.9
     # via
@@ -16,7 +16,7 @@ django-waffle==2.1.0
     # via
     #   -r requirements/base.in
     #   edx-django-utils
-django==2.2.17
+django==2.2.18
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
@@ -37,7 +37,7 @@ psutil==5.8.0
     # via edx-django-utils
 python-slugify==4.0.1
     # via code-annotations
-pytz==2020.5
+pytz==2021.1
     # via django
 pyyaml==5.4.1
     # via code-annotations

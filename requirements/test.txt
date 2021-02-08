@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-atlassian-python-api==3.4.0
+atlassian-python-api==3.4.1
     # via -r requirements/scripts.txt
 attrs==20.3.0
     # via pytest
@@ -21,7 +21,7 @@ click==7.1.2
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   code-annotations
-code-annotations==1.0.2
+code-annotations==1.1.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -110,7 +110,7 @@ python-slugify==4.0.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   code-annotations
-pytz==2020.5
+pytz==2021.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
