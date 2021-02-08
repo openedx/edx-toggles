@@ -6,7 +6,7 @@
 #
 alabaster==0.7.12
     # via sphinx
-atlassian-python-api==3.4.0
+atlassian-python-api==3.4.1
     # via -r requirements/test.txt
 attrs==20.3.0
     # via
@@ -14,7 +14,7 @@ attrs==20.3.0
     #   pytest
 babel==2.9.0
     # via sphinx
-bleach==3.2.3
+bleach==3.3.0
     # via readme-renderer
 certifi==2020.12.5
     # via
@@ -29,7 +29,7 @@ click==7.1.2
     # via
     #   -r requirements/test.txt
     #   code-annotations
-code-annotations==1.0.2
+code-annotations==1.1.0
     # via -r requirements/test.txt
 coverage==5.4
     # via
@@ -47,7 +47,7 @@ django-waffle==2.1.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-django==2.2.17
+django==2.2.18
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/test.txt
@@ -138,7 +138,7 @@ python-slugify==4.0.1
     # via
     #   -r requirements/test.txt
     #   code-annotations
-pytz==2020.5
+pytz==2021.1
     # via
     #   -r requirements/test.txt
     #   babel
