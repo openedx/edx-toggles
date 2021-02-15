@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-atlassian-python-api==3.4.1
+atlassian-python-api==3.5.1
     # via -r requirements/scripts.in
 certifi==2020.12.5
     # via requests

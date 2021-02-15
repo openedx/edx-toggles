@@ -6,7 +6,7 @@
 #
 alabaster==0.7.12
     # via sphinx
-atlassian-python-api==3.4.1
+atlassian-python-api==3.5.1
     # via -r requirements/test.txt
 attrs==20.3.0
     # via
@@ -64,7 +64,7 @@ docutils==0.16
     #   sphinx
 edx-django-utils==3.13.0
     # via -r requirements/test.txt
-edx-sphinx-theme==1.6.1
+edx-sphinx-theme==2.0.0
     # via -r requirements/doc.in
 idna==2.10
     # via
@@ -116,7 +116,7 @@ py==1.10.0
     # via
     #   -r requirements/test.txt
     #   pytest
-pygments==2.7.4
+pygments==2.8.0
     # via
     #   doc8
     #   readme-renderer
@@ -172,7 +172,7 @@ six==1.15.0
     #   stevedore
 snowballstemmer==2.1.0
     # via sphinx
-sphinx==3.4.3
+sphinx==3.5.0
     # via
     #   -r requirements/doc.in
     #   edx-sphinx-theme
