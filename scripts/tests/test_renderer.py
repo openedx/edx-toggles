@@ -31,6 +31,8 @@ def test_filter_and_sort_toggles_filtering():
     """
     toggle_types = ["WaffleFlag", "WaffleSwitch", "DjangoSetting"]
     names = [f"n{num}" for num in range(5*len(toggle_types))]
+    # There are cases in our real data where the name is explicitly None.  Be able to handle that case.
+    names.append(None)
     data = [{"name":name, "toggle_type":random.choice(list(toggle_types))} for name in names]
 
     # test with no filtering
