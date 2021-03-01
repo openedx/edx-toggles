@@ -4,11 +4,11 @@
 #
 #    make upgrade
 #
-astroid==2.5
+astroid==2.5.1
     # via
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.5.2
+atlassian-python-api==3.5.3
     # via -r requirements/test.txt
 attrs==20.3.0
     # via
@@ -34,7 +34,7 @@ code-annotations==1.1.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage==5.4
+coverage==5.5
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -60,7 +60,7 @@ django==2.2.19
     #   edx-lint
 edx-django-utils==3.13.0
     # via -r requirements/test.txt
-edx-lint==4.0.1
+edx-lint==4.1.0
     # via -r requirements/quality.in
 idna==2.10
     # via
@@ -86,7 +86,7 @@ markupsafe==1.1.1
     #   jinja2
 mccabe==0.6.1
     # via pylint
-newrelic==6.0.1.155
+newrelic==6.2.0.156
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -127,7 +127,7 @@ pylint-plugin-utils==0.6
     # via
     #   pylint-celery
     #   pylint-django
-pylint==2.7.0
+pylint==2.7.2
     # via
     #   edx-lint
     #   pylint-celery

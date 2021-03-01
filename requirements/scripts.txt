@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-atlassian-python-api==3.5.2
+atlassian-python-api==3.5.3
     # via -r requirements/scripts.in
 certifi==2020.12.5
     # via requests
@@ -47,7 +47,7 @@ markupsafe==1.1.1
     # via
     #   -r requirements/base.txt
     #   jinja2
-newrelic==6.0.1.155
+newrelic==6.2.0.156
     # via
     #   -r requirements/base.txt
     #   edx-django-utils

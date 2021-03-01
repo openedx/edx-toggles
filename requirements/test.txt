@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-atlassian-python-api==3.5.2
+atlassian-python-api==3.5.3
     # via -r requirements/scripts.txt
 attrs==20.3.0
     # via pytest
@@ -26,7 +26,7 @@ code-annotations==1.1.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   -r requirements/test.in
-coverage==5.4
+coverage==5.5
     # via pytest-cov
 deprecated==1.2.11
     # via
@@ -69,7 +69,7 @@ markupsafe==1.1.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   jinja2
-newrelic==6.0.1.155
+newrelic==6.2.0.156
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
