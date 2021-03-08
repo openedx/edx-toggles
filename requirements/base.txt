@@ -23,7 +23,7 @@ django==2.2.19
     #   code-annotations
     #   django-crum
     #   edx-django-utils
-edx-django-utils==3.13.0
+edx-django-utils==3.15.0
     # via -r requirements/base.in
 jinja2==2.11.3
     # via code-annotations

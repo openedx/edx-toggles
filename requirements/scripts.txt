@@ -35,7 +35,7 @@ django==2.2.19
     #   code-annotations
     #   django-crum
     #   edx-django-utils
-edx-django-utils==3.13.0
+edx-django-utils==3.15.0
     # via -r requirements/base.txt
 idna==2.10
     # via requests

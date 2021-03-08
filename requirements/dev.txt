@@ -58,7 +58,7 @@ deprecated==1.2.11
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
-diff-cover==4.2.1
+diff-cover==4.2.3
     # via -r requirements/dev.in
 distlib==0.3.1
     # via
@@ -81,7 +81,7 @@ django==2.2.19
     #   edx-django-utils
     #   edx-i18n-tools
     #   edx-lint
-edx-django-utils==3.13.0
+edx-django-utils==3.15.0
     # via -r requirements/quality.txt
 edx-i18n-tools==0.5.3
     # via -r requirements/dev.in
@@ -97,11 +97,12 @@ idna==2.10
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-importlib-metadata==3.7.0
+importlib-metadata==3.7.2
     # via inflect
 inflect==3.0.2
     # via
     #   -c requirements/constraints.txt
+    #   diff-cover
     #   jinja2-pluralize
 iniconfig==1.1.1
     # via
@@ -179,7 +180,7 @@ pycodestyle==2.6.0
     # via -r requirements/quality.txt
 pydocstyle==5.1.1
     # via -r requirements/quality.txt
-pygments==2.8.0
+pygments==2.8.1
     # via diff-cover
 pylint-celery==0.3
     # via
@@ -276,7 +277,7 @@ toml==0.10.2
     #   tox
 tox-battery==0.6.1
     # via -r requirements/ci.txt
-tox==3.22.0
+tox==3.23.0
     # via
     #   -r requirements/ci.txt
     #   tox-battery
