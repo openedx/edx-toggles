@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-atlassian-python-api==3.5.3
+atlassian-python-api==3.7.1
     # via -r requirements/scripts.txt
 attrs==20.3.0
     # via pytest
@@ -28,7 +28,7 @@ code-annotations==1.1.0
     #   -r requirements/test.in
 coverage==5.5
     # via pytest-cov
-deprecated==1.2.11
+deprecated==1.2.12
     # via
     #   -r requirements/scripts.txt
     #   atlassian-python-api
