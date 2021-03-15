@@ -13,7 +13,7 @@ astroid==2.5.1
     #   -r requirements/quality.txt
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.5.3
+atlassian-python-api==3.7.1
     # via -r requirements/quality.txt
 attrs==20.3.0
     # via
@@ -54,11 +54,11 @@ coverage==5.5
     #   -r requirements/quality.txt
     #   codecov
     #   pytest-cov
-deprecated==1.2.11
+deprecated==1.2.12
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
-diff-cover==4.2.3
+diff-cover==5.0.1
     # via -r requirements/dev.in
 distlib==0.3.1
     # via
@@ -97,12 +97,11 @@ idna==2.10
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-importlib-metadata==3.7.2
+importlib-metadata==3.7.3
     # via inflect
 inflect==3.0.2
     # via
     #   -c requirements/constraints.txt
-    #   diff-cover
     #   jinja2-pluralize
 iniconfig==1.1.1
     # via
@@ -155,7 +154,7 @@ pbr==5.5.1
     # via
     #   -r requirements/quality.txt
     #   stevedore
-pip-tools==5.5.0
+pip-tools==6.0.0
     # via -r requirements/pip-tools.txt
 pluggy==0.13.1
     # via
@@ -176,7 +175,7 @@ py==1.10.0
     #   -r requirements/quality.txt
     #   pytest
     #   tox
-pycodestyle==2.6.0
+pycodestyle==2.7.0
     # via -r requirements/quality.txt
 pydocstyle==5.1.1
     # via -r requirements/quality.txt

@@ -6,7 +6,7 @@
 #
 alabaster==0.7.12
     # via sphinx
-atlassian-python-api==3.5.3
+atlassian-python-api==3.7.1
     # via -r requirements/test.txt
 attrs==20.3.0
     # via
@@ -35,7 +35,7 @@ coverage==5.5
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-deprecated==1.2.11
+deprecated==1.2.12
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
