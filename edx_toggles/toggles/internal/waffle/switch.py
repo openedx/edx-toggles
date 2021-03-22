@@ -3,7 +3,7 @@ New-style switch classes: these classes no longer depend on namespaces to be cre
 """
 from weakref import WeakSet
 
-from waffle import switch_is_active
+from waffle import switch_is_active  # lint-amnesty, pylint: disable=invalid-django-waffle-import
 
 from .base import BaseWaffle
 from .cache import _get_waffle_request_cache

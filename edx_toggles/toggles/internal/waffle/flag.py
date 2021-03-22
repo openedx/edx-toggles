@@ -5,7 +5,7 @@ import logging
 from weakref import WeakSet
 
 import crum
-from waffle import flag_is_active
+from waffle import flag_is_active  # lint-amnesty, pylint: disable=invalid-django-waffle-import
 
 from .base import BaseWaffle
 from .cache import _get_waffle_request_cache

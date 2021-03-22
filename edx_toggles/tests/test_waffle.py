@@ -36,12 +36,18 @@ class WaffleFlagTests(TestCase):
     """
 
     def test_name_validation(self):
-        WaffleFlag("namespaced.name", module_name="module1")
+        WaffleFlag(  # lint-amnesty, pylint: disable=toggle-missing-annotation
+            "namespaced.name", module_name="module1"
+        )
         with self.assertRaises(ValueError):
-            WaffleFlag("non_namespaced", module_name="module1")
+            WaffleFlag(  # lint-amnesty, pylint: disable=toggle-missing-annotation
+                "non_namespaced", module_name="module1"
+            )
 
     def test_non_namespaced(self):
-        NonNamespacedWaffleFlag("non_namespaced", module_name="module1")
+        NonNamespacedWaffleFlag(  # lint-amnesty, pylint: disable=toggle-missing-annotation
+            "non_namespaced", module_name="module1"
+        )
 
 
 class WaffleSwitchTest(TestCase):
@@ -50,9 +56,15 @@ class WaffleSwitchTest(TestCase):
     """
 
     def test_name_validation(self):
-        WaffleSwitch("namespaced.name", module_name="module1")
+        WaffleSwitch(  # lint-amnesty, pylint: disable=toggle-missing-annotation
+            "namespaced.name", module_name="module1"
+        )
         with self.assertRaises(ValueError):
-            WaffleSwitch("non_namespaced", module_name="module1")
+            WaffleSwitch(  # lint-amnesty, pylint: disable=toggle-missing-annotation
+                "non_namespaced", module_name="module1"
+            )
 
     def test_non_namespaced(self):
-        NonNamespacedWaffleSwitch("non_namespaced", module_name="module1")
+        NonNamespacedWaffleSwitch(  # lint-amnesty, pylint: disable=toggle-missing-annotation
+            "non_namespaced", module_name="module1"
+        )

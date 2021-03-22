@@ -84,7 +84,9 @@ class LegacyWaffleSwitchNamespace(BaseNamespace):
         """
         Returns whether or not the switch is enabled.
         """
-        return WaffleSwitch(self._namespaced_name(switch_name), __name__).is_enabled()
+        return WaffleSwitch(  # lint-amnesty, pylint: disable=toggle-missing-annotation
+            self._namespaced_name(switch_name), __name__
+        ).is_enabled()
 
     def set_request_cache_with_short_name(self, switch_name, value):
         """
@@ -93,7 +95,9 @@ class LegacyWaffleSwitchNamespace(BaseNamespace):
         """
         namespaced_name = self._namespaced_name(switch_name)
         # pylint: disable=protected-access
-        WaffleSwitch(namespaced_name, __name__)._cached_switches[
+        WaffleSwitch(  # lint-amnesty, pylint: disable=toggle-missing-annotation
+            namespaced_name, __name__
+        )._cached_switches[
             namespaced_name
         ] = value
 
@@ -127,7 +131,7 @@ class LegacyWaffleFlagNamespace(BaseNamespace):
         """
         Returns and caches whether the provided flag is active.
         """
-        return WaffleFlag(
+        return WaffleFlag(  # lint-amnesty, pylint: disable=toggle-missing-annotation
             self._namespaced_name(flag_name), module_name=__name__
         ).is_enabled()
 
