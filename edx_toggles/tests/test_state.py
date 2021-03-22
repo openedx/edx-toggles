@@ -10,7 +10,7 @@ from edx_toggles.toggles import SettingDictToggle, SettingToggle, WaffleFlag
 from edx_toggles.toggles.state import ToggleStateReport
 from edx_toggles.toggles.testutils import override_waffle_flag
 
-TEST_WAFFLE_FLAG = WaffleFlag("test.flag", __name__)
+TEST_WAFFLE_FLAG = WaffleFlag("test.flag", __name__)  # lint-amnesty, pylint: disable=toggle-missing-annotation
 
 
 class ToggleStateTests(TestCase):
@@ -124,7 +124,9 @@ class ToggleStateTests(TestCase):
 
     def test_code_owners_without_module_information(self):
         # Create a waffle flag without any associated module_name
-        waffle_flag = WaffleFlag("test.flag2", module_name="module1")
+        waffle_flag = WaffleFlag(  # lint-amnesty, pylint: disable=toggle-missing-annotation
+            "test.flag2", module_name="module1"
+        )
         report = ToggleStateReport().as_dict()
 
         result = [

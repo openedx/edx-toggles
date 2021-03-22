@@ -20,7 +20,9 @@ class OverrideWaffleFlagTests(TestCase):
     def setUp(self):
         super().setUp()
         flag_name = "test_namespace.test_flag"
-        self.waffle_flag = WaffleFlag(flag_name, __name__)
+        self.waffle_flag = WaffleFlag(  # lint-amnesty, pylint: disable=toggle-missing-annotation
+            flag_name, __name__
+        )
 
         request = RequestFactory().request()
         crum.set_current_request(request)
@@ -75,7 +77,9 @@ class OverrideWaffleFlagTests(TestCase):
 
     def test_interlocked_overrides(self):
         waffle_flag1 = self.waffle_flag
-        waffle_flag2 = WaffleFlag(waffle_flag1.name + "2", __name__)
+        waffle_flag2 = WaffleFlag(  # lint-amnesty, pylint: disable=toggle-missing-annotation
+            waffle_flag1.name + "2", __name__
+        )
         waffle_flag2.cached_flags()[waffle_flag2.name] = True
 
         self.assertFalse(waffle_flag1.is_enabled())
@@ -96,7 +100,9 @@ class OverrideWaffleSwitchTests(TestCase):
     """
 
     def test_override(self):
-        switch = WaffleSwitch("test_namespace.test_switch", module_name="testmodule")
+        switch = WaffleSwitch(  # lint-amnesty, pylint: disable=toggle-missing-annotation
+            "test_namespace.test_switch", module_name="testmodule"
+        )
 
         self.assertFalse(switch.is_enabled())
         with override_waffle_switch(switch, active=True):

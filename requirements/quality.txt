@@ -8,7 +8,7 @@ astroid==2.5.1
     # via
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.7.1
+atlassian-python-api==3.8.0
     # via -r requirements/test.txt
 attrs==20.3.0
     # via
@@ -60,7 +60,7 @@ django==2.2.19
     #   edx-lint
 edx-django-utils==3.15.0
     # via -r requirements/test.txt
-edx-lint==4.1.0
+edx-lint==5.0.0
     # via -r requirements/quality.in
 idna==2.10
     # via
@@ -70,7 +70,7 @@ iniconfig==1.1.1
     # via
     #   -r requirements/test.txt
     #   pytest
-isort==5.7.0
+isort==5.8.0
     # via
     #   -r requirements/quality.in
     #   pylint
@@ -117,7 +117,7 @@ py==1.10.0
     #   pytest
 pycodestyle==2.7.0
     # via -r requirements/quality.in
-pydocstyle==5.1.1
+pydocstyle==6.0.0
     # via -r requirements/quality.in
 pylint-celery==0.3
     # via edx-lint
@@ -194,7 +194,7 @@ toml==0.10.2
     #   -r requirements/test.txt
     #   pylint
     #   pytest
-urllib3==1.26.3
+urllib3==1.26.4
     # via
     #   -r requirements/test.txt
     #   requests
