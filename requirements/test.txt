@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-atlassian-python-api==3.7.1
+atlassian-python-api==3.8.0
     # via -r requirements/scripts.txt
 attrs==20.3.0
     # via pytest
@@ -154,7 +154,7 @@ text-unidecode==1.3
     #   python-slugify
 toml==0.10.2
     # via pytest
-urllib3==1.26.3
+urllib3==1.26.4
     # via
     #   -r requirements/scripts.txt
     #   requests
