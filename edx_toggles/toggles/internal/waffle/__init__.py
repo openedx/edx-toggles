@@ -13,7 +13,7 @@ For waffle switches:
 
 The namespace prefix is used to categorize waffle objects.
 
-For both flags and switched, the waffle value can be checked in code by writing::
+For both flags and switches, the waffle value can be checked in code by writing::
 
     SOME_WAFFLE.is_enabled()
 
