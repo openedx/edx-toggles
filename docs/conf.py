@@ -42,7 +42,7 @@ sys.path.append(REPO_ROOT)
 VERSION = get_version('../edx_toggles', '__init__.py')
 
 # Configure Django for autodoc usage
-settings.configure()
+os.environ['DJANGO_SETTINGS_MODULE'] = 'test_settings'
 django_setup()
 
 # If extensions (or modules to document with autodoc) are in another directory,
