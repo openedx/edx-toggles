@@ -32,6 +32,7 @@ Library and utilities for feature toggles
    :caption: How-Tos
 
    how_to/documenting_new_feature_toggles
+   how_to/implement_the_right_toggle_type
    how_to/create_toggles_report_for_devstack_or_sandbox.rst
    how_to/adding_new_ida_to_toggle_report
    how_to/get_feature_toggles_annotation_data.rst
