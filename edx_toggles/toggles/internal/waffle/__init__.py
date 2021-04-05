@@ -7,7 +7,7 @@ For waffle flags::
 
     SOME_FLAG = WaffleFlag('some_namespace_prefix.some_feature', module_name=__name__)
 
-For waffle switches:
+For waffle switches::
 
     SOME_SWITCH = WaffleSwitch('some_namespace_prefix.some_feature', module_name=__name__)
 
