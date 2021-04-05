@@ -31,12 +31,12 @@ Copy-paste this boilerplate template to document a feature toggle::
     # .. toggle_description: Add here a detailed description of the consequences of enabling this feature toggle.
     #   Note that all annotations can be spread over multiple lines by prefixing every line after the first by
     #   at least three spaces (two spaces plus the leading space).
-    # .. toggle_warnings: Add here additional instructions that users should be aware of. For instance, dependency
+    # .. toggle_warnings: (Optional) Add here additional instructions that users should be aware of. For instance, dependency
     #   on additional settings or feature toggles should be referenced here. If this field is not needed, simply remove it.
     # .. toggle_use_cases: temporary OR circuit_breaker OR vip OR opt_out OR opt_in OR open_edx
     # .. toggle_creation_date: 2020-01-01
     # .. toggle_target_removal_date: 2020-07-01 (this is required if toggle_use_cases includes temporary. If not, simply remove it.)
-    # .. toggle_tickets: https://openedx.atlassian.net/browse/TICKET-xxx OR https://github.com/edx/edx-platform/pull/xxx
+    # .. toggle_tickets: (Optional) https://openedx.atlassian.net/browse/TICKET-xxx OR https://github.com/edx/edx-platform/pull/xxx
     SOME_FEATURE_NAME = ...
 
 Configuration model
@@ -135,6 +135,7 @@ Research
 
 Here are a number of techniques you might use to learn about an existing toggle. Please add any helpful background links to the PR description of the PR that is adding the annotation.
 
+* Search github by replacing the toggle name in the following search url: ``https://github.com/search?q=org%3Aedx+TYPE_YOUR_TOGGLE_OR_SETTING_HERE&type=code``.
 * Use ``git blame`` or ``git log search`` (a.k.a. pickaxe).
 * Search the `deprecated feature flag documentation in Confluence`_.
 * Search the `additional reference tab`_ of the toggle docathon spreadsheet.
@@ -179,6 +180,10 @@ Additional resources
 
 For more details on the individual annotations, see `OEP-17: Feature Toggles`_.
 
-.. _`OEP-17: Feature Toggles`: https://open-edx-proposals.readthedocs.io/en/latest/oep-0017-bp-feature-toggles.html
+The documentation format used to annotate feature toggles is stored in the code-annotations repository: `feature_toggle_annotations.yaml`_.
 
-The documentation format used to annotate feature toggles is stored in the code-annotations repository: `feature_toggle_annotations.yaml <https://github.com/edx/code-annotations/blob/master/code_annotations/contrib/config/feature_toggle_annotations.yaml>`__.
+See `how-to document non-boolean Django settings`_, for Django settings which are not feature toggles.
+
+.. _`OEP-17: Feature Toggles`: https://open-edx-proposals.readthedocs.io/en/latest/oep-0017-bp-feature-toggles.html
+.. _feature_toggle_annotations.yaml: https://github.com/edx/code-annotations/blob/master/code_annotations/contrib/config/feature_toggle_annotations.yaml
+.. _how-to document non-boolean Django settings: https://code-annotations.readthedocs.io/en/latest/contrib/how_to/documenting_django_settings.html
