@@ -29,7 +29,7 @@ click==7.1.2
     # via
     #   -r requirements/test.txt
     #   code-annotations
-code-annotations==1.1.0
+code-annotations==1.1.1
     # via -r requirements/test.txt
 coverage==5.5
     # via
@@ -56,15 +56,15 @@ django==2.2.19
     #   edx-django-utils
 doc8==0.8.1
     # via -r requirements/doc.in
-docutils==0.16
+docutils==0.17
     # via
     #   doc8
     #   readme-renderer
     #   restructuredtext-lint
     #   sphinx
-edx-django-utils==3.15.0
+edx-django-utils==3.16.0
     # via -r requirements/test.txt
-edx-sphinx-theme==2.0.0
+edx-sphinx-theme==2.1.0
     # via -r requirements/doc.in
 idna==2.10
     # via
@@ -129,7 +129,7 @@ pytest-cov==2.11.1
     # via -r requirements/test.txt
 pytest-django==4.1.0
     # via -r requirements/test.txt
-pytest==6.2.2
+pytest==6.2.3
     # via
     #   -r requirements/test.txt
     #   pytest-cov
