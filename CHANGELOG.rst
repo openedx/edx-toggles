@@ -13,7 +13,9 @@ Change Log
 
 Unreleased
 ~~~~~~~~~~
+
 * Handle the case where certain toggle names come in as ``None`` when generating summary reports.
+* Add ADR for updating annotations for toggle life expectancy and use cases.
 
 [4.1.0] - 2021-02-10
 ~~~~~~~~~~~~~~~~~~~~

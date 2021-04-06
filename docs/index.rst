@@ -26,6 +26,7 @@ Library and utilities for feature toggles
    decisions/0002-application-toggle-state
    decisions/0003-django-setting-toggles
    decisions/0004-toggle-api
+   decisions/0005-toggle-life-expectancy
 
 .. toctree::
    :maxdepth: 2
