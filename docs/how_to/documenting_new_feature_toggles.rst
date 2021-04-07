@@ -36,7 +36,7 @@ Copy-paste this boilerplate template to document a feature toggle::
     # .. toggle_use_cases: temporary OR circuit_breaker OR vip OR opt_out OR opt_in OR open_edx
     # .. toggle_creation_date: 2020-01-01
     # .. toggle_target_removal_date: 2020-07-01 (this is required if toggle_use_cases includes temporary. If not, simply remove it.)
-    # .. toggle_tickets: (Optional) https://openedx.atlassian.net/browse/TICKET-xxx OR https://github.com/edx/edx-platform/pull/xxx
+    # .. toggle_tickets: (Optional) https://openedx.atlassian.net/browse/DEPR-xxx, https://github.com/edx/edx-platform/blob/master/docs/decisions/xxx.rst, https://github.com/edx/edx-platform/pull/xxx (details initial feature)
     SOME_FEATURE_NAME = ...
 
 Configuration model
@@ -71,7 +71,7 @@ For more details. see :doc:`implement_the_right_toggle_type`.
 ``toggle_use_cases``
 --------------------
 
-To decide what are the use cases of a feature toggle, one should refer to the `list of use cases outlined in OEP-17 <https://open-edx-proposals.readthedocs.io/en/latest/oep-0017-bp-feature-toggles.html#use-cases>`__:
+To decide what are the use cases of a feature toggle, one should refer to the `list of use cases outlined in OEP-17 on feature toggles <https://open-edx-proposals.readthedocs.io/en/latest/oep-0017-bp-feature-toggles.html#use-cases>`__:
 
 Temporary (``.. toggle_use_cases: temporary``):
 
@@ -87,7 +87,54 @@ Temporary (``.. toggle_use_cases: temporary``):
 * Use Case 7: Opt-out/Opt-in (expected timeline: 2 years, ``.. toggle_use_cases: opt_out`` or ``.. toggle_use_cases: opt_in``)
 * Use Case 8: Open edX option (expected timeline: 3 years, ``.. toggle_use_cases: open_edx``)
 
-Note that if ``toggle_use_cases`` includes "temporary" then ``toggle_target_removal_date`` **must** be defined.
+Additional considerations:
+
+* Bias should be toward "temporary" toggles.
+
+  * See `OEP-17: Feature toggles use cases <https://open-edx-proposals.readthedocs.io/en/latest/oep-0017-bp-feature-toggles.html#use-cases>`__ for reasons and tips to avoid "permanent" toggles.
+
+* For "temporary" toggles, you must include ``toggle_target_removal_date``. See below.
+* For "temporary" toggles, see ``toggle_tickets`` below for recommendations.
+
+``toggle_target_removal_date``
+------------------------------
+
+Set to the target date planned for removal of the toggle.
+
+* Use YYYY-MM-DD format (e.g. 2021-04-07).
+* Required for "temporary" toggles.
+* Do **not** include this annotation for "permanent" toggles. Mark as "temporary" instead.
+* If the date is uncertain, add 3-6 months to the creation date.
+
+  * This is not a commitment, but may be used to trigger a conversation about removal.
+  * For legacy toggles, it is ok for this date to be in the past.
+
+* If you want to highlight a dependency on a named release, add additional notes to the ``toggle_warning`` or ``toggle_description`` as appropriate.
+
+``toggle_tickets``
+------------------
+
+Initially, the ``toggle_tickets`` annotation was intended for removal tickets for "temporary" toggles. This might include:
+
+* a link to a `DEPR(ecation) ticket`_, and/or
+* a link to a JIRA ticket created to clean-up the "temporary" toggle.
+
+This annotation is now also used to provide links to other useful supporting documentation, with the following considerations:
+
+* Prefer using links to more permanent documentation, like ADRs, how-tos, READMEs, etc.
+* Try to avoid links to PRs or private JIRA tickets. Some alternatives solutions include:
+
+  * Enhance the ``toggle_description`` or ``toggle_warning`` with additional notes.
+  * Update the PR description of the PR that adds or updates the annotation to include the links, if they don't need to be a part of the annotation.
+  * Write a more permanent doc and use it instead.
+  * If it still makes sense to use the link, include it with context (see below).
+
+* If the link url doesn't contain context (e.g. PRs or JIRA tickets other than DEPR), add the context with additional text. For example::
+
+    toggle_tickets: https://openedx.atlassian.net/browse/XXXX-XXX (private clean-up ticket)
+
+.. _DEPR(ecation) ticket: https://open-edx-proposals.readthedocs.io/en/latest/oep-0021-proc-deprecation.html#document
+
 
 Additional details
 ==================
@@ -143,19 +190,6 @@ Here are a number of techniques you might use to learn about an existing toggle.
 
 .. _deprecated feature flag documentation in Confluence: https://openedx.atlassian.net/wiki/spaces/AC/pages/34734726/edX+Feature+Flags
 .. _additional reference tab: https://docs.google.com/spreadsheets/d/1xWbEL6oNu6D84WKBs3aViLRM40xk-vmnmmGAeLyR09A/edit?ts=6008a109#gid=1700780514
-
-Bias toward temporary use case
-------------------------------
-
-As detailed in `OEP-17: Feature Toggles`_, the fewer feature toggles the better.
-
-If it is unclear whether or not a toggle was meant to be temporary or permanent:
-
-* Use the ``temporary`` use case.
-* Feel free to note your uncertainty in the description.
-* Use a target removal date of 3 months after the creation date. It is ok if this date has passed.
-
-Hopefully this can trigger our DEPR(ecation) process, so we can learn whether or not it really can be removed.
 
 Refactor to use new toggle setting classes
 ------------------------------------------
