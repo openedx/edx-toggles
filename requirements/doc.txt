@@ -56,7 +56,7 @@ django==2.2.19
     #   edx-django-utils
 doc8==0.8.1
     # via -r requirements/doc.in
-docutils==0.17
+docutils==0.16
     # via
     #   doc8
     #   readme-renderer
