@@ -4,6 +4,8 @@ How to: Implement the right toggle type
 
 First choose the general type of toggle and then the more specific implementation below.
 
+There is also a `decision map in OEP-17 on feature toggles <https://open-edx-proposals.readthedocs.io/en/latest/oep-0017-bp-feature-toggles.html#decision-map>`__.
+
 .. contents::
    :depth: 1
    :local:
@@ -41,8 +43,8 @@ Choosing the general toggle type
      -
      -
 
-Implementing the right toggle type
-==================================
+Implementing the right toggle class
+===================================
 
 Django Setting toggles
 ----------------------
@@ -88,3 +90,8 @@ Config Models
 A `ConfigurationModel`_ can be used if all other options do not suit your needs. In most cases, it is no longer necessary.
 
 .. _ConfigurationModel: https://github.com/edx/django-config-models/
+
+Documenting your new toggle
+===========================
+
+As part of implementing your new toggle, read :doc:`how to document the toggle <documenting_new_feature_toggles>`, which should also help you think through the use cases and life expectancy of the toggle.

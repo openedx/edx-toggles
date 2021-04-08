@@ -31,18 +31,19 @@ The job creates files with names like `<ida_name>-annotations.yml`. The feature 
 Steps
 ~~~~~
 
-- Add IDA specification to `edx-internal/*/feature-toggle-report-generator.yml`_ under ``idas`` key
-- Add IDA specification in ``scripts/configuration.yaml``
+- Add IDA specification to `feature-toggle-report-generator.yml`_ under ``idas`` key.
+- Add IDA specification in `scripts/configuration.yaml`_.
 
 
 Problems with current approach
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- If job fails, arch-bom is always notified, rather than the owning team
+- If job fails, arch-bom is always notified, rather than the owning team.
 
 
 State data from HTTP endpoint
 -----------------------------
+
 Toggles state is stored in the database for each deployment and must be retrieved either directly from the database or via the application.
 
 Collection of state data is automated through a jenkins job.
@@ -53,46 +54,47 @@ Collection of state data is automated through a jenkins job.
 
 Steps
 ~~~~~
-- Add the edx-toggles Django app to the IDA:
 
-  - Include ``edx-toggles`` in the ``base.in`` requirements file. It provides a Django view that allows staff users to retrieve a JSON document containing the toggles state. (**TODO:** Not yet possible! Functionality still in ``waffle_utils`` in edx-platform; will be moved into edx-toggles.)
-  - Add it to your ``urls.py``: ``url(r'^api/toggles/', include('edx_toggles.views.TODO'))`` (**TODO:** As above, and names have yet to be decided.)
+- Add a view for a toggle state REST endpoint:
 
-- Add environment specification for your database to `edx-internal/*/feature-toggle-report-generator.yml`_
+  - Include ``edx-toggles`` in the ``base.in`` requirements file if not already there.
+  - Create a view using the ToggleStateReport_ class to implement a REST endpoint.
 
+    - Our convention is to use the path `/api/toggles/v0/state/`.
+    - See an `example toggles state endpoint view`_ in edx-platform.
 
-Problems with current approach
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        - edx-platform sublasses the report to add in CourseOverrides.
+        - For the default report, replace `report = CourseOverrideToggleStateReport().as_dict()` with `report = ToggleStateReport().as_dict()`.
 
-- The toggle state Django app hasn't been moved into edx-toggles yet, so this only works for the LMS so far
+    - Add the view to a ``urls.py`` like in this `example urls.py in edx-platform`_.
 
-.. _edx-internal/*/feature-toggle-report-generator.yml: https://github.com/edx/edx-internal/blob/master/tools-edx-jenkins/feature-toggle-report-generator.yml
+- Finally, add the IDA and environment details to the shared `feature-toggle-report-generator.yml`_.
 
+.. _ToggleStateReport: https://edx.readthedocs.io/projects/edx-toggles/en/latest/edx_toggles.toggles.state.internal.html#module-edx_toggles.toggles.state.internal.report
+.. _example toggles state endpoint view: https://github.com/edx/edx-platform/blob/650b0c1/openedx/core/djangoapps/waffle_utils/views.py#L50-L66
+.. _example urls.py in edx-platform: https://github.com/edx/edx-platform/blob/650b0c13603468d33e3e629ef1e36acc8fefd683/openedx/core/djangoapps/waffle_utils/urls.py
+.. _feature-toggle-report-generator.yml: https://github.com/edx/edx-internal/blob/master/tools-edx-jenkins/feature-toggle-report-generator.yml
 
 Processing data
 ===============
 
-`feature_toggle_report_generator.py`_
-
-
 The annotation data and Toggle state data dump should be stored in s3 buckets. The automated publish-feature-toggle-report job (in `groovy job specification`_) pulls the data from s3 buckets and calls `feature_toggle_report_generator.py`_ to process  the data and output it as a csv file.
 
-As long as the data is structured correctly (specified in `README`_), nothing should be necessary
-
+As long as the data is structured correctly (specified in `README`_), no action should be necessary for a new IDA.
 
 Publishing data
 ===============
 
 As of now, the toggle csv reports are retained as artifacts in Jenkins job: `publish-feature-toggle-report`_.
 
-The plan is to eventually find a different home for it (possibly in google sheets).
-
+The csv reports are published to a private google sheet. See the `Toggle State Reports spreadsheet link`_ from this private page.
 
 .. _Jenkins Job folder: https://tools-edx-jenkins.edx.org/job/Feature-Toggle-Report-Generator
 .. _groovy job specification: https://github.com/edx/jenkins-job-dsl-internal/blob/master/jobs/tools-edx-jenkins.edx.org/createFeatureToggleReportGeneratorJobs.groovy
 .. _script to push data to s3 bucket: https://github.com/edx/jenkins-job-dsl-internal/blob/master/resources/push-feature-toggle-data-to-s3.sh
 .. _script to pull data from s3 bucket: https://github.com/edx/jenkins-job-dsl-internal/blob/master/resources/pull-feature-toggle-data-from-s3.sh
 .. _feature_toggle_report_generator.py: https://github.com/edx/edx-toggles/blob/master/scripts/feature_toggle_report_generator.py
+.. _scripts/configuration.yaml: https://github.com/edx/edx-toggles/blob/master/scripts/configuration.yaml
 .. _publish-feature-toggle-report: https://tools-edx-jenkins.edx.org/job/Feature-Toggle-Report-Generator/job/publish-feature-toggle-report/
-
 .. _README: https://github.com/edx/edx-toggles/blob/master/scripts/README.rst
+.. _Toggle State Reports spreadsheet link: https://openedx.atlassian.net/wiki/spaces/AT/pages/1398211515/Shared+links
