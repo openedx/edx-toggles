@@ -77,7 +77,7 @@ class WaffleFlag(BaseWaffle):
         occur when a page redirects to a 404, or for celery workers.
         """
         log.warning(
-            "%sFlag '%s' accessed without a request",
+            "%sFlag '%s' accessed without a request, which is likely in the context of a celery task.",
             self.log_prefix,
             self.name,
         )
