@@ -97,7 +97,7 @@ idna==2.10
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-importlib-metadata==3.10.0
+importlib-metadata==4.0.0
     # via inflect
 inflect==3.0.2
     # via
@@ -158,7 +158,7 @@ pep517==0.10.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-pip-tools==6.0.1
+pip-tools==6.1.0
     # via -r requirements/pip-tools.txt
 pluggy==0.13.1
     # via
