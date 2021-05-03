@@ -55,7 +55,7 @@ oauthlib==3.1.0
     # via
     #   atlassian-python-api
     #   requests-oauthlib
-pbr==5.5.1
+pbr==5.6.0
     # via
     #   -r requirements/base.txt
     #   stevedore
@@ -63,7 +63,7 @@ psutil==5.8.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
-python-slugify==4.0.1
+python-slugify==5.0.0
     # via
     #   -r requirements/base.txt
     #   code-annotations
