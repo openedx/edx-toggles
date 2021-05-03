@@ -81,7 +81,7 @@ oauthlib==3.1.0
     #   requests-oauthlib
 packaging==20.9
     # via pytest
-pbr==5.5.1
+pbr==5.6.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -105,7 +105,7 @@ pytest==6.2.3
     # via
     #   pytest-cov
     #   pytest-django
-python-slugify==4.0.1
+python-slugify==5.0.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
