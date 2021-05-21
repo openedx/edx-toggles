@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-atlassian-python-api==3.9.1
+atlassian-python-api==3.10.0
     # via -r requirements/scripts.txt
 attrs==21.2.0
     # via pytest
@@ -16,17 +16,17 @@ chardet==4.0.0
     # via
     #   -r requirements/scripts.txt
     #   requests
-click==7.1.2
+click==8.0.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   code-annotations
-code-annotations==1.1.1
+code-annotations==1.1.2
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   -r requirements/test.in
-coverage==5.5
+coverage[toml]==5.5
     # via pytest-cov
 deprecated==1.2.12
     # via
@@ -46,7 +46,6 @@ django-waffle==2.1.0
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
-    #   code-annotations
     #   django-crum
     #   edx-django-utils
 edx-django-utils==4.0.0
@@ -59,12 +58,12 @@ idna==2.10
     #   requests
 iniconfig==1.1.1
     # via pytest
-jinja2==2.11.3
+jinja2==3.0.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   code-annotations
-markupsafe==1.1.1
+markupsafe==2.0.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -97,9 +96,9 @@ py==1.10.0
     # via pytest
 pyparsing==2.4.7
     # via packaging
-pytest-cov==2.11.1
+pytest-cov==2.12.0
     # via -r requirements/test.in
-pytest-django==4.2.0
+pytest-django==4.3.0
     # via -r requirements/test.in
 pytest==6.2.4
     # via
@@ -153,7 +152,9 @@ text-unidecode==1.3
     #   -r requirements/scripts.txt
     #   python-slugify
 toml==0.10.2
-    # via pytest
+    # via
+    #   coverage
+    #   pytest
 urllib3==1.26.4
     # via
     #   -r requirements/scripts.txt

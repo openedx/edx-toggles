@@ -4,17 +4,17 @@
 #
 #    make upgrade
 #
-atlassian-python-api==3.9.1
+atlassian-python-api==3.10.0
     # via -r requirements/scripts.in
 certifi==2020.12.5
     # via requests
 chardet==4.0.0
     # via requests
-click==7.1.2
+click==8.0.1
     # via
     #   -r requirements/base.txt
     #   code-annotations
-code-annotations==1.1.1
+code-annotations==1.1.2
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.in
@@ -28,22 +28,21 @@ django-waffle==2.1.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
-django==2.2.22
+django==2.2.23
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.txt
-    #   code-annotations
     #   django-crum
     #   edx-django-utils
 edx-django-utils==4.0.0
     # via -r requirements/base.txt
 idna==2.10
     # via requests
-jinja2==2.11.3
+jinja2==3.0.1
     # via
     #   -r requirements/base.txt
     #   code-annotations
-markupsafe==1.1.1
+markupsafe==2.0.1
     # via
     #   -r requirements/base.txt
     #   jinja2
