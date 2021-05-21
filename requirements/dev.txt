@@ -13,7 +13,7 @@ astroid==2.5.6
     #   -r requirements/quality.txt
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.9.1
+atlassian-python-api==3.10.0
     # via -r requirements/quality.txt
 attrs==21.2.0
     # via
@@ -34,7 +34,7 @@ click-log==0.3.2
     # via
     #   -r requirements/quality.txt
     #   edx-lint
-click==7.1.2
+click==8.0.1
     # via
     #   -r requirements/pip-tools.txt
     #   -r requirements/quality.txt
@@ -42,13 +42,13 @@ click==7.1.2
     #   code-annotations
     #   edx-lint
     #   pip-tools
-code-annotations==1.1.1
+code-annotations==1.1.2
     # via
     #   -r requirements/quality.txt
     #   edx-lint
 codecov==2.1.11
     # via -r requirements/ci.txt
-coverage==5.5
+coverage[toml]==5.5
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -58,7 +58,7 @@ deprecated==1.2.12
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
-diff-cover==5.1.0
+diff-cover==5.1.1
     # via -r requirements/dev.in
 distlib==0.3.1
     # via
@@ -72,11 +72,10 @@ django-waffle==2.1.0
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
-django==2.2.22
+django==2.2.23
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/quality.txt
-    #   code-annotations
     #   django-crum
     #   edx-django-utils
     #   edx-i18n-tools
@@ -113,7 +112,7 @@ isort==5.8.0
     #   pylint
 jinja2-pluralize==0.3.0
     # via diff-cover
-jinja2==2.11.3
+jinja2==3.0.1
     # via
     #   -r requirements/quality.txt
     #   code-annotations
@@ -123,7 +122,7 @@ lazy-object-proxy==1.6.0
     # via
     #   -r requirements/quality.txt
     #   astroid
-markupsafe==1.1.1
+markupsafe==2.0.1
     # via
     #   -r requirements/quality.txt
     #   jinja2
@@ -181,7 +180,7 @@ py==1.10.0
     #   tox
 pycodestyle==2.7.0
     # via -r requirements/quality.txt
-pydocstyle==6.0.0
+pydocstyle==6.1.1
     # via -r requirements/quality.txt
 pygments==2.9.0
     # via diff-cover
@@ -210,9 +209,9 @@ pyparsing==2.4.7
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   packaging
-pytest-cov==2.11.1
+pytest-cov==2.12.0
     # via -r requirements/quality.txt
-pytest-django==4.2.0
+pytest-django==4.3.0
     # via -r requirements/quality.txt
 pytest==6.2.4
     # via
@@ -276,6 +275,7 @@ toml==0.10.2
     #   -r requirements/ci.txt
     #   -r requirements/pip-tools.txt
     #   -r requirements/quality.txt
+    #   coverage
     #   pep517
     #   pylint
     #   pytest
