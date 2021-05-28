@@ -68,7 +68,7 @@ markupsafe==2.0.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   jinja2
-newrelic==6.2.0.156
+newrelic==6.4.0.157
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -155,7 +155,7 @@ toml==0.10.2
     # via
     #   coverage
     #   pytest
-urllib3==1.26.4
+urllib3==1.26.5
     # via
     #   -r requirements/scripts.txt
     #   requests
