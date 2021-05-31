@@ -8,7 +8,7 @@ atlassian-python-api==3.10.0
     # via -r requirements/scripts.txt
 attrs==21.2.0
     # via pytest
-certifi==2020.12.5
+certifi==2021.5.30
     # via
     #   -r requirements/scripts.txt
     #   requests
