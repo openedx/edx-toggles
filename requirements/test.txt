@@ -26,7 +26,7 @@ code-annotations==1.1.2
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   -r requirements/test.in
-coverage[toml]==5.5
+coverage==5.5
     # via pytest-cov
 deprecated==1.2.12
     # via
@@ -48,7 +48,7 @@ django-waffle==2.2.0
     #   -r requirements/scripts.txt
     #   django-crum
     #   edx-django-utils
-edx-django-utils==4.0.0
+edx-django-utils==4.1.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -73,7 +73,7 @@ newrelic==6.4.0.157
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-oauthlib==3.1.0
+oauthlib==3.1.1
     # via
     #   -r requirements/scripts.txt
     #   atlassian-python-api
@@ -96,7 +96,7 @@ py==1.10.0
     # via pytest
 pyparsing==2.4.7
     # via packaging
-pytest-cov==2.12.0
+pytest-cov==2.12.1
     # via -r requirements/test.in
 pytest-django==4.3.0
     # via -r requirements/test.in
@@ -153,8 +153,8 @@ text-unidecode==1.3
     #   python-slugify
 toml==0.10.2
     # via
-    #   coverage
     #   pytest
+    #   pytest-cov
 urllib3==1.26.5
     # via
     #   -r requirements/scripts.txt
