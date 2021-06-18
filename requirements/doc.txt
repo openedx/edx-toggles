@@ -6,7 +6,7 @@
 #
 alabaster==0.7.12
     # via sphinx
-atlassian-python-api==3.10.0
+atlassian-python-api==3.11.0
     # via -r requirements/test.txt
 attrs==21.2.0
     # via
