@@ -13,7 +13,7 @@ astroid==2.5.6
     #   -r requirements/quality.txt
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.10.0
+atlassian-python-api==3.11.0
     # via -r requirements/quality.txt
 attrs==21.2.0
     # via
@@ -147,7 +147,7 @@ packaging==20.9
     #   tox
 path.py==12.5.0
     # via edx-i18n-tools
-path==15.1.2
+path==16.0.0
     # via path.py
 pbr==5.6.0
     # via

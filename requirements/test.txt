@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-atlassian-python-api==3.10.0
+atlassian-python-api==3.11.0
     # via -r requirements/scripts.txt
 attrs==21.2.0
     # via pytest
