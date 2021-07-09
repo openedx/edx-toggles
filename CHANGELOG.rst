@@ -20,7 +20,7 @@ Unreleased
 [4.2.0] - 2021-07-07
 ~~~~~~~~~~~~~~~~~~~~
 
-* Added support for django3.2
+* Added support for django3.0, 3.1 and 3.2
 
 [4.1.0] - 2021-02-10
 ~~~~~~~~~~~~~~~~~~~~
