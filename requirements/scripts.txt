@@ -8,7 +8,7 @@ atlassian-python-api==3.12.1
     # via -r requirements/scripts.in
 certifi==2021.5.30
     # via requests
-charset-normalizer==2.0.2
+charset-normalizer==2.0.3
     # via requests
 click==8.0.1
     # via
