@@ -56,7 +56,7 @@ If the toggle is being added to edx-platform, and it needs to be used by both LM
 Avoid referring to boolean Django Settings directly. However, if a boolean setting toggle is implemented without one of the wrapping classes, its annotation implementation would be `DjangoSetting`.
 
 .. _SettingToggle and SettingDictToggle classes: https://github.com/edx/edx-toggles/blob/master/edx_toggles/toggles/internal/setting_toggle.py
-.. _ADR for the Setting Toggle classes: ../decisions/0003-django-setting-toggles.html
+.. _ADR for the Setting Toggle classes: ../decisions/0003-django-setting-toggles.rst
 
 Waffle Switches
 ---------------
