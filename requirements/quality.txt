@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.6.2
+astroid==2.6.5
     # via
     #   pylint
     #   pylint-celery
@@ -18,7 +18,7 @@ certifi==2021.5.30
     # via
     #   -r requirements/test.txt
     #   requests
-charset-normalizer==2.0.2
+charset-normalizer==2.0.3
     # via
     #   -r requirements/test.txt
     #   requests
@@ -118,7 +118,7 @@ pycodestyle==2.7.0
     # via -r requirements/quality.in
 pydocstyle==6.1.1
     # via -r requirements/quality.in
-pylint==2.9.3
+pylint==2.9.5
     # via
     #   edx-lint
     #   pylint-celery
@@ -204,3 +204,6 @@ wrapt==1.11.0
     #   -r requirements/test.txt
     #   astroid
     #   deprecated
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools

@@ -20,9 +20,7 @@ certifi==2021.5.30
     # via
     #   -r requirements/test.txt
     #   requests
-chardet==4.0.0
-    # via doc8
-charset-normalizer==2.0.2
+charset-normalizer==2.0.3
     # via
     #   -r requirements/test.txt
     #   requests
@@ -54,7 +52,7 @@ django-waffle==2.2.1
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-doc8==0.8.1
+doc8==0.9.0
     # via -r requirements/doc.in
 docutils==0.17.1
     # via
@@ -166,7 +164,6 @@ six==1.16.0
     #   -r requirements/test.txt
     #   atlassian-python-api
     #   bleach
-    #   doc8
     #   edx-sphinx-theme
     #   readme-renderer
     #   stevedore

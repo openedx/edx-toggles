@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.6.2
+astroid==2.6.5
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -26,7 +26,7 @@ certifi==2021.5.30
     #   requests
 chardet==4.0.0
     # via diff-cover
-charset-normalizer==2.0.2
+charset-normalizer==2.0.3
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -154,7 +154,7 @@ pbr==5.6.0
     # via
     #   -r requirements/quality.txt
     #   stevedore
-pep517==0.10.0
+pep517==0.11.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
@@ -189,7 +189,7 @@ pydocstyle==6.1.1
     # via -r requirements/quality.txt
 pygments==2.9.0
     # via diff-cover
-pylint==2.9.3
+pylint==2.9.5
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -278,13 +278,15 @@ text-unidecode==1.3
 toml==0.10.2
     # via
     #   -r requirements/ci.txt
-    #   -r requirements/pip-tools.txt
     #   -r requirements/quality.txt
-    #   pep517
     #   pylint
     #   pytest
     #   pytest-cov
     #   tox
+tomli==1.0.4
+    # via
+    #   -r requirements/pip-tools.txt
+    #   pep517
 tox==3.24.0
     # via
     #   -r requirements/ci.txt
