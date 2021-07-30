@@ -14,7 +14,7 @@ click==8.0.1
     # via
     #   -r requirements/base.txt
     #   code-annotations
-code-annotations==1.1.2
+code-annotations==1.2.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.in
@@ -46,7 +46,7 @@ markupsafe==2.0.1
     # via
     #   -r requirements/base.txt
     #   jinja2
-newrelic==6.4.4.161
+newrelic==6.6.0.162
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
