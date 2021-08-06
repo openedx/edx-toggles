@@ -4,11 +4,11 @@
 #
 #    make upgrade
 #
-atlassian-python-api==3.12.1
+atlassian-python-api==3.13.0
     # via -r requirements/scripts.in
 certifi==2021.5.30
     # via requests
-charset-normalizer==2.0.3
+charset-normalizer==2.0.4
     # via requests
 click==8.0.1
     # via
@@ -46,7 +46,7 @@ markupsafe==2.0.1
     # via
     #   -r requirements/base.txt
     #   jinja2
-newrelic==6.6.0.162
+newrelic==6.8.0.163
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
