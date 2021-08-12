@@ -1,10 +1,12 @@
 """
 Toggle test utilities.
 """
+import sys
+from django.test.utils import TestContextDecorator
 from waffle.testutils import override_flag, override_switch
 
 
-class override_waffle_flag(override_flag):
+class override_waffle_flag(TestContextDecorator):
     """
     override_waffle_flag is a contextmanager for easier testing of flags.
 
@@ -19,7 +21,10 @@ class override_waffle_flag(override_flag):
     before entering the context, it is created, then removed at the end of the
     block.
 
-    It can also act as a decorator::
+    It can also act as a decorator both on the class and function level::
+        @override_waffle_flag(SOME_COURSE_FLAG, active=True)
+            class HappyModeTests(TestCase):
+                ...
 
         @override_waffle_flag(SOME_COURSE_FLAG, active=True)
         def test_happy_mode_enabled():
@@ -33,25 +38,33 @@ class override_waffle_flag(override_flag):
              flag (WaffleFlag): The namespaced cached waffle flag.
              active (Boolean): The value to which the flag will be set.
         """
+        super().__init__()
         self.flag = flag
+        self.active = active
         self._cached_value = None
-        super().__init__(self.flag.name, active)
+        self.decorator = override_flag(self.flag.name, self.active)
 
     def __enter__(self):
-        super().__enter__()
+        self.decorator.__enter__()
 
         # Store values that have been cached on the flag
-        self._cached_value = self.flag.cached_flags().get(self.name)
-        self.flag.cached_flags()[self.name] = self.active
+        self._cached_value = self.flag.cached_flags().get(self.flag.name)
+        self.flag.cached_flags()[self.flag.name] = self.active
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        super().__exit__(exc_type, exc_val, exc_tb)
+        self.decorator.__exit__(exc_type, exc_val, exc_tb)
 
         # Restore the cached values
-        self.flag.cached_flags().pop(self.name, None)
+        self.flag.cached_flags().pop(self.flag.name, None)
 
         if self._cached_value is not None:
-            self.flag.cached_flags()[self.name] = self._cached_value
+            self.flag.cached_flags()[self.flag.name] = self._cached_value
+
+    def enable(self):
+        self.__enter__()
+
+    def disable(self):
+        self.__exit__(*sys.exc_info())
 
 
 class override_waffle_switch(override_switch):
