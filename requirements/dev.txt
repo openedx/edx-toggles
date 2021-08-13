@@ -59,7 +59,7 @@ deprecated==1.2.12
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
-diff-cover==6.2.1
+diff-cover==6.3.0
     # via -r requirements/dev.in
 distlib==0.3.2
     # via
@@ -296,11 +296,11 @@ urllib3==1.26.6
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-virtualenv==20.7.0
+virtualenv==20.7.2
     # via
     #   -r requirements/ci.txt
     #   tox
-wheel==0.36.2
+wheel==0.37.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
