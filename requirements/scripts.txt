@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-atlassian-python-api==3.13.0
+atlassian-python-api==3.13.1
     # via -r requirements/scripts.in
 certifi==2021.5.30
     # via requests
@@ -34,7 +34,7 @@ django-waffle==2.2.1
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
-edx-django-utils==4.2.0
+edx-django-utils==4.4.0
     # via -r requirements/base.txt
 idna==3.2
     # via requests
@@ -46,7 +46,7 @@ markupsafe==2.0.1
     # via
     #   -r requirements/base.txt
     #   jinja2
-newrelic==6.8.0.163
+newrelic==6.8.1.164
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
