@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-atlassian-python-api==3.13.0
+atlassian-python-api==3.13.1
     # via -r requirements/scripts.txt
 attrs==21.2.0
     # via pytest
@@ -48,7 +48,7 @@ django-waffle==2.2.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-edx-django-utils==4.2.0
+edx-django-utils==4.4.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -68,7 +68,7 @@ markupsafe==2.0.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   jinja2
-newrelic==6.8.0.163
+newrelic==6.8.1.164
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -85,7 +85,7 @@ pbr==5.6.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   stevedore
-pluggy==0.13.1
+pluggy==1.0.0
     # via pytest
 psutil==5.8.0
     # via
@@ -96,7 +96,7 @@ py==1.10.0
     # via pytest
 pyparsing==2.4.7
     # via packaging
-pytest==6.2.4
+pytest==6.2.5
     # via
     #   pytest-cov
     #   pytest-django

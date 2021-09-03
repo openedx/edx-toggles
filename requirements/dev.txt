@@ -4,12 +4,12 @@
 #
 #    make upgrade
 #
-astroid==2.6.6
+astroid==2.7.3
     # via
     #   -r requirements/quality.txt
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.13.0
+atlassian-python-api==3.13.1
     # via -r requirements/quality.txt
 attrs==21.2.0
     # via
@@ -24,8 +24,6 @@ certifi==2021.5.30
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-chardet==4.0.0
-    # via diff-cover
 charset-normalizer==2.0.4
     # via
     #   -r requirements/ci.txt
@@ -59,8 +57,10 @@ deprecated==1.2.12
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
-diff-cover==6.3.3
-    # via -r requirements/dev.in
+diff-cover==4.0.0
+    # via
+    #   -c requirements/constraints.txt
+    #   -r requirements/dev.in
 distlib==0.3.2
     # via
     #   -r requirements/ci.txt
@@ -72,7 +72,6 @@ django==2.2.24
     #   django-crum
     #   edx-django-utils
     #   edx-i18n-tools
-    #   edx-lint
 django-crum==0.7.9
     # via
     #   -r requirements/quality.txt
@@ -81,11 +80,11 @@ django-waffle==2.2.1
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
-edx-django-utils==4.2.0
+edx-django-utils==4.4.0
     # via -r requirements/quality.txt
 edx-i18n-tools==0.7.0
     # via -r requirements/dev.in
-edx-lint==5.0.0
+edx-lint==5.1.0
     # via -r requirements/quality.txt
 filelock==3.0.12
     # via
@@ -97,7 +96,7 @@ idna==3.2
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-importlib-metadata==4.6.4
+importlib-metadata==4.8.1
     # via inflect
 inflect==3.0.2
     # via
@@ -131,7 +130,7 @@ mccabe==0.6.1
     # via
     #   -r requirements/quality.txt
     #   pylint
-newrelic==6.8.0.163
+newrelic==6.8.1.164
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
@@ -158,11 +157,13 @@ pep517==0.11.0
     #   pip-tools
 pip-tools==6.2.0
     # via -r requirements/pip-tools.txt
-platformdirs==2.2.0
+platformdirs==2.3.0
     # via
     #   -r requirements/ci.txt
+    #   -r requirements/quality.txt
+    #   pylint
     #   virtualenv
-pluggy==0.13.1
+pluggy==1.0.0
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -187,7 +188,7 @@ pydocstyle==6.1.1
     # via -r requirements/quality.txt
 pygments==2.10.0
     # via diff-cover
-pylint==2.9.6
+pylint==2.10.2
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -212,7 +213,7 @@ pyparsing==2.4.7
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   packaging
-pytest==6.2.4
+pytest==6.2.5
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -285,7 +286,7 @@ tomli==1.2.1
     # via
     #   -r requirements/pip-tools.txt
     #   pep517
-tox==3.24.2
+tox==3.24.3
     # via
     #   -r requirements/ci.txt
     #   tox-battery
