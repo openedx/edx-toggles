@@ -43,8 +43,72 @@ Choosing the general toggle type
      -
      -
 
-Implementing the right toggle class
+Using your toggle
+=================
+
+This section covers waffle switches and flags as well as Django Settings toggles.
+For information on `Configuration Models`_ refer to that library.
+
+.. _Configuration Models: https://github.com/edx/django-config-models/
+
+Creating toggles
+-----------------
+
+Flags and switches are created with a name. The namespace prefix is used to categorize them and prevent conflicts.
+
+.. code:: python
+
+    FLAG_FOO = WaffleFlag('namespace.feature', module_name=__name__)
+    SWITCH_BAR = WaffleSwitch('namespace.feature', module_name=__name__)
+    SETTING_TOGGLE_BAZ = SettingToggle("SETTING_NAME", default=False, module_name=__name__)
+
+Administering and testing toggles
+----------------------------------
+
+For the waffle flag and switch, you will use Django Admin "waffle" section to configure for a flag named ``namespace.feature``. Setting toggles are a wrapper around standard Django settings.
+
+Functions to override waffle flags in test are provided in `testutils`_.
+
+.. _testutils: https://github.com/edx/edx-toggles/blob/master/edx_toggles/toggles/testutils.py
+
+Accessing toggles
+------------------
+
+Unlike the underlying waffle and settings libraries which look up values by name, toggles are imported and used directly:
+
+.. code:: python
+
+    from whereever import FLAG_FOO, SWITCH_BAR, SETTING_TOGGLE_BAZ
+
+    FLAG_FOO.is_enabled()
+    SWITCH_BAR.is_enabled()
+    SETTING_TOGGLE_BAZ.is_enabled()
+
+State used by toggles
+---------------------
+
+Obviously since some toggles take into account the user they must have more data than the zero arguments of ``is_enabled()``.
+
+Waffle switches and flags have a few hidden sources of information. Both use a per-request cache, so a toggle value is stable during a request if there is one. Flags (including Course and Experiment types) additionally access the request via ``crum.get_request`` and through it the user. This means that in an environment without a request, flags will fail unless they are turned on for everyone like a simple switch.
+
+Settings toggles are unsurprisingly reading from the django settings object.
+
+Using other toggles
+--------------------
+
+As a best practice, when implementing toggles in a library, we recommend keeping those toggles limited to private or internal use within the library. In other words, only code within the library should refer directly to the toggle.
+
+If you wish to expose whether a library, service, or feature is available to its consumers, we recommend you instead expose a boolean method that may be implemented by wrapping a toggle.
+
+Documenting your new toggle
+===========================
+
+As part of implementing your new toggle, read :doc:`how to document the toggle <documenting_new_feature_toggles>`, which should also help you think through the use cases and life expectancy of the toggle.
+
+Toggle Implementation References
 ===================================
+
+For additional details, see references to the actual toggle class implementations.
 
 Django Setting toggles
 ----------------------
@@ -90,8 +154,3 @@ Config Models
 A `ConfigurationModel`_ can be used if all other options do not suit your needs. In most cases, it is no longer necessary.
 
 .. _ConfigurationModel: https://github.com/edx/django-config-models/
-
-Documenting your new toggle
-===========================
-
-As part of implementing your new toggle, read :doc:`how to document the toggle <documenting_new_feature_toggles>`, which should also help you think through the use cases and life expectancy of the toggle.
