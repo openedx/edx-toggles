@@ -9,7 +9,7 @@ astroid==2.7.3
     #   -r requirements/quality.txt
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.13.1
+atlassian-python-api==3.13.2
     # via -r requirements/quality.txt
 attrs==21.2.0
     # via
@@ -53,7 +53,7 @@ coverage==5.5
     #   -r requirements/quality.txt
     #   codecov
     #   pytest-cov
-deprecated==1.2.12
+deprecated==1.2.13
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api

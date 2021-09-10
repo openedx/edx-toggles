@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-atlassian-python-api==3.13.1
+atlassian-python-api==3.13.2
     # via -r requirements/scripts.in
 certifi==2021.5.30
     # via requests
@@ -18,7 +18,7 @@ code-annotations==1.2.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.in
-deprecated==1.2.12
+deprecated==1.2.13
     # via atlassian-python-api
 django==2.2.24
     # via
