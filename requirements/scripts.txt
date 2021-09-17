@@ -8,7 +8,7 @@ atlassian-python-api==3.13.2
     # via -r requirements/scripts.in
 certifi==2021.5.30
     # via requests
-charset-normalizer==2.0.4
+charset-normalizer==2.0.5
     # via requests
 click==8.0.1
     # via
@@ -46,7 +46,7 @@ markupsafe==2.0.1
     # via
     #   -r requirements/base.txt
     #   jinja2
-newrelic==6.8.1.164
+newrelic==6.10.0.165
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
@@ -85,7 +85,7 @@ six==1.16.0
     #   -r requirements/base.txt
     #   atlassian-python-api
     #   stevedore
-sqlparse==0.4.1
+sqlparse==0.4.2
     # via
     #   -r requirements/base.txt
     #   django
