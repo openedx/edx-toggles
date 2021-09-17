@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.7.3
+astroid==2.8.0
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -24,7 +24,7 @@ certifi==2021.5.30
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-charset-normalizer==2.0.4
+charset-normalizer==2.0.5
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -130,7 +130,7 @@ mccabe==0.6.1
     # via
     #   -r requirements/quality.txt
     #   pylint
-newrelic==6.8.1.164
+newrelic==6.10.0.165
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
@@ -188,7 +188,7 @@ pydocstyle==6.1.1
     # via -r requirements/quality.txt
 pygments==2.10.0
     # via diff-cover
-pylint==2.10.2
+pylint==2.11.1
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -260,7 +260,7 @@ snowballstemmer==2.1.0
     # via
     #   -r requirements/quality.txt
     #   pydocstyle
-sqlparse==0.4.1
+sqlparse==0.4.2
     # via
     #   -r requirements/quality.txt
     #   django
@@ -286,18 +286,23 @@ tomli==1.2.1
     # via
     #   -r requirements/pip-tools.txt
     #   pep517
-tox==3.24.3
+tox==3.24.4
     # via
     #   -r requirements/ci.txt
     #   tox-battery
 tox-battery==0.6.1
     # via -r requirements/ci.txt
+typing-extensions==3.10.0.2
+    # via
+    #   -r requirements/quality.txt
+    #   astroid
+    #   pylint
 urllib3==1.26.6
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-virtualenv==20.7.2
+virtualenv==20.8.0
     # via
     #   -r requirements/ci.txt
     #   tox
