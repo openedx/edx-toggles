@@ -8,7 +8,7 @@ astroid==2.8.0
     # via
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.13.2
+atlassian-python-api==3.14.0
     # via -r requirements/test.txt
 attrs==21.2.0
     # via
@@ -18,7 +18,7 @@ certifi==2021.5.30
     # via
     #   -r requirements/test.txt
     #   requests
-charset-normalizer==2.0.5
+charset-normalizer==2.0.6
     # via
     #   -r requirements/test.txt
     #   requests
@@ -84,7 +84,7 @@ markupsafe==2.0.1
     #   jinja2
 mccabe==0.6.1
     # via pylint
-newrelic==6.10.0.165
+newrelic==7.0.0.166
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -199,7 +199,7 @@ typing-extensions==3.10.0.2
     # via
     #   astroid
     #   pylint
-urllib3==1.26.6
+urllib3==1.26.7
     # via
     #   -r requirements/test.txt
     #   requests

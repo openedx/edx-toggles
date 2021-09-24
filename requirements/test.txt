@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-atlassian-python-api==3.13.2
+atlassian-python-api==3.14.0
     # via -r requirements/scripts.txt
 attrs==21.2.0
     # via pytest
@@ -12,7 +12,7 @@ certifi==2021.5.30
     # via
     #   -r requirements/scripts.txt
     #   requests
-charset-normalizer==2.0.5
+charset-normalizer==2.0.6
     # via
     #   -r requirements/scripts.txt
     #   requests
@@ -68,7 +68,7 @@ markupsafe==2.0.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   jinja2
-newrelic==6.10.0.165
+newrelic==7.0.0.166
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -155,7 +155,7 @@ toml==0.10.2
     # via
     #   pytest
     #   pytest-cov
-urllib3==1.26.6
+urllib3==1.26.7
     # via
     #   -r requirements/scripts.txt
     #   requests

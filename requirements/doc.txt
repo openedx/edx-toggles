@@ -6,7 +6,7 @@
 #
 alabaster==0.7.12
     # via sphinx
-atlassian-python-api==3.13.2
+atlassian-python-api==3.14.0
     # via -r requirements/test.txt
 attrs==21.2.0
     # via
@@ -20,7 +20,7 @@ certifi==2021.5.30
     # via
     #   -r requirements/test.txt
     #   requests
-charset-normalizer==2.0.5
+charset-normalizer==2.0.6
     # via
     #   -r requirements/test.txt
     #   requests
@@ -83,7 +83,7 @@ markupsafe==2.0.1
     # via
     #   -r requirements/test.txt
     #   jinja2
-newrelic==6.10.0.165
+newrelic==7.0.0.166
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -205,7 +205,7 @@ toml==0.10.2
     #   -r requirements/test.txt
     #   pytest
     #   pytest-cov
-urllib3==1.26.6
+urllib3==1.26.7
     # via
     #   -r requirements/test.txt
     #   requests
