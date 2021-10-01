@@ -58,7 +58,7 @@ django-waffle==2.2.1
     #   edx-django-utils
 edx-django-utils==4.4.0
     # via -r requirements/test.txt
-edx-lint==5.1.0
+edx-lint==5.2.0
     # via -r requirements/quality.in
 idna==3.2
     # via
@@ -101,7 +101,7 @@ pbr==5.6.0
     # via
     #   -r requirements/test.txt
     #   stevedore
-platformdirs==2.3.0
+platformdirs==2.4.0
     # via pylint
 pluggy==1.0.0
     # via
