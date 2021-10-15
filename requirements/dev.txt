@@ -86,7 +86,7 @@ edx-i18n-tools==0.8.1
     # via -r requirements/dev.in
 edx-lint==5.2.0
     # via -r requirements/quality.txt
-filelock==3.3.0
+filelock==3.3.1
     # via
     #   -r requirements/ci.txt
     #   tox
