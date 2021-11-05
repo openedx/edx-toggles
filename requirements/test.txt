@@ -26,7 +26,7 @@ code-annotations==1.2.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   -r requirements/test.in
-coverage[toml]==6.0.2
+coverage[toml]==6.1.1
     # via pytest-cov
 deprecated==1.2.13
     # via
@@ -68,7 +68,7 @@ markupsafe==2.0.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   jinja2
-newrelic==7.2.2.169
+newrelic==7.2.3.170
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -78,9 +78,9 @@ oauthlib==3.1.1
     #   -r requirements/scripts.txt
     #   atlassian-python-api
     #   requests-oauthlib
-packaging==21.0
+packaging==21.2
     # via pytest
-pbr==5.6.0
+pbr==5.7.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -92,9 +92,9 @@ psutil==5.8.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-py==1.10.0
+py==1.11.0
     # via pytest
-pyparsing==3.0.3
+pyparsing==2.4.7
     # via packaging
 pytest==6.2.5
     # via
