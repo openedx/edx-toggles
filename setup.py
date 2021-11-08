@@ -103,3 +103,4 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
 )
+print(1)
