@@ -47,7 +47,7 @@ code-annotations==1.2.0
     #   edx-lint
 codecov==2.1.12
     # via -r requirements/ci.txt
-coverage[toml]==6.0.2
+coverage[toml]==6.1.1
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -86,7 +86,7 @@ edx-i18n-tools==0.8.1
     # via -r requirements/dev.in
 edx-lint==5.2.1
     # via -r requirements/quality.txt
-filelock==3.3.1
+filelock==3.3.2
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -106,7 +106,7 @@ iniconfig==1.1.1
     # via
     #   -r requirements/quality.txt
     #   pytest
-isort==5.9.3
+isort==5.10.0
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -130,7 +130,7 @@ mccabe==0.6.1
     # via
     #   -r requirements/quality.txt
     #   pylint
-newrelic==7.2.2.169
+newrelic==7.2.3.170
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
@@ -139,7 +139,7 @@ oauthlib==3.1.1
     #   -r requirements/quality.txt
     #   atlassian-python-api
     #   requests-oauthlib
-packaging==21.0
+packaging==21.2
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -147,7 +147,7 @@ packaging==21.0
     #   tox
 path==16.2.0
     # via edx-i18n-tools
-pbr==5.6.0
+pbr==5.7.0
     # via
     #   -r requirements/quality.txt
     #   stevedore
@@ -176,7 +176,7 @@ psutil==5.8.0
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
-py==1.10.0
+py==1.11.0
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -208,7 +208,7 @@ pylint-plugin-utils==0.6
     #   -r requirements/quality.txt
     #   pylint-celery
     #   pylint-django
-pyparsing==3.0.3
+pyparsing==2.4.7
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -302,7 +302,7 @@ urllib3==1.26.7
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-virtualenv==20.9.0
+virtualenv==20.10.0
     # via
     #   -r requirements/ci.txt
     #   tox
