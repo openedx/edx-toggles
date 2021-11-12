@@ -26,7 +26,7 @@ code-annotations==1.2.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   -r requirements/test.in
-coverage[toml]==6.1.1
+coverage[toml]==6.1.2
     # via pytest-cov
 deprecated==1.2.13
     # via
@@ -58,7 +58,7 @@ idna==3.3
     #   requests
 iniconfig==1.1.1
     # via pytest
-jinja2==3.0.2
+jinja2==3.0.3
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -68,7 +68,7 @@ markupsafe==2.0.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   jinja2
-newrelic==7.2.3.170
+newrelic==7.2.4.171
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
