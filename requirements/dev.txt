@@ -15,7 +15,7 @@ attrs==21.2.0
     # via
     #   -r requirements/quality.txt
     #   pytest
-backports.entry-points-selectable==1.1.0
+backports.entry-points-selectable==1.1.1
     # via
     #   -r requirements/ci.txt
     #   virtualenv
@@ -47,7 +47,7 @@ code-annotations==1.2.0
     #   edx-lint
 codecov==2.1.12
     # via -r requirements/ci.txt
-coverage[toml]==6.1.1
+coverage[toml]==6.1.2
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -96,7 +96,7 @@ idna==3.3
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-importlib-metadata==4.8.1
+importlib-metadata==4.8.2
     # via inflect
 inflect==3.0.2
     # via
@@ -106,11 +106,11 @@ iniconfig==1.1.1
     # via
     #   -r requirements/quality.txt
     #   pytest
-isort==5.10.0
+isort==5.10.1
     # via
     #   -r requirements/quality.txt
     #   pylint
-jinja2==3.0.2
+jinja2==3.0.3
     # via
     #   -r requirements/quality.txt
     #   code-annotations
@@ -130,7 +130,7 @@ mccabe==0.6.1
     # via
     #   -r requirements/quality.txt
     #   pylint
-newrelic==7.2.3.170
+newrelic==7.2.4.171
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
