@@ -4,6 +4,10 @@
 #
 #    make upgrade
 #
+asgiref==3.4.1
+    # via
+    #   -r requirements/base.txt
+    #   django
 atlassian-python-api==3.14.1
     # via -r requirements/scripts.in
 certifi==2021.10.8
@@ -20,7 +24,7 @@ code-annotations==1.2.0
     #   -r requirements/scripts.in
 deprecated==1.2.13
     # via atlassian-python-api
-django==2.2.24
+django==3.2.9
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.txt
@@ -54,7 +58,7 @@ oauthlib==3.1.1
     # via
     #   atlassian-python-api
     #   requests-oauthlib
-pbr==5.7.0
+pbr==5.8.0
     # via
     #   -r requirements/base.txt
     #   stevedore
