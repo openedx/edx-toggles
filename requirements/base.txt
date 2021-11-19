@@ -4,11 +4,13 @@
 #
 #    make upgrade
 #
+asgiref==3.4.1
+    # via django
 click==8.0.3
     # via code-annotations
 code-annotations==1.2.0
     # via -r requirements/base.in
-django==2.2.24
+django==3.2.9
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
@@ -30,7 +32,7 @@ markupsafe==2.0.1
     # via jinja2
 newrelic==7.2.4.171
     # via edx-django-utils
-pbr==5.7.0
+pbr==5.8.0
     # via stevedore
 psutil==5.8.0
     # via edx-django-utils
