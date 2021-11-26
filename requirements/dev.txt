@@ -8,7 +8,7 @@ asgiref==3.4.1
     # via
     #   -r requirements/quality.txt
     #   django
-astroid==2.8.5
+astroid==2.9.0
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -28,7 +28,7 @@ certifi==2021.10.8
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-charset-normalizer==2.0.7
+charset-normalizer==2.0.8
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -192,7 +192,7 @@ pydocstyle==6.1.1
     # via -r requirements/quality.txt
 pygments==2.10.0
     # via diff-cover
-pylint==2.11.1
+pylint==2.12.1
     # via
     #   -r requirements/quality.txt
     #   edx-lint
