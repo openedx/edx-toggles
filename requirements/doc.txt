@@ -24,7 +24,7 @@ certifi==2021.10.8
     # via
     #   -r requirements/test.txt
     #   requests
-charset-normalizer==2.0.7
+charset-normalizer==2.0.8
     # via
     #   -r requirements/test.txt
     #   requests
