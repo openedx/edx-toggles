@@ -4,6 +4,11 @@
 #
 #    make upgrade
 #
+asgiref==3.4.1
+    # via
+    #   -r requirements/base.txt
+    #   -r requirements/scripts.txt
+    #   django
 atlassian-python-api==3.14.1
     # via -r requirements/scripts.txt
 attrs==21.2.0
@@ -12,7 +17,7 @@ certifi==2021.10.8
     # via
     #   -r requirements/scripts.txt
     #   requests
-charset-normalizer==2.0.7
+charset-normalizer==2.0.8
     # via
     #   -r requirements/scripts.txt
     #   requests
@@ -78,9 +83,9 @@ oauthlib==3.1.1
     #   -r requirements/scripts.txt
     #   atlassian-python-api
     #   requests-oauthlib
-packaging==21.2
+packaging==21.3
     # via pytest
-pbr==5.7.0
+pbr==5.8.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -94,7 +99,7 @@ psutil==5.8.0
     #   edx-django-utils
 py==1.11.0
     # via pytest
-pyparsing==2.4.7
+pyparsing==3.0.6
     # via packaging
 pytest==6.2.5
     # via
