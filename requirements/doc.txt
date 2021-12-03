@@ -34,7 +34,7 @@ click==8.0.3
     #   code-annotations
 code-annotations==1.2.0
     # via -r requirements/test.txt
-coverage[toml]==6.1.2
+coverage[toml]==6.2
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -134,7 +134,7 @@ pytest==6.2.5
     #   pytest-django
 pytest-cov==3.0.0
     # via -r requirements/test.txt
-pytest-django==4.4.0
+pytest-django==4.5.1
     # via -r requirements/test.txt
 python-slugify==5.0.2
     # via
@@ -172,7 +172,7 @@ six==1.16.0
     #   stevedore
 snowballstemmer==2.2.0
     # via sphinx
-sphinx==4.3.0
+sphinx==4.3.1
     # via
     #   -r requirements/doc.in
     #   edx-sphinx-theme
