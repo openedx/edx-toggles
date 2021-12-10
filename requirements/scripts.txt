@@ -12,7 +12,7 @@ atlassian-python-api==3.14.1
     # via -r requirements/scripts.in
 certifi==2021.10.8
     # via requests
-charset-normalizer==2.0.8
+charset-normalizer==2.0.9
     # via requests
 click==8.0.3
     # via
@@ -24,7 +24,7 @@ code-annotations==1.2.0
     #   -r requirements/scripts.in
 deprecated==1.2.13
     # via atlassian-python-api
-django==3.2.9
+django==3.2.10
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.txt
