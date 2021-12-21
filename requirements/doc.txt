@@ -149,7 +149,7 @@ pyyaml==6.0
     # via
     #   -r requirements/test.txt
     #   code-annotations
-readme-renderer==31.0
+readme-renderer==32.0
     # via -r requirements/doc.in
 requests==2.26.0
     # via
@@ -207,7 +207,7 @@ toml==0.10.2
     # via
     #   -r requirements/test.txt
     #   pytest
-tomli==1.2.2
+tomli==2.0.0
     # via
     #   -r requirements/test.txt
     #   coverage
