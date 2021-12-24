@@ -12,7 +12,7 @@ astroid==2.9.0
     # via
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.14.1
+atlassian-python-api==3.15.0
     # via -r requirements/test.txt
 attrs==21.2.0
     # via
@@ -60,7 +60,7 @@ django-waffle==2.2.1
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-edx-django-utils==4.4.0
+edx-django-utils==4.4.1
     # via -r requirements/test.txt
 edx-lint==5.2.1
     # via -r requirements/quality.in

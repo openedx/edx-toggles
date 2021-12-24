@@ -10,7 +10,7 @@ asgiref==3.4.1
     # via
     #   -r requirements/test.txt
     #   django
-atlassian-python-api==3.14.1
+atlassian-python-api==3.15.0
     # via -r requirements/test.txt
 attrs==21.2.0
     # via
@@ -64,7 +64,7 @@ docutils==0.17.1
     #   readme-renderer
     #   restructuredtext-lint
     #   sphinx
-edx-django-utils==4.4.0
+edx-django-utils==4.4.1
     # via -r requirements/test.txt
 edx-sphinx-theme==3.0.0
     # via -r requirements/doc.in
@@ -172,7 +172,7 @@ six==1.16.0
     #   stevedore
 snowballstemmer==2.2.0
     # via sphinx
-sphinx==4.3.1
+sphinx==4.3.2
     # via
     #   -r requirements/doc.in
     #   edx-sphinx-theme

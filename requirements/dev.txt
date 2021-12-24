@@ -13,7 +13,7 @@ astroid==2.9.0
     #   -r requirements/quality.txt
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.14.1
+atlassian-python-api==3.15.0
     # via -r requirements/quality.txt
 attrs==21.2.0
     # via
@@ -84,7 +84,7 @@ django-waffle==2.2.1
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
-edx-django-utils==4.4.0
+edx-django-utils==4.4.1
     # via -r requirements/quality.txt
 edx-i18n-tools==0.8.1
     # via -r requirements/dev.in
@@ -100,7 +100,7 @@ idna==3.3
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-importlib-metadata==4.9.0
+importlib-metadata==4.10.0
     # via inflect
 inflect==3.0.2
     # via
@@ -310,7 +310,7 @@ virtualenv==20.10.0
     # via
     #   -r requirements/ci.txt
     #   tox
-wheel==0.37.0
+wheel==0.37.1
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
