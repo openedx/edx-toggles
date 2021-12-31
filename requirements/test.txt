@@ -11,7 +11,7 @@ asgiref==3.4.1
     #   django
 atlassian-python-api==3.15.0
     # via -r requirements/scripts.txt
-attrs==21.2.0
+attrs==21.4.0
     # via pytest
 certifi==2021.10.8
     # via
@@ -92,7 +92,7 @@ pbr==5.8.0
     #   stevedore
 pluggy==1.0.0
     # via pytest
-psutil==5.8.0
+psutil==5.9.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt

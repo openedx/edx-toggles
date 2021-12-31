@@ -14,7 +14,7 @@ astroid==2.9.0
     #   pylint-celery
 atlassian-python-api==3.15.0
     # via -r requirements/test.txt
-attrs==21.2.0
+attrs==21.4.0
     # via
     #   -r requirements/test.txt
     #   pytest
@@ -111,7 +111,7 @@ pluggy==1.0.0
     # via
     #   -r requirements/test.txt
     #   pytest
-psutil==5.8.0
+psutil==5.9.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -133,7 +133,7 @@ pylint-celery==0.3
     # via edx-lint
 pylint-django==2.4.4
     # via edx-lint
-pylint-plugin-utils==0.6
+pylint-plugin-utils==0.7
     # via
     #   pylint-celery
     #   pylint-django
