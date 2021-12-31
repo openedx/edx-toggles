@@ -62,7 +62,7 @@ pbr==5.8.0
     # via
     #   -r requirements/base.txt
     #   stevedore
-psutil==5.8.0
+psutil==5.9.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
