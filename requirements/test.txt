@@ -9,7 +9,7 @@ asgiref==3.4.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   django
-atlassian-python-api==3.15.0
+atlassian-python-api==3.17.0
     # via -r requirements/scripts.txt
 attrs==21.4.0
     # via pytest
@@ -17,7 +17,7 @@ certifi==2021.10.8
     # via
     #   -r requirements/scripts.txt
     #   requests
-charset-normalizer==2.0.9
+charset-normalizer==2.0.10
     # via
     #   -r requirements/scripts.txt
     #   requests
@@ -124,7 +124,7 @@ pyyaml==6.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   code-annotations
-requests==2.26.0
+requests==2.27.1
     # via
     #   -r requirements/scripts.txt
     #   atlassian-python-api

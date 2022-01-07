@@ -8,12 +8,12 @@ asgiref==3.4.1
     # via
     #   -r requirements/quality.txt
     #   django
-astroid==2.9.0
+astroid==2.9.2
     # via
     #   -r requirements/quality.txt
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.15.0
+atlassian-python-api==3.17.0
     # via -r requirements/quality.txt
 attrs==21.4.0
     # via
@@ -24,7 +24,7 @@ certifi==2021.10.8
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-charset-normalizer==2.0.9
+charset-normalizer==2.0.10
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -65,7 +65,7 @@ distlib==0.3.4
     # via
     #   -r requirements/ci.txt
     #   virtualenv
-django==3.2.10
+django==3.2.11
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/quality.txt
@@ -145,7 +145,7 @@ packaging==21.3
     #   -r requirements/quality.txt
     #   pytest
     #   tox
-path==16.2.0
+path==16.3.0
     # via edx-i18n-tools
 pbr==5.8.0
     # via
@@ -186,7 +186,7 @@ pycodestyle==2.8.0
     # via -r requirements/quality.txt
 pydocstyle==6.1.1
     # via -r requirements/quality.txt
-pygments==2.11.0
+pygments==2.11.2
     # via diff-cover
 pylint==2.12.2
     # via
@@ -199,7 +199,7 @@ pylint-celery==0.3
     # via
     #   -r requirements/quality.txt
     #   edx-lint
-pylint-django==2.4.4
+pylint-django==2.5.0
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -235,7 +235,7 @@ pyyaml==6.0
     #   -r requirements/quality.txt
     #   code-annotations
     #   edx-i18n-tools
-requests==2.26.0
+requests==2.27.1
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -302,7 +302,7 @@ urllib3==1.26.7
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-virtualenv==20.11.2
+virtualenv==20.13.0
     # via
     #   -r requirements/ci.txt
     #   tox
