@@ -9,7 +9,7 @@ asgiref==3.4.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   django
-atlassian-python-api==3.17.0
+atlassian-python-api==3.18.0
     # via -r requirements/scripts.txt
 attrs==21.4.0
     # via pytest
@@ -48,7 +48,7 @@ django-crum==0.7.9
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-django-waffle==2.2.1
+django-waffle==2.3.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -160,7 +160,7 @@ toml==0.10.2
     # via pytest
 tomli==2.0.0
     # via coverage
-urllib3==1.26.7
+urllib3==1.26.8
     # via
     #   -r requirements/scripts.txt
     #   requests
