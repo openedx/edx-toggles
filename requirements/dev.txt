@@ -8,12 +8,12 @@ asgiref==3.4.1
     # via
     #   -r requirements/quality.txt
     #   django
-astroid==2.9.2
+astroid==2.9.3
     # via
     #   -r requirements/quality.txt
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.17.0
+atlassian-python-api==3.18.0
     # via -r requirements/quality.txt
 attrs==21.4.0
     # via
@@ -76,7 +76,7 @@ django-crum==0.7.9
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
-django-waffle==2.2.1
+django-waffle==2.3.0
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
@@ -297,7 +297,7 @@ typing-extensions==4.0.1
     #   -r requirements/quality.txt
     #   astroid
     #   pylint
-urllib3==1.26.7
+urllib3==1.26.8
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
