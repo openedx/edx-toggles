@@ -96,7 +96,7 @@ idna==3.3
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-importlib-metadata==4.10.0
+importlib-metadata==4.10.1
     # via inflect
 inflect==3.0.2
     # via
@@ -130,7 +130,7 @@ mccabe==0.6.1
     # via
     #   -r requirements/quality.txt
     #   pylint
-newrelic==7.2.4.171
+newrelic==7.4.0.172
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
