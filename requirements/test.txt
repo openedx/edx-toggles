@@ -73,7 +73,7 @@ markupsafe==2.0.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   jinja2
-newrelic==7.2.4.171
+newrelic==7.4.0.172
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
