@@ -4,12 +4,12 @@
 #
 #    make upgrade
 #
-asgiref==3.4.1
+asgiref==3.5.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   django
-atlassian-python-api==3.18.0
+atlassian-python-api==3.18.1
     # via -r requirements/scripts.txt
 attrs==21.4.0
     # via pytest
@@ -31,7 +31,7 @@ code-annotations==1.2.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   -r requirements/test.in
-coverage[toml]==6.2
+coverage[toml]==6.3
     # via pytest-cov
 deprecated==1.2.13
     # via
@@ -53,7 +53,7 @@ django-waffle==2.3.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-edx-django-utils==4.4.1
+edx-django-utils==4.4.2
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -99,7 +99,7 @@ psutil==5.9.0
     #   edx-django-utils
 py==1.11.0
     # via pytest
-pyparsing==3.0.6
+pyparsing==3.0.7
     # via packaging
 pytest==6.2.5
     # via

@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-asgiref==3.4.1
+asgiref==3.5.0
     # via
     #   -r requirements/test.txt
     #   django
@@ -12,7 +12,7 @@ astroid==2.9.3
     # via
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.18.0
+atlassian-python-api==3.18.1
     # via -r requirements/test.txt
 attrs==21.4.0
     # via
@@ -38,7 +38,7 @@ code-annotations==1.2.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage[toml]==6.2
+coverage[toml]==6.3
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -60,7 +60,7 @@ django-waffle==2.3.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-edx-django-utils==4.4.1
+edx-django-utils==4.4.2
     # via -r requirements/test.txt
 edx-lint==5.2.1
     # via -r requirements/quality.in
@@ -137,7 +137,7 @@ pylint-plugin-utils==0.7
     # via
     #   pylint-celery
     #   pylint-django
-pyparsing==3.0.6
+pyparsing==3.0.7
     # via
     #   -r requirements/test.txt
     #   packaging
