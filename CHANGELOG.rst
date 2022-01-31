@@ -17,6 +17,18 @@ Unreleased
 * Handle the case where certain toggle names come in as ``None`` when generating summary reports.
 * Add ADR for updating annotations for toggle life expectancy and use cases.
 
+[4.3.0] - 2022-01-31
+--------------------
+
+Removed
+~~~~~~~
+
+* Removed Django22, 30, 31
+
+Added
+~~~~~~~
+* Added Django40 support in CI
+
 [4.2.0] - 2021-07-07
 ~~~~~~~~~~~~~~~~~~~~
 
