@@ -6,11 +6,11 @@
 #
 alabaster==0.7.12
     # via sphinx
-asgiref==3.4.1
+asgiref==3.5.0
     # via
     #   -r requirements/test.txt
     #   django
-atlassian-python-api==3.18.0
+atlassian-python-api==3.18.1
     # via -r requirements/test.txt
 attrs==21.4.0
     # via
@@ -34,7 +34,7 @@ click==8.0.3
     #   code-annotations
 code-annotations==1.2.0
     # via -r requirements/test.txt
-coverage[toml]==6.2
+coverage[toml]==6.3
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -64,7 +64,7 @@ docutils==0.17.1
     #   readme-renderer
     #   restructuredtext-lint
     #   sphinx
-edx-django-utils==4.4.1
+edx-django-utils==4.4.2
     # via -r requirements/test.txt
 edx-sphinx-theme==3.0.0
     # via -r requirements/doc.in
@@ -89,7 +89,7 @@ markupsafe==2.0.1
     # via
     #   -r requirements/test.txt
     #   jinja2
-newrelic==7.2.4.171
+newrelic==7.4.0.172
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -125,7 +125,7 @@ pygments==2.11.2
     #   doc8
     #   readme-renderer
     #   sphinx
-pyparsing==3.0.6
+pyparsing==3.0.7
     # via
     #   -r requirements/test.txt
     #   packaging

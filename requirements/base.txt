@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-asgiref==3.4.1
+asgiref==3.5.0
     # via django
 click==8.0.3
     # via code-annotations
@@ -24,13 +24,13 @@ django-waffle==2.3.0
     # via
     #   -r requirements/base.in
     #   edx-django-utils
-edx-django-utils==4.4.1
+edx-django-utils==4.4.2
     # via -r requirements/base.in
 jinja2==3.0.3
     # via code-annotations
 markupsafe==2.0.1
     # via jinja2
-newrelic==7.2.4.171
+newrelic==7.4.0.172
     # via edx-django-utils
 pbr==5.8.0
     # via stevedore
