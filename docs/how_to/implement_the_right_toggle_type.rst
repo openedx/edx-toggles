@@ -140,7 +140,7 @@ If you are wrapping a legacy flag that does not have a namespaced name (i.e. no 
 
 In edx-platform, there is also:
 
-* `CourseWaffleFlag`_: A WaffleFlag that adds override capabilities per course.
+* `CourseWaffleFlag`_: A WaffleFlag that adds override capabilities per course and per organization.
 * `ExperimentWaffleFlag`_: A somewhat complex CourseWaffleFlag that enables bucketing of users for A/B experiments.
 
 .. _WaffleFlag class: ../edx_toggles.toggles.internal.waffle.html#module-edx_toggles.toggles.internal.waffle
