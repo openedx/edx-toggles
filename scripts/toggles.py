@@ -244,6 +244,11 @@ class ToggleState:
                 courses_forced_off = [course for course in v if course["force"] == "off"]
                 self._cleaned_state_data["num_courses_forced_on"] = len(courses_forced_on)
                 self._cleaned_state_data["num_courses_forced_off"] = len(courses_forced_off)
+            elif k == "org_overrides":
+                orgs_forced_on = [org for org in v if org["force"] == "on"]
+                orgs_forced_off = [org for org in v if org["force"] == "off"]
+                self._cleaned_state_data["num_orgs_forced_on"] = len(orgs_forced_on)
+                self._cleaned_state_data["num_orgs_forced_off"] = len(orgs_forced_off)
             else:
                 self._cleaned_state_data[k] = v
         self._cleaned_state_data["env_name"] = self.env_name
