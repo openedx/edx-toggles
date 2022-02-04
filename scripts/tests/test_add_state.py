@@ -45,3 +45,5 @@ def test_course_waffle_flag_handling(sample_ida):
     assert "num_courses_forced_off" in course_waffle_flag_toggle["state"] 
     assert course_waffle_flag_toggle["state"]["num_courses_forced_on"] == 2
     assert course_waffle_flag_toggle["state"]["num_courses_forced_off"] == 1
+    assert course_waffle_flag_toggle["state"]["num_orgs_forced_on"] == 1
+    assert course_waffle_flag_toggle["state"]["num_orgs_forced_off"] == 2
