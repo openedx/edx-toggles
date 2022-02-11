@@ -10,7 +10,7 @@ asgiref==3.5.0
     # via
     #   -r requirements/test.txt
     #   django
-atlassian-python-api==3.18.1
+atlassian-python-api==3.19.0
     # via -r requirements/test.txt
 attrs==21.4.0
     # via
@@ -24,7 +24,7 @@ certifi==2021.10.8
     # via
     #   -r requirements/test.txt
     #   requests
-charset-normalizer==2.0.10
+charset-normalizer==2.0.11
     # via
     #   -r requirements/test.txt
     #   requests
@@ -32,9 +32,9 @@ click==8.0.3
     # via
     #   -r requirements/test.txt
     #   code-annotations
-code-annotations==1.2.0
+code-annotations==1.3.0
     # via -r requirements/test.txt
-coverage[toml]==6.3
+coverage[toml]==6.3.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -42,7 +42,7 @@ deprecated==1.2.13
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
-django==3.2.11
+django==3.2.12
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/test.txt
@@ -64,7 +64,7 @@ docutils==0.17.1
     #   readme-renderer
     #   restructuredtext-lint
     #   sphinx
-edx-django-utils==4.4.2
+edx-django-utils==4.5.0
     # via -r requirements/test.txt
 edx-sphinx-theme==3.0.0
     # via -r requirements/doc.in
@@ -74,7 +74,7 @@ idna==3.3
     #   requests
 imagesize==1.3.0
     # via sphinx
-importlib-metadata==4.10.1
+importlib-metadata==4.11.0
     # via sphinx
 iniconfig==1.1.1
     # via
@@ -93,7 +93,7 @@ newrelic==7.4.0.172
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-oauthlib==3.1.1
+oauthlib==3.2.0
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
@@ -104,7 +104,7 @@ packaging==21.3
     #   bleach
     #   pytest
     #   sphinx
-pbr==5.8.0
+pbr==5.8.1
     # via
     #   -r requirements/test.txt
     #   stevedore
@@ -129,7 +129,7 @@ pyparsing==3.0.7
     # via
     #   -r requirements/test.txt
     #   packaging
-pytest==6.2.5
+pytest==7.0.0
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -159,7 +159,7 @@ requests==2.27.1
     #   atlassian-python-api
     #   requests-oauthlib
     #   sphinx
-requests-oauthlib==1.3.0
+requests-oauthlib==1.3.1
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
@@ -205,14 +205,11 @@ text-unidecode==1.3
     # via
     #   -r requirements/test.txt
     #   python-slugify
-toml==0.10.2
-    # via
-    #   -r requirements/test.txt
-    #   pytest
-tomli==2.0.0
+tomli==2.0.1
     # via
     #   -r requirements/test.txt
     #   coverage
+    #   pytest
 urllib3==1.26.8
     # via
     #   -r requirements/test.txt

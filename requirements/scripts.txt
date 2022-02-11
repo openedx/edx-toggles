@@ -8,23 +8,23 @@ asgiref==3.5.0
     # via
     #   -r requirements/base.txt
     #   django
-atlassian-python-api==3.18.1
+atlassian-python-api==3.19.0
     # via -r requirements/scripts.in
 certifi==2021.10.8
     # via requests
-charset-normalizer==2.0.10
+charset-normalizer==2.0.11
     # via requests
 click==8.0.3
     # via
     #   -r requirements/base.txt
     #   code-annotations
-code-annotations==1.2.0
+code-annotations==1.3.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.in
 deprecated==1.2.13
     # via atlassian-python-api
-django==3.2.11
+django==3.2.12
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.txt
@@ -38,7 +38,7 @@ django-waffle==2.3.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
-edx-django-utils==4.4.2
+edx-django-utils==4.5.0
     # via -r requirements/base.txt
 idna==3.3
     # via requests
@@ -54,11 +54,11 @@ newrelic==7.4.0.172
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
-oauthlib==3.1.1
+oauthlib==3.2.0
     # via
     #   atlassian-python-api
     #   requests-oauthlib
-pbr==5.8.0
+pbr==5.8.1
     # via
     #   -r requirements/base.txt
     #   stevedore
@@ -82,7 +82,7 @@ requests==2.27.1
     # via
     #   atlassian-python-api
     #   requests-oauthlib
-requests-oauthlib==1.3.0
+requests-oauthlib==1.3.1
     # via atlassian-python-api
 six==1.16.0
     # via
