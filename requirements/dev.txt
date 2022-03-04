@@ -96,7 +96,7 @@ idna==3.3
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-importlib-metadata==4.11.1
+importlib-metadata==4.11.2
     # via inflect
 inflect==3.0.2
     # via
@@ -130,7 +130,7 @@ mccabe==0.6.1
     # via
     #   -r requirements/quality.txt
     #   pylint
-newrelic==7.4.0.172
+newrelic==7.6.0.173
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
@@ -145,7 +145,7 @@ packaging==21.3
     #   -r requirements/quality.txt
     #   pytest
     #   tox
-path==16.3.0
+path==16.4.0
     # via edx-i18n-tools
 pbr==5.8.1
     # via
@@ -222,7 +222,7 @@ pytest-cov==3.0.0
     # via -r requirements/quality.txt
 pytest-django==4.5.2
     # via -r requirements/quality.txt
-python-slugify==6.1.0
+python-slugify==6.1.1
     # via
     #   -r requirements/quality.txt
     #   code-annotations
