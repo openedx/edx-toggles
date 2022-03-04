@@ -73,7 +73,7 @@ markupsafe==2.1.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   jinja2
-newrelic==7.4.0.172
+newrelic==7.6.0.173
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -109,7 +109,7 @@ pytest-cov==3.0.0
     # via -r requirements/test.in
 pytest-django==4.5.2
     # via -r requirements/test.in
-python-slugify==6.1.0
+python-slugify==6.1.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
