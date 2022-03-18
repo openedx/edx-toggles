@@ -24,11 +24,11 @@ django-waffle==2.3.0
     # via
     #   -r requirements/base.in
     #   edx-django-utils
-edx-django-utils==4.5.0
+edx-django-utils==4.6.0
     # via -r requirements/base.in
 jinja2==3.0.3
     # via code-annotations
-markupsafe==2.1.0
+markupsafe==2.1.1
     # via jinja2
 newrelic==7.6.0.173
     # via edx-django-utils
