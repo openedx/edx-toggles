@@ -21,7 +21,7 @@ charset-normalizer==2.0.12
     # via
     #   -r requirements/scripts.txt
     #   requests
-click==8.0.4
+click==8.1.2
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -48,7 +48,7 @@ django-crum==0.7.9
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-django-waffle==2.3.0
+django-waffle==2.4.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -63,7 +63,7 @@ idna==3.3
     #   requests
 iniconfig==1.1.1
     # via pytest
-jinja2==3.0.3
+jinja2==3.1.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -73,7 +73,7 @@ markupsafe==2.1.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   jinja2
-newrelic==7.6.0.173
+newrelic==7.8.0.174
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -114,7 +114,7 @@ python-slugify==6.1.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   code-annotations
-pytz==2021.3
+pytz==2022.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
