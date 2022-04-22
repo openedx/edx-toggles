@@ -14,6 +14,10 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[5.0.0] - 2022-04-22
+--------------------
+
+* BREAKING CHANGE: Removed LegacyWaffle* classes. Although this is a breaking change, all known uses have already been fixed.
 * Handle the case where certain toggle names come in as ``None`` when generating summary reports.
 * Add ADR for updating annotations for toggle life expectancy and use cases.
 

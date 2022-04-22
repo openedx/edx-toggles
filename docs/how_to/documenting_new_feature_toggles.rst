@@ -196,12 +196,6 @@ Refactor to use new toggle setting classes
 
 Undocumented boolean Django Setting toggles defined in the Open edX codebase are probably not yet defined using a ``SettingToggle`` or ``SettingDictToggle``. Read about implementing these toggle classes in :doc:`implement_the_right_toggle_type`.
 
-Refactor LegacyWaffle classes
-------------------------------
-
-* Import ``WaffleFlag`` instead of ``LegacyWaffleFlag`` or ``WaffleSwitch`` instead of ``LegacyWaffleSwitch``.
-* Initialize these new classes with a single string that includes the fully namespaced toggle name, including the period.
-
 Refactor direct waffle usage
 ----------------------------
 
