@@ -8,7 +8,7 @@ asgiref==3.5.0
     # via
     #   -r requirements/base.txt
     #   django
-atlassian-python-api==3.20.1
+atlassian-python-api==3.21.0
     # via -r requirements/scripts.in
 certifi==2021.10.8
     # via requests

@@ -9,7 +9,7 @@ asgiref==3.5.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   django
-atlassian-python-api==3.20.1
+atlassian-python-api==3.21.0
     # via -r requirements/scripts.txt
 attrs==21.4.0
     # via pytest
