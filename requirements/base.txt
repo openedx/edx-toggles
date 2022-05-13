@@ -28,7 +28,7 @@ django-waffle==2.4.1
     # via
     #   -r requirements/base.in
     #   edx-django-utils
-edx-django-utils==4.7.0
+edx-django-utils==4.8.1
     # via -r requirements/base.in
 jinja2==3.1.2
     # via code-annotations
