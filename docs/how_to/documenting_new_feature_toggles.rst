@@ -31,7 +31,7 @@ Copy-paste this boilerplate template to document a feature toggle::
     # .. toggle_description: Add here a detailed description of the consequences of enabling this feature toggle.
     #   Note that all annotations can be spread over multiple lines by prefixing every line after the first by
     #   at least three spaces (two spaces plus the leading space).
-    # .. toggle_warnings: (Optional) Add here additional instructions that users should be aware of. For instance, dependency
+    # .. toggle_warning: (Optional) Add here additional instructions that users should be aware of. For instance, dependency
     #   on additional settings or feature toggles should be referenced here. If this field is not needed, simply remove it.
     # .. toggle_use_cases: temporary OR circuit_breaker OR vip OR opt_out OR opt_in OR open_edx
     # .. toggle_creation_date: 2020-01-01
@@ -165,7 +165,7 @@ Same toggle in multiple services
 If a toggle needs to be synchronized across services:
 
 * The ``toggle_description`` could state that you should read the description for the same toggle in XXX service, rather than duplicating a description.
-* The ``toggle_warnings`` should note that the value must be consistent with XXX service. XXX will often be the LMS, but not necessarily.
+* The ``toggle_warning`` should note that the value must be consistent with XXX service. XXX will often be the LMS, but not necessarily.
 
 Third-party toggles
 -------------------

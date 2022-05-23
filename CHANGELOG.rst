@@ -14,6 +14,8 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+* Rename toggle_warnings to toggle_warning for consistency with setting_warning.
+
 [5.0.0] - 2022-04-22
 --------------------
 
