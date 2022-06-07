@@ -85,7 +85,7 @@ django-crum==0.7.9
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
-django-waffle==2.4.1
+django-waffle==2.5.0
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
@@ -201,7 +201,7 @@ pydocstyle==6.1.1
     # via -r requirements/quality.txt
 pygments==2.12.0
     # via diff-cover
-pylint==2.14.0
+pylint==2.14.1
     # via
     #   -r requirements/quality.txt
     #   edx-lint

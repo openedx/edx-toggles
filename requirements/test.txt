@@ -54,7 +54,7 @@ django-crum==0.7.9
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-django-waffle==2.4.1
+django-waffle==2.5.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
