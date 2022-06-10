@@ -8,7 +8,6 @@ disable =
     feature-toggle-needs-doc,
     invalid-name,
     illegal-waffle-usage,
-    no-self-use,
     unspecified-encoding,
     too-few-public-methods,
     consider-using-f-string,

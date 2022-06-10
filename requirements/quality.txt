@@ -69,7 +69,7 @@ django-waffle==2.5.0
     #   edx-django-utils
 edx-django-utils==5.0.0
     # via -r requirements/test.txt
-edx-lint==5.2.3
+edx-lint==5.2.4
     # via -r requirements/quality.in
 idna==3.3
     # via
