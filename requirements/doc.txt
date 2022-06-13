@@ -29,7 +29,6 @@ certifi==2022.5.18.1
 cffi==1.15.0
     # via
     #   -r requirements/test.txt
-    #   cryptography
     #   pynacl
 charset-normalizer==2.0.12
     # via
@@ -48,8 +47,6 @@ coverage[toml]==6.4.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==37.0.2
-    # via secretstorage
 deprecated==1.2.13
     # via
     #   -r requirements/test.txt
@@ -64,7 +61,7 @@ django-crum==0.7.9
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-django-waffle==2.4.1
+django-waffle==2.5.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -95,22 +92,18 @@ iniconfig==1.1.1
     # via
     #   -r requirements/test.txt
     #   pytest
-jeepney==0.8.0
-    # via
-    #   keyring
-    #   secretstorage
 jinja2==3.1.2
     # via
     #   -r requirements/test.txt
     #   code-annotations
     #   sphinx
-keyring==23.5.1
+keyring==23.6.0
     # via twine
 markupsafe==2.1.1
     # via
     #   -r requirements/test.txt
     #   jinja2
-newrelic==7.10.0.175
+newrelic==7.12.0.176
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -131,7 +124,7 @@ pbr==5.9.0
     #   stevedore
 pep517==0.12.0
     # via build
-pkginfo==1.8.2
+pkginfo==1.8.3
     # via twine
 pluggy==1.0.0
     # via
@@ -187,7 +180,7 @@ pyyaml==6.0
     #   code-annotations
 readme-renderer==35.0
     # via twine
-requests==2.27.1
+requests==2.28.0
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
@@ -207,8 +200,6 @@ rfc3986==2.0.0
     # via twine
 rich==12.4.4
     # via twine
-secretstorage==3.3.2
-    # via keyring
 six==1.16.0
     # via
     #   -r requirements/test.txt
