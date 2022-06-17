@@ -13,7 +13,7 @@ atlassian-python-api==3.25.0
     # via -r requirements/scripts.txt
 attrs==21.4.0
     # via pytest
-certifi==2022.5.18.1
+certifi==2022.6.15
     # via
     #   -r requirements/scripts.txt
     #   requests
