@@ -17,12 +17,12 @@ certifi==2022.6.15
     # via
     #   -r requirements/scripts.txt
     #   requests
-cffi==1.15.0
+cffi==1.15.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   pynacl
-charset-normalizer==2.0.12
+charset-normalizer==2.1.0
     # via
     #   -r requirements/scripts.txt
     #   requests
@@ -79,7 +79,7 @@ markupsafe==2.1.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   jinja2
-newrelic==7.12.0.176
+newrelic==7.14.0.177
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -140,7 +140,7 @@ pyyaml==6.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   code-annotations
-requests==2.28.0
+requests==2.28.1
     # via
     #   -r requirements/scripts.txt
     #   atlassian-python-api
