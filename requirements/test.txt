@@ -54,7 +54,7 @@ django-crum==0.7.9
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-django-waffle==2.5.0
+django-waffle==2.6.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -79,7 +79,7 @@ markupsafe==2.1.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   jinja2
-newrelic==7.14.0.177
+newrelic==7.16.0.178
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
