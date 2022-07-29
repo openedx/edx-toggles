@@ -14,7 +14,7 @@ astroid==2.11.7
     #   pylint-celery
 atlassian-python-api==3.25.0
     # via -r requirements/test.txt
-attrs==21.4.0
+attrs==22.1.0
     # via
     #   -r requirements/test.txt
     #   pytest
@@ -220,7 +220,7 @@ typing-extensions==4.3.0
     # via
     #   astroid
     #   pylint
-urllib3==1.26.10
+urllib3==1.26.11
     # via
     #   -r requirements/test.txt
     #   requests
