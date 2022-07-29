@@ -12,7 +12,7 @@ asgiref==3.5.2
     #   django
 atlassian-python-api==3.25.0
     # via -r requirements/test.txt
-attrs==21.4.0
+attrs==22.1.0
     # via
     #   -r requirements/test.txt
     #   pytest
@@ -68,9 +68,9 @@ django-waffle==2.6.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-doc8==0.11.2
+doc8==1.0.0
     # via -r requirements/doc.in
-docutils==0.18.1
+docutils==0.19
     # via
     #   doc8
     #   readme-renderer
@@ -218,7 +218,7 @@ six==1.16.0
     #   stevedore
 snowballstemmer==2.2.0
     # via sphinx
-sphinx==5.0.2
+sphinx==5.1.1
     # via
     #   -r requirements/doc.in
     #   edx-sphinx-theme
@@ -254,13 +254,14 @@ tomli==2.0.1
     #   -r requirements/test.txt
     #   build
     #   coverage
+    #   doc8
     #   pep517
     #   pytest
 twine==4.0.1
     # via -r requirements/doc.in
 typing-extensions==4.3.0
     # via rich
-urllib3==1.26.10
+urllib3==1.26.11
     # via
     #   -r requirements/test.txt
     #   requests

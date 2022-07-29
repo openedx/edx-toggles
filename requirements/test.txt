@@ -11,7 +11,7 @@ asgiref==3.5.2
     #   django
 atlassian-python-api==3.25.0
     # via -r requirements/scripts.txt
-attrs==21.4.0
+attrs==22.1.0
     # via pytest
 certifi==2022.6.15
     # via
@@ -176,7 +176,7 @@ tomli==2.0.1
     # via
     #   coverage
     #   pytest
-urllib3==1.26.10
+urllib3==1.26.11
     # via
     #   -r requirements/scripts.txt
     #   requests

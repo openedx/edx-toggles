@@ -15,7 +15,7 @@ astroid==2.11.7
     #   pylint-celery
 atlassian-python-api==3.25.0
     # via -r requirements/quality.txt
-attrs==21.4.0
+attrs==22.1.0
     # via
     #   -r requirements/quality.txt
     #   pytest
@@ -278,7 +278,6 @@ six==1.16.0
     #   edx-lint
     #   stevedore
     #   tox
-    #   virtualenv
 snowballstemmer==2.2.0
     # via
     #   -r requirements/quality.txt
@@ -325,12 +324,12 @@ typing-extensions==4.3.0
     #   -r requirements/quality.txt
     #   astroid
     #   pylint
-urllib3==1.26.10
+urllib3==1.26.11
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-virtualenv==20.15.1
+virtualenv==20.16.2
     # via
     #   -r requirements/ci.txt
     #   tox
