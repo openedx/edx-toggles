@@ -8,7 +8,7 @@ asgiref==3.5.2
     # via
     #   -r requirements/base.txt
     #   django
-atlassian-python-api==3.25.0
+atlassian-python-api==3.26.0
     # via -r requirements/scripts.in
 certifi==2022.6.15
     # via requests
@@ -63,7 +63,7 @@ oauthlib==3.2.0
     # via
     #   atlassian-python-api
     #   requests-oauthlib
-pbr==5.9.0
+pbr==5.10.0
     # via
     #   -r requirements/base.txt
     #   stevedore
@@ -83,7 +83,7 @@ python-slugify==6.1.2
     # via
     #   -r requirements/base.txt
     #   code-annotations
-pytz==2022.1
+pytz==2022.2
     # via
     #   -r requirements/base.txt
     #   django
