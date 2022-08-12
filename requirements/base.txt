@@ -36,7 +36,7 @@ markupsafe==2.1.1
     # via jinja2
 newrelic==7.16.0.178
     # via edx-django-utils
-pbr==5.9.0
+pbr==5.10.0
     # via stevedore
 psutil==5.9.1
     # via edx-django-utils
@@ -46,7 +46,7 @@ pynacl==1.5.0
     # via edx-django-utils
 python-slugify==6.1.2
     # via code-annotations
-pytz==2022.1
+pytz==2022.2
     # via django
 pyyaml==6.0
     # via code-annotations
