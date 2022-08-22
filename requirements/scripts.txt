@@ -55,7 +55,7 @@ markupsafe==2.1.1
     # via
     #   -r requirements/base.txt
     #   jinja2
-newrelic==7.16.0.178
+newrelic==8.0.0.179
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
@@ -83,7 +83,7 @@ python-slugify==6.1.2
     # via
     #   -r requirements/base.txt
     #   code-annotations
-pytz==2022.2
+pytz==2022.2.1
     # via
     #   -r requirements/base.txt
     #   django
