@@ -12,7 +12,7 @@ astroid==2.11.7
     # via
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.26.0
+atlassian-python-api==3.27.0
     # via -r requirements/test.txt
 attrs==22.1.0
     # via
@@ -26,7 +26,7 @@ cffi==1.15.1
     # via
     #   -r requirements/test.txt
     #   pynacl
-charset-normalizer==2.1.0
+charset-normalizer==2.1.1
     # via
     #   -r requirements/test.txt
     #   requests
@@ -63,7 +63,7 @@ django-crum==0.7.9
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-django-waffle==2.6.0
+django-waffle==2.7.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -220,7 +220,7 @@ typing-extensions==4.3.0
     # via
     #   astroid
     #   pylint
-urllib3==1.26.11
+urllib3==1.26.12
     # via
     #   -r requirements/test.txt
     #   requests
