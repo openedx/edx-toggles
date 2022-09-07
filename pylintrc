@@ -258,12 +258,41 @@ enable =
 	unrecognized-inline-option,
 	useless-suppression,
 disable = 
+	bad-indentation,
+	consider-using-f-string,
+	duplicate-code,
+	file-ignored,
+	fixme,
+	global-statement,
+	invalid-name,
+	locally-disabled,
+	no-else-return,
+	suppressed-message,
+	too-few-public-methods,
+	too-many-ancestors,
+	too-many-arguments,
+	too-many-branches,
+	too-many-instance-attributes,
+	too-many-lines,
+	too-many-locals,
+	too-many-public-methods,
+	too-many-return-statements,
+	ungrouped-imports,
+	unspecified-encoding,
+	unused-wildcard-import,
+	use-maxsplit-arg,
+	
+	feature-toggle-needs-doc,
+	illegal-waffle-usage,
+	
+	logging-fstring-interpolation,
 	feature-toggle-needs-doc,
 	invalid-name,
 	illegal-waffle-usage,
 	unspecified-encoding,
 	too-few-public-methods,
 	consider-using-f-string,
+	django-not-configured
 
 [REPORTS]
 output-format = text
@@ -360,4 +389,4 @@ int-import-graph =
 [EXCEPTIONS]
 overgeneral-exceptions = Exception
 
-# 87e198c8def3b80d4d7ed254189cb791526202c3
+# 389b8424f72de1cb8dcec1e27e6e8869c34028d6
