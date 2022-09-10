@@ -49,7 +49,7 @@ Using your toggle
 This section covers waffle switches and flags as well as Django Settings toggles.
 For information on `Configuration Models`_ refer to that library.
 
-.. _Configuration Models: https://github.com/edx/django-config-models/
+.. _Configuration Models: https://github.com/openedx/django-config-models/
 
 Creating toggles
 -----------------
@@ -69,7 +69,7 @@ For the waffle flag and switch, you will use Django Admin "waffle" section to co
 
 Functions to override waffle flags in test are provided in `testutils`_.
 
-.. _testutils: https://github.com/edx/edx-toggles/blob/master/edx_toggles/toggles/testutils.py
+.. _testutils: https://github.com/openedx/edx-toggles/blob/master/edx_toggles/toggles/testutils.py
 
 Accessing toggles
 ------------------
@@ -119,7 +119,7 @@ If the toggle is being added to edx-platform, and it needs to be used by both LM
 
 Avoid referring to boolean Django Settings directly. However, if a boolean setting toggle is implemented without one of the wrapping classes, its annotation implementation would be `DjangoSetting`.
 
-.. _SettingToggle and SettingDictToggle classes: https://github.com/edx/edx-toggles/blob/master/edx_toggles/toggles/internal/setting_toggle.py
+.. _SettingToggle and SettingDictToggle classes: https://github.com/openedx/edx-toggles/blob/master/edx_toggles/toggles/internal/setting_toggle.py
 .. _ADR for the Setting Toggle classes: ../decisions/0003-django-setting-toggles.rst
 
 Waffle Switches
@@ -145,12 +145,12 @@ In edx-platform, there is also:
 
 .. _WaffleFlag class: ../edx_toggles.toggles.internal.waffle.html#module-edx_toggles.toggles.internal.waffle
 .. _waffle: https://waffle.readthedocs.io/
-.. _CourseWaffleFlag: https://github.com/edx/edx-platform/blob/master/openedx/core/djangoapps/waffle_utils/__init__.py
-.. _ExperimentWaffleFlag: https://github.com/edx/edx-platform/blob/master/lms/djangoapps/experiments/flags.py
+.. _CourseWaffleFlag: https://github.com/openedx/edx-platform/blob/master/openedx/core/djangoapps/waffle_utils/__init__.py
+.. _ExperimentWaffleFlag: https://github.com/openedx/edx-platform/blob/master/lms/djangoapps/experiments/flags.py
 
 Config Models
 --------------
 
 A `ConfigurationModel`_ can be used if all other options do not suit your needs. In most cases, it is no longer necessary.
 
-.. _ConfigurationModel: https://github.com/edx/django-config-models/
+.. _ConfigurationModel: https://github.com/openedx/django-config-models/

@@ -36,7 +36,7 @@ Copy-paste this boilerplate template to document a feature toggle::
     # .. toggle_use_cases: temporary OR circuit_breaker OR vip OR opt_out OR opt_in OR open_edx
     # .. toggle_creation_date: 2020-01-01
     # .. toggle_target_removal_date: 2020-07-01 (this is required if toggle_use_cases includes temporary. If not, simply remove it.)
-    # .. toggle_tickets: (Optional) https://openedx.atlassian.net/browse/DEPR-xxx, https://github.com/edx/edx-platform/blob/master/docs/decisions/xxx.rst, https://github.com/edx/edx-platform/pull/xxx (details initial feature)
+    # .. toggle_tickets: (Optional) https://openedx.atlassian.net/browse/DEPR-xxx, https://github.com/openedx/edx-platform/blob/master/docs/decisions/xxx.rst, https://github.com/openedx/edx-platform/pull/xxx (details initial feature)
     SOME_FEATURE_NAME = ...
 
 Configuration model
@@ -213,5 +213,5 @@ The documentation format used to annotate feature toggles is stored in the code-
 See `how-to document non-boolean Django settings`_, for Django settings which are not feature toggles.
 
 .. _`OEP-17: Feature Toggles`: https://open-edx-proposals.readthedocs.io/en/latest/oep-0017-bp-feature-toggles.html
-.. _feature_toggle_annotations.yaml: https://github.com/edx/code-annotations/blob/master/code_annotations/contrib/config/feature_toggle_annotations.yaml
+.. _feature_toggle_annotations.yaml: https://github.com/openedx/code-annotations/blob/master/code_annotations/contrib/config/feature_toggle_annotations.yaml
 .. _how-to document non-boolean Django settings: https://code-annotations.readthedocs.io/en/latest/contrib/how_to/documenting_django_settings.html
