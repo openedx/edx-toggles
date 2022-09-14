@@ -81,8 +81,8 @@ Implementation Steps:
   * Cleaning up `common.py` where appropriate by removing unnecessary defaults should also be done.
   * We can define these in a `toggles.py` file in the apps. We can consider moving (permanent) waffle definitions from `waffle.py` to `toggles.py`.
 
-.. _implemented setting toggle classes: https://github.com/edx/edx-toggles/blob/53cf1f71be35ee886521d3d6badafee69198a551/edx_toggles/toggles/internal/setting_toggle.py
-.. _toggle state endpoint: https://github.com/edx/edx-platform/blob/216b99264a50011cb313f5b391abeae61870acee/openedx/core/djangoapps/waffle_utils/views.py#L20
+.. _implemented setting toggle classes: https://github.com/openedx/edx-toggles/blob/53cf1f71be35ee886521d3d6badafee69198a551/edx_toggles/toggles/internal/setting_toggle.py
+.. _toggle state endpoint: https://github.com/openedx/edx-platform/blob/216b99264a50011cb313f5b391abeae61870acee/openedx/core/djangoapps/waffle_utils/views.py#L20
 
 Rejected Alternatives
 ---------------------
