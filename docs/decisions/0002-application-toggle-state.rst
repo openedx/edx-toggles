@@ -38,7 +38,7 @@ For security purposes:
 
 Note: Django Setting toggles could also have a default provided upon retrieval. That topic will be covered under a separate ADR.
 
-.. _WaffleFlag: https://github.com/edx/edx-platform/blob/77e490f0578cbaa5a4c2e6110b848cceef30962b/openedx/core/djangoapps/waffle_utils/__init__.py#L373
+.. _WaffleFlag: https://github.com/openedx/edx-platform/blob/77e490f0578cbaa5a4c2e6110b848cceef30962b/openedx/core/djangoapps/waffle_utils/__init__.py#L373
 
 Consequences
 ------------
@@ -47,7 +47,7 @@ The implementation of this toggle state endpoint needs to live with the toggle c
 
 The current implementation of toggle state gathering will be refactored/reworked into the new endpoint.
 
-.. _waffle_utils: https://github.com/edx/edx-platform/tree/77e490f0578cbaa5a4c2e6110b848cceef30962b/openedx/core/djangoapps/waffle_utils
+.. _waffle_utils: https://github.com/openedx/edx-platform/tree/77e490f0578cbaa5a4c2e6110b848cceef30962b/openedx/core/djangoapps/waffle_utils
 
 Rejected Alternatives
 ---------------------
