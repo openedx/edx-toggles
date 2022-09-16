@@ -22,7 +22,7 @@ bleach==5.0.1
     # via readme-renderer
 build==0.8.0
     # via -r requirements/doc.in
-certifi==2022.6.15
+certifi==2022.9.14
     # via
     #   -r requirements/test.txt
     #   requests
@@ -76,11 +76,11 @@ docutils==0.19
     #   readme-renderer
     #   restructuredtext-lint
     #   sphinx
-edx-django-utils==5.0.0
+edx-django-utils==5.0.1
     # via -r requirements/test.txt
 edx-sphinx-theme==3.0.0
     # via -r requirements/doc.in
-idna==3.3
+idna==3.4
     # via
     #   -r requirements/test.txt
     #   requests
@@ -114,11 +114,11 @@ markupsafe==2.1.1
     #   jinja2
 more-itertools==8.14.0
     # via jaraco-classes
-newrelic==8.0.0.179
+newrelic==8.1.0.180
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-oauthlib==3.2.0
+oauthlib==3.2.1
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
