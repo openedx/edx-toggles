@@ -13,7 +13,7 @@ atlassian-python-api==3.28.0
     # via -r requirements/scripts.txt
 attrs==22.1.0
     # via pytest
-certifi==2022.6.15
+certifi==2022.9.14
     # via
     #   -r requirements/scripts.txt
     #   requests
@@ -59,11 +59,11 @@ django-waffle==3.0.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-edx-django-utils==5.0.0
+edx-django-utils==5.0.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
-idna==3.3
+idna==3.4
     # via
     #   -r requirements/scripts.txt
     #   requests
@@ -79,12 +79,12 @@ markupsafe==2.1.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   jinja2
-newrelic==8.0.0.179
+newrelic==8.1.0.180
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-oauthlib==3.2.0
+oauthlib==3.2.1
     # via
     #   -r requirements/scripts.txt
     #   atlassian-python-api
