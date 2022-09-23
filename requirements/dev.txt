@@ -8,12 +8,12 @@ asgiref==3.5.2
     # via
     #   -r requirements/quality.txt
     #   django
-astroid==2.12.9
+astroid==2.12.10
     # via
     #   -r requirements/quality.txt
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.28.0
+atlassian-python-api==3.28.1
     # via -r requirements/quality.txt
 attrs==22.1.0
     # via
@@ -93,7 +93,7 @@ django-waffle==3.0.0
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
-edx-django-utils==5.0.1
+edx-django-utils==5.1.0
     # via -r requirements/quality.txt
 edx-i18n-tools==0.9.1
     # via -r requirements/dev.in
@@ -207,7 +207,7 @@ pydocstyle==6.1.1
     # via -r requirements/quality.txt
 pygments==2.13.0
     # via diff-cover
-pylint==2.15.2
+pylint==2.15.3
     # via
     #   -r requirements/quality.txt
     #   edx-lint
