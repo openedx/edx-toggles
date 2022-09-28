@@ -10,7 +10,7 @@ asgiref==3.5.2
     # via
     #   -r requirements/test.txt
     #   django
-atlassian-python-api==3.28.0
+atlassian-python-api==3.28.1
     # via -r requirements/test.txt
 attrs==22.1.0
     # via
@@ -76,7 +76,7 @@ docutils==0.19
     #   readme-renderer
     #   restructuredtext-lint
     #   sphinx
-edx-django-utils==5.0.1
+edx-django-utils==5.1.0
     # via -r requirements/test.txt
 edx-sphinx-theme==3.0.0
     # via -r requirements/doc.in
@@ -106,7 +106,7 @@ jinja2==3.1.2
     #   -r requirements/test.txt
     #   code-annotations
     #   sphinx
-keyring==23.9.1
+keyring==23.9.3
     # via twine
 markupsafe==2.1.1
     # via

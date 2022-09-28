@@ -9,7 +9,7 @@ asgiref==3.5.2
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   django
-atlassian-python-api==3.28.0
+atlassian-python-api==3.28.1
     # via -r requirements/scripts.txt
 attrs==22.1.0
     # via pytest
@@ -59,7 +59,7 @@ django-waffle==3.0.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-edx-django-utils==5.0.1
+edx-django-utils==5.1.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
