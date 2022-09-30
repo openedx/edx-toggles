@@ -10,7 +10,7 @@ asgiref==3.5.2
     #   django
 atlassian-python-api==3.28.1
     # via -r requirements/scripts.in
-certifi==2022.9.14
+certifi==2022.9.24
     # via requests
 cffi==1.15.1
     # via
@@ -55,7 +55,7 @@ markupsafe==2.1.1
     # via
     #   -r requirements/base.txt
     #   jinja2
-newrelic==8.1.0.180
+newrelic==8.2.0.181
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
@@ -102,7 +102,7 @@ six==1.16.0
     #   -r requirements/base.txt
     #   atlassian-python-api
     #   stevedore
-sqlparse==0.4.2
+sqlparse==0.4.3
     # via
     #   -r requirements/base.txt
     #   django
