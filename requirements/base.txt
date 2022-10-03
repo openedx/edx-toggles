@@ -34,7 +34,7 @@ jinja2==3.1.2
     # via code-annotations
 markupsafe==2.1.1
     # via jinja2
-newrelic==8.1.0.180
+newrelic==8.2.0.181
     # via edx-django-utils
 pbr==5.10.0
     # via stevedore
@@ -52,7 +52,7 @@ pyyaml==6.0
     # via code-annotations
 six==1.16.0
     # via stevedore
-sqlparse==0.4.2
+sqlparse==0.4.3
     # via django
 stevedore==1.32.0
     # via
