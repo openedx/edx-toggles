@@ -54,7 +54,7 @@ deprecated==1.2.13
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
-django==3.2.15
+django==3.2.16
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/test.txt
@@ -86,7 +86,7 @@ idna==3.4
     #   requests
 imagesize==1.4.1
     # via sphinx
-importlib-metadata==4.12.0
+importlib-metadata==5.0.0
     # via
     #   keyring
     #   sphinx
@@ -180,7 +180,7 @@ python-slugify==6.1.2
     # via
     #   -r requirements/test.txt
     #   code-annotations
-pytz==2022.2.1
+pytz==2022.4
     # via
     #   -r requirements/test.txt
     #   babel
@@ -209,7 +209,7 @@ restructuredtext-lint==1.4.0
     # via doc8
 rfc3986==2.0.0
     # via twine
-rich==12.5.1
+rich==12.6.0
     # via twine
 secretstorage==3.3.3
     # via keyring
@@ -222,7 +222,7 @@ six==1.16.0
     #   stevedore
 snowballstemmer==2.2.0
     # via sphinx
-sphinx==5.2.2
+sphinx==5.2.3
     # via
     #   -r requirements/doc.in
     #   edx-sphinx-theme
@@ -263,7 +263,7 @@ tomli==2.0.1
     #   pytest
 twine==4.0.1
     # via -r requirements/doc.in
-typing-extensions==4.3.0
+typing-extensions==4.4.0
     # via rich
 urllib3==1.26.12
     # via
