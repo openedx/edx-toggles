@@ -130,7 +130,7 @@ python-slugify==6.1.2
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   code-annotations
-pytz==2022.2.1
+pytz==2022.4
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
