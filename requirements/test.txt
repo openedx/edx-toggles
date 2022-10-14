@@ -59,7 +59,7 @@ django-waffle==3.0.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-edx-django-utils==5.1.0
+edx-django-utils==5.2.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -79,7 +79,7 @@ markupsafe==2.1.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   jinja2
-newrelic==8.2.0.181
+newrelic==8.2.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
