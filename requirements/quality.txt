@@ -8,7 +8,7 @@ asgiref==3.5.2
     # via
     #   -r requirements/test.txt
     #   django
-astroid==2.12.11
+astroid==2.12.12
     # via
     #   pylint
     #   pylint-celery
@@ -51,7 +51,7 @@ deprecated==1.2.13
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
-dill==0.3.5.1
+dill==0.3.6
     # via pylint
 django==3.2.16
     # via
@@ -71,6 +71,10 @@ edx-django-utils==5.2.0
     # via -r requirements/test.txt
 edx-lint==5.3.0
     # via -r requirements/quality.in
+exceptiongroup==1.0.1
+    # via
+    #   -r requirements/test.txt
+    #   pytest
 idna==3.4
     # via
     #   -r requirements/test.txt
@@ -87,7 +91,7 @@ jinja2==3.1.2
     # via
     #   -r requirements/test.txt
     #   code-annotations
-lazy-object-proxy==1.7.1
+lazy-object-proxy==1.8.0
     # via astroid
 markupsafe==2.1.1
     # via
@@ -95,11 +99,11 @@ markupsafe==2.1.1
     #   jinja2
 mccabe==0.7.0
     # via pylint
-newrelic==8.2.1
+newrelic==8.4.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-oauthlib==3.2.1
+oauthlib==3.2.2
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
@@ -108,24 +112,20 @@ packaging==21.3
     # via
     #   -r requirements/test.txt
     #   pytest
-pbr==5.10.0
+pbr==5.11.0
     # via
     #   -r requirements/test.txt
     #   stevedore
-platformdirs==2.5.2
+platformdirs==2.5.3
     # via pylint
 pluggy==1.0.0
     # via
     #   -r requirements/test.txt
     #   pytest
-psutil==5.9.2
+psutil==5.9.4
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-py==1.11.0
-    # via
-    #   -r requirements/test.txt
-    #   pytest
 pycodestyle==2.9.1
     # via -r requirements/quality.in
 pycparser==2.21
@@ -134,7 +134,7 @@ pycparser==2.21
     #   cffi
 pydocstyle==6.1.1
     # via -r requirements/quality.in
-pylint==2.15.4
+pylint==2.15.5
     # via
     #   edx-lint
     #   pylint-celery
@@ -156,7 +156,7 @@ pyparsing==3.0.9
     # via
     #   -r requirements/test.txt
     #   packaging
-pytest==7.1.3
+pytest==7.2.0
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -169,7 +169,7 @@ python-slugify==6.1.2
     # via
     #   -r requirements/test.txt
     #   code-annotations
-pytz==2022.4
+pytz==2022.6
     # via
     #   -r requirements/test.txt
     #   django
@@ -214,7 +214,7 @@ tomli==2.0.1
     #   coverage
     #   pylint
     #   pytest
-tomlkit==0.11.5
+tomlkit==0.11.6
     # via pylint
 typing-extensions==4.4.0
     # via
