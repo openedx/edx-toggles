@@ -10,7 +10,7 @@ asgiref==3.5.2
     # via
     #   -r requirements/test.txt
     #   django
-atlassian-python-api==3.28.1
+atlassian-python-api==3.31.1
     # via -r requirements/test.txt
 attrs==22.1.0
     # via
@@ -80,7 +80,7 @@ edx-django-utils==5.2.0
     # via -r requirements/test.txt
 edx-sphinx-theme==3.0.0
     # via -r requirements/doc.in
-exceptiongroup==1.0.1
+exceptiongroup==1.0.4
     # via
     #   -r requirements/test.txt
     #   pytest
@@ -90,7 +90,7 @@ idna==3.4
     #   requests
 imagesize==1.4.1
     # via sphinx
-importlib-metadata==5.0.0
+importlib-metadata==5.1.0
     # via
     #   keyring
     #   sphinx
@@ -176,7 +176,7 @@ pytest-cov==4.0.0
     # via -r requirements/test.txt
 pytest-django==4.5.2
     # via -r requirements/test.txt
-python-slugify==6.1.2
+python-slugify==7.0.0
     # via
     #   -r requirements/test.txt
     #   code-annotations
@@ -265,7 +265,7 @@ twine==4.0.1
     # via -r requirements/doc.in
 typing-extensions==4.4.0
     # via rich
-urllib3==1.26.12
+urllib3==1.26.13
     # via
     #   -r requirements/test.txt
     #   requests

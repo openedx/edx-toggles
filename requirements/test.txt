@@ -9,7 +9,7 @@ asgiref==3.5.2
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   django
-atlassian-python-api==3.28.1
+atlassian-python-api==3.31.1
     # via -r requirements/scripts.txt
 attrs==22.1.0
     # via pytest
@@ -63,7 +63,7 @@ edx-django-utils==5.2.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
-exceptiongroup==1.0.1
+exceptiongroup==1.0.4
     # via pytest
 idna==3.4
     # via
@@ -125,7 +125,7 @@ pytest-cov==4.0.0
     # via -r requirements/test.in
 pytest-django==4.5.2
     # via -r requirements/test.in
-python-slugify==6.1.2
+python-slugify==7.0.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -176,7 +176,7 @@ tomli==2.0.1
     # via
     #   coverage
     #   pytest
-urllib3==1.26.12
+urllib3==1.26.13
     # via
     #   -r requirements/scripts.txt
     #   requests
