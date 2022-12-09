@@ -8,9 +8,9 @@ asgiref==3.5.2
     # via
     #   -r requirements/base.txt
     #   django
-atlassian-python-api==3.31.1
+atlassian-python-api==3.32.1
     # via -r requirements/scripts.in
-certifi==2022.9.24
+certifi==2022.12.7
     # via requests
 cffi==1.15.1
     # via
@@ -55,7 +55,7 @@ markupsafe==2.1.1
     # via
     #   -r requirements/base.txt
     #   jinja2
-newrelic==8.4.0
+newrelic==8.5.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
