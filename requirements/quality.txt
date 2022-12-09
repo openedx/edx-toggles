@@ -12,13 +12,13 @@ astroid==2.12.13
     # via
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.31.1
+atlassian-python-api==3.32.1
     # via -r requirements/test.txt
 attrs==22.1.0
     # via
     #   -r requirements/test.txt
     #   pytest
-certifi==2022.9.24
+certifi==2022.12.7
     # via
     #   -r requirements/test.txt
     #   requests
@@ -99,7 +99,7 @@ markupsafe==2.1.1
     #   jinja2
 mccabe==0.7.0
     # via pylint
-newrelic==8.4.0
+newrelic==8.5.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -108,7 +108,7 @@ oauthlib==3.2.2
     #   -r requirements/test.txt
     #   atlassian-python-api
     #   requests-oauthlib
-packaging==21.3
+packaging==22.0
     # via
     #   -r requirements/test.txt
     #   pytest
@@ -116,7 +116,7 @@ pbr==5.11.0
     # via
     #   -r requirements/test.txt
     #   stevedore
-platformdirs==2.5.4
+platformdirs==2.6.0
     # via pylint
 pluggy==1.0.0
     # via
@@ -134,7 +134,7 @@ pycparser==2.21
     #   cffi
 pydocstyle==6.1.1
     # via -r requirements/quality.in
-pylint==2.15.7
+pylint==2.15.8
     # via
     #   edx-lint
     #   pylint-celery
@@ -152,10 +152,6 @@ pynacl==1.5.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-pyparsing==3.0.9
-    # via
-    #   -r requirements/test.txt
-    #   packaging
 pytest==7.2.0
     # via
     #   -r requirements/test.txt
