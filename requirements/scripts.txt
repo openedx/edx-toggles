@@ -4,11 +4,11 @@
 #
 #    make upgrade
 #
-asgiref==3.5.2
+asgiref==3.6.0
     # via
     #   -r requirements/base.txt
     #   django
-atlassian-python-api==3.32.1
+atlassian-python-api==3.32.2
     # via -r requirements/scripts.in
 certifi==2022.12.7
     # via requests
@@ -83,7 +83,7 @@ python-slugify==7.0.0
     # via
     #   -r requirements/base.txt
     #   code-annotations
-pytz==2022.6
+pytz==2022.7
     # via
     #   -r requirements/base.txt
     #   django

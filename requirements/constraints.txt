@@ -11,9 +11,6 @@
 # Common constraints for edx repos
 -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
  
-# zipp > 1.2.0 does not work with Python 3.5
-zipp<=1.2.0
-
 # stevedore > 1.32.0 does not work with Python 3.5
 stevedore==1.32.0
 
