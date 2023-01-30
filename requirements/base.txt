@@ -32,7 +32,7 @@ edx-django-utils==5.2.0
     # via -r requirements/base.in
 jinja2==3.1.2
     # via code-annotations
-markupsafe==2.1.1
+markupsafe==2.1.2
     # via jinja2
 newrelic==8.5.0
     # via edx-django-utils
@@ -46,7 +46,7 @@ pynacl==1.5.0
     # via edx-django-utils
 python-slugify==7.0.0
     # via code-annotations
-pytz==2022.7
+pytz==2022.7.1
     # via django
 pyyaml==6.0
     # via code-annotations
