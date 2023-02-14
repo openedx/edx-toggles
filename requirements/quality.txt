@@ -99,7 +99,7 @@ markupsafe==2.1.2
     #   jinja2
 mccabe==0.7.0
     # via pylint
-newrelic==8.5.0
+newrelic==8.6.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -116,7 +116,7 @@ pbr==5.11.1
     # via
     #   -r requirements/test.txt
     #   stevedore
-platformdirs==2.6.2
+platformdirs==3.0.0
     # via pylint
 pluggy==1.0.0
     # via
