@@ -44,7 +44,7 @@ pycparser==2.21
     # via cffi
 pynacl==1.5.0
     # via edx-django-utils
-python-slugify==8.0.0
+python-slugify==8.0.1
     # via code-annotations
 pytz==2022.7.1
     # via django
