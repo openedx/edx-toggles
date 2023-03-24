@@ -28,13 +28,13 @@ django-waffle==3.0.0
     # via
     #   -r requirements/base.in
     #   edx-django-utils
-edx-django-utils==5.2.0
+edx-django-utils==5.3.0
     # via -r requirements/base.in
 jinja2==3.1.2
     # via code-annotations
 markupsafe==2.1.2
     # via jinja2
-newrelic==8.7.0
+newrelic==8.7.1
     # via edx-django-utils
 pbr==5.11.1
     # via stevedore
