@@ -15,6 +15,9 @@ Unreleased
 ~~~~~~~~~~
 
 * Rename toggle_warnings to toggle_warning for consistency with setting_warning.
+* Switch from ``edx-sphinx-theme`` to ``sphinx-book-theme`` since the former is
+  deprecated
+
 
 [5.0.0] - 2022-04-22
 --------------------
