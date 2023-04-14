@@ -28,13 +28,13 @@ django-waffle==3.0.0
     # via
     #   -r requirements/base.in
     #   edx-django-utils
-edx-django-utils==5.2.0
+edx-django-utils==5.4.0
     # via -r requirements/base.in
 jinja2==3.1.2
     # via code-annotations
 markupsafe==2.1.2
     # via jinja2
-newrelic==8.7.0
+newrelic==8.8.0
     # via edx-django-utils
 pbr==5.11.1
     # via stevedore
@@ -46,7 +46,7 @@ pynacl==1.5.0
     # via edx-django-utils
 python-slugify==8.0.1
     # via code-annotations
-pytz==2022.7.1
+pytz==2023.3
     # via django
 pyyaml==6.0
     # via code-annotations
