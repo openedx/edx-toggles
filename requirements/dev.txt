@@ -8,7 +8,7 @@ asgiref==3.6.0
     # via
     #   -r requirements/quality.txt
     #   django
-astroid==2.15.2
+astroid==2.15.4
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -93,7 +93,7 @@ exceptiongroup==1.1.1
     # via
     #   -r requirements/quality.txt
     #   pytest
-filelock==3.11.0
+filelock==3.12.0
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -102,7 +102,7 @@ idna==3.4
     # via
     #   -r requirements/quality.txt
     #   requests
-importlib-metadata==6.3.0
+importlib-metadata==6.6.0
     # via inflect
 inflect==3.0.2
     # via
@@ -176,7 +176,7 @@ pluggy==1.0.0
     #   tox
 polib==1.2.0
     # via edx-i18n-tools
-psutil==5.9.4
+psutil==5.9.5
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
@@ -192,9 +192,9 @@ pycparser==2.21
     #   cffi
 pydocstyle==6.3.0
     # via -r requirements/quality.txt
-pygments==2.15.0
+pygments==2.15.1
     # via diff-cover
-pylint==2.17.2
+pylint==2.17.3
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -222,7 +222,7 @@ pyproject-hooks==1.0.0
     # via
     #   -r requirements/pip-tools.txt
     #   build
-pytest==7.3.0
+pytest==7.3.1
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -265,7 +265,7 @@ snowballstemmer==2.2.0
     # via
     #   -r requirements/quality.txt
     #   pydocstyle
-sqlparse==0.4.3
+sqlparse==0.4.4
     # via
     #   -r requirements/quality.txt
     #   django
@@ -310,7 +310,7 @@ urllib3==1.26.15
     # via
     #   -r requirements/quality.txt
     #   requests
-virtualenv==20.21.0
+virtualenv==20.22.0
     # via
     #   -r requirements/ci.txt
     #   tox
