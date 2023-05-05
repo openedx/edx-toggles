@@ -39,7 +39,7 @@ code-annotations==1.3.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage[toml]==7.2.3
+coverage[toml]==7.2.5
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -49,7 +49,7 @@ deprecated==1.2.13
     #   atlassian-python-api
 dill==0.3.6
     # via pylint
-django==3.2.18
+django==3.2.19
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/test.txt
@@ -169,7 +169,7 @@ pyyaml==6.0
     # via
     #   -r requirements/test.txt
     #   code-annotations
-requests==2.29.0
+requests==2.30.0
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
@@ -212,7 +212,7 @@ typing-extensions==4.5.0
     # via
     #   astroid
     #   pylint
-urllib3==1.26.15
+urllib3==2.0.2
     # via
     #   -r requirements/test.txt
     #   requests
