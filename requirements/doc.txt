@@ -12,7 +12,7 @@ asgiref==3.6.0
     # via
     #   -r requirements/test.txt
     #   django
-atlassian-python-api==3.36.0
+atlassian-python-api==3.37.0
     # via -r requirements/test.txt
 babel==2.12.1
     # via
@@ -24,7 +24,7 @@ bleach==6.0.0
     # via readme-renderer
 build==0.10.0
     # via -r requirements/doc.in
-certifi==2022.12.7
+certifi==2023.5.7
     # via
     #   -r requirements/test.txt
     #   requests
