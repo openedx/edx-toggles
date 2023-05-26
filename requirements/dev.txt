@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-asgiref==3.6.0
+asgiref==3.7.1
     # via
     #   -r requirements/quality.txt
     #   django
@@ -48,7 +48,7 @@ code-annotations==1.3.0
     # via
     #   -r requirements/quality.txt
     #   edx-lint
-coverage[toml]==7.2.5
+coverage[toml]==7.2.6
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -209,7 +209,7 @@ pylint-django==2.5.3
     # via
     #   -r requirements/quality.txt
     #   edx-lint
-pylint-plugin-utils==0.8.1
+pylint-plugin-utils==0.8.2
     # via
     #   -r requirements/quality.txt
     #   pylint-celery
@@ -227,7 +227,7 @@ pytest==7.3.1
     #   -r requirements/quality.txt
     #   pytest-cov
     #   pytest-django
-pytest-cov==4.0.0
+pytest-cov==4.1.0
     # via -r requirements/quality.txt
 pytest-django==4.5.2
     # via -r requirements/quality.txt
@@ -244,7 +244,7 @@ pyyaml==6.0
     #   -r requirements/quality.txt
     #   code-annotations
     #   edx-i18n-tools
-requests==2.30.0
+requests==2.31.0
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
@@ -301,9 +301,10 @@ tox==3.28.0
     #   tox-battery
 tox-battery==0.6.1
     # via -r requirements/ci.txt
-typing-extensions==4.5.0
+typing-extensions==4.6.2
     # via
     #   -r requirements/quality.txt
+    #   asgiref
     #   astroid
     #   pylint
 urllib3==2.0.2
