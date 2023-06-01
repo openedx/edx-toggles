@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-asgiref==3.6.0
+asgiref==3.7.1
     # via
     #   -r requirements/base.txt
     #   django
@@ -91,7 +91,7 @@ pyyaml==6.0
     # via
     #   -r requirements/base.txt
     #   code-annotations
-requests==2.30.0
+requests==2.31.0
     # via
     #   atlassian-python-api
     #   requests-oauthlib
@@ -116,6 +116,10 @@ text-unidecode==1.3
     # via
     #   -r requirements/base.txt
     #   python-slugify
+typing-extensions==4.6.2
+    # via
+    #   -r requirements/base.txt
+    #   asgiref
 urllib3==2.0.2
     # via requests
 wrapt==1.11.0
