@@ -27,6 +27,8 @@ cffi==1.15.1
     # via
     #   -r requirements/quality.txt
     #   pynacl
+chardet==5.1.0
+    # via diff-cover
 charset-normalizer==3.1.0
     # via
     #   -r requirements/quality.txt
@@ -56,10 +58,8 @@ deprecated==1.2.14
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
-diff-cover==4.0.0
-    # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/dev.in
+diff-cover==7.5.0
+    # via -r requirements/dev.in
 dill==0.3.6
     # via
     #   -r requirements/quality.txt
@@ -102,12 +102,6 @@ idna==3.4
     # via
     #   -r requirements/quality.txt
     #   requests
-importlib-metadata==6.6.0
-    # via inflect
-inflect==3.0.2
-    # via
-    #   -c requirements/constraints.txt
-    #   jinja2-pluralize
 iniconfig==2.0.0
     # via
     #   -r requirements/quality.txt
@@ -121,14 +115,11 @@ jinja2==3.1.2
     #   -r requirements/quality.txt
     #   code-annotations
     #   diff-cover
-    #   jinja2-pluralize
-jinja2-pluralize==0.3.0
-    # via diff-cover
 lazy-object-proxy==1.9.0
     # via
     #   -r requirements/quality.txt
     #   astroid
-markupsafe==2.1.2
+markupsafe==2.1.3
     # via
     #   -r requirements/quality.txt
     #   jinja2
@@ -259,7 +250,6 @@ six==1.16.0
     #   -r requirements/quality.txt
     #   atlassian-python-api
     #   edx-lint
-    #   stevedore
     #   tox
 snowballstemmer==2.2.0
     # via
@@ -269,9 +259,8 @@ sqlparse==0.4.4
     # via
     #   -r requirements/quality.txt
     #   django
-stevedore==1.32.0
+stevedore==5.1.0
     # via
-    #   -c requirements/constraints.txt
     #   -r requirements/quality.txt
     #   code-annotations
     #   edx-django-utils
@@ -319,14 +308,11 @@ wheel==0.40.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-wrapt==1.11.0
+wrapt==1.15.0
     # via
-    #   -c requirements/constraints.txt
     #   -r requirements/quality.txt
     #   astroid
     #   deprecated
-zipp==3.15.0
-    # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
