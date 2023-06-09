@@ -212,7 +212,7 @@ typing-extensions==4.6.3
     #   asgiref
     #   astroid
     #   pylint
-urllib3==2.0.2
+urllib3==2.0.3
     # via
     #   -r requirements/test.txt
     #   requests

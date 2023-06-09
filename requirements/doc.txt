@@ -278,7 +278,7 @@ typing-extensions==4.6.3
     #   asgiref
     #   pydata-sphinx-theme
     #   rich
-urllib3==2.0.2
+urllib3==2.0.3
     # via
     #   -r requirements/test.txt
     #   requests
