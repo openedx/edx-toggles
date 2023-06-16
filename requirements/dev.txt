@@ -58,7 +58,7 @@ deprecated==1.2.14
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
-diff-cover==7.5.0
+diff-cover==7.6.0
     # via -r requirements/dev.in
 dill==0.3.6
     # via
@@ -93,7 +93,7 @@ exceptiongroup==1.1.1
     # via
     #   -r requirements/quality.txt
     #   pytest
-filelock==3.12.0
+filelock==3.12.2
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -152,7 +152,7 @@ pbr==5.11.1
     #   stevedore
 pip-tools==6.13.0
     # via -r requirements/pip-tools.txt
-platformdirs==3.5.1
+platformdirs==3.5.3
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -213,7 +213,7 @@ pyproject-hooks==1.0.0
     # via
     #   -r requirements/pip-tools.txt
     #   build
-pytest==7.3.1
+pytest==7.3.2
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
