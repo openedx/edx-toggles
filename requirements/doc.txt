@@ -12,7 +12,7 @@ asgiref==3.7.2
     # via
     #   -r requirements/test.txt
     #   django
-atlassian-python-api==3.38.0
+atlassian-python-api==3.39.0
     # via -r requirements/test.txt
 babel==2.12.1
     # via
@@ -89,7 +89,7 @@ idna==3.4
     #   requests
 imagesize==1.4.1
     # via sphinx
-importlib-metadata==6.6.0
+importlib-metadata==6.7.0
     # via
     #   keyring
     #   sphinx
@@ -111,7 +111,7 @@ jinja2==3.1.2
     #   -r requirements/test.txt
     #   code-annotations
     #   sphinx
-keyring==23.13.1
+keyring==24.1.0
     # via twine
 markdown-it-py==3.0.0
     # via rich
@@ -145,7 +145,7 @@ pbr==5.11.1
     #   stevedore
 pkginfo==1.9.6
     # via twine
-pluggy==1.0.0
+pluggy==1.2.0
     # via
     #   -r requirements/test.txt
     #   pytest
@@ -195,7 +195,7 @@ pyyaml==6.0
     # via
     #   -r requirements/test.txt
     #   code-annotations
-readme-renderer==37.3
+readme-renderer==40.0
     # via twine
 requests==2.31.0
     # via
@@ -228,9 +228,8 @@ snowballstemmer==2.2.0
     # via sphinx
 soupsieve==2.4.1
     # via beautifulsoup4
-sphinx==5.3.0
+sphinx==6.2.1
     # via
-    #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/doc.in
     #   pydata-sphinx-theme
     #   sphinx-book-theme
