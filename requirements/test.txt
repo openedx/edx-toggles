@@ -9,7 +9,7 @@ asgiref==3.7.2
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   django
-atlassian-python-api==3.38.0
+atlassian-python-api==3.39.0
     # via -r requirements/scripts.txt
 certifi==2023.5.7
     # via
@@ -96,7 +96,7 @@ pbr==5.11.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   stevedore
-pluggy==1.0.0
+pluggy==1.2.0
     # via pytest
 psutil==5.9.5
     # via

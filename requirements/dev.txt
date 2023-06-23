@@ -13,7 +13,7 @@ astroid==2.15.5
     #   -r requirements/quality.txt
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.38.0
+atlassian-python-api==3.39.0
     # via -r requirements/quality.txt
 build==0.10.0
     # via
@@ -152,13 +152,13 @@ pbr==5.11.1
     #   stevedore
 pip-tools==6.13.0
     # via -r requirements/pip-tools.txt
-platformdirs==3.5.3
+platformdirs==3.8.0
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   pylint
     #   virtualenv
-pluggy==1.0.0
+pluggy==1.2.0
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -300,7 +300,7 @@ urllib3==2.0.3
     # via
     #   -r requirements/quality.txt
     #   requests
-virtualenv==20.23.0
+virtualenv==20.23.1
     # via
     #   -r requirements/ci.txt
     #   tox
