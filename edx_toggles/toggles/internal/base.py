@@ -37,3 +37,12 @@ class BaseToggle(ABC):
         Return the list of class instances sorted by name.
         """
         return sorted(cls._class_instances, key=lambda instance: instance.name)
+
+    def is_disabed(self):
+        return not self.is_enabled()
+
+    def is_toggle_on(self):
+        return self.is_enabled()
+
+    def is_toggle_off(self):
+        return self.is_disabed()
