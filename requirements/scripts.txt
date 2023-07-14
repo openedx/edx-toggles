@@ -16,9 +16,9 @@ cffi==1.15.1
     # via
     #   -r requirements/base.txt
     #   pynacl
-charset-normalizer==3.1.0
+charset-normalizer==3.2.0
     # via requests
-click==8.1.4
+click==8.1.5
     # via
     #   -r requirements/base.txt
     #   code-annotations
