@@ -37,7 +37,7 @@ charset-normalizer==3.2.0
     # via
     #   -r requirements/test.txt
     #   requests
-click==8.1.5
+click==8.1.6
     # via
     #   -r requirements/test.txt
     #   code-annotations
@@ -191,7 +191,7 @@ pytz==2023.3
     #   -r requirements/test.txt
     #   babel
     #   django
-pyyaml==6.0
+pyyaml==6.0.1
     # via
     #   -r requirements/test.txt
     #   code-annotations
@@ -277,7 +277,7 @@ typing-extensions==4.7.1
     #   asgiref
     #   pydata-sphinx-theme
     #   rich
-urllib3==2.0.3
+urllib3==2.0.4
     # via
     #   -r requirements/test.txt
     #   requests
@@ -288,7 +288,7 @@ wrapt==1.15.0
     # via
     #   -r requirements/test.txt
     #   deprecated
-zipp==3.16.1
+zipp==3.16.2
     # via
     #   importlib-metadata
     #   importlib-resources

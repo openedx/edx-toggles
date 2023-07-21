@@ -24,7 +24,7 @@ charset-normalizer==3.2.0
     # via
     #   -r requirements/scripts.txt
     #   requests
-click==8.1.5
+click==8.1.6
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -131,7 +131,7 @@ pytz==2023.3
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   django
-pyyaml==6.0
+pyyaml==6.0.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -174,7 +174,7 @@ typing-extensions==4.7.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   asgiref
-urllib3==2.0.3
+urllib3==2.0.4
     # via
     #   -r requirements/scripts.txt
     #   requests
