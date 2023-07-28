@@ -11,7 +11,7 @@ asgiref==3.7.2
     #   django
 atlassian-python-api==3.39.0
     # via -r requirements/scripts.txt
-certifi==2023.5.7
+certifi==2023.7.22
     # via
     #   -r requirements/scripts.txt
     #   requests
@@ -24,13 +24,13 @@ charset-normalizer==3.2.0
     # via
     #   -r requirements/scripts.txt
     #   requests
-click==8.1.5
+click==8.1.6
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   code-annotations
     #   edx-django-utils
-code-annotations==1.3.0
+code-annotations==1.5.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -46,18 +46,19 @@ deprecated==1.2.14
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   django-crum
+    #   django-waffle
     #   edx-django-utils
 django-crum==0.7.9
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-django-waffle==3.0.0
+django-waffle==4.0.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-edx-django-utils==5.5.0
+edx-django-utils==5.6.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -79,7 +80,7 @@ markupsafe==2.1.3
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   jinja2
-newrelic==8.8.1
+newrelic==8.9.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -131,7 +132,7 @@ pytz==2023.3
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   django
-pyyaml==6.0
+pyyaml==6.0.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -174,7 +175,7 @@ typing-extensions==4.7.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   asgiref
-urllib3==2.0.3
+urllib3==2.0.4
     # via
     #   -r requirements/scripts.txt
     #   requests
