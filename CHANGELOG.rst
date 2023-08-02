@@ -14,10 +14,13 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[5.1.0] - 2023-08-02
+--------------------
+
+* Added support for Django 4.2
 * Rename toggle_warnings to toggle_warning for consistency with setting_warning.
 * Switch from ``edx-sphinx-theme`` to ``sphinx-book-theme`` since the former is
   deprecated
-
 
 [5.0.0] - 2022-04-22
 --------------------
