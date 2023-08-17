@@ -29,6 +29,17 @@ class BaseWaffleTest(TestCase):
         self.assertEqual("module1", waffle.module_name)
         self.assertEqual(1, len(NaiveWaffle.get_instances()))
 
+    def test_toggle_methods(self):
+        waffle = NaiveWaffle("namespaced.name", "module1")
+        # test is_enabled method
+        self.assertEqual(True, waffle.is_enabled())
+        #test is_disabled method
+        self.assertEqual(False, waffle.is_disabled())
+        #test is_toggle_on method
+        self.assertEqual(waffle.is_enabled(), waffle.is_toggle_on())
+        #test is_toggle_off method
+        self.assertEqual(waffle.is_disabled(), waffle.is_toggle_off())
+
 
 class WaffleFlagTests(TestCase):
     """

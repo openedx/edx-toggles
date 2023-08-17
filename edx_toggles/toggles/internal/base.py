@@ -38,7 +38,7 @@ class BaseToggle(ABC):
         """
         return sorted(cls._class_instances, key=lambda instance: instance.name)
 
-    def is_disabed(self):
+    def is_disabled(self):
         return not self.is_enabled()
 
     def is_toggle_on(self):
