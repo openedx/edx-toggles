@@ -20,8 +20,6 @@ babel==2.12.1
     #   sphinx
 beautifulsoup4==4.12.2
     # via pydata-sphinx-theme
-bleach==6.0.0
-    # via readme-renderer
 build==1.0.3
     # via -r requirements/doc.in
 certifi==2023.7.22
@@ -129,6 +127,8 @@ newrelic==9.0.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
+nh3==0.2.14
+    # via readme-renderer
 oauthlib==3.2.2
     # via
     #   -r requirements/test.txt
@@ -197,7 +197,7 @@ pyyaml==6.0.1
     # via
     #   -r requirements/test.txt
     #   code-annotations
-readme-renderer==41.0
+readme-renderer==42.0
     # via twine
 requests==2.31.0
     # via
@@ -225,7 +225,6 @@ six==1.16.0
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
-    #   bleach
 snowballstemmer==2.2.0
     # via sphinx
 soupsieve==2.5
@@ -284,8 +283,6 @@ urllib3==2.0.4
     #   -r requirements/test.txt
     #   requests
     #   twine
-webencodings==0.5.1
-    # via bleach
 wrapt==1.15.0
     # via
     #   -r requirements/test.txt
