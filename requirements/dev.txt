@@ -296,13 +296,13 @@ tox==3.28.0
     #   tox-battery
 tox-battery==0.6.2
     # via -r requirements/ci.txt
-typing-extensions==4.7.1
+typing-extensions==4.8.0
     # via
     #   -r requirements/quality.txt
     #   asgiref
     #   astroid
     #   pylint
-urllib3==2.0.4
+urllib3==2.0.5
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -319,7 +319,7 @@ wrapt==1.15.0
     #   -r requirements/quality.txt
     #   astroid
     #   deprecated
-zipp==3.16.2
+zipp==3.17.0
     # via
     #   -r requirements/pip-tools.txt
     #   importlib-metadata

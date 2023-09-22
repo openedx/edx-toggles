@@ -46,7 +46,7 @@ coverage[toml]==7.3.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==41.0.3
+cryptography==41.0.4
     # via secretstorage
 deprecated==1.2.14
     # via
@@ -94,7 +94,7 @@ importlib-metadata==6.8.0
     #   keyring
     #   sphinx
     #   twine
-importlib-resources==6.0.1
+importlib-resources==6.1.0
     # via keyring
 iniconfig==2.0.0
     # via
@@ -159,7 +159,7 @@ pycparser==2.21
     # via
     #   -r requirements/test.txt
     #   cffi
-pydata-sphinx-theme==0.13.3
+pydata-sphinx-theme==0.14.1
     # via sphinx-book-theme
 pygments==2.16.1
     # via
@@ -217,7 +217,7 @@ restructuredtext-lint==1.4.0
     # via doc8
 rfc3986==2.0.0
     # via twine
-rich==13.5.2
+rich==13.5.3
     # via twine
 secretstorage==3.3.3
     # via keyring
@@ -272,13 +272,13 @@ tomli==2.0.1
     #   pytest
 twine==4.0.2
     # via -r requirements/doc.in
-typing-extensions==4.7.1
+typing-extensions==4.8.0
     # via
     #   -r requirements/test.txt
     #   asgiref
     #   pydata-sphinx-theme
     #   rich
-urllib3==2.0.4
+urllib3==2.0.5
     # via
     #   -r requirements/test.txt
     #   requests
@@ -287,7 +287,7 @@ wrapt==1.15.0
     # via
     #   -r requirements/test.txt
     #   deprecated
-zipp==3.16.2
+zipp==3.17.0
     # via
     #   importlib-metadata
     #   importlib-resources
