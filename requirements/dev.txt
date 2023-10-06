@@ -8,7 +8,7 @@ asgiref==3.7.2
     # via
     #   -r requirements/quality.txt
     #   django
-astroid==2.15.6
+astroid==2.15.8
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -23,13 +23,13 @@ certifi==2023.7.22
     # via
     #   -r requirements/quality.txt
     #   requests
-cffi==1.15.1
+cffi==1.16.0
     # via
     #   -r requirements/quality.txt
     #   pynacl
 chardet==5.2.0
     # via diff-cover
-charset-normalizer==3.2.0
+charset-normalizer==3.3.0
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -50,7 +50,7 @@ code-annotations==1.5.0
     # via
     #   -r requirements/quality.txt
     #   edx-lint
-coverage[toml]==7.3.1
+coverage[toml]==7.3.2
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -68,7 +68,7 @@ distlib==0.3.7
     # via
     #   -r requirements/ci.txt
     #   virtualenv
-django==3.2.21
+django==3.2.22
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/quality.txt
@@ -132,7 +132,7 @@ mccabe==0.7.0
     # via
     #   -r requirements/quality.txt
     #   pylint
-newrelic==9.0.0
+newrelic==9.1.0
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
@@ -141,7 +141,7 @@ oauthlib==3.2.2
     #   -r requirements/quality.txt
     #   atlassian-python-api
     #   requests-oauthlib
-packaging==23.1
+packaging==23.2
     # via
     #   -r requirements/ci.txt
     #   -r requirements/pip-tools.txt
@@ -157,7 +157,7 @@ pbr==5.11.1
     #   stevedore
 pip-tools==7.3.0
     # via -r requirements/pip-tools.txt
-platformdirs==3.10.0
+platformdirs==3.11.0
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -190,7 +190,7 @@ pydocstyle==6.3.0
     # via -r requirements/quality.txt
 pygments==2.16.1
     # via diff-cover
-pylint==2.17.5
+pylint==2.17.7
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -296,13 +296,13 @@ tox==3.28.0
     #   tox-battery
 tox-battery==0.6.2
     # via -r requirements/ci.txt
-typing-extensions==4.7.1
+typing-extensions==4.8.0
     # via
     #   -r requirements/quality.txt
     #   asgiref
     #   astroid
     #   pylint
-urllib3==2.0.4
+urllib3==2.0.6
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -319,7 +319,7 @@ wrapt==1.15.0
     #   -r requirements/quality.txt
     #   astroid
     #   deprecated
-zipp==3.16.2
+zipp==3.17.0
     # via
     #   -r requirements/pip-tools.txt
     #   importlib-metadata
