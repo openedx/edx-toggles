@@ -14,7 +14,7 @@ asgiref==3.7.2
     #   django
 atlassian-python-api==3.41.2
     # via -r requirements/test.txt
-babel==2.12.1
+babel==2.13.0
     # via
     #   pydata-sphinx-theme
     #   sphinx
@@ -26,12 +26,12 @@ certifi==2023.7.22
     # via
     #   -r requirements/test.txt
     #   requests
-cffi==1.15.1
+cffi==1.16.0
     # via
     #   -r requirements/test.txt
     #   cryptography
     #   pynacl
-charset-normalizer==3.2.0
+charset-normalizer==3.3.0
     # via
     #   -r requirements/test.txt
     #   requests
@@ -42,17 +42,17 @@ click==8.1.7
     #   edx-django-utils
 code-annotations==1.5.0
     # via -r requirements/test.txt
-coverage[toml]==7.3.1
+coverage[toml]==7.3.2
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==41.0.3
+cryptography==41.0.4
     # via secretstorage
 deprecated==1.2.14
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
-django==3.2.21
+django==3.2.22
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/test.txt
@@ -94,7 +94,7 @@ importlib-metadata==6.8.0
     #   keyring
     #   sphinx
     #   twine
-importlib-resources==6.0.1
+importlib-resources==6.1.0
     # via keyring
 iniconfig==2.0.0
     # via
@@ -123,7 +123,7 @@ mdurl==0.1.2
     # via markdown-it-py
 more-itertools==10.1.0
     # via jaraco-classes
-newrelic==9.0.0
+newrelic==9.1.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -134,7 +134,7 @@ oauthlib==3.2.2
     #   -r requirements/test.txt
     #   atlassian-python-api
     #   requests-oauthlib
-packaging==23.1
+packaging==23.2
     # via
     #   -r requirements/test.txt
     #   build
@@ -159,7 +159,7 @@ pycparser==2.21
     # via
     #   -r requirements/test.txt
     #   cffi
-pydata-sphinx-theme==0.13.3
+pydata-sphinx-theme==0.14.1
     # via sphinx-book-theme
 pygments==2.16.1
     # via
@@ -217,7 +217,7 @@ restructuredtext-lint==1.4.0
     # via doc8
 rfc3986==2.0.0
     # via twine
-rich==13.5.2
+rich==13.6.0
     # via twine
 secretstorage==3.3.3
     # via keyring
@@ -272,13 +272,13 @@ tomli==2.0.1
     #   pytest
 twine==4.0.2
     # via -r requirements/doc.in
-typing-extensions==4.7.1
+typing-extensions==4.8.0
     # via
     #   -r requirements/test.txt
     #   asgiref
     #   pydata-sphinx-theme
     #   rich
-urllib3==2.0.4
+urllib3==2.0.6
     # via
     #   -r requirements/test.txt
     #   requests
@@ -287,7 +287,7 @@ wrapt==1.15.0
     # via
     #   -r requirements/test.txt
     #   deprecated
-zipp==3.16.2
+zipp==3.17.0
     # via
     #   importlib-metadata
     #   importlib-resources
