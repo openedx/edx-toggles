@@ -123,7 +123,7 @@ psutil==5.9.5
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-pycodestyle==2.11.0
+pycodestyle==2.11.1
     # via -r requirements/quality.in
 pycparser==2.21
     # via
