@@ -41,8 +41,8 @@ class BaseToggle(ABC):
     def is_disabled(self):
         return not self.is_enabled()
 
-    def is_toggle_on(self):
+    def is_toggled_on(self):
         return self.is_enabled()
 
-    def is_toggle_off(self):
+    def is_toggled_off(self):
         return self.is_disabled()

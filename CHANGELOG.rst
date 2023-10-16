@@ -14,6 +14,11 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[5.2.0] - 2023-10-16
+--------------------
+
+* Added is_disabled, is_toggled_on, and is_toggled_off methods to BaseToggle.
+
 [5.1.0] - 2023-08-02
 --------------------
 
