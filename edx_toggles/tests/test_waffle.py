@@ -49,9 +49,9 @@ class BaseWaffleTest(TestCase):
             # test is_disabled method
             self.assertEqual(True, waffle.is_disabled())
             # test is_toggle_on method
-            self.assertEqual(False, waffle.is_toggle_on())
+            self.assertEqual(False, waffle.is_toggled_on())
             # test is_toggle_off method
-            self.assertEqual(True, waffle.is_toggle_off())
+            self.assertEqual(True, waffle.is_toggled_off())
 
 
 class WaffleFlagTests(TestCase):
