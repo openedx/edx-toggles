@@ -12,7 +12,7 @@ astroid==2.15.8
     # via
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.41.2
+atlassian-python-api==3.41.3
     # via -r requirements/test.txt
 certifi==2023.7.22
     # via
@@ -42,6 +42,7 @@ code-annotations==1.5.0
 coverage[toml]==7.3.2
     # via
     #   -r requirements/test.txt
+    #   coverage
     #   pytest-cov
 deprecated==1.2.14
     # via
@@ -96,7 +97,7 @@ markupsafe==2.1.3
     #   jinja2
 mccabe==0.7.0
     # via pylint
-newrelic==9.1.0
+newrelic==9.1.1
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -119,7 +120,7 @@ pluggy==1.3.0
     # via
     #   -r requirements/test.txt
     #   pytest
-psutil==5.9.5
+psutil==5.9.6
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -213,7 +214,7 @@ typing-extensions==4.8.0
     #   asgiref
     #   astroid
     #   pylint
-urllib3==2.0.6
+urllib3==2.0.7
     # via
     #   -r requirements/test.txt
     #   requests
