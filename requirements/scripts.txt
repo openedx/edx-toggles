@@ -8,9 +8,9 @@ asgiref==3.7.2
     # via
     #   -r requirements/base.txt
     #   django
-atlassian-python-api==3.41.3
+atlassian-python-api==3.41.4
     # via -r requirements/scripts.in
-certifi==2023.7.22
+certifi==2023.11.17
     # via requests
 cffi==1.16.0
     # via
@@ -44,9 +44,9 @@ django-waffle==4.0.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
-edx-django-utils==5.8.0
+edx-django-utils==5.9.0
     # via -r requirements/base.txt
-idna==3.4
+idna==3.6
     # via requests
 jinja2==3.1.2
     # via
