@@ -61,7 +61,7 @@ colorama==0.4.6
     # via
     #   -r requirements/ci.txt
     #   tox
-coverage[toml]==7.3.4
+coverage[toml]==7.4.0
     # via
     #   -r requirements/quality.txt
     #   coverage
@@ -115,7 +115,7 @@ idna==3.6
     # via
     #   -r requirements/quality.txt
     #   requests
-importlib-metadata==7.0.0
+importlib-metadata==7.0.1
     # via
     #   -r requirements/pip-tools.txt
     #   build
