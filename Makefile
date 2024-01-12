@@ -44,6 +44,8 @@ upgrade: ## update the requirements/*.txt files with the latest packages satisfy
 	# Make sure to compile files after any other files they include!
 	pip-compile --upgrade --allow-unsafe --rebuild -o requirements/pip.txt requirements/pip.in
 	pip-compile --upgrade -o requirements/pip-tools.txt requirements/pip-tools.in
+	pip install -qr requirements/pip.txt
+	pip install -qr requirements/pip-tools.txt
 	pip-compile --upgrade -o requirements/base.txt requirements/base.in
 	pip-compile --upgrade -o requirements/scripts.txt requirements/scripts.in
 	pip-compile --upgrade -o requirements/test.txt requirements/test.in
@@ -96,7 +98,7 @@ detect_changed_source_translations:
 	cd edx-toggles && i18n_tool changed
 
 pull_translations: ## pull translations from Transifex
-	tx pull -af --mode reviewed
+	tx pull -t -a -f --mode reviewed
 
 push_translations: ## push source translation files (.po) from Transifex
 	tx push -s

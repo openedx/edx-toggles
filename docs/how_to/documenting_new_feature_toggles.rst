@@ -31,12 +31,12 @@ Copy-paste this boilerplate template to document a feature toggle::
     # .. toggle_description: Add here a detailed description of the consequences of enabling this feature toggle.
     #   Note that all annotations can be spread over multiple lines by prefixing every line after the first by
     #   at least three spaces (two spaces plus the leading space).
-    # .. toggle_warnings: (Optional) Add here additional instructions that users should be aware of. For instance, dependency
+    # .. toggle_warning: (Optional) Add here additional instructions that users should be aware of. For instance, dependency
     #   on additional settings or feature toggles should be referenced here. If this field is not needed, simply remove it.
     # .. toggle_use_cases: temporary OR circuit_breaker OR vip OR opt_out OR opt_in OR open_edx
     # .. toggle_creation_date: 2020-01-01
     # .. toggle_target_removal_date: 2020-07-01 (this is required if toggle_use_cases includes temporary. If not, simply remove it.)
-    # .. toggle_tickets: (Optional) https://openedx.atlassian.net/browse/DEPR-xxx, https://github.com/edx/edx-platform/blob/master/docs/decisions/xxx.rst, https://github.com/edx/edx-platform/pull/xxx (details initial feature)
+    # .. toggle_tickets: (Optional) https://openedx.atlassian.net/browse/DEPR-xxx, https://github.com/openedx/edx-platform/blob/master/docs/decisions/xxx.rst, https://github.com/openedx/edx-platform/pull/xxx (details initial feature)
     SOME_FEATURE_NAME = ...
 
 Configuration model
@@ -165,7 +165,7 @@ Same toggle in multiple services
 If a toggle needs to be synchronized across services:
 
 * The ``toggle_description`` could state that you should read the description for the same toggle in XXX service, rather than duplicating a description.
-* The ``toggle_warnings`` should note that the value must be consistent with XXX service. XXX will often be the LMS, but not necessarily.
+* The ``toggle_warning`` should note that the value must be consistent with XXX service. XXX will often be the LMS, but not necessarily.
 
 Third-party toggles
 -------------------
@@ -196,12 +196,6 @@ Refactor to use new toggle setting classes
 
 Undocumented boolean Django Setting toggles defined in the Open edX codebase are probably not yet defined using a ``SettingToggle`` or ``SettingDictToggle``. Read about implementing these toggle classes in :doc:`implement_the_right_toggle_type`.
 
-Refactor LegacyWaffle classes
-------------------------------
-
-* Import ``WaffleFlag`` instead of ``LegacyWaffleFlag`` or ``WaffleSwitch`` instead of ``LegacyWaffleSwitch``.
-* Initialize these new classes with a single string that includes the fully namespaced toggle name, including the period.
-
 Refactor direct waffle usage
 ----------------------------
 
@@ -219,5 +213,5 @@ The documentation format used to annotate feature toggles is stored in the code-
 See `how-to document non-boolean Django settings`_, for Django settings which are not feature toggles.
 
 .. _`OEP-17: Feature Toggles`: https://open-edx-proposals.readthedocs.io/en/latest/oep-0017-bp-feature-toggles.html
-.. _feature_toggle_annotations.yaml: https://github.com/edx/code-annotations/blob/master/code_annotations/contrib/config/feature_toggle_annotations.yaml
+.. _feature_toggle_annotations.yaml: https://github.com/openedx/code-annotations/blob/master/code_annotations/contrib/config/feature_toggle_annotations.yaml
 .. _how-to document non-boolean Django settings: https://code-annotations.readthedocs.io/en/latest/contrib/how_to/documenting_django_settings.html

@@ -56,10 +56,10 @@ If a stakeholder wanted to review our "permanent" toggles to determine which rea
 * Most permanent toggles have ``.. toggle_use_cases: open_edx``, which provides no information about the confidence around it being a permanent toggle.
 * If confidence were boosted using additional research or a failed attempt to DEPR, there would be no consistent way to document this change in confidence, other than adding text to the ``toggle_description`` and hoping it would be seen.
 
-.. _set of use cases for toggles: https://github.com/edx/open-edx-proposals/blob/c2d3b2a/oeps/oep-0017-bp-feature-toggles.rst#use-cases
-.. _Details a reporting requirement: https://github.com/edx/open-edx-proposals/blob/c2d3b2a/oeps/oep-0017-bp-feature-toggles.rst#req-12-report
-.. _PR discussion about toggle_use_cases: https://github.com/edx/edx-platform/pull/24815#issuecomment-681174018
-.. _PR to implement this proposal: https://github.com/edx/code-annotations/pull/49
+.. _set of use cases for toggles: https://github.com/openedx/open-edx-proposals/blob/c2d3b2a/oeps/oep-0017-bp-feature-toggles.rst#use-cases
+.. _Details a reporting requirement: https://github.com/openedx/open-edx-proposals/blob/c2d3b2a/oeps/oep-0017-bp-feature-toggles.rst#req-12-report
+.. _PR discussion about toggle_use_cases: https://github.com/openedx/edx-platform/pull/24815#issuecomment-681174018
+.. _PR to implement this proposal: https://github.com/openedx/code-annotations/pull/49
 
 Decision
 --------
@@ -108,4 +108,4 @@ Consequences
 * The `how-to documenting_new_feature_toggles.rst`_ should be updated as necessary.
 * OEP-17 should be updated to reflect these choices. Note that the OEP is outdated in other ways as well.
 
-.. _how-to documenting_new_feature_toggles.rst: https://github.com/edx/edx-toggles/blob/master/docs/how_to/documenting_new_feature_toggles.rst
+.. _how-to documenting_new_feature_toggles.rst: https://github.com/openedx/edx-toggles/blob/master/docs/how_to/documenting_new_feature_toggles.rst

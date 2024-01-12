@@ -14,8 +14,32 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[5.1.0] - 2023-08-02
+--------------------
+
+* Added support for Django 4.2
+* Rename toggle_warnings to toggle_warning for consistency with setting_warning.
+* Switch from ``edx-sphinx-theme`` to ``sphinx-book-theme`` since the former is
+  deprecated
+
+[5.0.0] - 2022-04-22
+--------------------
+
+* BREAKING CHANGE: Removed LegacyWaffle* classes. Although this is a breaking change, all known uses have already been fixed.
 * Handle the case where certain toggle names come in as ``None`` when generating summary reports.
 * Add ADR for updating annotations for toggle life expectancy and use cases.
+
+[4.3.0] - 2022-01-31
+--------------------
+
+Removed
+~~~~~~~
+
+* Removed Django22, 30, 31
+
+Added
+~~~~~~~
+* Added Django40 support in CI
 
 [4.2.0] - 2021-07-07
 ~~~~~~~~~~~~~~~~~~~~

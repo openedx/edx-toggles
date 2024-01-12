@@ -66,4 +66,4 @@ Place all resulting annotations yml files in a single directory. The name of ann
 Create Report
 -------------
 
-Use instructions found in `"Creating a Feature Toggle Report" section of Readme <https://github.com/edx/edx-toggles/blob/master/scripts/README.rst#creating-a-feature-toggle-report>`__ to generate report.
+Use instructions found in `"Creating a Feature Toggle Report" section of Readme <https://github.com/openedx/edx-toggles/blob/master/scripts/README.rst#creating-a-feature-toggle-report>`__ to generate report.

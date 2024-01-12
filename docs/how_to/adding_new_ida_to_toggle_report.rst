@@ -37,8 +37,8 @@ Steps required (2-4 hours):
     You can follow similar steps to use the settings Sphinx extension to publish non-boolean non-toggle setting annotations as well.
 
 .. _readthedocs documention for edx-platform feature toggles: https://edx.readthedocs.io/projects/edx-platform-technical/en/latest/featuretoggles.html
-.. _annotated toggles in the edx-platform codebase: https://github.com/edx/edx-platform/search?q=toggle_name
-.. _search for featuretoggles in edx-platform: https://github.com/edx/edx-platform/search?q=featuretoggles
+.. _annotated toggles in the edx-platform codebase: https://github.com/openedx/edx-platform/search?q=toggle_name
+.. _search for featuretoggles in edx-platform: https://github.com/openedx/edx-platform/search?q=featuretoggles
 
 Toggles State Endpoint
 ======================
@@ -67,8 +67,8 @@ Steps required (2-4 hours):
     - (Optional) If your IDA has custom toggle types, you can subclass and override the reporting methods as was done in the edx-platform `example toggles state endpoint view`_.
 
 .. _ToggleStateReport: https://edx.readthedocs.io/projects/edx-toggles/en/latest/edx_toggles.toggles.state.internal.html#module-edx_toggles.toggles.state.internal.report
-.. _example toggles state endpoint view: https://github.com/edx/edx-platform/blob/650b0c1/openedx/core/djangoapps/waffle_utils/views.py#L50-L66
-.. _example urls.py in edx-platform: https://github.com/edx/edx-platform/blob/650b0c13603468d33e3e629ef1e36acc8fefd683/openedx/core/djangoapps/waffle_utils/urls.py
+.. _example toggles state endpoint view: https://github.com/openedx/edx-platform/blob/650b0c1/openedx/core/djangoapps/waffle_utils/views.py#L50-L66
+.. _example urls.py in edx-platform: https://github.com/openedx/edx-platform/blob/650b0c13603468d33e3e629ef1e36acc8fefd683/openedx/core/djangoapps/waffle_utils/urls.py
 .. _supported toggle classes from edx-toggles: https://edx.readthedocs.io/projects/edx-toggles/en/latest/how_to/implement_the_right_toggle_type.html#implementing-the-right-toggle-class
 
 Toggles State Reports Spreadsheet
@@ -91,7 +91,7 @@ Steps required (1 hour):
 
 .. _Toggle State Reports Spreadsheet (private to edX.org): https://tinyurl.com/edx-toggles-state
 .. _feature-toggle-report-generator.yml: https://github.com/edx/edx-internal/blob/master/tools-edx-jenkins/feature-toggle-report-generator.yml
-.. _scripts/configuration.yaml: https://github.com/edx/edx-toggles/blob/master/scripts/configuration.yaml
+.. _scripts/configuration.yaml: https://github.com/openedx/edx-toggles/blob/master/scripts/configuration.yaml
 
 How the Toggle State Reports Spreadsheet is generated
 =====================================================
@@ -111,7 +111,7 @@ The steps to collect annotations are automated through a Jenkins job:
 
 The job creates files with names like ``<ida_name>-annotations.yml``. The feature toggle report generator will key off the ``ida_name`` in the filename in order to be able to link this data to the toggle state data collected.
 
-.. _code_annotations: https://github.com/edx/code-annotations
+.. _code_annotations: https://github.com/openedx/code-annotations
 
 Gathering state data from HTTP endpoint
 ---------------------------------------
@@ -142,6 +142,6 @@ The csv reports are published to a private Google Sheet. See `Toggle State Repor
 .. _groovy job specification: https://github.com/edx/jenkins-job-dsl-internal/blob/master/jobs/tools-edx-jenkins.edx.org/createFeatureToggleReportGeneratorJobs.groovy
 .. _script to push data to s3 bucket: https://github.com/edx/jenkins-job-dsl-internal/blob/master/resources/push-feature-toggle-data-to-s3.sh
 .. _script to pull data from s3 bucket: https://github.com/edx/jenkins-job-dsl-internal/blob/master/resources/pull-feature-toggle-data-from-s3.sh
-.. _feature_toggle_report_generator.py: https://github.com/edx/edx-toggles/blob/master/scripts/feature_toggle_report_generator.py
+.. _feature_toggle_report_generator.py: https://github.com/openedx/edx-toggles/blob/master/scripts/feature_toggle_report_generator.py
 .. _publish-feature-toggle-report: https://tools-edx-jenkins.edx.org/job/Feature-Toggle-Report-Generator/job/publish-feature-toggle-report/
-.. _README: https://github.com/edx/edx-toggles/blob/master/scripts/README.rst
+.. _README: https://github.com/openedx/edx-toggles/blob/master/scripts/README.rst

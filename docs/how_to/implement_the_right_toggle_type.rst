@@ -49,18 +49,24 @@ Using your toggle
 This section covers waffle switches and flags as well as Django Settings toggles.
 For information on `Configuration Models`_ refer to that library.
 
-.. _Configuration Models: https://github.com/edx/django-config-models/
+.. _Configuration Models: https://github.com/openedx/django-config-models/
 
-Creating toggles
------------------
+Creating and naming toggles
+----------------------------
 
 Flags and switches are created with a name. The namespace prefix is used to categorize them and prevent conflicts.
 
 .. code:: python
 
-    FLAG_FOO = WaffleFlag('namespace.feature', module_name=__name__)
-    SWITCH_BAR = WaffleSwitch('namespace.feature', module_name=__name__)
-    SETTING_TOGGLE_BAZ = SettingToggle("SETTING_NAME", default=False, module_name=__name__)
+    FOO_FLAG = WaffleFlag('namespace.some_feature', module_name=__name__)
+    BAR_SWITCH = WaffleSwitch('namespace.some_feature', module_name=__name__)
+    BAZ_TOGGLE = SettingToggle("SOME_SETTING_TOGGLE", default=False, module_name=__name__)
+
+When naming a toggle, consider the following recommendations:
+
+- Use the suffixes ``_FLAG`` or ``_SWITCH`` to indicate Waffle flags and switches, respectively. Use the suffix ``_TOGGLE`` to clarify that a setting is being used as a toggle.
+- Avoid ``ENABLE`` or ``ENABLED`` in the name. It is redundant when accessing toggles (e.g. ``ENABLE_MY_EXPERIMENT_FLAG.is_enabled()``).
+- Avoid ``DISABLE`` or ``DISABLED`` in the name. It makes accessing the toggle very confusing (e.g. ``DISABLE_MY_FEATURE.is_enabled()``). For settings toggles, consider defaulting the toggle to True instead. For Waffle switches and flags, which must default to False, consider re-framing them to positively describe the enabled state (e.g. ``LEGACY_EXPERIENCE_FLAG`` instead of ``DISABLE_NEW_EXPERIENCE_FLAG``).
 
 Administering and testing toggles
 ----------------------------------
@@ -69,7 +75,7 @@ For the waffle flag and switch, you will use Django Admin "waffle" section to co
 
 Functions to override waffle flags in test are provided in `testutils`_.
 
-.. _testutils: https://github.com/edx/edx-toggles/blob/master/edx_toggles/toggles/testutils.py
+.. _testutils: https://github.com/openedx/edx-toggles/blob/master/edx_toggles/toggles/testutils.py
 
 Accessing toggles
 ------------------
@@ -78,11 +84,11 @@ Unlike the underlying waffle and settings libraries which look up values by name
 
 .. code:: python
 
-    from whereever import FLAG_FOO, SWITCH_BAR, SETTING_TOGGLE_BAZ
+    from whereever import FOO_FLAG, BAR_SWITCH, SETTING_TOGGLE_BAZ
 
-    FLAG_FOO.is_enabled()
-    SWITCH_BAR.is_enabled()
-    SETTING_TOGGLE_BAZ.is_enabled()
+    FOO_FLAG.is_enabled()
+    BAR_SWITCH.is_enabled()
+    BAZ_TOGGLE.is_enabled()
 
 State used by toggles
 ---------------------
@@ -119,7 +125,7 @@ If the toggle is being added to edx-platform, and it needs to be used by both LM
 
 Avoid referring to boolean Django Settings directly. However, if a boolean setting toggle is implemented without one of the wrapping classes, its annotation implementation would be `DjangoSetting`.
 
-.. _SettingToggle and SettingDictToggle classes: https://github.com/edx/edx-toggles/blob/master/edx_toggles/toggles/internal/setting_toggle.py
+.. _SettingToggle and SettingDictToggle classes: https://github.com/openedx/edx-toggles/blob/master/edx_toggles/toggles/internal/setting_toggle.py
 .. _ADR for the Setting Toggle classes: ../decisions/0003-django-setting-toggles.rst
 
 Waffle Switches
@@ -140,17 +146,17 @@ If you are wrapping a legacy flag that does not have a namespaced name (i.e. no 
 
 In edx-platform, there is also:
 
-* `CourseWaffleFlag`_: A WaffleFlag that adds override capabilities per course.
+* `CourseWaffleFlag`_: A WaffleFlag that adds override capabilities per course and per organization.
 * `ExperimentWaffleFlag`_: A somewhat complex CourseWaffleFlag that enables bucketing of users for A/B experiments.
 
 .. _WaffleFlag class: ../edx_toggles.toggles.internal.waffle.html#module-edx_toggles.toggles.internal.waffle
 .. _waffle: https://waffle.readthedocs.io/
-.. _CourseWaffleFlag: https://github.com/edx/edx-platform/blob/master/openedx/core/djangoapps/waffle_utils/__init__.py
-.. _ExperimentWaffleFlag: https://github.com/edx/edx-platform/blob/master/lms/djangoapps/experiments/flags.py
+.. _CourseWaffleFlag: https://github.com/openedx/edx-platform/blob/master/openedx/core/djangoapps/waffle_utils/__init__.py
+.. _ExperimentWaffleFlag: https://github.com/openedx/edx-platform/blob/master/lms/djangoapps/experiments/flags.py
 
 Config Models
 --------------
 
 A `ConfigurationModel`_ can be used if all other options do not suit your needs. In most cases, it is no longer necessary.
 
-.. _ConfigurationModel: https://github.com/edx/django-config-models/
+.. _ConfigurationModel: https://github.com/openedx/django-config-models/
