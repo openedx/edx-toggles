@@ -213,7 +213,14 @@ def _add_settings(settings_dict):
     """
     Fill the `settings_dict`: will only include values that are set to true or false.
     """
-    for setting_name, setting_value in vars(settings).items():
+    settings_dict_copy = {}
+    default_attribute_value = object()  # default is not a bool, so won't be included
+    for attr in dir(settings):
+        if not attr.startswith('__'):
+            value = getattr(settings, attr, default_attribute_value)
+            settings_dict_copy[attr] = value
+
+    for setting_name, setting_value in settings_dict_copy.items():
         if isinstance(setting_value, dict):
             for dict_name, dict_value in setting_value.items():
                 if isinstance(dict_value, bool):
