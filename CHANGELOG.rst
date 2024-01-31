@@ -14,6 +14,11 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[5.1.1] - 2024-01-31
+--------------------
+
+* Fix toggle report to output all settings.
+
 [5.1.0] - 2023-08-02
 --------------------
 

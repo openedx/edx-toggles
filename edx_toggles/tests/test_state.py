@@ -33,6 +33,26 @@ class ToggleStateTests(TestCase):
         waffle_names = [waffle["name"] for waffle in report["waffle_switches"]]
         self.assertIn("test.switch", waffle_names)
 
+    def test_response_with_simple_setting(self):
+        with override_settings(MYSETTING=True):
+            report = ToggleStateReport().as_dict()
+
+        self.assertIn(
+            {
+                "name": "MYSETTING",
+                "is_active": True,
+            },
+            report["django_settings"],
+        )
+
+        self.assertNotIn(
+            {
+                "name": "__dict__['MYSETTING']",
+                "is_active": True,
+            },
+            report["django_settings"],
+        )
+
     def test_response_with_setting_toggle(self):
         _toggle = SettingToggle("MYSETTING", default=False, module_name="module1")
         with override_settings(MYSETTING=True):
