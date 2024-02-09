@@ -85,7 +85,7 @@ jmespath==1.0.1
     # via
     #   -r requirements/scripts.txt
     #   atlassian-python-api
-markupsafe==2.1.4
+markupsafe==2.1.5
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -132,7 +132,7 @@ pytest-cov==4.1.0
     # via -r requirements/test.in
 pytest-django==4.8.0
     # via -r requirements/test.in
-python-slugify==8.0.3
+python-slugify==8.0.4
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt

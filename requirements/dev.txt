@@ -8,7 +8,7 @@ asgiref==3.7.2
     # via
     #   -r requirements/quality.txt
     #   django
-astroid==3.0.2
+astroid==3.0.3
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -84,7 +84,7 @@ distlib==0.3.8
     # via
     #   -r requirements/ci.txt
     #   virtualenv
-django==3.2.23
+django==3.2.24
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/quality.txt
@@ -142,7 +142,7 @@ jmespath==1.0.1
     #   atlassian-python-api
 lxml==5.1.0
     # via edx-i18n-tools
-markupsafe==2.1.4
+markupsafe==2.1.5
     # via
     #   -r requirements/quality.txt
     #   jinja2
@@ -168,7 +168,7 @@ packaging==23.2
     #   pyproject-api
     #   pytest
     #   tox
-path==16.9.0
+path==16.10.0
     # via edx-i18n-tools
 pbr==6.0.0
     # via
@@ -247,7 +247,7 @@ pytest-cov==4.1.0
     # via -r requirements/quality.txt
 pytest-django==4.8.0
     # via -r requirements/quality.txt
-python-slugify==8.0.3
+python-slugify==8.0.4
     # via
     #   -r requirements/quality.txt
     #   code-annotations

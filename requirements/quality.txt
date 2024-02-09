@@ -8,7 +8,7 @@ asgiref==3.7.2
     # via
     #   -r requirements/test.txt
     #   django
-astroid==3.0.2
+astroid==3.0.3
     # via
     #   pylint
     #   pylint-celery
@@ -54,7 +54,7 @@ deprecated==1.2.14
     #   atlassian-python-api
 dill==0.3.8
     # via pylint
-django==3.2.23
+django==3.2.24
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/test.txt
@@ -97,7 +97,7 @@ jmespath==1.0.1
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
-markupsafe==2.1.4
+markupsafe==2.1.5
     # via
     #   -r requirements/test.txt
     #   jinja2
@@ -165,7 +165,7 @@ pytest-cov==4.1.0
     # via -r requirements/test.txt
 pytest-django==4.8.0
     # via -r requirements/test.txt
-python-slugify==8.0.3
+python-slugify==8.0.4
     # via
     #   -r requirements/test.txt
     #   code-annotations
