@@ -12,7 +12,7 @@ asgiref==3.7.2
     # via
     #   -r requirements/test.txt
     #   django
-atlassian-python-api==3.41.9
+atlassian-python-api==3.41.10
     # via -r requirements/test.txt
 babel==2.14.0
     # via
@@ -280,7 +280,7 @@ tomli==2.0.1
     #   doc8
     #   pyproject-hooks
     #   pytest
-twine==4.0.2
+twine==5.0.0
     # via -r requirements/doc.in
 typing-extensions==4.9.0
     # via

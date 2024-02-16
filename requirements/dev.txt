@@ -13,7 +13,7 @@ astroid==3.0.3
     #   -r requirements/quality.txt
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.41.9
+atlassian-python-api==3.41.10
     # via -r requirements/quality.txt
 beautifulsoup4==4.12.3
     # via
