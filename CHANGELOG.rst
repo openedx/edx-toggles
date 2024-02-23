@@ -14,6 +14,11 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[5.2.0] - 2024-03-31
+--------------------
+
+* Added python3.11 and 3.12 support. Dropped django32 support.
+
 [5.1.1] - 2024-01-31
 --------------------
 

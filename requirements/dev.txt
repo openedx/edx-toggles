@@ -15,8 +15,9 @@ astroid==3.1.0
     #   pylint-celery
 atlassian-python-api==3.41.11
     # via -r requirements/quality.txt
-backports-zoneinfo==0.2.1
+backports-zoneinfo==0.2.1 ; python_version < "3.9"
     # via
+    #   -c requirements/constraints.txt
     #   -r requirements/quality.txt
     #   django
 beautifulsoup4==4.12.3
