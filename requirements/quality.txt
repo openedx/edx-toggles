@@ -8,12 +8,16 @@ asgiref==3.7.2
     # via
     #   -r requirements/test.txt
     #   django
-astroid==3.0.3
+astroid==3.1.0
     # via
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.41.10
+atlassian-python-api==3.41.11
     # via -r requirements/test.txt
+backports-zoneinfo==0.2.1
+    # via
+    #   -r requirements/test.txt
+    #   django
 beautifulsoup4==4.12.3
     # via
     #   -r requirements/test.txt
@@ -43,7 +47,7 @@ code-annotations==1.6.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage[toml]==7.4.2
+coverage[toml]==7.4.3
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -53,7 +57,7 @@ deprecated==1.2.14
     #   atlassian-python-api
 dill==0.3.8
     # via pylint
-django==3.2.24
+django==4.2.10
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/test.txt
@@ -137,7 +141,7 @@ pycparser==2.21
     #   cffi
 pydocstyle==6.3.0
     # via -r requirements/quality.in
-pylint==3.0.3
+pylint==3.1.0
     # via
     #   edx-lint
     #   pylint-celery
@@ -155,7 +159,7 @@ pynacl==1.5.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-pytest==8.0.1
+pytest==8.0.2
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -168,10 +172,6 @@ python-slugify==8.0.4
     # via
     #   -r requirements/test.txt
     #   code-annotations
-pytz==2024.1
-    # via
-    #   -r requirements/test.txt
-    #   django
 pyyaml==6.0.1
     # via
     #   -r requirements/test.txt
@@ -215,9 +215,9 @@ tomli==2.0.1
     #   coverage
     #   pylint
     #   pytest
-tomlkit==0.12.3
+tomlkit==0.12.4
     # via pylint
-typing-extensions==4.9.0
+typing-extensions==4.10.0
     # via
     #   -r requirements/test.txt
     #   asgiref
