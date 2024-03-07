@@ -8,8 +8,12 @@ asgiref==3.7.2
     # via
     #   -r requirements/base.txt
     #   django
-atlassian-python-api==3.41.10
+atlassian-python-api==3.41.11
     # via -r requirements/scripts.in
+backports-zoneinfo==0.2.1
+    # via
+    #   -r requirements/base.txt
+    #   django
 beautifulsoup4==4.12.3
     # via atlassian-python-api
 certifi==2024.2.2
@@ -31,7 +35,7 @@ code-annotations==1.6.0
     #   -r requirements/scripts.in
 deprecated==1.2.14
     # via atlassian-python-api
-django==3.2.24
+django==4.2.10
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.txt
@@ -88,10 +92,6 @@ python-slugify==8.0.4
     # via
     #   -r requirements/base.txt
     #   code-annotations
-pytz==2024.1
-    # via
-    #   -r requirements/base.txt
-    #   django
 pyyaml==6.0.1
     # via
     #   -r requirements/base.txt
@@ -119,7 +119,7 @@ text-unidecode==1.3
     # via
     #   -r requirements/base.txt
     #   python-slugify
-typing-extensions==4.9.0
+typing-extensions==4.10.0
     # via
     #   -r requirements/base.txt
     #   asgiref

@@ -9,8 +9,13 @@ asgiref==3.7.2
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   django
-atlassian-python-api==3.41.10
+atlassian-python-api==3.41.11
     # via -r requirements/scripts.txt
+backports-zoneinfo==0.2.1
+    # via
+    #   -r requirements/base.txt
+    #   -r requirements/scripts.txt
+    #   django
 beautifulsoup4==4.12.3
     # via
     #   -r requirements/scripts.txt
@@ -39,7 +44,7 @@ code-annotations==1.6.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   -r requirements/test.in
-coverage[toml]==7.4.2
+coverage[toml]==7.4.3
     # via pytest-cov
 deprecated==1.2.14
     # via
@@ -122,7 +127,7 @@ pynacl==1.5.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-pytest==8.0.1
+pytest==8.0.2
     # via
     #   pytest-cov
     #   pytest-django
@@ -135,11 +140,6 @@ python-slugify==8.0.4
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   code-annotations
-pytz==2024.1
-    # via
-    #   -r requirements/base.txt
-    #   -r requirements/scripts.txt
-    #   django
 pyyaml==6.0.1
     # via
     #   -r requirements/base.txt
@@ -182,7 +182,7 @@ tomli==2.0.1
     # via
     #   coverage
     #   pytest
-typing-extensions==4.9.0
+typing-extensions==4.10.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
