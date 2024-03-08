@@ -57,7 +57,7 @@ deprecated==1.2.14
     #   atlassian-python-api
 dill==0.3.8
     # via pylint
-django==4.2.10
+django==4.2.11
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/test.txt
@@ -72,7 +72,7 @@ django-waffle==4.1.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-edx-django-utils==5.10.1
+edx-django-utils==5.11.0
     # via -r requirements/test.txt
 edx-lint==5.3.6
     # via -r requirements/quality.in

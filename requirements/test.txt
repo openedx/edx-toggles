@@ -67,7 +67,7 @@ django-waffle==4.1.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-edx-django-utils==5.10.1
+edx-django-utils==5.11.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
