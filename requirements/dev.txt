@@ -145,7 +145,7 @@ jmespath==1.0.1
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
-lxml==5.2.0
+lxml==5.2.1
     # via edx-i18n-tools
 markupsafe==2.1.5
     # via
@@ -173,7 +173,7 @@ packaging==24.0
     #   pyproject-api
     #   pytest
     #   tox
-path==16.10.0
+path==16.12.1
     # via edx-i18n-tools
 pbr==6.0.0
     # via
