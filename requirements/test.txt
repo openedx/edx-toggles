@@ -40,7 +40,7 @@ click==8.1.7
     #   -r requirements/scripts.txt
     #   code-annotations
     #   edx-django-utils
-code-annotations==1.7.0
+code-annotations==1.8.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -72,9 +72,9 @@ edx-django-utils==5.12.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
-exceptiongroup==1.2.0
+exceptiongroup==1.2.1
     # via pytest
-idna==3.6
+idna==3.7
     # via
     #   -r requirements/scripts.txt
     #   requests
@@ -94,7 +94,7 @@ markupsafe==2.1.5
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   jinja2
-newrelic==9.8.0
+newrelic==9.9.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -163,7 +163,7 @@ soupsieve==2.5
     # via
     #   -r requirements/scripts.txt
     #   beautifulsoup4
-sqlparse==0.4.4
+sqlparse==0.5.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -183,7 +183,7 @@ tomli==2.0.1
     # via
     #   coverage
     #   pytest
-typing-extensions==4.10.0
+typing-extensions==4.11.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
