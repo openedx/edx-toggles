@@ -44,11 +44,11 @@ click==8.1.7
     #   edx-lint
 click-log==0.4.0
     # via edx-lint
-code-annotations==1.7.0
+code-annotations==1.8.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage[toml]==7.4.4
+coverage[toml]==7.5.0
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -73,15 +73,15 @@ django-waffle==4.1.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-edx-django-utils==5.12.0
+edx-django-utils==5.13.0
     # via -r requirements/test.txt
 edx-lint==5.3.6
     # via -r requirements/quality.in
-exceptiongroup==1.2.0
+exceptiongroup==1.2.1
     # via
     #   -r requirements/test.txt
     #   pytest
-idna==3.6
+idna==3.7
     # via
     #   -r requirements/test.txt
     #   requests
@@ -107,7 +107,7 @@ markupsafe==2.1.5
     #   jinja2
 mccabe==0.7.0
     # via pylint
-newrelic==9.8.0
+newrelic==9.9.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -124,9 +124,9 @@ pbr==6.0.0
     # via
     #   -r requirements/test.txt
     #   stevedore
-platformdirs==4.2.0
+platformdirs==4.2.1
     # via pylint
-pluggy==1.4.0
+pluggy==1.5.0
     # via
     #   -r requirements/test.txt
     #   pytest
@@ -160,7 +160,7 @@ pynacl==1.5.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-pytest==8.1.1
+pytest==8.2.0
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -197,7 +197,7 @@ soupsieve==2.5
     # via
     #   -r requirements/test.txt
     #   beautifulsoup4
-sqlparse==0.4.4
+sqlparse==0.5.0
     # via
     #   -r requirements/test.txt
     #   django
@@ -218,7 +218,7 @@ tomli==2.0.1
     #   pytest
 tomlkit==0.12.4
     # via pylint
-typing-extensions==4.10.0
+typing-extensions==4.11.0
     # via
     #   -r requirements/test.txt
     #   asgiref
