@@ -58,6 +58,8 @@ Flags and switches are created with a name. The namespace prefix is used to cate
 
 .. code:: python
 
+    from edx_toggles.toggles import SettingToggle, WaffleFlag, WaffleSwitch
+
     FOO_FLAG = WaffleFlag('namespace.some_feature', module_name=__name__)
     BAR_SWITCH = WaffleSwitch('namespace.some_feature', module_name=__name__)
     BAZ_TOGGLE = SettingToggle("SOME_SETTING_TOGGLE", default=False, module_name=__name__)

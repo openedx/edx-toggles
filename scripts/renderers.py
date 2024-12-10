@@ -7,7 +7,7 @@ import os
 import re
 import csv
 import logging
-from collections import OrderedDict, defaultdict, Hashable
+from collections import OrderedDict, defaultdict
 
 import click
 import jinja2
