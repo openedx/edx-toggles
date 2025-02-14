@@ -12,6 +12,7 @@ class NaiveWaffle(BaseWaffle):
     """
     Simple waffle class that implements a basic instance-tracking mechanism
     """
+
     _class_instances = set()
 
     def is_enabled(self):
@@ -28,6 +29,12 @@ class BaseWaffleTest(TestCase):
         self.assertEqual("namespaced.name", waffle.name)
         self.assertEqual("module1", waffle.module_name)
         self.assertEqual(1, len(NaiveWaffle.get_instances()))
+
+    def test_no_blank_space_in_name(self):
+        with self.assertRaises(ValueError):
+            NaiveWaffle("namespaced.name ", "module")
+        with self.assertRaises(ValueError):
+            NaiveWaffle(" namespaced.name", "module")
 
 
 class WaffleFlagTests(TestCase):
