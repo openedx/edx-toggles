@@ -14,6 +14,8 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+* Drop Python 3.8 support.
+
 [5.2.0] - 2024-03-31
 --------------------
 

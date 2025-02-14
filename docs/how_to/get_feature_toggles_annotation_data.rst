@@ -11,6 +11,6 @@ To run the code-annotations tool to collect annotations into a report, run the c
 
 .. code:: bash
 
-    code_annotations static_find_annotations --config_file $VIRTUAL_ENV/lib/python3.8/site-packages/code_annotations/contrib/config/feature_toggle_annotations.yaml
+    code_annotations static_find_annotations --config_file $VIRTUAL_ENV/lib/python3.11/site-packages/code_annotations/contrib/config/feature_toggle_annotations.yaml
 
 .. _code_annotations: https://www.github.com/openedx/code-annotations
