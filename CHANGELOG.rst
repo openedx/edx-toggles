@@ -14,6 +14,8 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+* BREAKING CHANGE: Trigger exception on waffle object creation when name includes a blank space as a prefix or suffix.
+
 [5.3.0] - 2025-02-14
 --------------------
 

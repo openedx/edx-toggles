@@ -30,7 +30,9 @@ class BaseWaffle(BaseToggle):
         """
         if "." not in name:
             raise ValueError(
-                "Cannot create non-namespaced '{}' {} instance".format(
-                    name, cls.__name__
-                )
+                f"Cannot create non-namespaced '{name}' {cls.__name__} instance"
+            )
+        if name.startswith(" ") or name.endswith(" "):
+            raise ValueError(
+                f"{cls.__name__} instance name may not include a blank space prefix or suffix"
             )
