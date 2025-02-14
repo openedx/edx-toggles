@@ -2,7 +2,11 @@
 Base waffle toggle classes.
 """
 
+import logging
+
 from ..base import BaseToggle
+
+logger = logging.getLogger(__name__)
 
 
 class BaseWaffle(BaseToggle):
@@ -30,7 +34,9 @@ class BaseWaffle(BaseToggle):
         """
         if "." not in name:
             raise ValueError(
-                "Cannot create non-namespaced '{}' {} instance".format(
-                    name, cls.__name__
-                )
+                f"Cannot create non-namespaced '{name}' {cls.__name__} instance"
+            )
+        if name.startswith(" ") or name.endswith(" "):
+            logger.error(
+                f"{cls.__name__} instance name should not include a blank space prefix or suffix: '{name}'"
             )
