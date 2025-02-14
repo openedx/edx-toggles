@@ -2,16 +2,20 @@
 Unit tests for waffle classes.
 """
 
+from unittest.mock import patch
+
 from django.test import TestCase
 
 from edx_toggles.toggles import NonNamespacedWaffleFlag, NonNamespacedWaffleSwitch, WaffleFlag, WaffleSwitch
 from edx_toggles.toggles.internal.waffle.base import BaseWaffle
+from edx_toggles.toggles.internal.waffle.base import logger as base_logger
 
 
 class NaiveWaffle(BaseWaffle):
     """
     Simple waffle class that implements a basic instance-tracking mechanism
     """
+
     _class_instances = set()
 
     def is_enabled(self):
@@ -28,6 +32,18 @@ class BaseWaffleTest(TestCase):
         self.assertEqual("namespaced.name", waffle.name)
         self.assertEqual("module1", waffle.module_name)
         self.assertEqual(1, len(NaiveWaffle.get_instances()))
+
+    def test_no_blank_space_in_name(self):
+        with patch.object(base_logger, "error") as mock_logger_error:
+            NaiveWaffle("namespaced.name ", "module")
+            mock_logger_error.assert_called_with(
+                "NaiveWaffle instance name should not include a blank space prefix or suffix: 'namespaced.name '"
+            )
+        with patch.object(base_logger, "error") as mock_logger_error:
+            NaiveWaffle(" namespaced.name", "module")
+            mock_logger_error.assert_called_with(
+                "NaiveWaffle instance name should not include a blank space prefix or suffix: ' namespaced.name'"
+            )
 
 
 class WaffleFlagTests(TestCase):
