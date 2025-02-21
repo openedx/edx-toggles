@@ -160,7 +160,7 @@ sqlparse==0.5.3
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   django
-stevedore==5.4.0
+stevedore==5.4.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
