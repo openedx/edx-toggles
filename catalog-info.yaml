@@ -1,0 +1,25 @@
+# This file records information about this repo. Its use is described in OEP-55:
+# https://open-edx-proposals.readthedocs.io/en/latest/processes/oep-0055-proc-project-maintainers.html
+# Spec: https://backstage.io/docs/features/software-catalog/descriptor-format/
+
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: 'edx-toggles'
+  description: "Library and utilities for Open edX feature toggles"
+  links:
+    - url: "https://edx.readthedocs.io/projects/edx-toggles/en/latest/"
+      title: "Documentation"
+      icon: "Web"
+  annotations:
+    openedx.org/arch-interest-groups: "regisb"
+spec:
+  # https://github.com/orgs/openedx/teams/committers-edx-toggles
+  owner: group:committers-edx-toggles
+
+  type: 'library'
+  lifecycle: 'production'
+  dependsOn:
+  # See requirements/base.in
+  - 'edx-django-utils'
+  - 'code-annotations'
