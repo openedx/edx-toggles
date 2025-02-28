@@ -36,7 +36,7 @@ Steps required (2-4 hours):
 
     You can follow similar steps to use the settings Sphinx extension to publish non-boolean non-toggle setting annotations as well.
 
-.. _readthedocs documention for edx-platform feature toggles: https://edx.readthedocs.io/projects/edx-platform-technical/en/latest/featuretoggles.html
+.. _readthedocs documention for edx-platform feature toggles: https://docs.openedx.org/projects/edx-platform/en/latest/references/featuretoggles.html
 .. _annotated toggles in the edx-platform codebase: https://github.com/openedx/edx-platform/search?q=toggle_name
 .. _search for featuretoggles in edx-platform: https://github.com/openedx/edx-platform/search?q=featuretoggles
 
@@ -66,10 +66,10 @@ Steps required (2-4 hours):
 
     - (Optional) If your IDA has custom toggle types, you can subclass and override the reporting methods as was done in the edx-platform `example toggles state endpoint view`_.
 
-.. _ToggleStateReport: https://edx.readthedocs.io/projects/edx-toggles/en/latest/edx_toggles.toggles.state.internal.html#module-edx_toggles.toggles.state.internal.report
+.. _ToggleStateReport: https://docs.openedx.org/projects/edx-toggles/en/latest/edx_toggles.toggles.state.internal.html#module-edx_toggles.toggles.state.internal.report
 .. _example toggles state endpoint view: https://github.com/openedx/edx-platform/blob/650b0c1/openedx/core/djangoapps/waffle_utils/views.py#L50-L66
 .. _example urls.py in edx-platform: https://github.com/openedx/edx-platform/blob/650b0c13603468d33e3e629ef1e36acc8fefd683/openedx/core/djangoapps/waffle_utils/urls.py
-.. _supported toggle classes from edx-toggles: https://edx.readthedocs.io/projects/edx-toggles/en/latest/how_to/implement_the_right_toggle_type.html#implementing-the-right-toggle-class
+.. _supported toggle classes from edx-toggles: https://docs.openedx.org/projects/edx-toggles/en/latest/how_to/implement_the_right_toggle_type.html#implementing-the-right-toggle-class
 
 Toggles State Reports Spreadsheet
 =================================

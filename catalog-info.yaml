@@ -8,7 +8,7 @@ metadata:
   name: 'edx-toggles'
   description: "Library and utilities for Open edX feature toggles"
   links:
-    - url: "https://edx.readthedocs.io/projects/edx-toggles/en/latest/"
+    - url: "https://docs.openedx.org/projects/edx-toggles/en/latest/"
       title: "Documentation"
       icon: "Web"
   annotations:

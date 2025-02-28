@@ -8,7 +8,7 @@ Library and utilities for implementing and reporting on feature toggles.
 
 Documentation is on `Read the Docs`_.  Code repository is on `GitHub`_.
 
-.. _Read the Docs: https://edx.readthedocs.io/projects/edx-toggles/en/latest/readme.html
+.. _Read the Docs: https://docs.openedx.org/projects/edx-toggles/en/latest/readme.html
 .. _GitHub: https://github.com/openedx/edx-toggles
 
 See the `scripts README`_ for more information on the scripts for reporting on the status of
