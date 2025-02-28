@@ -46,7 +46,7 @@ django-waffle==4.2.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
-edx-django-utils==7.1.0
+edx-django-utils==7.2.0
     # via -r requirements/base.txt
 idna==3.10
     # via requests
