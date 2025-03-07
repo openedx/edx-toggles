@@ -31,7 +31,7 @@ code-annotations==2.2.0
     #   -r requirements/scripts.in
 deprecated==1.2.18
     # via atlassian-python-api
-django==4.2.19
+django==4.2.20
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.txt
@@ -50,7 +50,7 @@ edx-django-utils==7.2.0
     # via -r requirements/base.txt
 idna==3.10
     # via requests
-jinja2==3.1.5
+jinja2==3.1.6
     # via
     #   -r requirements/base.txt
     #   code-annotations
@@ -60,7 +60,7 @@ markupsafe==3.0.2
     # via
     #   -r requirements/base.txt
     #   jinja2
-newrelic==10.6.0
+newrelic==10.7.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
