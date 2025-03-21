@@ -8,7 +8,7 @@ asgiref==3.8.1
     # via
     #   -r requirements/base.txt
     #   django
-atlassian-python-api==3.41.19
+atlassian-python-api==3.41.21
     # via -r requirements/scripts.in
 beautifulsoup4==4.13.3
     # via atlassian-python-api
