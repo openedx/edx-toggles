@@ -13,7 +13,7 @@ astroid==3.3.9
     #   -r requirements/quality.txt
     #   pylint
     #   pylint-celery
-atlassian-python-api==3.41.21
+atlassian-python-api==4.0.0
     # via -r requirements/quality.txt
 beautifulsoup4==4.13.3
     # via
@@ -65,7 +65,7 @@ colorama==0.4.6
     # via
     #   -r requirements/ci.txt
     #   tox
-coverage[toml]==7.7.0
+coverage[toml]==7.7.1
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -101,7 +101,7 @@ django-waffle==4.2.0
     #   edx-django-utils
 edx-django-utils==7.2.0
     # via -r requirements/quality.txt
-edx-i18n-tools==1.6.3
+edx-i18n-tools==1.7.0
     # via -r requirements/dev.in
 edx-lint==5.6.0
     # via -r requirements/quality.txt
@@ -145,7 +145,7 @@ mccabe==0.7.0
     # via
     #   -r requirements/quality.txt
     #   pylint
-newrelic==10.7.0
+newrelic==10.8.0
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
@@ -291,9 +291,9 @@ tomlkit==0.13.2
     # via
     #   -r requirements/quality.txt
     #   pylint
-tox==4.24.2
+tox==4.25.0
     # via -r requirements/ci.txt
-typing-extensions==4.12.2
+typing-extensions==4.13.0
     # via
     #   -r requirements/quality.txt
     #   beautifulsoup4
