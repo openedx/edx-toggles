@@ -14,6 +14,10 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[5.4.0] - 2025-04-16
+--------------------
+
+* Added Django 5.2 support.
 * Log error on waffle object creation when name includes a blank space as a prefix or suffix.
 
 [5.3.0] - 2025-02-14
