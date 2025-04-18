@@ -12,7 +12,7 @@ click==8.1.8
     # via
     #   code-annotations
     #   edx-django-utils
-code-annotations==2.2.0
+code-annotations==2.3.0
     # via -r requirements/base.in
 django==4.2.20
     # via
@@ -29,13 +29,13 @@ django-waffle==4.2.0
     # via
     #   -r requirements/base.in
     #   edx-django-utils
-edx-django-utils==7.2.0
+edx-django-utils==7.4.0
     # via -r requirements/base.in
 jinja2==3.1.6
     # via code-annotations
 markupsafe==3.0.2
     # via jinja2
-newrelic==10.8.1
+newrelic==10.9.0
     # via edx-django-utils
 pbr==6.1.1
     # via stevedore
