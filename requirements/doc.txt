@@ -126,11 +126,11 @@ markupsafe==3.0.2
     #   jinja2
 mdurl==0.1.2
     # via markdown-it-py
-more-itertools==10.6.0
+more-itertools==10.7.0
     # via
     #   jaraco-classes
     #   jaraco-functools
-newrelic==10.9.0
+newrelic==10.10.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -141,7 +141,7 @@ oauthlib==3.2.2
     #   -r requirements/test.txt
     #   atlassian-python-api
     #   requests-oauthlib
-packaging==24.2
+packaging==25.0
     # via
     #   -r requirements/test.txt
     #   build
@@ -231,7 +231,7 @@ six==1.17.0
     #   atlassian-python-api
 snowballstemmer==2.2.0
     # via sphinx
-soupsieve==2.6
+soupsieve==2.7
     # via
     #   -r requirements/test.txt
     #   beautifulsoup4

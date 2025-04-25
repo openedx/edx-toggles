@@ -60,7 +60,7 @@ markupsafe==3.0.2
     # via
     #   -r requirements/base.txt
     #   jinja2
-newrelic==10.9.0
+newrelic==10.10.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
@@ -100,7 +100,7 @@ requests-oauthlib==2.0.0
     # via atlassian-python-api
 six==1.17.0
     # via atlassian-python-api
-soupsieve==2.6
+soupsieve==2.7
     # via beautifulsoup4
 sqlparse==0.5.3
     # via

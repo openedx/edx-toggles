@@ -98,7 +98,7 @@ markupsafe==3.0.2
     #   jinja2
 mccabe==0.7.0
     # via pylint
-newrelic==10.9.0
+newrelic==10.10.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -107,7 +107,7 @@ oauthlib==3.2.2
     #   -r requirements/test.txt
     #   atlassian-python-api
     #   requests-oauthlib
-packaging==24.2
+packaging==25.0
     # via
     #   -r requirements/test.txt
     #   pytest
@@ -184,7 +184,7 @@ six==1.17.0
     #   edx-lint
 snowballstemmer==2.2.0
     # via pydocstyle
-soupsieve==2.6
+soupsieve==2.7
     # via
     #   -r requirements/test.txt
     #   beautifulsoup4
