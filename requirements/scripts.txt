@@ -12,13 +12,13 @@ atlassian-python-api==4.0.3
     # via -r requirements/scripts.in
 beautifulsoup4==4.13.4
     # via atlassian-python-api
-certifi==2025.1.31
+certifi==2025.4.26
     # via requests
 cffi==1.17.1
     # via
     #   -r requirements/base.txt
     #   pynacl
-charset-normalizer==3.4.1
+charset-normalizer==3.4.2
     # via requests
 click==8.1.8
     # via
@@ -31,7 +31,7 @@ code-annotations==2.3.0
     #   -r requirements/scripts.in
 deprecated==1.2.18
     # via atlassian-python-api
-django==4.2.20
+django==4.2.21
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.txt
@@ -60,7 +60,7 @@ markupsafe==3.0.2
     # via
     #   -r requirements/base.txt
     #   jinja2
-newrelic==10.9.0
+newrelic==10.11.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
@@ -100,7 +100,7 @@ requests-oauthlib==2.0.0
     # via atlassian-python-api
 six==1.17.0
     # via atlassian-python-api
-soupsieve==2.6
+soupsieve==2.7
     # via beautifulsoup4
 sqlparse==0.5.3
     # via
