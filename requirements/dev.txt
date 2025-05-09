@@ -27,7 +27,7 @@ cachetools==5.5.2
     # via
     #   -r requirements/ci.txt
     #   tox
-certifi==2025.1.31
+certifi==2025.4.26
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -40,7 +40,7 @@ chardet==5.2.0
     #   -r requirements/ci.txt
     #   diff-cover
     #   tox
-charset-normalizer==3.4.1
+charset-normalizer==3.4.2
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -83,7 +83,7 @@ distlib==0.3.9
     # via
     #   -r requirements/ci.txt
     #   virtualenv
-django==4.2.20
+django==4.2.21
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/quality.txt
@@ -101,7 +101,7 @@ django-waffle==4.2.0
     #   edx-django-utils
 edx-django-utils==7.4.0
     # via -r requirements/quality.txt
-edx-i18n-tools==1.7.0
+edx-i18n-tools==1.9.0
     # via -r requirements/dev.in
 edx-lint==5.6.0
     # via -r requirements/quality.txt
@@ -131,7 +131,7 @@ jmespath==1.0.1
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
-lxml[html-clean,html_clean]==5.3.2
+lxml[html-clean,html_clean]==5.4.0
     # via
     #   edx-i18n-tools
     #   lxml-html-clean
@@ -145,7 +145,7 @@ mccabe==0.7.0
     # via
     #   -r requirements/quality.txt
     #   pylint
-newrelic==10.9.0
+newrelic==10.11.0
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
@@ -154,7 +154,7 @@ oauthlib==3.2.2
     #   -r requirements/quality.txt
     #   atlassian-python-api
     #   requests-oauthlib
-packaging==24.2
+packaging==25.0
     # via
     #   -r requirements/ci.txt
     #   -r requirements/pip-tools.txt
@@ -171,7 +171,7 @@ pbr==6.1.1
     #   stevedore
 pip-tools==7.4.1
     # via -r requirements/pip-tools.txt
-platformdirs==4.3.7
+platformdirs==4.3.8
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -201,7 +201,7 @@ pydocstyle==6.3.0
     # via -r requirements/quality.txt
 pygments==2.19.1
     # via diff-cover
-pylint==3.3.6
+pylint==3.3.7
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -266,11 +266,11 @@ six==1.17.0
     #   -r requirements/quality.txt
     #   atlassian-python-api
     #   edx-lint
-snowballstemmer==2.2.0
+snowballstemmer==3.0.0.1
     # via
     #   -r requirements/quality.txt
     #   pydocstyle
-soupsieve==2.6
+soupsieve==2.7
     # via
     #   -r requirements/quality.txt
     #   beautifulsoup4
@@ -303,7 +303,7 @@ urllib3==2.2.3
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/quality.txt
     #   requests
-virtualenv==20.30.0
+virtualenv==20.31.2
     # via
     #   -r requirements/ci.txt
     #   tox

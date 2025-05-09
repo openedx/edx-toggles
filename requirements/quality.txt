@@ -18,7 +18,7 @@ beautifulsoup4==4.13.4
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
-certifi==2025.1.31
+certifi==2025.4.26
     # via
     #   -r requirements/test.txt
     #   requests
@@ -26,7 +26,7 @@ cffi==1.17.1
     # via
     #   -r requirements/test.txt
     #   pynacl
-charset-normalizer==3.4.1
+charset-normalizer==3.4.2
     # via
     #   -r requirements/test.txt
     #   requests
@@ -53,7 +53,7 @@ deprecated==1.2.18
     #   atlassian-python-api
 dill==0.4.0
     # via pylint
-django==4.2.20
+django==4.2.21
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/test.txt
@@ -98,7 +98,7 @@ markupsafe==3.0.2
     #   jinja2
 mccabe==0.7.0
     # via pylint
-newrelic==10.9.0
+newrelic==10.11.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -107,7 +107,7 @@ oauthlib==3.2.2
     #   -r requirements/test.txt
     #   atlassian-python-api
     #   requests-oauthlib
-packaging==24.2
+packaging==25.0
     # via
     #   -r requirements/test.txt
     #   pytest
@@ -115,7 +115,7 @@ pbr==6.1.1
     # via
     #   -r requirements/test.txt
     #   stevedore
-platformdirs==4.3.7
+platformdirs==4.3.8
     # via pylint
 pluggy==1.5.0
     # via
@@ -133,7 +133,7 @@ pycparser==2.22
     #   cffi
 pydocstyle==6.3.0
     # via -r requirements/quality.in
-pylint==3.3.6
+pylint==3.3.7
     # via
     #   edx-lint
     #   pylint-celery
@@ -182,9 +182,9 @@ six==1.17.0
     #   -r requirements/test.txt
     #   atlassian-python-api
     #   edx-lint
-snowballstemmer==2.2.0
+snowballstemmer==3.0.0.1
     # via pydocstyle
-soupsieve==2.6
+soupsieve==2.7
     # via
     #   -r requirements/test.txt
     #   beautifulsoup4
