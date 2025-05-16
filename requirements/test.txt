@@ -9,13 +9,13 @@ asgiref==3.8.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   django
-atlassian-python-api==4.0.3
+atlassian-python-api==4.0.4
     # via -r requirements/scripts.txt
 beautifulsoup4==4.13.4
     # via
     #   -r requirements/scripts.txt
     #   atlassian-python-api
-certifi==2025.1.31
+certifi==2025.4.26
     # via
     #   -r requirements/scripts.txt
     #   requests
@@ -24,11 +24,11 @@ cffi==1.17.1
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   pynacl
-charset-normalizer==3.4.1
+charset-normalizer==3.4.2
     # via
     #   -r requirements/scripts.txt
     #   requests
-click==8.1.8
+click==8.2.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -86,7 +86,7 @@ markupsafe==3.0.2
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   jinja2
-newrelic==10.9.0
+newrelic==10.12.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -96,14 +96,14 @@ oauthlib==3.2.2
     #   -r requirements/scripts.txt
     #   atlassian-python-api
     #   requests-oauthlib
-packaging==24.2
+packaging==25.0
     # via pytest
 pbr==6.1.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   stevedore
-pluggy==1.5.0
+pluggy==1.6.0
     # via pytest
 psutil==7.0.0
     # via
@@ -147,11 +147,7 @@ requests-oauthlib==2.0.0
     # via
     #   -r requirements/scripts.txt
     #   atlassian-python-api
-six==1.17.0
-    # via
-    #   -r requirements/scripts.txt
-    #   atlassian-python-api
-soupsieve==2.6
+soupsieve==2.7
     # via
     #   -r requirements/scripts.txt
     #   beautifulsoup4
