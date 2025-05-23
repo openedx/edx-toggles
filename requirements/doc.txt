@@ -40,18 +40,18 @@ charset-normalizer==3.4.2
     # via
     #   -r requirements/test.txt
     #   requests
-click==8.2.0
+click==8.2.1
     # via
     #   -r requirements/test.txt
     #   code-annotations
     #   edx-django-utils
 code-annotations==2.3.0
     # via -r requirements/test.txt
-coverage[toml]==7.8.0
+coverage[toml]==7.8.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==44.0.3
+cryptography==45.0.2
     # via secretstorage
 deprecated==1.2.18
     # via
@@ -81,7 +81,7 @@ docutils==0.21.2
     #   readme-renderer
     #   restructuredtext-lint
     #   sphinx
-edx-django-utils==7.4.0
+edx-django-utils==8.0.0
     # via -r requirements/test.txt
 id==1.5.0
     # via twine
@@ -130,10 +130,6 @@ more-itertools==10.7.0
     # via
     #   jaraco-classes
     #   jaraco-functools
-newrelic==10.12.0
-    # via
-    #   -r requirements/test.txt
-    #   edx-django-utils
 nh3==0.2.21
     # via readme-renderer
 oauthlib==3.2.2

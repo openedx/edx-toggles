@@ -28,7 +28,7 @@ charset-normalizer==3.4.2
     # via
     #   -r requirements/scripts.txt
     #   requests
-click==8.2.0
+click==8.2.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -39,7 +39,7 @@ code-annotations==2.3.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   -r requirements/test.in
-coverage[toml]==7.8.0
+coverage[toml]==7.8.1
     # via pytest-cov
 deprecated==1.2.18
     # via
@@ -62,7 +62,7 @@ django-waffle==4.2.0
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-edx-django-utils==7.4.0
+edx-django-utils==8.0.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -86,11 +86,6 @@ markupsafe==3.0.2
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   jinja2
-newrelic==10.12.0
-    # via
-    #   -r requirements/base.txt
-    #   -r requirements/scripts.txt
-    #   edx-django-utils
 oauthlib==3.2.2
     # via
     #   -r requirements/scripts.txt
