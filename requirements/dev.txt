@@ -23,7 +23,7 @@ build==1.2.2.post1
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-cachetools==5.5.2
+cachetools==6.0.0
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -65,7 +65,7 @@ colorama==0.4.6
     # via
     #   -r requirements/ci.txt
     #   tox
-coverage[toml]==7.8.1
+coverage[toml]==7.8.2
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -73,7 +73,7 @@ deprecated==1.2.18
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
-diff-cover==9.2.4
+diff-cover==9.3.1
     # via -r requirements/dev.in
 dill==0.4.0
     # via
