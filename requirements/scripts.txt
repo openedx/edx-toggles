@@ -31,7 +31,7 @@ code-annotations==2.3.0
     #   -r requirements/scripts.in
 deprecated==1.2.18
     # via atlassian-python-api
-django==4.2.22
+django==4.2.23
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.txt
@@ -42,7 +42,7 @@ django-crum==0.7.9
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
-django-waffle==4.2.0
+django-waffle==5.0.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
@@ -88,7 +88,7 @@ pyyaml==6.0.2
     # via
     #   -r requirements/base.txt
     #   code-annotations
-requests==2.32.3
+requests==2.32.4
     # via
     #   atlassian-python-api
     #   requests-oauthlib
