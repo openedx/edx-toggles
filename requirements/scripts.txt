@@ -12,7 +12,7 @@ atlassian-python-api==4.0.4
     # via -r requirements/scripts.in
 beautifulsoup4==4.13.4
     # via atlassian-python-api
-certifi==2025.4.26
+certifi==2025.6.15
     # via requests
 cffi==1.17.1
     # via
@@ -60,7 +60,7 @@ markupsafe==3.0.2
     # via
     #   -r requirements/base.txt
     #   jinja2
-oauthlib==3.2.2
+oauthlib==3.3.1
     # via
     #   atlassian-python-api
     #   requests-oauthlib
