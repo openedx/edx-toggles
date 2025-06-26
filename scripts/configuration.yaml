@@ -1,5 +1,7 @@
 ida:
   lms:
     github_url: https://github.com/openedx/edx-platform
+  cms:
+    github_url: https://github.com/openedx/edx-platform
   credentials:
     github_url: https://github.com/openedx/credentials
