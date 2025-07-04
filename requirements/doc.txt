@@ -8,7 +8,7 @@ accessible-pygments==0.0.5
     # via pydata-sphinx-theme
 alabaster==1.0.0
     # via sphinx
-asgiref==3.8.1
+asgiref==3.9.0
     # via
     #   -r requirements/test.txt
     #   django
@@ -47,11 +47,11 @@ click==8.2.1
     #   edx-django-utils
 code-annotations==2.3.0
     # via -r requirements/test.txt
-coverage[toml]==7.9.1
+coverage[toml]==7.9.2
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==45.0.4
+cryptography==45.0.5
     # via secretstorage
 deprecated==1.2.18
     # via
@@ -101,7 +101,7 @@ jaraco-classes==3.4.0
     # via keyring
 jaraco-context==6.0.1
     # via keyring
-jaraco-functools==4.1.0
+jaraco-functools==4.2.1
     # via keyring
 jeepney==0.9.0
     # via
@@ -164,7 +164,7 @@ pycparser==2.22
     #   cffi
 pydata-sphinx-theme==0.15.4
     # via sphinx-book-theme
-pygments==2.19.1
+pygments==2.19.2
     # via
     #   -r requirements/test.txt
     #   accessible-pygments
