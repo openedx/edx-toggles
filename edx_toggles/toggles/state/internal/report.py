@@ -222,7 +222,7 @@ def _add_settings(settings_dict):
             settings_dict_copy[attr] = value
 
     def _add_setting_recursively(setting_value, current_name):
-       """
+        """
         Recursively process a setting value, using current_name for nested paths.
         """
         if isinstance(setting_value, bool):
