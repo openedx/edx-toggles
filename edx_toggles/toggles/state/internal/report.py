@@ -221,30 +221,21 @@ def _add_settings(settings_dict):
             value = getattr(settings, attr, default_attribute_value)
             settings_dict_copy[attr] = value
 
-    def _add_setting_recursively(setting_name, setting_value, current_name):
-        """
-        Recursively process a setting value, using setting_dict_name for nested paths.
-
-        Args:
-            setting_name: The original top-level setting name
-            setting_value: The current value being processed
-            current_name: The current nested name being built
+    def _add_setting_recursively(setting_value, current_name):
+       """
+        Recursively process a setting value, using current_name for nested paths.
         """
         if isinstance(setting_value, bool):
-            # Found a boolean - create a toggle entry
             toggle_response = get_or_create_toggle_response(settings_dict, current_name)
             toggle_response["is_active"] = setting_value
         elif isinstance(setting_value, dict):
-            # Found a dictionary - recurse into each key-value pair
             for dict_key, dict_value in setting_value.items():
-                # Use setting_dict_name to build the proper nested name
                 nested_name = setting_dict_name(current_name, dict_key)
-                _add_setting_recursively(setting_name, dict_value, nested_name)
-        # For any other type (str, int, list, etc.), we ignore it
+                _add_setting_recursively(dict_value, nested_name)
 
     # Process each top-level setting
-    for setting_name, setting_value in settings_dict_copy.items():
-        _add_setting_recursively(setting_name, setting_value, setting_name)
+    for setting_name, value in settings_dict_copy.items():
+        _add_setting_recursively(value, setting_name)
 
 
 def _add_setting_toggles(settings_dict):
