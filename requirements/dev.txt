@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-asgiref==3.8.1
+asgiref==3.9.1
     # via
     #   -r requirements/quality.txt
     #   django
@@ -27,7 +27,7 @@ cachetools==6.1.0
     # via
     #   -r requirements/ci.txt
     #   tox
-certifi==2025.6.15
+certifi==2025.7.9
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -65,7 +65,7 @@ colorama==0.4.6
     # via
     #   -r requirements/ci.txt
     #   tox
-coverage[toml]==7.9.1
+coverage[toml]==7.9.2
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -73,7 +73,7 @@ deprecated==1.2.18
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
-diff-cover==9.3.2
+diff-cover==9.5.0
     # via -r requirements/dev.in
 dill==0.4.0
     # via
@@ -131,7 +131,7 @@ jmespath==1.0.1
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
-lxml[html-clean,html_clean]==5.4.0
+lxml[html-clean,html_clean]==6.0.0
     # via
     #   edx-i18n-tools
     #   lxml-html-clean
@@ -188,7 +188,7 @@ psutil==7.0.0
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
-pycodestyle==2.13.0
+pycodestyle==2.14.0
     # via -r requirements/quality.txt
 pycparser==2.22
     # via
@@ -196,7 +196,7 @@ pycparser==2.22
     #   cffi
 pydocstyle==6.3.0
     # via -r requirements/quality.txt
-pygments==2.19.1
+pygments==2.19.2
     # via
     #   -r requirements/quality.txt
     #   diff-cover
@@ -216,7 +216,7 @@ pylint-django==2.6.1
     # via
     #   -r requirements/quality.txt
     #   edx-lint
-pylint-plugin-utils==0.8.2
+pylint-plugin-utils==0.9.0
     # via
     #   -r requirements/quality.txt
     #   pylint-celery
@@ -292,7 +292,7 @@ tomlkit==0.13.3
     #   pylint
 tox==4.27.0
     # via -r requirements/ci.txt
-typing-extensions==4.14.0
+typing-extensions==4.14.1
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
