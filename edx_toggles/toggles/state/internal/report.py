@@ -209,6 +209,24 @@ def _get_settings_state():
     return settings_dict
 
 
+def _add_setting(settings_dict, setting_value, setting_name):
+    """
+    Recursively process a setting value and add boolean values to settings_dict.
+
+    Args:
+        settings_dict: Dictionary to store the processed settings
+        setting_value: The value of the setting to process
+        setting_name: The name/path of the setting
+    """
+    if isinstance(setting_value, bool):
+        toggle_response = get_or_create_toggle_response(settings_dict, setting_name)
+        toggle_response["is_active"] = setting_value
+    elif isinstance(setting_value, dict):
+        for dict_key, dict_value in setting_value.items():
+            nested_name = setting_dict_name(setting_name, dict_key)
+            _add_setting(settings_dict, dict_value, nested_name)
+
+
 def _add_settings(settings_dict):
     """
     Fill the `settings_dict`: will only include values that are set to true or false.
@@ -220,22 +238,11 @@ def _add_settings(settings_dict):
         if not attr.startswith('__'):
             value = getattr(settings, attr, default_attribute_value)
             settings_dict_copy[attr] = value
-
-    def _add_setting_recursively(setting_value, current_name):
-        """
-        Recursively process a setting value, using current_name for nested paths.
-        """
-        if isinstance(setting_value, bool):
-            toggle_response = get_or_create_toggle_response(settings_dict, current_name)
-            toggle_response["is_active"] = setting_value
-        elif isinstance(setting_value, dict):
-            for dict_key, dict_value in setting_value.items():
-                nested_name = setting_dict_name(current_name, dict_key)
-                _add_setting_recursively(dict_value, nested_name)
+    print("hello:settings_dict_copy", settings_dict_copy)
 
     # Process each top-level setting
     for setting_name, value in settings_dict_copy.items():
-        _add_setting_recursively(value, setting_name)
+        _add_setting(settings_dict, value, setting_name)
 
 
 def _add_setting_toggles(settings_dict):
