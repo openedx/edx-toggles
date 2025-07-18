@@ -127,7 +127,7 @@ Collection of state data is automated through a jenkins job.
 Processing annotation and state data
 ------------------------------------
 
-The annotation data and toggle state data dump should be stored in s3 buckets. The automated publish-feature-toggle-report job (in `groovy job specification`_) pulls the data from s3 buckets and calls `feature_toggle_report_generator.py`_ to process  the data and output it as a csv file.
+The annotation data and toggle state data dump should be stored in s3 buckets. The automated publish-feature-toggle-report job (in `groovy job specification`_) pulls the data from s3 buckets and calls `feature_toggle_report.py`_ to process  the data and output it as a csv file.
 
 As long as the data is structured correctly (specified in `README`_), no action should be necessary for a new IDA.
 
@@ -142,6 +142,6 @@ The csv reports are published to a private Google Sheet. See `Toggle State Repor
 .. _groovy job specification: https://github.com/edx/jenkins-job-dsl-internal/blob/master/jobs/tools-edx-jenkins.edx.org/createFeatureToggleReportGeneratorJobs.groovy
 .. _script to push data to s3 bucket: https://github.com/edx/jenkins-job-dsl-internal/blob/master/resources/push-feature-toggle-data-to-s3.sh
 .. _script to pull data from s3 bucket: https://github.com/edx/jenkins-job-dsl-internal/blob/master/resources/pull-feature-toggle-data-from-s3.sh
-.. _feature_toggle_report_generator.py: https://github.com/openedx/edx-toggles/blob/master/scripts/feature_toggle_report_generator.py
+.. _feature_toggle_report.py: https://github.com/openedx/edx-toggles/blob/master/scripts/feature_toggle_report.py
 .. _publish-feature-toggle-report: https://tools-edx-jenkins.edx.org/job/Feature-Toggle-Report-Generator/job/publish-feature-toggle-report/
 .. _README: https://github.com/openedx/edx-toggles/blob/master/scripts/README.rst

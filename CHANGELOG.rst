@@ -185,11 +185,11 @@ First release to PyPI (2020-10-02)
 * Add toggles report with CSV output using new CsvRenderer.
 * Add CourseWaffleFlag and course override data to toggle report.
 * Add output for waffle flag course overrides to data gatherer
-* Add additional options to scripts/feature_toggle_report_generator
+* Add additional options to scripts/feature_toggle_report
 
     * filter toggle types and envs, add github_url, and change name of ida in report
 
-* Modified scripts/feature_toggle_report_generator to work based on envs
+* Modified scripts/feature_toggle_report to work based on envs
 * Removed confluence integration
 * Moved HtmlRenderer to its own file
 * Add ADR for new SettingToggle. (see 0003-django-setting-toggles.rst)
