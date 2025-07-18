@@ -6,7 +6,7 @@ Unit tests that cover feature toggle functionalities.
 from django.test import TestCase
 
 from edx_toggles import toggles
-
+from edx_toggles.toggles.state.internal.report import _add_setting, get_or_create_toggle_response
 
 class SettingToggleTests(TestCase):
     """
@@ -78,3 +78,62 @@ class ToggleInstancesTests(TestCase):
         toggles.SettingToggle("NAME1", default=False, module_name="module1")
         instances = toggles.SettingToggle.get_instances()
         self.assertEqual([], instances)
+
+
+class NestedToggleExtractionTests(TestCase):
+    """
+    Tests for deeply nested toggle extraction from report.py
+    """
+
+    def test_level_1_nesting(self):
+        """
+        Test that Level 1 nested boolean values are correctly extracted.
+
+        Level 1: CONFIG['simple_toggle']
+        """
+        # Level 1 nesting: CONFIG['simple_toggle']
+        nested_config = {
+            'simple_toggle': True,
+        }
+
+        settings_dict = {}
+        _add_setting(settings_dict, nested_config, 'CONFIG')
+
+        # Test Level 1 nesting
+        level1_toggle = "CONFIG['simple_toggle']"
+        self.assertIn(level1_toggle, settings_dict)
+        self.assertEqual(settings_dict[level1_toggle]['name'], level1_toggle)
+        self.assertTrue(settings_dict[level1_toggle]['is_active'])
+
+        self.assertEqual(len(settings_dict), 1)
+
+    def test_level_4_nesting(self):
+        """
+        Test that Level 4 nested boolean values are correctly extracted.
+
+        Level 4: CONFIG['org.openedx.learning.course.enrollment']
+                ['advanced']['settings']['notifications']['enabled']
+        """
+        nested_config = {
+            'org.openedx.learning.course.enrollment': {
+                'advanced': {
+                    'settings': {
+                        'notifications': {
+                            'enabled': False
+                        }
+                    }
+                }
+            }
+        }
+
+        settings_dict = {}
+        _add_setting(settings_dict, nested_config, 'CONFIG')
+
+        # Test Level 4 nesting
+        level4_toggle = ("CONFIG['org.openedx.learning.course.enrollment']['advanced']"
+                        "['settings']['notifications']['enabled']")
+        self.assertIn(level4_toggle, settings_dict)
+        self.assertEqual(settings_dict[level4_toggle]['name'], level4_toggle)
+        self.assertFalse(settings_dict[level4_toggle]['is_active'])
+
+        self.assertEqual(len(settings_dict), 1)

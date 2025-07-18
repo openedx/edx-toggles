@@ -238,7 +238,6 @@ def _add_settings(settings_dict):
         if not attr.startswith('__'):
             value = getattr(settings, attr, default_attribute_value)
             settings_dict_copy[attr] = value
-    print("hello:settings_dict_copy", settings_dict_copy)
 
     # Process each top-level setting
     for setting_name, value in settings_dict_copy.items():
