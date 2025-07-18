@@ -8,6 +8,7 @@ from django.test import TestCase
 from edx_toggles import toggles
 from edx_toggles.toggles.state.internal.report import _add_setting
 
+
 class SettingToggleTests(TestCase):
     """
     SettingToggle tests
@@ -131,7 +132,7 @@ class NestedToggleExtractionTests(TestCase):
 
         # Test Level 4 nesting
         level4_toggle = ("CONFIG['org.openedx.learning.course.enrollment']['advanced']"
-                        "['settings']['notifications']['enabled']")
+                         "['settings']['notifications']['enabled']")
         self.assertIn(level4_toggle, settings_dict)
         self.assertEqual(settings_dict[level4_toggle]['name'], level4_toggle)
         self.assertFalse(settings_dict[level4_toggle]['is_active'])
