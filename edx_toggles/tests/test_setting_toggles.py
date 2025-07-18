@@ -6,7 +6,7 @@ Unit tests that cover feature toggle functionalities.
 from django.test import TestCase
 
 from edx_toggles import toggles
-from edx_toggles.toggles.state.internal.report import _add_setting, get_or_create_toggle_response
+from edx_toggles.toggles.state.internal.report import _add_setting
 
 class SettingToggleTests(TestCase):
     """
