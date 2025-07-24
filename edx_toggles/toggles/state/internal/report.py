@@ -229,8 +229,7 @@ def _add_setting(settings_dict, setting_value, setting_name):
 
 def _add_settings(settings_dict):
     """
-    Fill the `settings_dict`: will only include values that are set to true or false.
-    Now supports arbitrarily deep nested dictionaries with recursion.
+    Fill the `settings_dict` with deeply nested dictionaries with true or false values.
     """
     settings_dict_copy = {}
     default_attribute_value = object()  # default is not a bool, so won't be included
