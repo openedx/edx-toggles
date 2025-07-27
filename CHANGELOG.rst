@@ -14,6 +14,11 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[5.4.1] - 2025-07-27
+--------------------
+
+* Fix toggle report to extract boolean values from deeply nested configurations.
+
 [5.4.0] - 2025-04-16
 --------------------
 
