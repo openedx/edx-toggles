@@ -153,3 +153,46 @@ class ToggleStateTests(TestCase):
             flag for flag in report["waffle_flags"] if flag["name"] == waffle_flag.name
         ][0]
         self.assertNotIn("code_owner", result)
+
+    def test_level_1_nested_dictionary(self):
+        """
+        Test that Level 1 nested boolean values are correctly extracted in the report.
+        """
+        with override_settings(
+            CONFIG={
+                'simple_toggle': True,
+            }
+        ):
+            report = ToggleStateReport().as_dict()
+
+        setting_dict = {toggle["name"]: toggle for toggle in report["django_settings"]}
+
+        expected_toggle_name = "CONFIG['simple_toggle']"
+        self.assertIn(expected_toggle_name, setting_dict)
+        self.assertTrue(setting_dict[expected_toggle_name]["is_active"])
+
+    def test_level_4_nested_dictionary(self):
+        """
+        Test that Level 4 nested boolean values are correctly extracted in the report.
+        """
+        with override_settings(
+            CONFIG={
+                'org.openedx.learning.course.enrollment': {
+                    'advanced': {
+                        'settings': {
+                            'notifications': {
+                                'enabled': True
+                            }
+                        }
+                    }
+                }
+            }
+        ):
+            report = ToggleStateReport().as_dict()
+
+        setting_dict = {toggle["name"]: toggle for toggle in report["django_settings"]}
+
+        expected_toggle_name = ("CONFIG['org.openedx.learning.course.enrollment']"
+                                "['advanced']['settings']['notifications']['enabled']")
+        self.assertIn(expected_toggle_name, setting_dict)
+        self.assertTrue(setting_dict[expected_toggle_name]["is_active"])
