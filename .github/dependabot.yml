@@ -6,4 +6,4 @@ updates:
     schedule:
         interval: "weekly"
     reviewers:
-      - "openedx/group:committers-edx-toggles"
+      - "openedx/committers-edx-toggles"
