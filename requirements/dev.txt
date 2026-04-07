@@ -19,11 +19,11 @@ beautifulsoup4==4.14.3
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
-build==1.4.0
+build==1.4.2
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-cachetools==7.0.3
+cachetools==7.0.5
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -35,13 +35,13 @@ cffi==2.0.0
     # via
     #   -r requirements/quality.txt
     #   pynacl
-chardet==7.0.1
+chardet==7.4.0.post2
     # via diff-cover
-charset-normalizer==3.4.5
+charset-normalizer==3.4.7
     # via
     #   -r requirements/quality.txt
     #   requests
-click==8.3.1
+click==8.3.2
     # via
     #   -r requirements/pip-tools.txt
     #   -r requirements/quality.txt
@@ -54,7 +54,7 @@ click-log==0.4.0
     # via
     #   -r requirements/quality.txt
     #   edx-lint
-code-annotations==2.3.2
+code-annotations==3.0.0
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -62,7 +62,7 @@ colorama==0.4.6
     # via
     #   -r requirements/ci.txt
     #   tox
-coverage[toml]==7.13.4
+coverage[toml]==7.13.5
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -80,7 +80,7 @@ distlib==0.4.0
     # via
     #   -r requirements/ci.txt
     #   virtualenv
-django==5.2.12
+django==5.2.13
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/quality.txt
@@ -98,11 +98,11 @@ django-waffle==5.0.0
     #   edx-django-utils
 edx-django-utils==8.0.1
     # via -r requirements/quality.txt
-edx-i18n-tools==1.9.0
+edx-i18n-tools==2.0.0
     # via -r requirements/dev.in
-edx-lint==5.6.0
+edx-lint==6.0.0
     # via -r requirements/quality.txt
-filelock==3.25.0
+filelock==3.25.2
     # via
     #   -r requirements/ci.txt
     #   python-discovery
@@ -192,7 +192,7 @@ pycparser==3.0
     #   cffi
 pydocstyle==6.3.0
     # via -r requirements/quality.txt
-pygments==2.19.2
+pygments==2.20.0
     # via
     #   -r requirements/quality.txt
     #   diff-cover
@@ -235,13 +235,14 @@ pytest==9.0.2
     #   -r requirements/quality.txt
     #   pytest-cov
     #   pytest-django
-pytest-cov==7.0.0
+pytest-cov==7.1.0
     # via -r requirements/quality.txt
 pytest-django==4.12.0
     # via -r requirements/quality.txt
-python-discovery==1.1.0
+python-discovery==1.2.1
     # via
     #   -r requirements/ci.txt
+    #   tox
     #   virtualenv
 python-slugify==8.0.4
     # via
@@ -252,7 +253,7 @@ pyyaml==6.0.3
     #   -r requirements/quality.txt
     #   code-annotations
     #   edx-i18n-tools
-requests==2.32.5
+requests==2.33.1
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
@@ -294,7 +295,7 @@ tomlkit==0.14.0
     # via
     #   -r requirements/quality.txt
     #   pylint
-tox==4.49.0
+tox==4.52.0
     # via -r requirements/ci.txt
 typing-extensions==4.15.0
     # via
@@ -305,7 +306,7 @@ urllib3==2.6.3
     # via
     #   -r requirements/quality.txt
     #   requests
-virtualenv==21.1.0
+virtualenv==21.2.0
     # via
     #   -r requirements/ci.txt
     #   tox
