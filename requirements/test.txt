@@ -114,7 +114,7 @@ pynacl==1.6.2
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-pytest==9.0.2
+pytest==9.0.3
     # via
     #   pytest-cov
     #   pytest-django
