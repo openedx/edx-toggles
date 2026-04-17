@@ -91,7 +91,7 @@ oauthlib==3.3.1
     #   -r requirements/scripts.txt
     #   atlassian-python-api
     #   requests-oauthlib
-packaging==26.0
+packaging==26.1
     # via pytest
 pluggy==1.6.0
     # via
@@ -114,7 +114,7 @@ pynacl==1.6.2
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-pytest==9.0.2
+pytest==9.0.3
     # via
     #   pytest-cov
     #   pytest-django
