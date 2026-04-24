@@ -18,7 +18,7 @@ beautifulsoup4==4.14.3
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
-certifi==2026.2.25
+certifi==2026.4.22
     # via
     #   -r requirements/test.txt
     #   requests
@@ -30,7 +30,7 @@ charset-normalizer==3.4.7
     # via
     #   -r requirements/test.txt
     #   requests
-click==8.3.2
+click==8.3.3
     # via
     #   -r requirements/test.txt
     #   click-log
@@ -72,7 +72,7 @@ edx-django-utils==8.0.1
     # via -r requirements/test.txt
 edx-lint==6.0.0
     # via -r requirements/quality.in
-idna==3.11
+idna==3.13
     # via
     #   -r requirements/test.txt
     #   requests
@@ -103,11 +103,11 @@ oauthlib==3.3.1
     #   -r requirements/test.txt
     #   atlassian-python-api
     #   requests-oauthlib
-packaging==26.0
+packaging==26.1
     # via
     #   -r requirements/test.txt
     #   pytest
-platformdirs==4.9.4
+platformdirs==4.9.6
     # via pylint
 pluggy==1.6.0
     # via
@@ -148,7 +148,7 @@ pynacl==1.6.2
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-pytest==9.0.2
+pytest==9.0.3
     # via
     #   -r requirements/test.txt
     #   pytest-cov

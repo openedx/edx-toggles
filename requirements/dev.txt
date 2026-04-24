@@ -19,15 +19,15 @@ beautifulsoup4==4.14.3
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
-build==1.4.2
+build==1.4.4
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-cachetools==7.0.5
+cachetools==7.0.6
     # via
     #   -r requirements/ci.txt
     #   tox
-certifi==2026.2.25
+certifi==2026.4.22
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -35,13 +35,13 @@ cffi==2.0.0
     # via
     #   -r requirements/quality.txt
     #   pynacl
-chardet==7.4.0.post2
+chardet==7.4.3
     # via diff-cover
 charset-normalizer==3.4.7
     # via
     #   -r requirements/quality.txt
     #   requests
-click==8.3.2
+click==8.3.3
     # via
     #   -r requirements/pip-tools.txt
     #   -r requirements/quality.txt
@@ -102,13 +102,13 @@ edx-i18n-tools==2.0.0
     # via -r requirements/dev.in
 edx-lint==6.0.0
     # via -r requirements/quality.txt
-filelock==3.25.2
+filelock==3.29.0
     # via
     #   -r requirements/ci.txt
     #   python-discovery
     #   tox
     #   virtualenv
-idna==3.11
+idna==3.13
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -129,7 +129,7 @@ jmespath==1.1.0
     # via
     #   -r requirements/quality.txt
     #   atlassian-python-api
-lxml[html-clean]==6.0.2
+lxml[html-clean]==6.1.0
     # via
     #   edx-i18n-tools
     #   lxml-html-clean
@@ -148,7 +148,7 @@ oauthlib==3.3.1
     #   -r requirements/quality.txt
     #   atlassian-python-api
     #   requests-oauthlib
-packaging==26.0
+packaging==26.1
     # via
     #   -r requirements/ci.txt
     #   -r requirements/pip-tools.txt
@@ -162,7 +162,7 @@ path==16.16.0
     # via edx-i18n-tools
 pip-tools==7.5.3
     # via -r requirements/pip-tools.txt
-platformdirs==4.9.4
+platformdirs==4.9.6
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -230,7 +230,7 @@ pyproject-hooks==1.2.0
     #   -r requirements/pip-tools.txt
     #   build
     #   pip-tools
-pytest==9.0.2
+pytest==9.0.3
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -239,7 +239,7 @@ pytest-cov==7.1.0
     # via -r requirements/quality.txt
 pytest-django==4.12.0
     # via -r requirements/quality.txt
-python-discovery==1.2.1
+python-discovery==1.2.2
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -295,7 +295,7 @@ tomlkit==0.14.0
     # via
     #   -r requirements/quality.txt
     #   pylint
-tox==4.52.0
+tox==4.53.0
     # via -r requirements/ci.txt
 typing-extensions==4.15.0
     # via
@@ -306,11 +306,11 @@ urllib3==2.6.3
     # via
     #   -r requirements/quality.txt
     #   requests
-virtualenv==21.2.0
+virtualenv==21.2.4
     # via
     #   -r requirements/ci.txt
     #   tox
-wheel==0.46.3
+wheel==0.47.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools

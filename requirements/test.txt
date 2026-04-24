@@ -15,7 +15,7 @@ beautifulsoup4==4.14.3
     # via
     #   -r requirements/scripts.txt
     #   atlassian-python-api
-certifi==2026.2.25
+certifi==2026.4.22
     # via
     #   -r requirements/scripts.txt
     #   requests
@@ -28,7 +28,7 @@ charset-normalizer==3.4.7
     # via
     #   -r requirements/scripts.txt
     #   requests
-click==8.3.2
+click==8.3.3
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
@@ -66,7 +66,7 @@ edx-django-utils==8.0.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
-idna==3.11
+idna==3.13
     # via
     #   -r requirements/scripts.txt
     #   requests
@@ -91,7 +91,7 @@ oauthlib==3.3.1
     #   -r requirements/scripts.txt
     #   atlassian-python-api
     #   requests-oauthlib
-packaging==26.0
+packaging==26.1
     # via pytest
 pluggy==1.6.0
     # via
@@ -114,7 +114,7 @@ pynacl==1.6.2
     #   -r requirements/base.txt
     #   -r requirements/scripts.txt
     #   edx-django-utils
-pytest==9.0.2
+pytest==9.0.3
     # via
     #   pytest-cov
     #   pytest-django
