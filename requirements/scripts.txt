@@ -12,7 +12,7 @@ atlassian-python-api==4.0.7
     # via -r requirements/scripts.in
 beautifulsoup4==4.14.3
     # via atlassian-python-api
-certifi==2026.2.25
+certifi==2026.4.22
     # via requests
 cffi==2.0.0
     # via
@@ -20,7 +20,7 @@ cffi==2.0.0
     #   pynacl
 charset-normalizer==3.4.7
     # via requests
-click==8.3.2
+click==8.3.3
     # via
     #   -r requirements/base.txt
     #   code-annotations
@@ -48,7 +48,7 @@ django-waffle==5.0.0
     #   edx-django-utils
 edx-django-utils==8.0.1
     # via -r requirements/base.txt
-idna==3.11
+idna==3.13
     # via requests
 jinja2==3.1.6
     # via
