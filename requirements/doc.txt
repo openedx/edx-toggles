@@ -25,7 +25,7 @@ beautifulsoup4==4.14.3
     #   pydata-sphinx-theme
 build==1.4.2
     # via -r requirements/doc.in
-certifi==2026.2.25
+certifi==2026.10.19
     # via
     #   -r requirements/test.txt
     #   requests
