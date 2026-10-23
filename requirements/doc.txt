@@ -8,54 +8,54 @@ accessible-pygments==0.0.5
     # via pydata-sphinx-theme
 alabaster==1.0.0
     # via sphinx
-asgiref==3.11.1
+asgiref==3.12.1
     # via
     #   -r requirements/test.txt
     #   django
-atlassian-python-api==4.0.7
+atlassian-python-api==5.0.5
     # via -r requirements/test.txt
 babel==2.18.0
     # via
     #   pydata-sphinx-theme
     #   sphinx
-beautifulsoup4==4.14.3
+beautifulsoup4==4.15.0
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
     #   pydata-sphinx-theme
-build==1.4.2
+build==1.6.1
     # via -r requirements/doc.in
 certifi==2026.10.19
     # via
     #   -r requirements/test.txt
     #   requests
-cffi==2.0.0
+cffi==2.1.1
     # via
     #   -r requirements/test.txt
     #   cryptography
     #   pynacl
-charset-normalizer==3.4.7
+charset-normalizer==3.5.2
     # via
     #   -r requirements/test.txt
     #   requests
-click==8.3.2
+click==8.5.0
     # via
     #   -r requirements/test.txt
     #   code-annotations
     #   edx-django-utils
 code-annotations==3.0.0
     # via -r requirements/test.txt
-coverage[toml]==7.13.5
+coverage[toml]==7.17.0
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==46.0.6
+cryptography==50.0.2
     # via secretstorage
-deprecated==1.3.1
+deprecated==3.0.0
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
-django==5.2.13
+django==5.2.18
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/test.txt
@@ -79,17 +79,17 @@ docutils==0.21.2
     #   readme-renderer
     #   restructuredtext-lint
     #   sphinx
-edx-django-utils==8.0.1
+edx-django-utils==8.1.0
     # via -r requirements/test.txt
 id==1.6.1
     # via twine
-idna==3.11
+idna==3.20
     # via
     #   -r requirements/test.txt
     #   requests
-imagesize==2.0.0
+imagesize==2.0.1
     # via sphinx
-iniconfig==2.3.0
+iniconfig==2.3.1
     # via
     #   -r requirements/test.txt
     #   pytest
@@ -97,7 +97,7 @@ jaraco-classes==3.4.0
     # via keyring
 jaraco-context==6.1.2
     # via keyring
-jaraco-functools==4.4.0
+jaraco-functools==4.6.0
     # via keyring
 jeepney==0.9.0
     # via
@@ -107,6 +107,7 @@ jinja2==3.1.6
     # via
     #   -r requirements/test.txt
     #   code-annotations
+    #   pydata-sphinx-theme
     #   sphinx
 jmespath==1.1.0
     # via
@@ -114,33 +115,33 @@ jmespath==1.1.0
     #   atlassian-python-api
 keyring==25.7.0
     # via twine
-markdown-it-py==4.0.0
+markdown-it-py==4.2.0
     # via rich
-markupsafe==3.0.3
+markupsafe==3.0.4
     # via
     #   -r requirements/test.txt
     #   jinja2
 mdurl==0.1.2
     # via markdown-it-py
-more-itertools==11.0.1
+more-itertools==11.2.1
     # via
     #   jaraco-classes
     #   jaraco-functools
-nh3==0.3.4
+nh3==0.3.7
     # via readme-renderer
-oauthlib==3.3.1
+oauthlib==4.0.0
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
     #   requests-oauthlib
-packaging==26.0
+packaging==26.3
     # via
     #   -r requirements/test.txt
     #   build
     #   pytest
     #   sphinx
     #   twine
-pluggy==1.6.0
+pluggy==1.7.0
     # via
     #   -r requirements/test.txt
     #   pytest
@@ -149,13 +150,13 @@ psutil==7.2.2
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-pycparser==3.0
+pycparser==3.12
     # via
     #   -r requirements/test.txt
     #   cffi
-pydata-sphinx-theme==0.16.1
+pydata-sphinx-theme==0.20.0
     # via sphinx-book-theme
-pygments==2.20.0
+pygments==2.21.0
     # via
     #   -r requirements/test.txt
     #   accessible-pygments
@@ -169,18 +170,18 @@ pynacl==1.6.2
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-pyproject-hooks==1.2.0
+pyproject-hooks==1.3.3
     # via build
-pytest==9.0.2
+pytest==9.1.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
     #   pytest-django
 pytest-cov==7.1.0
     # via -r requirements/test.txt
-pytest-django==4.12.0
+pytest-django==4.14.0
     # via -r requirements/test.txt
-python-slugify==8.0.4
+python-slugify==9.1.3
     # via
     #   -r requirements/test.txt
     #   code-annotations
@@ -188,12 +189,13 @@ pyyaml==6.0.3
     # via
     #   -r requirements/test.txt
     #   code-annotations
-readme-renderer==44.0
+readme-renderer==46.0
     # via twine
-requests==2.33.1
+requests==2.34.2
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
+    #   pydata-sphinx-theme
     #   requests-oauthlib
     #   requests-toolbelt
     #   sphinx
@@ -208,24 +210,24 @@ restructuredtext-lint==2.0.2
     # via doc8
 rfc3986==2.0.0
     # via twine
-rich==14.3.3
+rich==15.0.0
     # via twine
 roman-numerals==4.1.0
     # via sphinx
 secretstorage==3.5.0
     # via keyring
-snowballstemmer==3.0.1
+snowballstemmer==3.1.1
     # via sphinx
-soupsieve==2.8.3
+soupsieve==3.0.4
     # via
     #   -r requirements/test.txt
     #   beautifulsoup4
-sphinx==9.1.0
+sphinx==9.1.1
     # via
     #   -r requirements/doc.in
     #   pydata-sphinx-theme
     #   sphinx-book-theme
-sphinx-book-theme==1.2.0
+sphinx-book-theme==1.4.0
     # via -r requirements/doc.in
 sphinxcontrib-applehelp==2.0.0
     # via sphinx
@@ -233,17 +235,17 @@ sphinxcontrib-devhelp==2.0.0
     # via sphinx
 sphinxcontrib-htmlhelp==2.1.0
     # via sphinx
-sphinxcontrib-jsmath==1.0.1
+sphinxcontrib-jsmath==2.0.0
     # via sphinx
 sphinxcontrib-qthelp==2.0.0
     # via sphinx
 sphinxcontrib-serializinghtml==2.0.0
     # via sphinx
-sqlparse==0.5.5
+sqlparse==0.6.0
     # via
     #   -r requirements/test.txt
     #   django
-stevedore==5.7.0
+stevedore==5.9.1
     # via
     #   -r requirements/test.txt
     #   code-annotations
@@ -253,21 +255,20 @@ text-unidecode==1.3
     # via
     #   -r requirements/test.txt
     #   python-slugify
-twine==6.2.0
+twine==7.0.0
     # via -r requirements/doc.in
-typing-extensions==4.15.0
+typing-extensions==4.16.0
     # via
     #   -r requirements/test.txt
     #   atlassian-python-api
     #   beautifulsoup4
-    #   pydata-sphinx-theme
-urllib3==2.6.3
+urllib3==2.8.0
     # via
     #   -r requirements/test.txt
     #   id
     #   requests
     #   twine
-wrapt==2.1.2
+wrapt==2.5.1
     # via
     #   -r requirements/test.txt
     #   deprecated
