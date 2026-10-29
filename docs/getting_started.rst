@@ -1,10 +1,10 @@
 Getting Started
 ===============
 
-If you have not already done so, create or activate a `virtualenv`_. Unless otherwise stated, assume all terminal code
-below is executed within the virtualenv.
+If you have not already done so, install `uv`_. Unless otherwise stated, assume all terminal code
+below is executed within the ``.venv`` virtualenv that ``make requirements`` creates.
 
-.. _virtualenv: https://virtualenvwrapper.readthedocs.org/en/latest/
+.. _uv: https://docs.astral.sh/uv/getting-started/installation/
 
 
 Install dependencies
