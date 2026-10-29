@@ -68,10 +68,6 @@ docs/modules.rst
 docs/edx_toggles.rst
 docs/edx_toggles.*.rst
 
-# Private requirements
-requirements/private.in
-requirements/private.txt
-
 # tox environment temporary artifacts
 tests/__init__.py
 
