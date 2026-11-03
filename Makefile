@@ -35,48 +35,36 @@ coverage: clean ## generate and view HTML coverage report
 	$(BROWSER) htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
-	tox -e docs
+	doc8 --ignore-path docs/_build README.rst docs
+	rm -f docs/edx_toggles.rst
+	rm -f docs/modules.rst
+	make -C docs clean
+	make -C docs html
+	python -m build --wheel
+	twine check dist/*
 	$(BROWSER) docs/_build/html/index.html
 
-COMMON_CONSTRAINTS_TXT=requirements/common_constraints.txt
-.PHONY: $(COMMON_CONSTRAINTS_TXT)
-$(COMMON_CONSTRAINTS_TXT):
-	wget -O "$(@)" https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt || touch "$(@)"
-
-upgrade: export CUSTOM_COMPILE_COMMAND=make upgrade
-upgrade: $(COMMON_CONSTRAINTS_TXT) # update the requirements/*.txt files with the latest packages satisfying requirements/*.in
-	pip install -qr requirements/pip-tools.txt
-	# Make sure to compile files after any other files they include!
-	pip-compile --upgrade --allow-unsafe --rebuild -o requirements/pip.txt requirements/pip.in
-	pip-compile --upgrade -o requirements/pip-tools.txt requirements/pip-tools.in
-	pip install -qr requirements/pip.txt
-	pip install -qr requirements/pip-tools.txt
-	pip-compile --upgrade -o requirements/base.txt requirements/base.in
-	pip-compile --upgrade -o requirements/scripts.txt requirements/scripts.in
-	pip-compile --upgrade -o requirements/test.txt requirements/test.in
-	pip-compile --upgrade -o requirements/doc.txt requirements/doc.in
-	pip-compile --upgrade -o requirements/quality.txt requirements/quality.in
-	pip-compile --upgrade -o requirements/ci.txt requirements/ci.in
-	pip-compile --upgrade -o requirements/dev.txt requirements/dev.in
-	# Let tox control the Django version for tests
-	sed '/^[dD]jango==/d' requirements/test.txt > requirements/test.tmp
-	mv requirements/test.tmp requirements/test.txt
+upgrade: ## update python dependencies
+	uv run --with edx-lint edx_lint write_uv_constraints pyproject.toml
+	uv lock --upgrade
 
 quality: ## check coding style with pycodestyle and pylint
-	tox -e quality
+	pylint src/edx_toggles test_utils manage.py
+	pycodestyle src/edx_toggles manage.py
+	pydocstyle src/edx_toggles manage.py
+	isort --check-only --diff test_utils src/edx_toggles manage.py test_settings.py
+	make selfcheck
 
 pii_check: ## check for PII annotations on all Django models
 	tox -e pii_check
 
 requirements: ## install development environment requirements
-	pip install -qr requirements/pip.txt
-	pip install -qr requirements/pip-tools.txt
-	pip-sync requirements/dev.txt requirements/private.*
+	uv sync --locked --group dev
 
 test: clean test-python ## run tests in the current virtualenv
 
 test-python: ## run all python tests
-	pytest
+	pytest $(PYTEST_ARGS)
 
 diff_cover: test ## find diff lines that need test coverage
 	diff-cover coverage.xml
@@ -109,7 +97,7 @@ push_translations: ## push source translation files (.po) from Transifex
 	tx push -s
 
 dummy_translations: ## generate dummy translation (.po) files
-	cd edx_toggles && i18n_tool dummy
+	cd src/edx_toggles && i18n_tool dummy
 
 build_dummy_translations: extract_translations dummy_translations compile_translations ## generate and compile dummy translation files
 
