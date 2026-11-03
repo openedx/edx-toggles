@@ -20,6 +20,6 @@ spec:
   type: 'library'
   lifecycle: 'production'
   dependsOn:
-  # See requirements/base.in
+  # See [project].dependencies in pyproject.toml
   - 'edx-django-utils'
   - 'code-annotations'

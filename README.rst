@@ -56,8 +56,8 @@ refer to this `list of resources`_ if you need any assistance.
     :target: https://pypi.python.org/pypi/edx-toggles/
     :alt: PyPI
 
-.. |ci-badge| image:: https://github.com/openedx/edx-toggles/workflows/Python%20CI/badge.svg?branch=master
-    :target: https://github.com/openedx/edx-toggles/actions?query=workflow%3A%22Python+CI%22
+.. |ci-badge| image:: https://github.com/openedx/edx-toggles/actions/workflows/release.yml/badge.svg?branch=master
+    :target: https://github.com/openedx/edx-toggles/actions/workflows/release.yml
     :alt: Github CI
 
 .. |codecov-badge| image:: http://codecov.io/github/edx/edx-toggles/coverage.svg?branch=master
