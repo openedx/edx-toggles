@@ -56,7 +56,7 @@ quality: ## check coding style with pycodestyle and pylint
 	make selfcheck
 
 pii_check: ## check for PII annotations on all Django models
-	tox -e pii_check
+	DJANGO_SETTINGS_MODULE=test_settings code_annotations django_find_annotations --config_file .pii_annotations.yml --lint --report --coverage
 
 requirements: ## install development environment requirements
 	uv sync --locked --group dev
