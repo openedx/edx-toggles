@@ -36,7 +36,7 @@ INSTALLED_APPS = (
 )
 
 LOCALE_PATHS = [
-    root('edx_toggles', 'conf', 'locale'),
+    root('src', 'edx_toggles', 'conf', 'locale'),
 ]
 
 ROOT_URLCONF = 'edx_toggles.urls'
