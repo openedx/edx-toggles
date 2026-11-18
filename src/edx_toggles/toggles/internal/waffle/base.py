@@ -9,7 +9,7 @@ from ..base import BaseToggle
 logger = logging.getLogger(__name__)
 
 
-class BaseWaffle(BaseToggle):
+class BaseWaffle(BaseToggle):  # pylint: disable=abstract-method
     """
     Base waffle toggle class, which performs waffle name validation.
     """
