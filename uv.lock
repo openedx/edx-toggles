@@ -127,11 +127,11 @@ wheels = [
 
 [[package]]
 name = "cachetools"
-version = "8.0.1"
+version = "8.0.2"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/06/ce/d7ce62d82ec620e3b08538ce8948f4b3d7cb33829fc274413560004edd6d/cachetools-8.0.1.tar.gz", hash = "sha256:deb1d376d4d28c2f33f3e3058043b005e0af75c35c094bd54053e27d2906ad95", size = 50746, upload-time = "2026-11-17T20:20:33.613Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/75/28/eb1ac766e4c0c439506a654186de8e2cfcd99035218a9393986103a0fdf0/cachetools-8.0.2.tar.gz", hash = "sha256:30ac523adfc118b51d2b2e7bad8a0ddb31370dfe2700c7f10ca224f36ccf81e0", size = 51441, upload-time = "2026-11-18T21:18:28.225Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ef/42/15781416aedef98a28619024c5218fcd0179723c02b8cf25954bfabb3d12/cachetools-8.0.1-py3-none-any.whl", hash = "sha256:9e54fbdef4b24e8059e8a430893122febbaf9f5673f236fdb82256cdd090d506", size = 19095, upload-time = "2026-11-17T20:20:31.771Z" },
+    { url = "https://files.pythonhosted.org/packages/f6/35/0dca79b22cd3ad3fc4bfbd91ea85f259903e7ce5fe956647916df8f691f4/cachetools-8.0.2-py3-none-any.whl", hash = "sha256:502bf3c17c6e35d78ccdaa70da8c7001b28634541f5cde0dee33c93bb252277d", size = 19334, upload-time = "2026-11-18T21:18:26.889Z" },
 ]
 
 [[package]]
@@ -423,7 +423,7 @@ wheels = [
 
 [[package]]
 name = "code-annotations"
-version = "3.0.0"
+version = "3.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
@@ -432,9 +432,9 @@ dependencies = [
     { name = "pyyaml" },
     { name = "stevedore" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/98/cd/73b009a7790d67d218c7caf5f1030f37f6f4863383c3dee47f44eac7a568/code_annotations-3.0.0.tar.gz", hash = "sha256:7ce2e883ab5c62b27fd3e490658f9ccbd632910422b80280d659b851483b0200", size = 44676, upload-time = "2026-03-13T16:36:41.47Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e3/b1/a73619fff2a2ccd9e291df920e506534f30dc78de1cbadc0066039fd3310/code_annotations-3.1.0.tar.gz", hash = "sha256:97ce6aca301fa9b2c7f827de0643d786d077c402c2a79ddb3f5f8bcf0bf5868f", size = 169358, upload-time = "2026-11-18T15:09:15.829Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/54/4e/fc55066be96e4efbd73b52434d438dffb62ed57b6b2125abae41b7d624bc/code_annotations-3.0.0-py2.py3-none-any.whl", hash = "sha256:5470320f207bc71023989484fe60c9b45e5122c7c6d3666d7dd3a98aa7434864", size = 45424, upload-time = "2026-03-13T16:36:40.427Z" },
+    { url = "https://files.pythonhosted.org/packages/18/a3/6fe354c98a3f8b608d8f67354b5245925f901e059baccf33d8abc3c9545b/code_annotations-3.1.0-py3-none-any.whl", hash = "sha256:95c59644f4f96f6cbcd1efd86d7cd57996cec1b6ad5a2f6a1b9276335a0adfed", size = 44136, upload-time = "2026-11-18T15:09:14.377Z" },
 ]
 
 [[package]]
@@ -634,7 +634,7 @@ wheels = [
 
 [[package]]
 name = "diff-cover"
-version = "11.0.3"
+version = "11.0.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "chardet" },
@@ -642,9 +642,9 @@ dependencies = [
     { name = "pluggy" },
     { name = "pygments" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/73/a8/2fa7a14412f02b716e2dc1e3f416a4fc1e0ad73c9f0ec7907cbb155ef1ee/diff_cover-11.0.3.tar.gz", hash = "sha256:64319dae259dc860eef89ce05cc4f27c0fd69f6fc69cbbd7fb7d4fc2e5a219a3", size = 110447, upload-time = "2026-11-17T01:09:35.957Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/97/57/6c6d1fafa82c6d32e8a5de02034ee81317a85c1b7450c59eb9ab2590f8ab/diff_cover-11.0.4.tar.gz", hash = "sha256:595b03ab755c49bce82c0dd9572e3d3466dd25e32bf19856e8d101991a536921", size = 110848, upload-time = "2026-11-19T02:49:23.43Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e9/2f/ed55dbc0fb7e7458c2f8e7b5502239308164df92986c8b6f3462f28ff666/diff_cover-11.0.3-py3-none-any.whl", hash = "sha256:f97cfe094567922e4d7fd063262c5fca36d6325296813dc5814d7439e1c3a733", size = 63912, upload-time = "2026-11-17T01:09:34.569Z" },
+    { url = "https://files.pythonhosted.org/packages/ab/40/84f847956d78fdc2e5b744e84fcd7f4430354d1a6e5ff9446b329ba1ed94/diff_cover-11.0.4-py3-none-any.whl", hash = "sha256:41555d73bc237dc35e42927feb70729dc2fb0a6d2ece8c14cfb10d5f4a48b551", size = 63972, upload-time = "2026-11-19T02:49:22.24Z" },
 ]
 
 [[package]]
@@ -749,7 +749,7 @@ wheels = [
 
 [[package]]
 name = "edx-django-utils"
-version = "8.2.0"
+version = "8.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
@@ -761,9 +761,9 @@ dependencies = [
     { name = "pynacl" },
     { name = "stevedore" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/2c/aa/a1c7ec43d117ee24062e640f51877a119f05f375bacddf9df3d72eed5e14/edx_django_utils-8.2.0.tar.gz", hash = "sha256:edf969105692ec1b1f270eb7319b0364f9aa0141faebc4bdd9e15d91e58a7f33", size = 118147, upload-time = "2026-11-12T20:47:55.467Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/6c/5d/22e64ddc4bb6d99fb4c73bf8f81a29f76f7ef6949dc991cae62d53550a22/edx_django_utils-8.2.1.tar.gz", hash = "sha256:b9168524887ab7afd95ef83dac3e4828c94b75557a8b8e562a77cb3ac215c78e", size = 118186, upload-time = "2026-11-18T13:21:39.073Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/16/8c/e303f758d95f3abfe6fb6f22ed6d51a22b14d3854fe9ce546024e2d85957/edx_django_utils-8.2.0-py3-none-any.whl", hash = "sha256:b905ff356fe1bf42d02bedaac91deb0a9ac7a7687b31e1090f3edff966644966", size = 116667, upload-time = "2026-11-12T20:47:53.036Z" },
+    { url = "https://files.pythonhosted.org/packages/a3/43/627339fbe0cd88f372734b7e3099749c4e9d3fb1ba7a07cc3314427f0978/edx_django_utils-8.2.1-py3-none-any.whl", hash = "sha256:d32f38d87e33c9bb31cd2696579bc97bb694cb71af30dfeb86f3e80bbc754d3d", size = 116667, upload-time = "2026-11-18T13:21:37.481Z" },
 ]
 
 [[package]]
@@ -1986,11 +1986,11 @@ wheels = [
 
 [[package]]
 name = "soupsieve"
-version = "4.1.1"
+version = "4.1.2"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/1f/52/ee5646b65d98a252e807ccc37725363942372a4113072e0bce7ed22f8b84/soupsieve-4.1.1.tar.gz", hash = "sha256:b296bd2d2f65b1a78149f3d7bf6736a147d2c9e2dfbde0e4404639d748a02e03", size = 169784, upload-time = "2026-11-14T17:23:32.467Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/17/35/bf779c1cc376bc216a2d94e3b3d9ee48347296af29bedfc6caaf96bc132f/soupsieve-4.1.2.tar.gz", hash = "sha256:c6539a2638f26991463527337e39d630e3cbb86d024f52282a510535b8a7e09f", size = 178884, upload-time = "2026-11-18T17:21:03.858Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/cd/65/7fae69a095696195334a934eab23aeb12e2715e6c3f08025d2f91942750e/soupsieve-4.1.1-py3-none-any.whl", hash = "sha256:8ff3422dab0b720fb667ee79864d80531a0e57994a13eb701697719ffcb751f6", size = 55089, upload-time = "2026-11-14T17:23:31.001Z" },
+    { url = "https://files.pythonhosted.org/packages/1e/33/f5082b3c480db024453077592057200955aed2a376327b8921d553404ca7/soupsieve-4.1.2-py3-none-any.whl", hash = "sha256:96b4115212a3abee1f572d62da706cca090b088cb5effa278db5702122e63a2c", size = 59295, upload-time = "2026-11-18T17:21:02.593Z" },
 ]
 
 [[package]]
@@ -2290,7 +2290,7 @@ wheels = [
 
 [[package]]
 name = "virtualenv"
-version = "21.15.8"
+version = "21.15.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "distlib" },
@@ -2299,9 +2299,9 @@ dependencies = [
     { name = "platformdirs" },
     { name = "python-discovery" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/7a/04/ead3c46bad2f59ff6d1c6efdf0a1f60ae8565131d2bf920fb579a64c1252/virtualenv-21.15.8.tar.gz", hash = "sha256:cfa97e12996373ea030ccbae8eda23cae9cfdbe74aa7b627621b6a0bd03cd7d4", size = 5659577, upload-time = "2026-11-17T15:47:56.209Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ae/66/8dd793701fa14a32086a7b7c3acaa7c22d8de6a7359b34eb7467d2d00c51/virtualenv-21.15.9.tar.gz", hash = "sha256:adc6799981f513ce852aea17ea592e0d342ce48e87f5d17a3d997966df582a67", size = 5676072, upload-time = "2026-11-18T18:12:23.394Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8a/cf/02048f7392bf213360bbd12c12dfd69aa5975b28de93a2068b08f57afbdb/virtualenv-21.15.8-py3-none-any.whl", hash = "sha256:e4cb274633d6f3ddb19f535a3be7539ce8fe34fc7aa2b0c417ff6e96c3cf67dc", size = 5721550, upload-time = "2026-11-17T15:47:53.95Z" },
+    { url = "https://files.pythonhosted.org/packages/7a/97/b18afd39e22dcddb79656a7d3b69b7a6bfa2c3bc65159744f0c12a1bcb50/virtualenv-21.15.9-py3-none-any.whl", hash = "sha256:c0fbae7de061402e31897d96cfbe7dc35ce93cd464fe05f9bdbecf61313447bf", size = 5730190, upload-time = "2026-11-18T18:12:21.088Z" },
 ]
 
 [[package]]
